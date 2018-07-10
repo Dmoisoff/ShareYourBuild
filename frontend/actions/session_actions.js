@@ -9,13 +9,11 @@ export const RECEIVE_SESSION_ERRORS = 'RECEIVE_SESSION_ERRORS';
 
 
 export const logIn = (user) => dispatch => {
-  debugger
     return Session_Util.logIn(user).then(
       (user) => {
       return dispatch({type:RECEIVE_CURRENT_USER, user:user});
       },
         (errors) => {
-          debugger
           return dispatch({type: RECEIVE_SESSION_ERRORS, errors: errors.responseJSON });
         }
       );
