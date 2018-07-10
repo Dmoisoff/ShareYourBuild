@@ -488,10 +488,10 @@ var SessionForm = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (SessionForm.__proto__ || Object.getPrototypeOf(SessionForm)).call(this, props));
 
     _this.state = {
-      username: 'Username',
-      password: "Password",
-      email: "Email",
-      age: 'Age (dd/mm/yyyy)'
+      username: '',
+      password: '',
+      email: '',
+      age: ''
     };
     _this.updateUsername = _this.updateUsername.bind(_this);
     _this.updatePassword = _this.updatePassword.bind(_this);
@@ -528,10 +528,36 @@ var SessionForm = function (_React$Component) {
       this.setState({ age: e.target.value });
     }
   }, {
+    key: 'signUpFields1',
+    value: function signUpFields1(formType) {
+      if (formType === 'Sign Up') {
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement('input', { onChange: this.updateEmail, type: 'text', placeholder: 'Email', value: this.state.email }),
+          _react2.default.createElement('br', null)
+        );
+      } else {
+        return _react2.default.createElement('br', null);
+      }
+    }
+  }, {
+    key: 'signUpFields2',
+    value: function signUpFields2(formType) {
+      if (formType === 'Sign Up') {
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement('input', { onChange: this.updateAge, type: 'text', placeholder: 'Age (dd/mm/yyyy)', value: this.state.age }),
+          _react2.default.createElement('br', null)
+        );
+      } else {
+        return _react2.default.createElement('br', null);
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
-
       var errors = this.props.errors.map(function (error, i) {
         return _react2.default.createElement(
           'li',
@@ -539,21 +565,6 @@ var SessionForm = function (_React$Component) {
           error
         );
       });
-      var signUpFields = function signUpFields(formType) {
-        if (formType === 'Sign Up') {
-          return _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement('input', { onChange: _this2.updateEmail, type: 'text', value: _this2.state.email }),
-            _react2.default.createElement('br', null),
-            _react2.default.createElement('input', { onChange: _this2.updateAge, type: 'text', value: _this2.state.age }),
-            _react2.default.createElement('br', null)
-          );
-        } else {
-          return _react2.default.createElement('br', null);
-        }
-      };
-
       return _react2.default.createElement(
         'div',
         null,
@@ -564,13 +575,13 @@ var SessionForm = function (_React$Component) {
           ' below or ',
           this.props.navLink
         ),
-        'The starred fields are required',
         _react2.default.createElement(
           'form',
           { onSubmit: this.handleSubmit },
-          _react2.default.createElement('input', { onChange: this.updateUsername, type: 'text', value: this.state.username }),
-          _react2.default.createElement('input', { onChange: this.updatePassword, type: 'password', value: this.state.password }),
-          signUpFields(this.props.formType),
+          this.signUpFields1(this.props.formType),
+          _react2.default.createElement('input', { onChange: this.updateUsername, type: 'text', value: this.state.username, placeholder: 'Username' }),
+          _react2.default.createElement('input', { onChange: this.updatePassword, type: 'password', placeholder: 'Password', value: this.state.password }),
+          this.signUpFields2(this.props.formType),
           _react2.default.createElement('input', { type: 'submit', value: this.props.formType })
         ),
         _react2.default.createElement(

@@ -6,10 +6,10 @@ class SessionForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: 'Username',
-      password: "Password",
-      email: "Email",
-      age: 'Age (dd/mm/yyyy)'
+      username: '',
+      password: '',
+      email: '',
+      age: ''
     };
     this.updateUsername = this.updateUsername.bind(this);
     this.updatePassword = this.updatePassword.bind(this);
@@ -37,35 +37,44 @@ class SessionForm extends React.Component {
     this.setState({age: e.target.value});
   }
 
+  signUpFields1(formType){
+    if(formType === 'Sign Up'){
+      return (
+        <div>
+          <input onChange={this.updateEmail} type="text" placeholder='Email' value={this.state.email} />
+          <br/>
+        </div>
+      );
+    }else{
+      return <br/> ;
+    }
+  }
+  signUpFields2(formType){
+    if(formType === 'Sign Up'){
+      return (
+        <div>
+          <input onChange={this.updateAge} type="text" placeholder='Age (dd/mm/yyyy)' value={this.state.age} />
+          <br/>
+        </div>
+      );
+    }else{
+      return <br/> ;
+    }
+  }
+
   render(){
     const errors = this.props.errors.map((error,i) => {
       return <li key={i} >{error}</li>;
       });
-    const signUpFields = (formType) => {
-      if(formType === 'Sign Up'){
-        return (
-          <div>
-              <input onChange={this.updateEmail} type="text" value={this.state.email} />
-            <br/>
-                <input onChange={this.updateAge} type="text" value={this.state.age} />
-              <br/>
-          </div>
-        );
-      }else{
-        return <br/> ;
-      }
-    };
-
     return(
       <div>
         <h3>{this.props.formType} below or {this.props.navLink}</h3>
-        The starred fields are required
-
         <form onSubmit={this.handleSubmit}>
-            <input onChange={this.updateUsername} type="text" value={this.state.username} />
-            <input onChange={this.updatePassword} type="password" value={this.state.password} />
+          {this.signUpFields1(this.props.formType)}
+          <input onChange={this.updateUsername} type="text" value={this.state.username} placeholder="Username" />
+          <input onChange={this.updatePassword} type="password" placeholder="Password" value={this.state.password} />
+          {this.signUpFields2(this.props.formType)}
 
-          {signUpFields(this.props.formType)}
           <input type="submit" value={this.props.formType} />
         </form>
         <ul>
