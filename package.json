@@ -24,7 +24,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack": "webpack --mode=development --watch"
   },
   "repository": {
     "type": "git",
@@ -36,5 +37,8 @@
   "bugs": {
     "url": "https://github.com/Dmoisoff/ShareYourBuild/issues"
   },
-  "homepage": "https://github.com/Dmoisoff/ShareYourBuild#readme"
+  "homepage": "https://github.com/Dmoisoff/ShareYourBuild#readme",
+  "devDependencies": {
+    "webpack-cli": "^3.0.8"
+  }
 }
