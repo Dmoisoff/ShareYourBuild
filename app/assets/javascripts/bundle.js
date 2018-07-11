@@ -913,17 +913,14 @@ var _root = __webpack_require__(/*! ./components/root */ "./frontend/components/
 
 var _root2 = _interopRequireDefault(_root);
 
-var _session_actions = __webpack_require__(/*! ./actions/session_actions */ "./frontend/actions/session_actions.js");
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 document.addEventListener('DOMContentLoaded', function () {
   var store = (0, _store2.default)();
+  // testing
   window.getState = store.getState;
   window.dispatch = store.dispatch;
-  window.logIn = _session_actions.logIn;
-  window.logOut = _session_actions.logOut;
-  window.signUp = _session_actions.signUp;
+
   var root = document.getElementById('root');
   _reactDom2.default.render(_react2.default.createElement(_root2.default, { store: store }), root);
 });
