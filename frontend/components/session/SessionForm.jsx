@@ -9,7 +9,8 @@ class SessionForm extends React.Component {
       username: '',
       password: '',
       email: '',
-      age: ''
+      age: '',
+      about: ''
     };
     this.updateUsername = this.updateUsername.bind(this);
     this.updatePassword = this.updatePassword.bind(this);
@@ -17,12 +18,18 @@ class SessionForm extends React.Component {
     this.updateAge = this.updateAge.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.isEmail = this.isEmail.bind(this);
+    this.aboutMe = this.aboutMe.bind(this);
+    this.properAge = this.properAge.bind(this);
+    this.updateAboutMe = this.updateAboutMe.bind(this);
   }
 
   handleSubmit(e) {
     e.preventDefault();
     if (!(this.isEmail(this.state.email))) {
       this.state.email = '';
+    }
+    if (!(this.properAge(this.state.age))) {
+      this.state.age = '';
     }
     const user = Object.assign({}, this.state);
     this.props.processForm(user);
@@ -42,9 +49,18 @@ class SessionForm extends React.Component {
     this.setState({age: e.target.value});
   }
 
+  updateAboutMe(e){
+    this.setState({about: e.target.value});
+  }
+
   isEmail(email) {
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     return regex.test(email);
+  }
+
+  properAge(date) {
+    var regex = /^(0[1-9]|1[0-2])+\/(0[1-9]|1[0-9]|2[0-9]|3[0-1])+\/(199[0-9]|200[0-9]|201[0-8])+$/;
+    return regex.test(date);
   }
 
   signUpFields1(formType){
@@ -55,41 +71,65 @@ class SessionForm extends React.Component {
           <br/>
         </div>
       );
-    }else{
-      return <br/> ;
     }
   }
   signUpFields2(formType){
     if(formType === 'Sign Up'){
       return (
         <div>
-          <input onChange={this.updateAge} type="date" placeholder='Age (dd/mm/yyyy)'  value={this.state.age} />
-          <br/>
+          <input onChange={this.updateAge} type="text" placeholder='Birthday (mm/dd/yyyy)' value={this.state.age} />
         </div>
       );
-    }else{
-      return <br/> ;
+    }
+  }
+
+  signUpFields3(){
+    const aboutMe = 'About me, student, K-5 Teacher, 6-8 Teacher, 9-12 Teacher, Post-Secondary Teacher, Instructor, Hobbyist, Professional, Parent, Robot'.split(',');
+    return aboutMe.map((type,i) => {
+      if (i === 0) {
+        return(
+          <option key={i} value={type} selected disabled hidden >{type}</option>
+        );
+      }else{
+        return(
+          <option key={i} value={type} >{type}</option>
+        );
+      }
+    });
+  }
+
+  aboutMe(formType){
+    if(formType === 'Sign Up'){
+      return(
+        <select onChange={this.updateAboutMe}>
+          {this.signUpFields3(this.props.formType)}
+        </select>
+      );
     }
   }
 
   render(){
     let errors = this.props.errors.map((error,i) => {
-      return <li key={i} >{error}</li>;
+      return <li className='user-errors' key={i} >{error}</li>;
       });
     return(
-      <div>
-        <h3>{this.props.formType} below or {this.props.navLink}</h3>
-        <form onSubmit={this.handleSubmit}>
-          {this.signUpFields1(this.props.formType)}
-          <input onChange={this.updateUsername} type="text" value={this.state.username} placeholder="Username" />
-          <input onChange={this.updatePassword} type="password" placeholder="Password" value={this.state.password} />
-          {this.signUpFields2(this.props.formType)}
+      <div className='user-entry-background'>
+        <div className='user-entry'>
+          <form onSubmit={this.handleSubmit}>
+            <div>
+              {this.signUpFields1(this.props.formType)}
+              <input onChange={this.updateUsername} type="text" value={this.state.username} placeholder="Username" />
+              <input onChange={this.updatePassword} type="password" placeholder="Password" value={this.state.password} />
 
-          <input type="submit" value={this.props.formType} />
-        </form>
-        <ul>
-          {errors}
-        </ul>
+              {this.signUpFields2(this.props.formType)}
+              {this.aboutMe(this.props.formType)}
+            </div>
+            <button onClick={this.handleSubmit} value={this.props.formType}>{this.props.formType}</button>
+          </form>
+          <ul >
+            {errors}
+          </ul>
+        </div>
       </div>
     );
 

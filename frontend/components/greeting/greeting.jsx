@@ -19,11 +19,9 @@ class Greeting extends React.Component{
       );
     }else {
       return(
-        <div>
+        <div className='user-nav'>
+          <Link to='/login'>Log In</Link>
           <Link to='/signup'>Sign Up</Link>
-          <br>
-          </br>
-          <Link to='/login'>Sign In</Link>
         </div>
       );
     }

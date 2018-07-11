@@ -1,0 +1,62 @@
+
+
+.user-entry{
+  display: flex;
+  width: 300px;
+  justify-content: center;
+  height: 700px;
+  margin-left: 20px;
+  flex-direction: column;
+}
+
+.user-entry > form {
+  padding: 10px;
+}
+.user-entry > form > button {
+  background-color: orange;
+  border-radius: 5px;
+  box-sizing: border-box;
+  padding-left: 75px;
+  padding-right: 75px;
+  margin-top: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: white;
+}
+ input{
+  box-sizing: border-box;
+  background-color: white;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 8px;
+}
+
+.user-entry::before{
+  content: "";
+position: fixed;
+left: 0;
+right: 0;
+z-index: -1;
+display: block;
+background-image: image-url('DIY-Bar-2.jpg');
+background-size: cover;
+width: 1200px;
+height: 800px;
+filter: blur(5px);
+}
+
+.user-date::placeholder{
+  color: palevioletred;
+}
+
+.user-errors{
+  box-sizing: border-box;
+  padding: 10px;
+  background-color: white;
+  border-radius: 2px;
+  display: flex;
+}
+
+.user-entry > ul{
+
+}

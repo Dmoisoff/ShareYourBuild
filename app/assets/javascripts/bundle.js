@@ -185,7 +185,7 @@ var App = function App() {
     null,
     _react2.default.createElement(
       'header',
-      null,
+      { className: 'navbar' },
       _react2.default.createElement(
         'h1',
         null,
@@ -194,10 +194,14 @@ var App = function App() {
       _react2.default.createElement(_greeting_container2.default, null)
     ),
     _react2.default.createElement(
-      _reactRouterDom.Switch,
+      'div',
       null,
-      _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/login', component: _LoginFormContainer2.default }),
-      _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/signup', component: _SignupFormContainer2.default })
+      _react2.default.createElement(
+        _reactRouterDom.Switch,
+        null,
+        _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/login', component: _LoginFormContainer2.default }),
+        _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/signup', component: _SignupFormContainer2.default })
+      )
     )
   );
 };
@@ -275,17 +279,16 @@ var Greeting = function (_React$Component) {
       } else {
         return _react2.default.createElement(
           'div',
-          null,
+          { className: 'user-nav' },
+          _react2.default.createElement(
+            _reactRouterDom.Link,
+            { to: '/login' },
+            'Log In'
+          ),
           _react2.default.createElement(
             _reactRouterDom.Link,
             { to: '/signup' },
             'Sign Up'
-          ),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement(
-            _reactRouterDom.Link,
-            { to: '/login' },
-            'Sign In'
           )
         );
       }
@@ -428,10 +431,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var mstp = function mstp(state) {
   return {
     errors: state.errors.session,
-    formType: 'Sign In',
+    formType: 'Log In',
     navLink: _react2.default.createElement(
       _reactRouterDom.Link,
-      { to: '/signup' },
+      { to: '/signup', className: 'link' },
       ' Sign up here'
     )
   };
@@ -491,7 +494,8 @@ var SessionForm = function (_React$Component) {
       username: '',
       password: '',
       email: '',
-      age: ''
+      age: '',
+      about: ''
     };
     _this.updateUsername = _this.updateUsername.bind(_this);
     _this.updatePassword = _this.updatePassword.bind(_this);
@@ -499,6 +503,9 @@ var SessionForm = function (_React$Component) {
     _this.updateAge = _this.updateAge.bind(_this);
     _this.handleSubmit = _this.handleSubmit.bind(_this);
     _this.isEmail = _this.isEmail.bind(_this);
+    _this.aboutMe = _this.aboutMe.bind(_this);
+    _this.properAge = _this.properAge.bind(_this);
+    _this.updateAboutMe = _this.updateAboutMe.bind(_this);
     return _this;
   }
 
@@ -508,6 +515,9 @@ var SessionForm = function (_React$Component) {
       e.preventDefault();
       if (!this.isEmail(this.state.email)) {
         this.state.email = '';
+      }
+      if (!this.properAge(this.state.age)) {
+        this.state.age = '';
       }
       var user = Object.assign({}, this.state);
       this.props.processForm(user);
@@ -533,10 +543,21 @@ var SessionForm = function (_React$Component) {
       this.setState({ age: e.target.value });
     }
   }, {
+    key: 'updateAboutMe',
+    value: function updateAboutMe(e) {
+      this.setState({ about: e.target.value });
+    }
+  }, {
     key: 'isEmail',
     value: function isEmail(email) {
       var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
       return regex.test(email);
+    }
+  }, {
+    key: 'properAge',
+    value: function properAge(date) {
+      var regex = /^(0[1-9]|1[0-2])+\/(0[1-9]|1[0-9]|2[0-9]|3[0-1])+\/(199[0-9]|200[0-9]|201[0-8])+$/;
+      return regex.test(date);
     }
   }, {
     key: 'signUpFields1',
@@ -548,8 +569,6 @@ var SessionForm = function (_React$Component) {
           _react2.default.createElement('input', { onChange: this.updateEmail, type: 'text', placeholder: 'Email', value: this.state.email }),
           _react2.default.createElement('br', null)
         );
-      } else {
-        return _react2.default.createElement('br', null);
       }
     }
   }, {
@@ -559,11 +578,39 @@ var SessionForm = function (_React$Component) {
         return _react2.default.createElement(
           'div',
           null,
-          _react2.default.createElement('input', { onChange: this.updateAge, type: 'date', placeholder: 'Age (dd/mm/yyyy)', value: this.state.age }),
-          _react2.default.createElement('br', null)
+          _react2.default.createElement('input', { onChange: this.updateAge, type: 'text', placeholder: 'Birthday (mm/dd/yyyy)', value: this.state.age })
         );
-      } else {
-        return _react2.default.createElement('br', null);
+      }
+    }
+  }, {
+    key: 'signUpFields3',
+    value: function signUpFields3() {
+      var aboutMe = 'About me, student, K-5 Teacher, 6-8 Teacher, 9-12 Teacher, Post-Secondary Teacher, Instructor, Hobbyist, Professional, Parent, Robot'.split(',');
+      return aboutMe.map(function (type, i) {
+        if (i === 0) {
+          return _react2.default.createElement(
+            'option',
+            { key: i, value: type, selected: true, disabled: true, hidden: true },
+            type
+          );
+        } else {
+          return _react2.default.createElement(
+            'option',
+            { key: i, value: type },
+            type
+          );
+        }
+      });
+    }
+  }, {
+    key: 'aboutMe',
+    value: function aboutMe(formType) {
+      if (formType === 'Sign Up') {
+        return _react2.default.createElement(
+          'select',
+          { onChange: this.updateAboutMe },
+          this.signUpFields3(this.props.formType)
+        );
       }
     }
   }, {
@@ -572,33 +619,39 @@ var SessionForm = function (_React$Component) {
       var errors = this.props.errors.map(function (error, i) {
         return _react2.default.createElement(
           'li',
-          { key: i },
+          { className: 'user-errors', key: i },
           error
         );
       });
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'user-entry-background' },
         _react2.default.createElement(
-          'h3',
-          null,
-          this.props.formType,
-          ' below or ',
-          this.props.navLink
-        ),
-        _react2.default.createElement(
-          'form',
-          { onSubmit: this.handleSubmit },
-          this.signUpFields1(this.props.formType),
-          _react2.default.createElement('input', { onChange: this.updateUsername, type: 'text', value: this.state.username, placeholder: 'Username' }),
-          _react2.default.createElement('input', { onChange: this.updatePassword, type: 'password', placeholder: 'Password', value: this.state.password }),
-          this.signUpFields2(this.props.formType),
-          _react2.default.createElement('input', { type: 'submit', value: this.props.formType })
-        ),
-        _react2.default.createElement(
-          'ul',
-          null,
-          errors
+          'div',
+          { className: 'user-entry' },
+          _react2.default.createElement(
+            'form',
+            { onSubmit: this.handleSubmit },
+            _react2.default.createElement(
+              'div',
+              null,
+              this.signUpFields1(this.props.formType),
+              _react2.default.createElement('input', { onChange: this.updateUsername, type: 'text', value: this.state.username, placeholder: 'Username' }),
+              _react2.default.createElement('input', { onChange: this.updatePassword, type: 'password', placeholder: 'Password', value: this.state.password }),
+              this.signUpFields2(this.props.formType),
+              this.aboutMe(this.props.formType)
+            ),
+            _react2.default.createElement(
+              'button',
+              { onClick: this.handleSubmit, value: this.props.formType },
+              this.props.formType
+            )
+          ),
+          _react2.default.createElement(
+            'ul',
+            null,
+            errors
+          )
         )
       );
     }
@@ -647,7 +700,7 @@ var mstp = function mstp(state) {
     formType: 'Sign Up',
     navLink: _react2.default.createElement(
       _reactRouterDom.Link,
-      { to: '/login' },
+      { to: '/login', className: 'link' },
       ' Sign in here'
     )
   };

@@ -1,0 +1,25 @@
+.navbar{
+  position: relative;
+  height: 78px;
+  background-color: #eee;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1;
+}
+
+.user-nav{
+  display: flex;
+  box-sizing: border-box;
+  margin: 10px;
+}
+
+.user-nav > a{
+  margin-left: 10px;
+}
+
+.navbar > h1{
+  margin-left: 10px;
+  font-weight: bold;
+}

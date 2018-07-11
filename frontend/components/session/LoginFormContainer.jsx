@@ -8,8 +8,8 @@ import React from 'react';
 const mstp = (state) => {
   return({
     errors: state.errors.session,
-    formType: 'Sign In',
-    navLink: <Link to='/signup'> Sign up here</Link>
+    formType: 'Log In',
+    navLink: <Link to='/signup' className='link'> Sign up here</Link>
   });
 
 };
