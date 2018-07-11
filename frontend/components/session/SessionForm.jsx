@@ -14,11 +14,16 @@ class SessionForm extends React.Component {
     this.updateUsername = this.updateUsername.bind(this);
     this.updatePassword = this.updatePassword.bind(this);
     this.updateEmail = this.updateEmail.bind(this);
+    this.updateAge = this.updateAge.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.isEmail = this.isEmail.bind(this);
   }
 
   handleSubmit(e) {
     e.preventDefault();
+    if (!(this.isEmail(this.state.email))) {
+      this.state.email = '';
+    }
     const user = Object.assign({}, this.state);
     this.props.processForm(user);
   }
@@ -37,6 +42,11 @@ class SessionForm extends React.Component {
     this.setState({age: e.target.value});
   }
 
+  isEmail(email) {
+    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    return regex.test(email);
+  }
+
   signUpFields1(formType){
     if(formType === 'Sign Up'){
       return (
@@ -53,7 +63,7 @@ class SessionForm extends React.Component {
     if(formType === 'Sign Up'){
       return (
         <div>
-          <input onChange={this.updateAge} type="text" placeholder='Age (dd/mm/yyyy)' value={this.state.age} />
+          <input onChange={this.updateAge} type="date" placeholder='Age (dd/mm/yyyy)'  value={this.state.age} />
           <br/>
         </div>
       );
@@ -63,7 +73,7 @@ class SessionForm extends React.Component {
   }
 
   render(){
-    const errors = this.props.errors.map((error,i) => {
+    let errors = this.props.errors.map((error,i) => {
       return <li key={i} >{error}</li>;
       });
     return(

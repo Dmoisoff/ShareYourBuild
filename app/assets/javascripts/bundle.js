@@ -496,7 +496,9 @@ var SessionForm = function (_React$Component) {
     _this.updateUsername = _this.updateUsername.bind(_this);
     _this.updatePassword = _this.updatePassword.bind(_this);
     _this.updateEmail = _this.updateEmail.bind(_this);
+    _this.updateAge = _this.updateAge.bind(_this);
     _this.handleSubmit = _this.handleSubmit.bind(_this);
+    _this.isEmail = _this.isEmail.bind(_this);
     return _this;
   }
 
@@ -504,6 +506,9 @@ var SessionForm = function (_React$Component) {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
       e.preventDefault();
+      if (!this.isEmail(this.state.email)) {
+        this.state.email = '';
+      }
       var user = Object.assign({}, this.state);
       this.props.processForm(user);
     }
@@ -528,6 +533,12 @@ var SessionForm = function (_React$Component) {
       this.setState({ age: e.target.value });
     }
   }, {
+    key: 'isEmail',
+    value: function isEmail(email) {
+      var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      return regex.test(email);
+    }
+  }, {
     key: 'signUpFields1',
     value: function signUpFields1(formType) {
       if (formType === 'Sign Up') {
@@ -548,7 +559,7 @@ var SessionForm = function (_React$Component) {
         return _react2.default.createElement(
           'div',
           null,
-          _react2.default.createElement('input', { onChange: this.updateAge, type: 'text', placeholder: 'Age (dd/mm/yyyy)', value: this.state.age }),
+          _react2.default.createElement('input', { onChange: this.updateAge, type: 'date', placeholder: 'Age (dd/mm/yyyy)', value: this.state.age }),
           _react2.default.createElement('br', null)
         );
       } else {
@@ -915,8 +926,22 @@ var _root2 = _interopRequireDefault(_root);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 document.addEventListener('DOMContentLoaded', function () {
-  var store = (0, _store2.default)();
+  var store = void 0;
+  if (window.currentUser) {
+    var preloadedState = {
+      session: { id: window.currentUser.id },
+      entities: {
+        users: _defineProperty({}, window.currentUser.id, window.currentUser)
+      }
+    };
+    store = (0, _store2.default)(preloadedState);
+    delete window.currentUser;
+  } else {
+    store = (0, _store2.default)();
+  }
   // testing
   window.getState = store.getState;
   window.dispatch = store.dispatch;
