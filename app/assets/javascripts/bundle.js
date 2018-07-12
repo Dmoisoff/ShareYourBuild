@@ -187,8 +187,8 @@ var App = function App() {
       'header',
       { className: 'navbar' },
       _react2.default.createElement(
-        'h1',
-        null,
+        _reactRouterDom.Link,
+        { to: '/' },
         'Share Your Build'
       ),
       _react2.default.createElement(_greeting_container2.default, null)
@@ -1024,6 +1024,8 @@ var _root = __webpack_require__(/*! ./components/root */ "./frontend/components/
 
 var _root2 = _interopRequireDefault(_root);
 
+var _project_api_util = __webpack_require__(/*! ./util/project_api_util */ "./frontend/util/project_api_util.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -1045,6 +1047,11 @@ document.addEventListener('DOMContentLoaded', function () {
   // testing
   window.getState = store.getState;
   window.dispatch = store.dispatch;
+  window.fetchProjects = _project_api_util.fetchProjects;
+  window.fetchProject = _project_api_util.fetchProject;
+  window.createProject = _project_api_util.createProject;
+  window.updateProject = _project_api_util.updateProject;
+  window.deleteProject = _project_api_util.deleteProject;
 
   var root = document.getElementById('root');
   _reactDom2.default.render(_react2.default.createElement(_root2.default, { store: store }), root);
@@ -1088,6 +1095,58 @@ var configureStore = function configureStore() {
 };
 
 exports.default = configureStore;
+
+/***/ }),
+
+/***/ "./frontend/util/project_api_util.js":
+/*!*******************************************!*\
+  !*** ./frontend/util/project_api_util.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var fetchProjects = exports.fetchProjects = function fetchProjects() {
+  return $.ajax({
+    method: 'GET',
+    url: 'api/projects'
+  });
+};
+
+var fetchProject = exports.fetchProject = function fetchProject(id) {
+  return $.ajax({
+    method: 'GET',
+    url: 'api/projects/' + id
+  });
+};
+
+var createProject = exports.createProject = function createProject(project) {
+  return $.ajax({
+    method: 'GET',
+    url: 'api/projects',
+    data: { project: project }
+  });
+};
+
+var updateProject = exports.updateProject = function updateProject(project) {
+  return $.ajax({
+    method: 'PATCH',
+    url: 'api/projects/' + project.id,
+    data: { project: project }
+  });
+};
+
+var deleteProject = exports.deleteProject = function deleteProject(id) {
+  return $.ajax({
+    method: 'PATCH',
+    url: 'api/projects/' + id
+  });
+};
 
 /***/ }),
 

@@ -10,7 +10,7 @@ import { AuthRoute, ProtectedRoute } from '../util/route_util';
 const App = () => (
   <div>
     <header className='navbar'>
-      <h1>Share Your Build</h1>
+      <Link to='/'>Share Your Build</Link>
       <GreetingContainer />
     </header>
     <div>
