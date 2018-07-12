@@ -263,7 +263,7 @@ var Greeting = function (_React$Component) {
           null,
           _react2.default.createElement(
             'h1',
-            null,
+            { className: true },
             'Greeting ',
             this.props.currentUser.username
           ),
