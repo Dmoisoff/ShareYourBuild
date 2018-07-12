@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
-import { signUp } from './../../actions/session_actions';
+import { signUp, logIn } from './../../actions/session_actions';
 import SessionForm from './SessionForm';
 import { Link } from 'react-router-dom';
 import React from 'react';
 
 const mstp = (state) => {
   return({
-    errors: state.errors.session,
+    errors: state.errors.session.signUp,
     formType: 'Sign Up',
     navLink: <Link to='/login' className='link'> Sign in here</Link>
   });
@@ -14,8 +14,10 @@ const mstp = (state) => {
 };
 
 const mdtp = (dispatch) => {
+  const demo = {username: 'Demo-Man', password:'123456'};
   return({
-    processForm: (user) => { dispatch(signUp(user));}
+    processForm: (user) => { dispatch(signUp(user));},
+    demoLogin: () => { dispatch(logIn(demo));}
   });
 };
 

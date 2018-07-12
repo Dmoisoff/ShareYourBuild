@@ -12,7 +12,7 @@
 .user-entry > form {
   padding: 10px;
 }
-.user-entry > form > button {
+.submit {
   background-color: orange;
   border-radius: 5px;
   box-sizing: border-box;
@@ -45,18 +45,22 @@ height: 800px;
 filter: blur(5px);
 }
 
-.user-date::placeholder{
-  color: palevioletred;
-}
-
 .user-errors{
   box-sizing: border-box;
-  padding: 10px;
+  padding: 5px;
   background-color: white;
   border-radius: 2px;
   display: flex;
 }
 
-.user-entry > ul{
-
+.user-demo {
+  background-color: orange;
+  border-radius: 5px;
+  box-sizing: border-box;
+  padding-left: 60px;
+  padding-right: 62px;
+  margin-top: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: white;
 }

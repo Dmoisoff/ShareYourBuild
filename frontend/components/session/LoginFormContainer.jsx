@@ -6,8 +6,10 @@ import React from 'react';
 
 
 const mstp = (state) => {
+  debugger
   return({
-    errors: state.errors.session,
+    // errors: state.errors.session.logIn.logIn,
+    errors: state.errors.session.logIn,
     formType: 'Log In',
     navLink: <Link to='/signup' className='link'> Sign up here</Link>
   });
@@ -15,8 +17,10 @@ const mstp = (state) => {
 };
 
 const mdtp = (dispatch) => {
+  const demo = {username: 'Demo-Man', password:'123456'};
   return({
-    processForm: (user) => { dispatch(logIn(user));}
+    processForm: (user) => { dispatch(logIn(user));},
+    demoLogin: () => { dispatch(logIn(demo));}
   });
 };
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
+
 class SessionForm extends React.Component {
 
   constructor(props) {
@@ -21,8 +22,19 @@ class SessionForm extends React.Component {
     this.aboutMe = this.aboutMe.bind(this);
     this.properAge = this.properAge.bind(this);
     this.updateAboutMe = this.updateAboutMe.bind(this);
+    this.DemoSubmit = this.DemoSubmit.bind(this);
+    this.errors = this.errors.bind(this);
   }
 
+  isEmail(email) {
+    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    return regex.test(email);
+  }
+
+  properAge(date) {
+    var regex = /^(0[1-9]|1[0-2])+\/(0[1-9]|1[0-9]|2[0-9]|3[0-1])+\/(199[0-9]|200[0-9]|201[0-8])+$/;
+    return regex.test(date);
+  }
   handleSubmit(e) {
     e.preventDefault();
     if (!(this.isEmail(this.state.email))) {
@@ -53,15 +65,6 @@ class SessionForm extends React.Component {
     this.setState({about: e.target.value});
   }
 
-  isEmail(email) {
-    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    return regex.test(email);
-  }
-
-  properAge(date) {
-    var regex = /^(0[1-9]|1[0-2])+\/(0[1-9]|1[0-9]|2[0-9]|3[0-1])+\/(199[0-9]|200[0-9]|201[0-8])+$/;
-    return regex.test(date);
-  }
 
   signUpFields1(formType){
     if(formType === 'Sign Up'){
@@ -84,7 +87,7 @@ class SessionForm extends React.Component {
   }
 
   signUpFields3(){
-    const aboutMe = 'About me, student, K-5 Teacher, 6-8 Teacher, 9-12 Teacher, Post-Secondary Teacher, Instructor, Hobbyist, Professional, Parent, Robot'.split(',');
+    const aboutMe = 'About me,student,K-5 Teacher,6-8 Teacher,9-12 Teacher,Post-Secondary Teacher,Instructor,Hobbyist,Professional, Parent,Robot'.split(',');
     return aboutMe.map((type,i) => {
       if (i === 0) {
         return(
@@ -98,6 +101,12 @@ class SessionForm extends React.Component {
     });
   }
 
+  DemoSubmit(){
+    const user = 'Demo-Man';
+    this.setState({username: user, password:'123456'});
+    setTimeout(() => {this.props.demoLogin();}, 500);
+  }
+
   aboutMe(formType){
     if(formType === 'Sign Up'){
       return(
@@ -108,13 +117,21 @@ class SessionForm extends React.Component {
     }
   }
 
+  errors(){
+    debugger
+    if(!this.props.errors){
+      return [];
+    }else{
+      return this.props.errors.map((error,i) => {
+        return <li className='user-errors' key={i} >{error}</li>;
+        });
+      }
+    }
   render(){
-    let errors = this.props.errors.map((error,i) => {
-      return <li className='user-errors' key={i} >{error}</li>;
-      });
     return(
       <div className='user-entry-background'>
         <div className='user-entry'>
+
           <form onSubmit={this.handleSubmit}>
             <div>
               {this.signUpFields1(this.props.formType)}
@@ -124,11 +141,14 @@ class SessionForm extends React.Component {
               {this.signUpFields2(this.props.formType)}
               {this.aboutMe(this.props.formType)}
             </div>
-            <button onClick={this.handleSubmit} value={this.props.formType}>{this.props.formType}</button>
+            <button className="submit" onClick={this.handleSubmit} value={this.props.formType}>{this.props.formType}</button>
           </form>
           <ul >
-            {errors}
+            {this.errors()}
           </ul>
+          <form>
+            <button className="user-demo" onClick={() => {this.DemoSubmit();} }> Demo Login</button>
+          </form>
         </div>
       </div>
     );

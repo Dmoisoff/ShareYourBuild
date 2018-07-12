@@ -429,8 +429,10 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state) {
+  debugger;
   return {
-    errors: state.errors.session,
+    // errors: state.errors.session.logIn.logIn,
+    errors: state.errors.session.logIn,
     formType: 'Log In',
     navLink: _react2.default.createElement(
       _reactRouterDom.Link,
@@ -441,9 +443,13 @@ var mstp = function mstp(state) {
 };
 
 var mdtp = function mdtp(dispatch) {
+  var demo = { username: 'Demo-Man', password: '123456' };
   return {
     processForm: function processForm(user) {
       dispatch((0, _session_actions.logIn)(user));
+    },
+    demoLogin: function demoLogin() {
+      dispatch((0, _session_actions.logIn)(demo));
     }
   };
 };
@@ -506,10 +512,24 @@ var SessionForm = function (_React$Component) {
     _this.aboutMe = _this.aboutMe.bind(_this);
     _this.properAge = _this.properAge.bind(_this);
     _this.updateAboutMe = _this.updateAboutMe.bind(_this);
+    _this.DemoSubmit = _this.DemoSubmit.bind(_this);
+    _this.errors = _this.errors.bind(_this);
     return _this;
   }
 
   _createClass(SessionForm, [{
+    key: 'isEmail',
+    value: function isEmail(email) {
+      var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      return regex.test(email);
+    }
+  }, {
+    key: 'properAge',
+    value: function properAge(date) {
+      var regex = /^(0[1-9]|1[0-2])+\/(0[1-9]|1[0-9]|2[0-9]|3[0-1])+\/(199[0-9]|200[0-9]|201[0-8])+$/;
+      return regex.test(date);
+    }
+  }, {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
       e.preventDefault();
@@ -548,18 +568,6 @@ var SessionForm = function (_React$Component) {
       this.setState({ about: e.target.value });
     }
   }, {
-    key: 'isEmail',
-    value: function isEmail(email) {
-      var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-      return regex.test(email);
-    }
-  }, {
-    key: 'properAge',
-    value: function properAge(date) {
-      var regex = /^(0[1-9]|1[0-2])+\/(0[1-9]|1[0-9]|2[0-9]|3[0-1])+\/(199[0-9]|200[0-9]|201[0-8])+$/;
-      return regex.test(date);
-    }
-  }, {
     key: 'signUpFields1',
     value: function signUpFields1(formType) {
       if (formType === 'Sign Up') {
@@ -585,7 +593,7 @@ var SessionForm = function (_React$Component) {
   }, {
     key: 'signUpFields3',
     value: function signUpFields3() {
-      var aboutMe = 'About me, student, K-5 Teacher, 6-8 Teacher, 9-12 Teacher, Post-Secondary Teacher, Instructor, Hobbyist, Professional, Parent, Robot'.split(',');
+      var aboutMe = 'About me,student,K-5 Teacher,6-8 Teacher,9-12 Teacher,Post-Secondary Teacher,Instructor,Hobbyist,Professional, Parent,Robot'.split(',');
       return aboutMe.map(function (type, i) {
         if (i === 0) {
           return _react2.default.createElement(
@@ -603,6 +611,17 @@ var SessionForm = function (_React$Component) {
       });
     }
   }, {
+    key: 'DemoSubmit',
+    value: function DemoSubmit() {
+      var _this2 = this;
+
+      var user = 'Demo-Man';
+      this.setState({ username: user, password: '123456' });
+      setTimeout(function () {
+        _this2.props.demoLogin();
+      }, 500);
+    }
+  }, {
     key: 'aboutMe',
     value: function aboutMe(formType) {
       if (formType === 'Sign Up') {
@@ -614,15 +633,26 @@ var SessionForm = function (_React$Component) {
       }
     }
   }, {
+    key: 'errors',
+    value: function errors() {
+      debugger;
+      if (!this.props.errors) {
+        return [];
+      } else {
+        return this.props.errors.map(function (error, i) {
+          return _react2.default.createElement(
+            'li',
+            { className: 'user-errors', key: i },
+            error
+          );
+        });
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var errors = this.props.errors.map(function (error, i) {
-        return _react2.default.createElement(
-          'li',
-          { className: 'user-errors', key: i },
-          error
-        );
-      });
+      var _this3 = this;
+
       return _react2.default.createElement(
         'div',
         { className: 'user-entry-background' },
@@ -643,14 +673,25 @@ var SessionForm = function (_React$Component) {
             ),
             _react2.default.createElement(
               'button',
-              { onClick: this.handleSubmit, value: this.props.formType },
+              { className: 'submit', onClick: this.handleSubmit, value: this.props.formType },
               this.props.formType
             )
           ),
           _react2.default.createElement(
             'ul',
             null,
-            errors
+            this.errors()
+          ),
+          _react2.default.createElement(
+            'form',
+            null,
+            _react2.default.createElement(
+              'button',
+              { className: 'user-demo', onClick: function onClick() {
+                  _this3.DemoSubmit();
+                } },
+              ' Demo Login'
+            )
           )
         )
       );
@@ -696,7 +737,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var mstp = function mstp(state) {
   return {
-    errors: state.errors.session,
+    errors: state.errors.session.signUp,
     formType: 'Sign Up',
     navLink: _react2.default.createElement(
       _reactRouterDom.Link,
@@ -707,9 +748,13 @@ var mstp = function mstp(state) {
 };
 
 var mdtp = function mdtp(dispatch) {
+  var demo = { username: 'Demo-Man', password: '123456' };
   return {
     processForm: function processForm(user) {
       dispatch((0, _session_actions.signUp)(user));
+    },
+    demoLogin: function demoLogin() {
+      dispatch((0, _session_actions.logIn)(demo));
     }
   };
 };
@@ -845,15 +890,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var sessionErrorsReducer = function sessionErrorsReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { signUp: [], logIn: [] };
   var action = arguments[1];
 
+  var newState = void 0;
   var oldState = Object.freeze(state);
+  debugger;
   switch (action.type) {
     case Session_Actions.RECEIVE_SESSION_ERRORS:
+      // newState = merge({}, state, {[Object.keys(action.errors)]: action.errors});
+      // return newState;
       return action.errors;
     case Session_Actions.RECEIVE_CURRENT_USER:
-      return [];
+      return { signUp: [], logIn: [] };
     default:
       return oldState;
   }
