@@ -2,26 +2,28 @@
 
 .user-entry{
   display: flex;
-  width: 300px;
+  width: 400px;
   justify-content: center;
-  height: 700px;
+  height: 945px;
   margin-left: 20px;
   flex-direction: column;
 }
 
 .user-entry > form {
   padding: 10px;
+  padding-top: 0;
 }
+
 .submit {
   background-color: orange;
   border-radius: 5px;
   box-sizing: border-box;
-  padding-left: 75px;
-  padding-right: 75px;
   margin-top: 10px;
   padding-top: 10px;
   padding-bottom: 10px;
   color: white;
+  width: 96%;
+  text-align: center;
 }
  input{
   box-sizing: border-box;
@@ -31,36 +33,85 @@
   padding: 8px;
 }
 
-.user-entry::before{
-  content: "";
-position: fixed;
-left: 0;
-right: 0;
-z-index: -1;
-display: block;
-background-image: image-url('DIY-Bar-2.jpg');
-background-size: cover;
-width: 1200px;
-height: 800px;
-filter: blur(5px);
-}
+// .user-entry::before{
+//   content: "";
+//   position: fixed;
+//   left: 0;
+//   right: 0;
+//   z-index: -1;
+//   display: block;
+//   background-image: image-url('pexels-photo-209235');
+//   background-size: cover;
+//   width: 1200px;
+//   height: 800px;
+//   filter: blur(5px);
+// }
 
 .user-errors{
-  box-sizing: border-box;
-  padding: 5px;
-  background-color: white;
-  border-radius: 2px;
-  display: flex;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  color: white;
 }
+
+.user-errors-container{
+  background-color: #bd2121;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-left: 9px;
+  margin-right: 24px;
+}
+
+// text-align: center;
+// /* box-sizing: border-box; */
+// /* padding: 12px; */
+// background-color: #bd2121;
+// border-radius: 2px;
+// display: flex;
+// color: white;
+// /* border-right-style: dashed; */
+// display: flex;
+// text-align: center;
+// /* width: 502px; */
+// margin-right: 25px;
+// padding-top: 5px;
+// margin-left: 10px;
+// padding-left: 10px;
 
 .user-demo {
   background-color: orange;
   border-radius: 5px;
   box-sizing: border-box;
-  padding-left: 60px;
-  padding-right: 62px;
   margin-top: 10px;
   padding-top: 10px;
   padding-bottom: 10px;
   color: white;
+  width: 96%;
+  text-align: center;
+}
+
+.user-entry-background {
+  background-image: image-url('pexels-photo-209235');
+  background-size: cover;
+  width: 1200px;
+  height: 800px;
+}
+
+.width {
+  width: 96%;
+}
+
+.user-username-login,.user-password-login{
+  width: 95%;
+}
+
+.about-me{
+  width: 46%;
+  height: 35px;
+  margin-left: 5px;
+}
+
+.demo-move{
+  padding-top: 0;
 }

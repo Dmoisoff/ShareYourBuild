@@ -9,8 +9,7 @@ class Greeting extends React.Component{
 
 
   greeting(){
-    if (this.props.currentUser) {
-      console.log(this.props);
+    if (this.props.currentUser){
       return(
         <div>
           <h1>Greeting {this.props.currentUser.username}</h1>

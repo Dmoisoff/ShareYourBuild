@@ -6,9 +6,7 @@ import React from 'react';
 
 
 const mstp = (state) => {
-  debugger
   return({
-    // errors: state.errors.session.logIn.logIn,
     errors: state.errors.session.logIn,
     formType: 'Log In',
     navLink: <Link to='/signup' className='link'> Sign up here</Link>

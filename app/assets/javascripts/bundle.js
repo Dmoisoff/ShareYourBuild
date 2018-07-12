@@ -258,7 +258,6 @@ var Greeting = function (_React$Component) {
       var _this2 = this;
 
       if (this.props.currentUser) {
-        console.log(this.props);
         return _react2.default.createElement(
           'div',
           null,
@@ -429,9 +428,7 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state) {
-  debugger;
   return {
-    // errors: state.errors.session.logIn.logIn,
     errors: state.errors.session.logIn,
     formType: 'Log In',
     navLink: _react2.default.createElement(
@@ -510,10 +507,11 @@ var SessionForm = function (_React$Component) {
     _this.handleSubmit = _this.handleSubmit.bind(_this);
     _this.isEmail = _this.isEmail.bind(_this);
     _this.aboutMe = _this.aboutMe.bind(_this);
-    _this.properAge = _this.properAge.bind(_this);
     _this.updateAboutMe = _this.updateAboutMe.bind(_this);
     _this.DemoSubmit = _this.DemoSubmit.bind(_this);
     _this.errors = _this.errors.bind(_this);
+    _this.user = _this.user.bind(_this);
+    _this.password = _this.password.bind(_this);
     return _this;
   }
 
@@ -524,20 +522,11 @@ var SessionForm = function (_React$Component) {
       return regex.test(email);
     }
   }, {
-    key: 'properAge',
-    value: function properAge(date) {
-      var regex = /^(0[1-9]|1[0-2])+\/(0[1-9]|1[0-9]|2[0-9]|3[0-1])+\/(199[0-9]|200[0-9]|201[0-8])+$/;
-      return regex.test(date);
-    }
-  }, {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
       e.preventDefault();
       if (!this.isEmail(this.state.email)) {
         this.state.email = '';
-      }
-      if (!this.properAge(this.state.age)) {
-        this.state.age = '';
       }
       var user = Object.assign({}, this.state);
       this.props.processForm(user);
@@ -568,31 +557,45 @@ var SessionForm = function (_React$Component) {
       this.setState({ about: e.target.value });
     }
   }, {
-    key: 'signUpFields1',
-    value: function signUpFields1(formType) {
+    key: 'email',
+    value: function email(formType) {
       if (formType === 'Sign Up') {
         return _react2.default.createElement(
           'div',
           null,
-          _react2.default.createElement('input', { onChange: this.updateEmail, type: 'text', placeholder: 'Email', value: this.state.email }),
+          _react2.default.createElement('input', { className: 'width', onChange: this.updateEmail, type: 'text', placeholder: 'Email', value: this.state.email }),
           _react2.default.createElement('br', null)
         );
       }
     }
   }, {
-    key: 'signUpFields2',
-    value: function signUpFields2(formType) {
+    key: 'age',
+    value: function age(formType) {
       if (formType === 'Sign Up') {
-        return _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement('input', { onChange: this.updateAge, type: 'text', placeholder: 'Birthday (mm/dd/yyyy)', value: this.state.age })
-        );
+        return _react2.default.createElement('input', { onChange: this.updateAge, type: 'text', placeholder: '(mm/dd/yyyy) Optional', value: this.state.age });
       }
     }
   }, {
-    key: 'signUpFields3',
-    value: function signUpFields3() {
+    key: 'user',
+    value: function user(formType) {
+      if (formType === 'Sign Up') {
+        return _react2.default.createElement('input', { className: 'user-username-signup', onChange: this.updateUsername, type: 'text', value: this.state.username, placeholder: 'Username' });
+      } else {
+        return _react2.default.createElement('input', { className: 'user-username-login', onChange: this.updateUsername, type: 'text', value: this.state.username, placeholder: 'Username' });
+      }
+    }
+  }, {
+    key: 'password',
+    value: function password(formType) {
+      if (formType === 'Sign Up') {
+        return _react2.default.createElement('input', { onChange: this.updatePassword, className: 'user-password-signup', type: 'password', placeholder: 'Password', value: this.state.password });
+      } else {
+        return _react2.default.createElement('input', { onChange: this.updatePassword, className: 'user-password-login', type: 'password', placeholder: 'Password', value: this.state.password });
+      }
+    }
+  }, {
+    key: 'about',
+    value: function about() {
       var aboutMe = 'About me,student,K-5 Teacher,6-8 Teacher,9-12 Teacher,Post-Secondary Teacher,Instructor,Hobbyist,Professional, Parent,Robot'.split(',');
       return aboutMe.map(function (type, i) {
         if (i === 0) {
@@ -627,15 +630,14 @@ var SessionForm = function (_React$Component) {
       if (formType === 'Sign Up') {
         return _react2.default.createElement(
           'select',
-          { onChange: this.updateAboutMe },
-          this.signUpFields3(this.props.formType)
+          { className: 'about-me', onChange: this.updateAboutMe },
+          this.about(this.props.formType)
         );
       }
     }
   }, {
     key: 'errors',
     value: function errors() {
-      debugger;
       if (!this.props.errors) {
         return [];
       } else {
@@ -665,10 +667,10 @@ var SessionForm = function (_React$Component) {
             _react2.default.createElement(
               'div',
               null,
-              this.signUpFields1(this.props.formType),
-              _react2.default.createElement('input', { onChange: this.updateUsername, type: 'text', value: this.state.username, placeholder: 'Username' }),
-              _react2.default.createElement('input', { onChange: this.updatePassword, type: 'password', placeholder: 'Password', value: this.state.password }),
-              this.signUpFields2(this.props.formType),
+              this.email(this.props.formType),
+              this.user(this.props.formType),
+              this.password(this.props.formType),
+              this.age(this.props.formType),
               this.aboutMe(this.props.formType)
             ),
             _react2.default.createElement(
@@ -678,13 +680,8 @@ var SessionForm = function (_React$Component) {
             )
           ),
           _react2.default.createElement(
-            'ul',
-            null,
-            this.errors()
-          ),
-          _react2.default.createElement(
             'form',
-            null,
+            { className: 'demo-move' },
             _react2.default.createElement(
               'button',
               { className: 'user-demo', onClick: function onClick() {
@@ -692,6 +689,11 @@ var SessionForm = function (_React$Component) {
                 } },
               ' Demo Login'
             )
+          ),
+          _react2.default.createElement(
+            'ul',
+            { className: 'user-errors-container' },
+            this.errors()
           )
         )
       );
@@ -893,13 +895,9 @@ var sessionErrorsReducer = function sessionErrorsReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { signUp: [], logIn: [] };
   var action = arguments[1];
 
-  var newState = void 0;
   var oldState = Object.freeze(state);
-  debugger;
   switch (action.type) {
     case Session_Actions.RECEIVE_SESSION_ERRORS:
-      // newState = merge({}, state, {[Object.keys(action.errors)]: action.errors});
-      // return newState;
       return action.errors;
     case Session_Actions.RECEIVE_CURRENT_USER:
       return { signUp: [], logIn: [] };

@@ -20,10 +20,11 @@ class SessionForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.isEmail = this.isEmail.bind(this);
     this.aboutMe = this.aboutMe.bind(this);
-    this.properAge = this.properAge.bind(this);
     this.updateAboutMe = this.updateAboutMe.bind(this);
     this.DemoSubmit = this.DemoSubmit.bind(this);
     this.errors = this.errors.bind(this);
+    this.user = this.user.bind(this);
+    this.password = this.password.bind(this);
   }
 
   isEmail(email) {
@@ -31,17 +32,10 @@ class SessionForm extends React.Component {
     return regex.test(email);
   }
 
-  properAge(date) {
-    var regex = /^(0[1-9]|1[0-2])+\/(0[1-9]|1[0-9]|2[0-9]|3[0-1])+\/(199[0-9]|200[0-9]|201[0-8])+$/;
-    return regex.test(date);
-  }
   handleSubmit(e) {
     e.preventDefault();
     if (!(this.isEmail(this.state.email))) {
       this.state.email = '';
-    }
-    if (!(this.properAge(this.state.age))) {
-      this.state.age = '';
     }
     const user = Object.assign({}, this.state);
     this.props.processForm(user);
@@ -66,27 +60,51 @@ class SessionForm extends React.Component {
   }
 
 
-  signUpFields1(formType){
+  email(formType){
     if(formType === 'Sign Up'){
       return (
         <div>
-          <input onChange={this.updateEmail} type="text" placeholder='Email' value={this.state.email} />
+          <input className='width' onChange={this.updateEmail} type="text" placeholder='Email' value={this.state.email} />
           <br/>
         </div>
       );
     }
   }
-  signUpFields2(formType){
+  age(formType){
     if(formType === 'Sign Up'){
       return (
-        <div>
-          <input onChange={this.updateAge} type="text" placeholder='Birthday (mm/dd/yyyy)' value={this.state.age} />
-        </div>
+          <input onChange={this.updateAge} type="text" placeholder='(mm/dd/yyyy) Optional' value={this.state.age} />
       );
     }
   }
 
-  signUpFields3(){
+  user(formType){
+    if(formType === 'Sign Up'){
+      return(
+        <input className='user-username-signup' onChange={this.updateUsername} type="text" value={this.state.username} placeholder="Username" />
+      );
+    }else{
+      return(
+        <input className='user-username-login' onChange={this.updateUsername} type="text" value={this.state.username} placeholder="Username" />
+      );
+    }
+  }
+
+  password(formType){
+    if(formType === 'Sign Up'){
+      return(
+        <input onChange={this.updatePassword} className='user-password-signup' type="password" placeholder="Password" value={this.state.password} />
+
+      );
+    }else{
+      return(
+        <input onChange={this.updatePassword} className='user-password-login' type="password" placeholder="Password" value={this.state.password} />
+
+      );
+    }
+  }
+
+  about(){
     const aboutMe = 'About me,student,K-5 Teacher,6-8 Teacher,9-12 Teacher,Post-Secondary Teacher,Instructor,Hobbyist,Professional, Parent,Robot'.split(',');
     return aboutMe.map((type,i) => {
       if (i === 0) {
@@ -110,15 +128,14 @@ class SessionForm extends React.Component {
   aboutMe(formType){
     if(formType === 'Sign Up'){
       return(
-        <select onChange={this.updateAboutMe}>
-          {this.signUpFields3(this.props.formType)}
+        <select className='about-me' onChange={this.updateAboutMe}>
+          {this.about(this.props.formType)}
         </select>
       );
     }
   }
 
   errors(){
-    debugger
     if(!this.props.errors){
       return [];
     }else{
@@ -134,21 +151,20 @@ class SessionForm extends React.Component {
 
           <form onSubmit={this.handleSubmit}>
             <div>
-              {this.signUpFields1(this.props.formType)}
-              <input onChange={this.updateUsername} type="text" value={this.state.username} placeholder="Username" />
-              <input onChange={this.updatePassword} type="password" placeholder="Password" value={this.state.password} />
-
-              {this.signUpFields2(this.props.formType)}
+              {this.email(this.props.formType)}
+              {this.user(this.props.formType)}
+              {this.password(this.props.formType)}
+              {this.age(this.props.formType)}
               {this.aboutMe(this.props.formType)}
             </div>
             <button className="submit" onClick={this.handleSubmit} value={this.props.formType}>{this.props.formType}</button>
           </form>
-          <ul >
-            {this.errors()}
-          </ul>
-          <form>
+          <form className='demo-move'>
             <button className="user-demo" onClick={() => {this.DemoSubmit();} }> Demo Login</button>
           </form>
+          <ul className='user-errors-container'>
+            {this.errors()}
+          </ul>
         </div>
       </div>
     );

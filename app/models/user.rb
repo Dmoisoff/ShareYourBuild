@@ -20,7 +20,7 @@ class User < ApplicationRecord
   validates :username, :password_digest, :session_token, presence: true
   validates :username, :email, uniqueness: true
   validates :password, length: { minimum: 6 }, allow_nil: true
-  validates :age, presence: { message: " is invalid, please pick a birth date between 1950-2018" }
+  # validates :age, presence: { message: " is invalid, please pick a birth date between 1950-2018" }
 
 
   after_initialize :ensure_session_token
