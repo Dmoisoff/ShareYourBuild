@@ -5,7 +5,6 @@ class Api::UsersController < ApplicationController
       log_in!(@user)
       render "api/users/show"
     else
-    
       render json: {signUp: @user.errors.full_messages}, status: 422
     end
   end
