@@ -15,7 +15,9 @@ class Api::ProjectsController < ApplicationController
   end
 
   def show
-    @project = Project.find(params[:id])
+    debugger
+    @project = Project.find_by(id: params[:id])
+
   end
 
   def update
@@ -29,7 +31,6 @@ class Api::ProjectsController < ApplicationController
 
   def destroy
     @project = Project.find(params[:id])
-    debugger
     @project.destroy
   end
 

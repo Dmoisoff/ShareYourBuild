@@ -265,6 +265,10 @@ var _EditProjectContainer = __webpack_require__(/*! ./projects/EditProjectContai
 
 var _EditProjectContainer2 = _interopRequireDefault(_EditProjectContainer);
 
+var _ShowProjectContainer = __webpack_require__(/*! ./projects/ShowProjectContainer */ "./frontend/components/projects/ShowProjectContainer.jsx");
+
+var _ShowProjectContainer2 = _interopRequireDefault(_ShowProjectContainer);
+
 var _route_util = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.jsx");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -291,9 +295,8 @@ var App = function App() {
         null,
         _react2.default.createElement(_route_util.ProtectedRoute, { path: '/projects/new', component: _NewProjectContainer2.default }),
         '// ',
-        _react2.default.createElement(_route_util.ProtectedRoute, { exact: true, path: '/projects/:projectsId/edit', component: _EditProjectContainer2.default }),
-        '// ',
-        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/projects/:projectsId', component: _EditProjectContainer2.default }),
+        _react2.default.createElement(_route_util.ProtectedRoute, { exact: true, path: '/projects/:projectId/edit', component: _EditProjectContainer2.default }),
+        _react2.default.createElement(_reactRouterDom.Route, { path: '/project/:projectId', component: _ShowProjectContainer2.default }),
         _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/login', component: _LoginFormContainer2.default }),
         _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/signup', component: _SignupFormContainer2.default })
       )
@@ -566,6 +569,154 @@ var ProjectForm = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = (0, _reactRouterDom.withRouter)(ProjectForm);
+
+/***/ }),
+
+/***/ "./frontend/components/projects/ShowProject.jsx":
+/*!******************************************************!*\
+  !*** ./frontend/components/projects/ShowProject.jsx ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ProjectShow = function (_React$Component) {
+  _inherits(ProjectShow, _React$Component);
+
+  function ProjectShow(props) {
+    _classCallCheck(this, ProjectShow);
+
+    var _this = _possibleConstructorReturn(this, (ProjectShow.__proto__ || Object.getPrototypeOf(ProjectShow)).call(this, props));
+
+    _this.state = _this.props.project;
+    return _this;
+  }
+
+  _createClass(ProjectShow, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.fetchProject(this.props.match.params.projectId);
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      debugger;
+      this.setState({
+        title: nextProps.project.title,
+        username: nextProps.project.username
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var project = this.props.project;
+
+      if (!project) {
+        return _react2.default.createElement(
+          'div',
+          null,
+          'Loading...'
+        );
+      }
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'h3',
+          null,
+          this.state.title
+        ),
+        _react2.default.createElement(
+          'h6',
+          null,
+          this.state.username
+        ),
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          { to: '/' },
+          'Back to Home Page'
+        )
+      );
+    }
+  }]);
+
+  return ProjectShow;
+}(_react2.default.Component);
+
+exports.default = ProjectShow;
+
+/***/ }),
+
+/***/ "./frontend/components/projects/ShowProjectContainer.jsx":
+/*!***************************************************************!*\
+  !*** ./frontend/components/projects/ShowProjectContainer.jsx ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _projects_actions = __webpack_require__(/*! ./../../actions/projects_actions */ "./frontend/actions/projects_actions.js");
+
+var _ShowProject = __webpack_require__(/*! ./ShowProject */ "./frontend/components/projects/ShowProject.jsx");
+
+var _ShowProject2 = _interopRequireDefault(_ShowProject);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mstp = function mstp(state, ownParams) {
+  debugger;
+  return {
+    project: state.entities.projects[ownParams.match.params.projectId],
+    formType: 'Show Project'
+  };
+};
+
+var mdtp = function mdtp(dispatch) {
+  return {
+    fetchProject: function fetchProject(id) {
+      dispatch((0, _projects_actions.fetchProject)(id));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mstp, mdtp)(_ShowProject2.default);
 
 /***/ }),
 
@@ -1080,14 +1231,12 @@ var projectReducer = function projectReducer() {
   var action = arguments[1];
 
   var newState = void 0;
-  debugger;
   var oldState = Object.freeze(state);
   switch (action.type) {
     case Projects_Actions.FETCH_ALL_PROJECTS:
       return (0, _merge3.default)({}, state, action.projects);
     case Projects_Actions.FETCH_PROJECT:
       newState = (0, _merge3.default)({}, state, _defineProperty({}, action.project.id, action.project));
-      debugger;
       return newState;
     case Projects_Actions.REMOVE_PROJECT:
       newState = (0, _merge3.default)({}, state);

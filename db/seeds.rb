@@ -10,4 +10,6 @@ Project.destroy_all
 
 demo = User.create!(username: 'Demo-Man', email: 'Demo@demo.com', age: '09/15/1991', password: 123456)
 
-Project.create!(title: 'Third Project', author_id: demo.id, view_count: 0, featured: false)
+Project.create!(title: 'Seed Project', author_id: demo.id, view_count: 0, featured: false)
+Project.create!(title: 'Seed2 Project', author_id: demo.id, view_count: 0, featured: false)
+Project.create!(title: 'Seed3 Project', author_id: demo.id, view_count: 0, featured: false)

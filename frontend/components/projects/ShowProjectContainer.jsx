@@ -2,12 +2,13 @@ import { Link } from 'react-router-dom';
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchProject } from './../../actions/projects_actions';
-import ProjectForm from './ProjectForm';
+import ShowProject from './ShowProject';
 
 
 const mstp = (state, ownParams) => {
+  debugger
   return({
-    project: state.entities.projects[ownParams.match.params.id],
+    project: state.entities.projects[ownParams.match.params.projectId],
     formType: 'Show Project'
   });
 };
@@ -18,4 +19,4 @@ const mdtp = (dispatch) => {
   });
 };
 
-export default connect(mstp,mdtp)(ProjectForm);
+export default connect(mstp,mdtp)(ShowProject);
