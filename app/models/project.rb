@@ -20,6 +20,7 @@ class Project < ApplicationRecord
 		foreign_key: :author_id,
     class_name: "User"
 
+  has_one_attached :picture
 
 
 end
