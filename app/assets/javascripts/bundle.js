@@ -1127,7 +1127,7 @@ var fetchProject = exports.fetchProject = function fetchProject(id) {
 
 var createProject = exports.createProject = function createProject(project) {
   return $.ajax({
-    method: 'GET',
+    method: 'POST',
     url: 'api/projects',
     data: { project: project }
   });
@@ -1143,7 +1143,7 @@ var updateProject = exports.updateProject = function updateProject(project) {
 
 var deleteProject = exports.deleteProject = function deleteProject(id) {
   return $.ajax({
-    method: 'PATCH',
+    method: 'DELETE',
     url: 'api/projects/' + id
   });
 };
