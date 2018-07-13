@@ -622,7 +622,6 @@ var ProjectShow = function (_React$Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      debugger;
       this.setState({
         title: nextProps.project.title,
         username: nextProps.project.username
@@ -701,7 +700,6 @@ var _ShowProject2 = _interopRequireDefault(_ShowProject);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state, ownParams) {
-  debugger;
   return {
     project: state.entities.projects[ownParams.match.params.projectId],
     formType: 'Show Project'

@@ -6,7 +6,6 @@ import ShowProject from './ShowProject';
 
 
 const mstp = (state, ownParams) => {
-  debugger
   return({
     project: state.entities.projects[ownParams.match.params.projectId],
     formType: 'Show Project'

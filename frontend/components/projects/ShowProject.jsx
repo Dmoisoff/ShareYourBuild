@@ -13,7 +13,6 @@ class ProjectShow extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    debugger
       this.setState({
         title: nextProps.project.title,
         username: nextProps.project.username
