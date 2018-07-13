@@ -7,6 +7,7 @@ import ProjectForm from './ProjectForm';
 
 const mstp = (state) => {
   return({
+    project: {title: '',author_id: state.session.id, author_username: state.entities.users[state.session.id], keyWords: '' },
     formType: 'New Project'
   });
 };

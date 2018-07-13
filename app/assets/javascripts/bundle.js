@@ -290,7 +290,9 @@ var App = function App() {
         _reactRouterDom.Switch,
         null,
         _react2.default.createElement(_route_util.ProtectedRoute, { path: '/projects/new', component: _NewProjectContainer2.default }),
+        '// ',
         _react2.default.createElement(_route_util.ProtectedRoute, { exact: true, path: '/projects/:projectsId/edit', component: _EditProjectContainer2.default }),
+        '// ',
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/projects/:projectsId', component: _EditProjectContainer2.default }),
         _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/login', component: _LoginFormContainer2.default }),
         _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/signup', component: _SignupFormContainer2.default })
@@ -489,6 +491,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var mstp = function mstp(state) {
   return {
+    project: { title: '', author_id: state.session.id, author_username: state.entities.users[state.session.id], keyWords: '' },
     formType: 'New Project'
   };
 };
