@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import configureStore from './store/store';
 import Root from './components/root';
-import { fetchProjects, fetchProject, createProject, updateProject, deleteProject} from './util/project_api_util';
+import { fetchProjects, fetchProject, createProject, updateProject, deleteProject} from './actions/projects_actions';
 
 
 

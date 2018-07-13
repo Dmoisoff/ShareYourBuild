@@ -86,6 +86,88 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./frontend/actions/projects_actions.js":
+/*!**********************************************!*\
+  !*** ./frontend/actions/projects_actions.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.deleteProject = exports.updateProject = exports.createProject = exports.fetchProject = exports.fetchProjects = exports.REMOVE_PROJECT = exports.FETCH_PROJECT = exports.FETCH_ALL_PROJECTS = undefined;
+
+var _project_api_util = __webpack_require__(/*! ./../util/project_api_util */ "./frontend/util/project_api_util.js");
+
+var Projects_Util = _interopRequireWildcard(_project_api_util);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var FETCH_ALL_PROJECTS = exports.FETCH_ALL_PROJECTS = 'FETCH_ALL_PROJECTS';
+var FETCH_PROJECT = exports.FETCH_PROJECT = 'FETCH_PROJECT';
+var REMOVE_PROJECT = exports.REMOVE_PROJECT = 'REMOVE_PROJECT';
+
+var fetchProjects = exports.fetchProjects = function fetchProjects() {
+  return function (dispatch) {
+    return Projects_Util.fetchProjects().then(function (projects) {
+      return dispatch({
+        type: FETCH_ALL_PROJECTS,
+        projects: projects
+      });
+    });
+  };
+};
+
+var fetchProject = exports.fetchProject = function fetchProject(id) {
+  return function (dispatch) {
+    return Projects_Util.fetchProject(id).then(function (project) {
+      return dispatch({
+        type: FETCH_PROJECT,
+        project: project
+      });
+    });
+  };
+};
+
+var createProject = exports.createProject = function createProject(project) {
+  return function (dispatch) {
+    return Projects_Util.createProject(project).then(function (project) {
+      return dispatch({
+        type: FETCH_PROJECT,
+        project: project
+      });
+    });
+  };
+};
+
+var updateProject = exports.updateProject = function updateProject(project) {
+  return function (dispatch) {
+    return Projects_Util.updateProject(project.id).then(function (project) {
+      return dispatch({
+        type: FETCH_PROJECT,
+        project: project
+      });
+    });
+  };
+};
+
+var deleteProject = exports.deleteProject = function deleteProject(id) {
+  return function (dispatch) {
+    return Projects_Util.deleteProject(id).then(function () {
+      return dispatch({
+        type: FETCH_PROJECT,
+        projectId: id
+      });
+    });
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/actions/session_actions.js":
 /*!*********************************************!*\
   !*** ./frontend/actions/session_actions.js ***!
@@ -175,6 +257,14 @@ var _SignupFormContainer = __webpack_require__(/*! ./session/SignupFormContainer
 
 var _SignupFormContainer2 = _interopRequireDefault(_SignupFormContainer);
 
+var _NewProjectContainer = __webpack_require__(/*! ./projects/NewProjectContainer */ "./frontend/components/projects/NewProjectContainer.jsx");
+
+var _NewProjectContainer2 = _interopRequireDefault(_NewProjectContainer);
+
+var _EditProjectContainer = __webpack_require__(/*! ./projects/EditProjectContainer */ "./frontend/components/projects/EditProjectContainer.jsx");
+
+var _EditProjectContainer2 = _interopRequireDefault(_EditProjectContainer);
+
 var _route_util = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.jsx");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -199,6 +289,9 @@ var App = function App() {
       _react2.default.createElement(
         _reactRouterDom.Switch,
         null,
+        _react2.default.createElement(_route_util.ProtectedRoute, { path: '/projects/new', component: _NewProjectContainer2.default }),
+        _react2.default.createElement(_route_util.ProtectedRoute, { exact: true, path: '/projects/:projectsId/edit', component: _EditProjectContainer2.default }),
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/projects/:projectsId', component: _EditProjectContainer2.default }),
         _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/login', component: _LoginFormContainer2.default }),
         _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/signup', component: _SignupFormContainer2.default })
       )
@@ -263,7 +356,7 @@ var Greeting = function (_React$Component) {
           null,
           _react2.default.createElement(
             'h1',
-            { className: true },
+            null,
             'Greeting ',
             this.props.currentUser.username
           ),
@@ -349,6 +442,127 @@ var mdtp = function mdtp(dispatch) {
 };
 
 exports.default = (0, _reactRedux.connect)(mstp, mdtp)(_greeting2.default);
+
+/***/ }),
+
+/***/ "./frontend/components/projects/EditProjectContainer.jsx":
+/*!***************************************************************!*\
+  !*** ./frontend/components/projects/EditProjectContainer.jsx ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/***/ }),
+
+/***/ "./frontend/components/projects/NewProjectContainer.jsx":
+/*!**************************************************************!*\
+  !*** ./frontend/components/projects/NewProjectContainer.jsx ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _projects_actions = __webpack_require__(/*! ./../../actions/projects_actions */ "./frontend/actions/projects_actions.js");
+
+var _ProjectForm = __webpack_require__(/*! ./ProjectForm */ "./frontend/components/projects/ProjectForm.jsx");
+
+var _ProjectForm2 = _interopRequireDefault(_ProjectForm);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mstp = function mstp(state) {
+  return {
+    formType: 'New Project'
+  };
+};
+
+var mdtp = function mdtp(dispatch) {
+  return {
+    submitProject: function submitProject(project) {
+      dispatch((0, _projects_actions.createProject)(project));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mstp, mdtp)(_ProjectForm2.default);
+
+/***/ }),
+
+/***/ "./frontend/components/projects/ProjectForm.jsx":
+/*!******************************************************!*\
+  !*** ./frontend/components/projects/ProjectForm.jsx ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ProjectForm = function (_React$Component) {
+  _inherits(ProjectForm, _React$Component);
+
+  function ProjectForm() {
+    _classCallCheck(this, ProjectForm);
+
+    return _possibleConstructorReturn(this, (ProjectForm.__proto__ || Object.getPrototypeOf(ProjectForm)).apply(this, arguments));
+  }
+
+  _createClass(ProjectForm, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'p',
+          null,
+          'I\'m a real page'
+        )
+      );
+    }
+  }]);
+
+  return ProjectForm;
+}(_react2.default.Component);
+
+exports.default = (0, _reactRouterDom.withRouter)(ProjectForm);
 
 /***/ }),
 
@@ -785,10 +999,15 @@ var _user_reducer = __webpack_require__(/*! ./user_reducer */ "./frontend/reduce
 
 var _user_reducer2 = _interopRequireDefault(_user_reducer);
 
+var _project_reducer = __webpack_require__(/*! ./project_reducer */ "./frontend/reducers/project_reducer.js");
+
+var _project_reducer2 = _interopRequireDefault(_project_reducer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var entitiesReducer = (0, _redux.combineReducers)({
-  users: _user_reducer2.default
+  users: _user_reducer2.default,
+  projects: _project_reducer2.default
 });
 
 exports.default = entitiesReducer;
@@ -822,6 +1041,61 @@ var errorsReducer = (0, _redux.combineReducers)({
 });
 
 exports.default = errorsReducer;
+
+/***/ }),
+
+/***/ "./frontend/reducers/project_reducer.js":
+/*!**********************************************!*\
+  !*** ./frontend/reducers/project_reducer.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _projects_actions = __webpack_require__(/*! ./../actions/projects_actions */ "./frontend/actions/projects_actions.js");
+
+var Projects_Actions = _interopRequireWildcard(_projects_actions);
+
+var _merge2 = __webpack_require__(/*! lodash/merge */ "./node_modules/lodash/merge.js");
+
+var _merge3 = _interopRequireDefault(_merge2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var projectReducer = function projectReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments[1];
+
+  var newState = void 0;
+  debugger;
+  var oldState = Object.freeze(state);
+  switch (action.type) {
+    case Projects_Actions.FETCH_ALL_PROJECTS:
+      return (0, _merge3.default)({}, state, action.projects);
+    case Projects_Actions.FETCH_PROJECT:
+      newState = (0, _merge3.default)({}, state, _defineProperty({}, action.project.id, action.project));
+      debugger;
+      return newState;
+    case Projects_Actions.REMOVE_PROJECT:
+      newState = (0, _merge3.default)({}, state);
+      delete newState[action.projectId];
+      return newState;
+    default:
+      return oldState;
+  }
+};
+
+exports.default = projectReducer;
 
 /***/ }),
 
@@ -1024,7 +1298,7 @@ var _root = __webpack_require__(/*! ./components/root */ "./frontend/components/
 
 var _root2 = _interopRequireDefault(_root);
 
-var _project_api_util = __webpack_require__(/*! ./util/project_api_util */ "./frontend/util/project_api_util.js");
+var _projects_actions = __webpack_require__(/*! ./actions/projects_actions */ "./frontend/actions/projects_actions.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1047,11 +1321,11 @@ document.addEventListener('DOMContentLoaded', function () {
   // testing
   window.getState = store.getState;
   window.dispatch = store.dispatch;
-  window.fetchProjects = _project_api_util.fetchProjects;
-  window.fetchProject = _project_api_util.fetchProject;
-  window.createProject = _project_api_util.createProject;
-  window.updateProject = _project_api_util.updateProject;
-  window.deleteProject = _project_api_util.deleteProject;
+  window.fetchProjects = _projects_actions.fetchProjects;
+  window.fetchProject = _projects_actions.fetchProject;
+  window.createProject = _projects_actions.createProject;
+  window.updateProject = _projects_actions.updateProject;
+  window.deleteProject = _projects_actions.deleteProject;
 
   var root = document.getElementById('root');
   _reactDom2.default.render(_react2.default.createElement(_root2.default, { store: store }), root);

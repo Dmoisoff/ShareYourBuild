@@ -12,7 +12,7 @@ class Greeting extends React.Component{
     if (this.props.currentUser){
       return(
         <div>
-          <h1 className>Greeting {this.props.currentUser.username}</h1>
+          <h1>Greeting {this.props.currentUser.username}</h1>
           <Link onClick={() =>{this.props.logOut();}} to='/signout'>Sign Out</Link>
         </div>
       );
