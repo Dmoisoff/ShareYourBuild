@@ -13,18 +13,24 @@ import { AuthRoute, ProtectedRoute } from '../util/route_util';
 const App = () => (
   <div>
     <header className='navbar'>
-      <Link to='/'>Share Your Build</Link>
+      <Link className='clickable' to='/'>Share Your Build</Link>
       <GreetingContainer />
     </header>
     <div>
       <Switch>
-        <ProtectedRoute path="/projects/new" component={NewProjectContainer} />
+        <ProtectedRoute path="/project/new" component={NewProjectContainer} />
         // <ProtectedRoute exact path="/projects/:projectId/edit" component={EditProjectContainer} />
         <Route path="/project/:projectId" component={ShowProjectContainer} />
         <AuthRoute exact path="/login" component={LoginFormContainer} />
         <AuthRoute exact path="/signup" component={SignupFormContainer} />
       </Switch>
     </div>
+    <main className='main'>
+      main content
+    </main>
+    // <footer class='footer'>
+    //   <Link className='clickable' to='/'>Share Your Build</Link>
+    // </footer>
   </div>
 );
 

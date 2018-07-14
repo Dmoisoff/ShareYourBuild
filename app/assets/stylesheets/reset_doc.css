@@ -42,6 +42,9 @@ input[type="submit"] {
   cursor: pointer;
 }
 
+.clickable{
+  cursor: pointer;
+}
 
 
 .group:after {

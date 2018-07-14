@@ -13,10 +13,17 @@ class ProjectShow extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    // debugger
+    // if (!this.props.project || this.props.project.id != nextProps.match.params.projectId) {
+    //   debugger
+    //   this.props.fetchProject(nextProps.match.params.projectId);
+    // }else{
+    //   debugger
       this.setState({
         title: nextProps.project.title,
         username: nextProps.project.username
       });
+    // }
   }
 
   render() {
@@ -29,7 +36,7 @@ class ProjectShow extends React.Component {
       <div>
         <h3>{this.state.title}</h3>
         <h6>{this.state.username}</h6>
-        <Link to="/">Back to Home Page</Link>
+        <Link className='clickable' to="/">Back to Home Page</Link>
       </div>
     );
   }

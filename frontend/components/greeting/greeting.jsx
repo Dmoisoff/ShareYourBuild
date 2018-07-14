@@ -5,22 +5,35 @@ class Greeting extends React.Component{
   constructor(props){
     super(props);
     this.greeting = this.greeting.bind(this);
-  }
 
+  }
 
   greeting(){
     if (this.props.currentUser){
       return(
         <div>
-          <h1>Greeting {this.props.currentUser.username}</h1>
-          <Link onClick={() =>{this.props.logOut();}} to='/signout'>Sign Out</Link>
+          <div className='user-dropdown-position'>
+            <img className='user-profile-pic clickable' src={this.props.currentUser.profilePic}/>
+            <ul className='user-profile-dropdown'>
+              <li className='user-dropDown-content'>
+                <Link className='clickable user-drop-items' onClick={() =>{this.props.logOut();}} to='/signout'>Sign Out</Link>
+              </li>
+              <li className='divide'></li>
+              <li className='user-dropDown-content'>
+                <Link className='clickable user-drop-items' to={`/${this.props.currentUser.username}/project}`}>Your Builds</Link>
+              </li>
+              <li className='user-dropDown-content create'>
+                <Link className='clickable user-drop-items' to={`project/new`}>Create Your Build >></Link>
+              </li>
+            </ul>
+          </div>
         </div>
       );
     }else {
       return(
         <div className='user-nav'>
-          <Link to='/login'>Log In</Link>
-          <Link to='/signup'>Sign Up</Link>
+          <Link className='clickable' to='/login'>Log In</Link>
+          <Link className='clickable' to='/signup'>Sign Up</Link>
         </div>
       );
     }

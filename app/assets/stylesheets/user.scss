@@ -115,3 +115,146 @@
 .demo-move{
   padding-top: 0;
 }
+
+.user-profile-pic{
+  display: inline-block;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  width: 34px;
+  height: 34px;
+  margin-top: 138px;
+  margin-left: 140px;
+}
+.user-profile-pic-stationary{
+  display: inline-block;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  width: 34px;
+  height: 34px;
+  margin-top: 138px;
+  margin-left: 140px;
+}
+
+.user-profile-dropdown{
+  white-space: nowrap;
+  background: #fff;
+  overflow: hidden;
+  min-height: 14px;
+  background-color: #fff;
+  border: 1px solid rgba(0,0,0,.2);
+  background-clip: padding-box;
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-left-color: rgba(0, 0, 0, 0.2);
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-right-color: rgba(0, 0, 0, 0.2);
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-top-color: rgba(0, 0, 0, 0.2);
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 10px 0px;
+  box-sizing: border-box;
+  color: rgb(51, 51, 51);
+  display: block;
+  float: none;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  height: 140px;
+  left: 606px;
+  line-height: normal;
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: none;
+  min-width: 160px;
+  padding-top: 10px;
+  // position: absolute;
+  text-size-adjust: 100%;
+  top: 34px;
+  width: 175px;
+}
+
+.user-dropDown-content{
+  background-color: rgba(0, 0, 0, 0);
+  box-sizing: border-box;
+  clear: both;
+  color: #777777;
+  cursor: pointer;
+  display: block;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  height: 32px;
+  line-height: 22px;
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: none;
+  padding-bottom: 4px;
+  padding-top: 4px;
+  text-align: center;
+  text-decoration-color: #777777;
+  text-decoration-line: none;
+  text-decoration-style: solid;
+  text-size-adjust: 100%;
+  white-space: nowrap;
+}
+
+.user-drop-items{
+  margin: 0;
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.divide{
+  background-color: rgb(229, 229, 229);
+  border-bottom-color: rgb(221, 221, 221);
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-top-color: rgb(221, 221, 221);
+  border-top-style: solid;
+  border-top-width: 1px;
+  box-sizing: border-box;
+  color: rgb(153, 153, 153);
+  display: list-item;
+  float: none;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  height: 2px;
+  line-height: normal;
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: none;
+  margin-bottom: 9px;
+  margin-left: 1px;
+  margin-right: 1px;
+  margin-top: 9px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  text-align: center;
+  width: 324px;
+}
+
+.create {
+  background-color: rgb(232, 108, 0);
+  color: white;
+  border-radius: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.user-dropdown-position{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin-right: 47px;
+}

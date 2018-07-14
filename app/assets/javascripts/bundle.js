@@ -282,7 +282,7 @@ var App = function App() {
       { className: 'navbar' },
       _react2.default.createElement(
         _reactRouterDom.Link,
-        { to: '/' },
+        { className: 'clickable', to: '/' },
         'Share Your Build'
       ),
       _react2.default.createElement(_greeting_container2.default, null)
@@ -293,13 +293,30 @@ var App = function App() {
       _react2.default.createElement(
         _reactRouterDom.Switch,
         null,
-        _react2.default.createElement(_route_util.ProtectedRoute, { path: '/projects/new', component: _NewProjectContainer2.default }),
+        _react2.default.createElement(_route_util.ProtectedRoute, { path: '/project/new', component: _NewProjectContainer2.default }),
         '// ',
         _react2.default.createElement(_route_util.ProtectedRoute, { exact: true, path: '/projects/:projectId/edit', component: _EditProjectContainer2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { path: '/project/:projectId', component: _ShowProjectContainer2.default }),
         _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/login', component: _LoginFormContainer2.default }),
         _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/signup', component: _SignupFormContainer2.default })
       )
+    ),
+    _react2.default.createElement(
+      'main',
+      { className: 'main' },
+      'main content'
+    ),
+    '// ',
+    _react2.default.createElement(
+      'footer',
+      { 'class': 'footer' },
+      '//   ',
+      _react2.default.createElement(
+        _reactRouterDom.Link,
+        { className: 'clickable', to: '/' },
+        'Share Your Build'
+      ),
+      '// '
     )
   );
 };
@@ -347,6 +364,7 @@ var Greeting = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Greeting.__proto__ || Object.getPrototypeOf(Greeting)).call(this, props));
 
     _this.greeting = _this.greeting.bind(_this);
+
     return _this;
   }
 
@@ -360,17 +378,43 @@ var Greeting = function (_React$Component) {
           'div',
           null,
           _react2.default.createElement(
-            'h1',
-            null,
-            'Greeting ',
-            this.props.currentUser.username
-          ),
-          _react2.default.createElement(
-            _reactRouterDom.Link,
-            { onClick: function onClick() {
-                _this2.props.logOut();
-              }, to: '/signout' },
-            'Sign Out'
+            'div',
+            { className: 'user-dropdown-position' },
+            _react2.default.createElement('img', { className: 'user-profile-pic clickable', src: this.props.currentUser.profilePic }),
+            _react2.default.createElement(
+              'ul',
+              { className: 'user-profile-dropdown' },
+              _react2.default.createElement(
+                'li',
+                { className: 'user-dropDown-content' },
+                _react2.default.createElement(
+                  _reactRouterDom.Link,
+                  { className: 'clickable user-drop-items', onClick: function onClick() {
+                      _this2.props.logOut();
+                    }, to: '/signout' },
+                  'Sign Out'
+                )
+              ),
+              _react2.default.createElement('li', { className: 'divide' }),
+              _react2.default.createElement(
+                'li',
+                { className: 'user-dropDown-content' },
+                _react2.default.createElement(
+                  _reactRouterDom.Link,
+                  { className: 'clickable user-drop-items', to: '/' + this.props.currentUser.username + '/project}' },
+                  'Your Builds'
+                )
+              ),
+              _react2.default.createElement(
+                'li',
+                { className: 'user-dropDown-content create' },
+                _react2.default.createElement(
+                  _reactRouterDom.Link,
+                  { className: 'clickable user-drop-items', to: 'project/new' },
+                  'Create Your Build >>'
+                )
+              )
+            )
           )
         );
       } else {
@@ -379,12 +423,12 @@ var Greeting = function (_React$Component) {
           { className: 'user-nav' },
           _react2.default.createElement(
             _reactRouterDom.Link,
-            { to: '/login' },
+            { className: 'clickable', to: '/login' },
             'Log In'
           ),
           _react2.default.createElement(
             _reactRouterDom.Link,
-            { to: '/signup' },
+            { className: 'clickable', to: '/signup' },
             'Sign Up'
           )
         );
@@ -622,10 +666,17 @@ var ProjectShow = function (_React$Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
+      // debugger
+      // if (!this.props.project || this.props.project.id != nextProps.match.params.projectId) {
+      //   debugger
+      //   this.props.fetchProject(nextProps.match.params.projectId);
+      // }else{
+      //   debugger
       this.setState({
         title: nextProps.project.title,
         username: nextProps.project.username
       });
+      // }
     }
   }, {
     key: 'render',
@@ -655,7 +706,7 @@ var ProjectShow = function (_React$Component) {
         ),
         _react2.default.createElement(
           _reactRouterDom.Link,
-          { to: '/' },
+          { className: 'clickable', to: '/' },
           'Back to Home Page'
         )
       );
@@ -793,13 +844,15 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var mstp = function mstp(state) {
   return {
     errors: state.errors.session.logIn,
     formType: 'Log In',
     navLink: _react2.default.createElement(
       _reactRouterDom.Link,
-      { to: '/signup', className: 'link' },
+      _defineProperty({ className: 'clickable', to: '/signup' }, 'className', 'link'),
       ' Sign up here'
     )
   };
@@ -1103,13 +1156,15 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var mstp = function mstp(state) {
   return {
     errors: state.errors.session.signUp,
     formType: 'Sign Up',
     navLink: _react2.default.createElement(
       _reactRouterDom.Link,
-      { to: '/login', className: 'link' },
+      _defineProperty({ className: 'clickable', to: '/login' }, 'className', 'link'),
       ' Sign in here'
     )
   };
@@ -1234,6 +1289,7 @@ var projectReducer = function projectReducer() {
     case Projects_Actions.FETCH_ALL_PROJECTS:
       return (0, _merge3.default)({}, state, action.projects);
     case Projects_Actions.FETCH_PROJECT:
+      debugger;
       newState = (0, _merge3.default)({}, state, _defineProperty({}, action.project.id, action.project));
       return newState;
     case Projects_Actions.REMOVE_PROJECT:
