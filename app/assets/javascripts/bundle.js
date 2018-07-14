@@ -306,17 +306,14 @@ var App = function App() {
       { className: 'main' },
       'main content'
     ),
-    '// ',
     _react2.default.createElement(
       'footer',
       { 'class': 'footer' },
-      '//   ',
       _react2.default.createElement(
         _reactRouterDom.Link,
         { className: 'clickable', to: '/' },
         'Share Your Build'
-      ),
-      '// '
+      )
     )
   );
 };

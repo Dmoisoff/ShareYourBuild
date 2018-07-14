@@ -28,9 +28,9 @@ const App = () => (
     <main className='main'>
       main content
     </main>
-    // <footer class='footer'>
-    //   <Link className='clickable' to='/'>Share Your Build</Link>
-    // </footer>
+    <footer class='footer'>
+      <Link className='clickable' to='/'>Share Your Build</Link>
+    </footer>
   </div>
 );
 
