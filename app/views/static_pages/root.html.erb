@@ -4,6 +4,7 @@
   window.logo = '<#%= image_url("image_name_here.png")  %>'
 </script> -->
 
+
 <% if logged_in? %>
   <script type="text/javascript">
     window.currentUser = <%= render('/api/users/user.json.jbuilder', { user: current_user }).html_safe %>

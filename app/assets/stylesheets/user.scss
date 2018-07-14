@@ -167,11 +167,10 @@
   box-sizing: border-box;
   color: rgb(51, 51, 51);
   display: block;
-  float: none;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 12px;
   height: 140px;
-  left: 606px;
+  // left: 606px;
   line-height: normal;
   list-style-image: none;
   list-style-position: outside;
@@ -180,8 +179,9 @@
   padding-top: 10px;
   // position: absolute;
   text-size-adjust: 100%;
-  top: 34px;
+  // top: 34px;
   width: 175px;
+  position: absolute;
 }
 
 .user-dropDown-content{
@@ -253,8 +253,10 @@
 }
 
 .user-dropdown-position{
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
   margin-right: 47px;
+  margin-bottom: 130px;
+}
+
+.hidden{
+  display: none;
 }

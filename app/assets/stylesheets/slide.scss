@@ -1,0 +1,54 @@
+.slider {
+	height: 700px;
+	width: 100%;
+}
+
+.slider.one {
+	background-image: image-url("4096px-Wedding_Cake_7712258102");
+  background-size: cover;
+  background-position: center center;
+}
+
+.slider.two {
+	background-image: image-url("architect-architecture-build-1109541");
+  // background-size: 100%;
+  // width: 100%;
+  background-size: cover;
+  background-position: center center;
+}
+
+.slider.three {
+	background-image: image-url("costume-head-horn-908686");
+	// background-size: 100%;
+  // width: 100%;
+  background-size: cover;
+  background-position: center center;
+}
+
+.slider.four {
+	background-image: image-url("artificial-intelligence-circuit-board-computing-50711");
+	// background-size: 100%;
+  // width: 100%;
+  background-size: cover;
+  background-position: center center;
+}
+
+ul.slick-dots {
+    position: relative;
+    bottom: 45px;
+
+}
+
+
+// .slide-show-text {
+//     position: absolute;
+//     z-index: 4;
+//     top: 25px;
+// }
+//
+// .slide-show-text h1 {
+// 	color: white;
+//     font-family: 'Permanent Marker', cursive;
+//     font-size: 80px;
+//     text-shadow: 6px 5px black;
+// }
