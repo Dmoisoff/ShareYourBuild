@@ -1,3 +1,7 @@
+
+@import url('https://fonts.googleapis.com/css?family=Permanent+Marker');
+
+
 .slider {
 	height: 700px;
 	width: 100%;
@@ -39,16 +43,6 @@ ul.slick-dots {
 
 }
 
-
-// .slide-show-text {
-//     position: absolute;
-//     z-index: 4;
-//     top: 25px;
-// }
-//
-// .slide-show-text h1 {
-// 	color: white;
-//     font-family: 'Permanent Marker', cursive;
-//     font-size: 80px;
-//     text-shadow: 6px 5px black;
-// }
+.slide-share{
+  font-family: 'Permanent Marker', cursive;
+}

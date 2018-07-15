@@ -8,13 +8,14 @@ import NewProjectContainer from './projects/NewProjectContainer';
 import EditProjectContainer from './projects/EditProjectContainer';
 import ShowProjectContainer from './projects/ShowProjectContainer';
 import Slides from './slides/Slides';
+import MainPage from './main_page/main_page';
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
 
 
 const App = () => (
   <div>
     <header className='navbar'>
-      <Link className='clickable' to='/'>Share Your Build</Link>
+      <Link className='clickable ' to='/'> Share Your Build</Link>
       <GreetingContainer />
     </header>
     <div>
@@ -24,7 +25,8 @@ const App = () => (
         <Route path="/project/:projectId" component={ShowProjectContainer} />
         <AuthRoute exact path="/login" component={LoginFormContainer} />
         <AuthRoute exact path="/signup" component={SignupFormContainer} />
-        <Route path="/" component={Slides} />
+        // <Route path="/" component={Slides} />
+        <Route path="/" component={MainPage} />
       </Switch>
     </div>
     <main className='main'>

@@ -9,13 +9,16 @@ class SimpleSlider extends React.Component {
       infinite: true,
       speed: 500,
       slidesToShow: 1,
-      slidesToScroll: 1,
       autoplay: true,
-      autoplaySpeed: 10000
+      autoplaySpeed: 10000,
+      fade: true
     };
     return (
       <Slider {...settings}>
-        <div className=" slider two">
+        <div>
+          <div className=" slider two">
+            <p classname='slide-share'>Share Your</p>
+          </div>
         </div>
         <div className=" slider three">
         </div>

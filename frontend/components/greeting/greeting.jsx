@@ -10,14 +10,12 @@ class Greeting extends React.Component{
   }
 
   toggleClass() {
-    // debugger
     const currentState = this.state.active;
      this.setState({active: !currentState});
     }
 
   greeting(){
     if (this.props.currentUser){
-      // debugger
       let active;
       if(this.state.active){
         active = 'user-profile-dropdown';
@@ -29,15 +27,14 @@ class Greeting extends React.Component{
           <div className='user-dropdown-position'>
             <ul>
               <li>
-                <img className='user-profile-pic clickable' src={this.props.currentUser.profilePic}/>
-                <ul className={`${active}`}
-                onclick={() => {this.toggleClass();}}>
+                <img className='user-profile-pic clickable' src={this.props.currentUser.profilePic} onClick={() => {this.toggleClass();}} />
+                <ul className={`${active} `}>
                   <li className='user-dropDown-content'>
                     <Link className='clickable user-drop-items' onClick={() =>{this.props.logOut();}} to='/signout'>Sign Out</Link>
                   </li>
                   <li className='divide'></li>
                   <li className='user-dropDown-content'>
-                    <Link className='clickable user-drop-items' to={`/${this.props.currentUser.username}/project}`}>Your Builds</Link>
+                    <Link className='clickable user-drop-items' to={`/${this.props.currentUser.username}/project`}>Your Builds</Link>
                   </li>
                   <li className='user-dropDown-content create'>
                     <Link className='clickable user-drop-items' to={`project/new`}>Create Your Build >></Link>

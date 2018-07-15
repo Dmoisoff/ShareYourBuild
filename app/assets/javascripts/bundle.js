@@ -273,6 +273,10 @@ var _Slides = __webpack_require__(/*! ./slides/Slides */ "./frontend/components/
 
 var _Slides2 = _interopRequireDefault(_Slides);
 
+var _main_page = __webpack_require__(/*! ./main_page/main_page */ "./frontend/components/main_page/main_page.jsx");
+
+var _main_page2 = _interopRequireDefault(_main_page);
+
 var _route_util = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.jsx");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -286,8 +290,8 @@ var App = function App() {
       { className: 'navbar' },
       _react2.default.createElement(
         _reactRouterDom.Link,
-        { className: 'clickable', to: '/' },
-        'Share Your Build'
+        { className: 'clickable ', to: '/' },
+        ' Share Your Build'
       ),
       _react2.default.createElement(_greeting_container2.default, null)
     ),
@@ -303,7 +307,9 @@ var App = function App() {
         _react2.default.createElement(_reactRouterDom.Route, { path: '/project/:projectId', component: _ShowProjectContainer2.default }),
         _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/login', component: _LoginFormContainer2.default }),
         _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/signup', component: _SignupFormContainer2.default }),
-        _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _Slides2.default })
+        '// ',
+        _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _Slides2.default }),
+        _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _main_page2.default })
       )
     ),
     _react2.default.createElement(
@@ -374,7 +380,6 @@ var Greeting = function (_React$Component) {
   _createClass(Greeting, [{
     key: 'toggleClass',
     value: function toggleClass() {
-      // debugger
       var currentState = this.state.active;
       this.setState({ active: !currentState });
     }
@@ -384,7 +389,6 @@ var Greeting = function (_React$Component) {
       var _this2 = this;
 
       if (this.props.currentUser) {
-        // debugger
         var active = void 0;
         if (this.state.active) {
           active = 'user-profile-dropdown';
@@ -403,13 +407,12 @@ var Greeting = function (_React$Component) {
               _react2.default.createElement(
                 'li',
                 null,
-                _react2.default.createElement('img', { className: 'user-profile-pic clickable', src: this.props.currentUser.profilePic }),
+                _react2.default.createElement('img', { className: 'user-profile-pic clickable', src: this.props.currentUser.profilePic, onClick: function onClick() {
+                    _this2.toggleClass();
+                  } }),
                 _react2.default.createElement(
                   'ul',
-                  { className: '' + active,
-                    onclick: function onclick() {
-                      _this2.toggleClass();
-                    } },
+                  { className: active + ' ' },
                   _react2.default.createElement(
                     'li',
                     { className: 'user-dropDown-content' },
@@ -427,7 +430,7 @@ var Greeting = function (_React$Component) {
                     { className: 'user-dropDown-content' },
                     _react2.default.createElement(
                       _reactRouterDom.Link,
-                      { className: 'clickable user-drop-items', to: '/' + this.props.currentUser.username + '/project}' },
+                      { className: 'clickable user-drop-items', to: '/' + this.props.currentUser.username + '/project' },
                       'Your Builds'
                     )
                   ),
@@ -519,6 +522,34 @@ var mdtp = function mdtp(dispatch) {
 };
 
 exports.default = (0, _reactRedux.connect)(mstp, mdtp)(_greeting2.default);
+
+/***/ }),
+
+/***/ "./frontend/components/main_page/main_page.jsx":
+/*!*****************************************************!*\
+  !*** ./frontend/components/main_page/main_page.jsx ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _Slides = __webpack_require__(/*! ./../slides/Slides */ "./frontend/components/slides/Slides.jsx");
+
+var _Slides2 = _interopRequireDefault(_Slides);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var HomePage = function HomePage() {
+  return React.createElement(_Slides2.default, null);
+};
+
+exports.default = HomePage;
 
 /***/ }),
 
@@ -1264,14 +1295,26 @@ var SimpleSlider = function (_React$Component) {
         infinite: true,
         speed: 500,
         slidesToShow: 1,
-        slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 10000
+        autoplaySpeed: 10000,
+        fade: true
       };
       return _react2.default.createElement(
         _reactSlick2.default,
         settings,
-        _react2.default.createElement("div", { className: " slider two" }),
+        _react2.default.createElement(
+          "div",
+          null,
+          _react2.default.createElement(
+            "div",
+            { className: " slider two" },
+            _react2.default.createElement(
+              "p",
+              { classname: "slide-share" },
+              "Share Your"
+            )
+          )
+        ),
         _react2.default.createElement("div", { className: " slider three" }),
         _react2.default.createElement("div", { className: " slider one" }),
         _react2.default.createElement("div", { className: " slider four" })
