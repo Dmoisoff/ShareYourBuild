@@ -412,6 +412,11 @@ var Greeting = function (_React$Component) {
       this.setState({ active: !currentState });
     }
   }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps() {
+      this.setState({ active: false });
+    }
+  }, {
     key: 'greeting',
     value: function greeting() {
       var _this2 = this;
@@ -448,7 +453,7 @@ var Greeting = function (_React$Component) {
                       _reactRouterDom.Link,
                       { className: 'clickable user-drop-items', onClick: function onClick() {
                           _this2.props.logOut();
-                        }, to: '/signout' },
+                        }, to: '/login' },
                       'Sign Out'
                     )
                   ),
