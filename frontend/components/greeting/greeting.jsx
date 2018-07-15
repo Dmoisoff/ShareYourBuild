@@ -49,6 +49,7 @@ class Greeting extends React.Component{
       return(
         <div className='user-nav'>
           <Link className='clickable' to='/login'>Log In</Link>
+          <div className='divider'></div>
           <Link className='clickable' to='/signup'>Sign Up</Link>
         </div>
       );

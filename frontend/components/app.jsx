@@ -15,10 +15,23 @@ import { AuthRoute, ProtectedRoute } from '../util/route_util';
 const App = () => (
   <div>
     <header className='navbar'>
-      <div className='icon-space'>
+      <div>
+        <Link className='clickable icon-space' to='/'>
         <div id='syb-logo'></div>
-        <Link className='clickable ' to='/'> Share Your Build</Link>
+         <p>Share Your Build</p>
+       </Link>
       </div>
+      <div className='nav_spacing'>
+        <div className='search-bar-formating'>
+          <form className='search-bar-form'>
+            <input type="text" placeholder="Let's Build ..." name="search2" className='search-bar-input' />
+            <button className='search-bar-button' type='submit'><i class="fas fa-search"></i></button>
+          </form>
+          <Link to="/project/new" className="create-build-button" >Create a Build</Link>
+        </div>
+      </div>
+      <div className='add-space'></div>
+      <div></div>
       <GreetingContainer />
     </header>
     <div>

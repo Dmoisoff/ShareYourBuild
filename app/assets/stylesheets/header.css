@@ -13,13 +13,64 @@
   display: flex;
   box-sizing: border-box;
   margin: 10px;
+  font-size: 13px;
+  padding-right: 15px;
 }
 
 .user-nav > a{
   margin-left: 10px;
+  color: gray;
 }
 
 .navbar > h1{
   margin-left: 10px;
   font-weight: bold;
+}
+
+.search-bar-formating{
+  display: flex;
+  align-items: center;
+  width: 300px;
+}
+
+.create-build-button{
+  margin-left: 15px;
+  border-radius: 5px;
+  box-sizing: content-box;
+  color: #333;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857;
+  margin-bottom: 0;
+  padding: 6px 12px;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  text-shadow: none;
+  border: 1px solid #dedede;
+}
+
+.divider{
+  box-sizing: content-box;
+  color: rgb(204, 204, 204);
+  display: inline;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  line-height: 20px;
+  /* text-size-adjust: 100%; */
+  width: 1px;
+  background-color: rgb(204,204,204);
+  height: 19px;
+  margin-left: 12px;
+}
+
+.nav_spacing{
+  margin-left: 60px;
+  margin-right: 80px;
+}
+
+.add-space{
+  width: 600px;
 }

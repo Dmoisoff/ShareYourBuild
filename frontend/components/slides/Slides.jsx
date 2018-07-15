@@ -10,7 +10,7 @@ class SimpleSlider extends React.Component {
       speed: 500,
       slidesToShow: 1,
       autoplay: true,
-      autoplaySpeed: 10000,
+      autoplaySpeed: 5000,
       fade: true
     };
     return (

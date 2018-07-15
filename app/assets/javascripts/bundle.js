@@ -290,14 +290,43 @@ var App = function App() {
       { className: 'navbar' },
       _react2.default.createElement(
         'div',
-        { className: 'icon-space' },
-        _react2.default.createElement('div', { id: 'syb-logo' }),
+        null,
         _react2.default.createElement(
           _reactRouterDom.Link,
-          { className: 'clickable ', to: '/' },
-          ' Share Your Build'
+          { className: 'clickable icon-space', to: '/' },
+          _react2.default.createElement('div', { id: 'syb-logo' }),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Share Your Build'
+          )
         )
       ),
+      _react2.default.createElement(
+        'div',
+        { className: 'nav_spacing' },
+        _react2.default.createElement(
+          'div',
+          { className: 'search-bar-formating' },
+          _react2.default.createElement(
+            'form',
+            { className: 'search-bar-form' },
+            _react2.default.createElement('input', { type: 'text', placeholder: 'Let\'s Build ...', name: 'search2', className: 'search-bar-input' }),
+            _react2.default.createElement(
+              'button',
+              { className: 'search-bar-button', type: 'submit' },
+              _react2.default.createElement('i', { 'class': 'fas fa-search' })
+            )
+          ),
+          _react2.default.createElement(
+            _reactRouterDom.Link,
+            { to: '/project/new', className: 'create-build-button' },
+            'Create a Build'
+          )
+        )
+      ),
+      _react2.default.createElement('div', { className: 'add-space' }),
+      _react2.default.createElement('div', null),
       _react2.default.createElement(_greeting_container2.default, null)
     ),
     _react2.default.createElement(
@@ -462,6 +491,7 @@ var Greeting = function (_React$Component) {
             { className: 'clickable', to: '/login' },
             'Log In'
           ),
+          _react2.default.createElement('div', { className: 'divider' }),
           _react2.default.createElement(
             _reactRouterDom.Link,
             { className: 'clickable', to: '/signup' },
@@ -1054,7 +1084,7 @@ var SessionForm = function (_React$Component) {
         return _react2.default.createElement(
           'div',
           null,
-          _react2.default.createElement('input', { className: 'width user-input-field', onChange: this.updateEmail, type: 'email', required: true, placeholder: 'Email', value: this.state.email }),
+          _react2.default.createElement('input', { className: 'width-email user-input-field', onChange: this.updateEmail, type: 'email', required: true, placeholder: 'Email', value: this.state.email }),
           _react2.default.createElement('br', null)
         );
       }
@@ -1068,7 +1098,7 @@ var SessionForm = function (_React$Component) {
         if (!this.state.active) {
           return _react2.default.createElement('input', { onClick: function onClick() {
               _this2.toggleClass();
-            }, onChange: this.updateAge, type: 'text', placeholder: '(mm/dd/yyyy) Optional', value: this.state.age });
+            }, onChange: this.updateAge, type: 'text', placeholder: 'Birthdate (mm/dd/yyyy)', value: this.state.age });
         } else {
           return _react2.default.createElement('input', { className: 'user-date-show user-input-field', onChange: this.updateAge, type: 'date', value: this.state.age });
         }
@@ -1087,9 +1117,9 @@ var SessionForm = function (_React$Component) {
     key: 'password',
     value: function password(formType) {
       if (formType === 'Sign Up') {
-        return _react2.default.createElement('input', { onChange: this.updatePassword, className: 'user-password-signup user-input-field', type: 'password', placeholder: 'Password', value: this.state.password });
+        return _react2.default.createElement('input', { onChange: this.updatePassword, className: 'user-password-signup user-input-field width-password-sign-up', type: 'password', placeholder: 'Password', value: this.state.password });
       } else {
-        return _react2.default.createElement('input', { onChange: this.updatePassword, className: 'user-password-login user-input-field', type: 'password', placeholder: 'Password', value: this.state.password });
+        return _react2.default.createElement('input', { onChange: this.updatePassword, className: 'user-password-login user-input-field width-password', type: 'password', placeholder: 'Password', value: this.state.password });
       }
     }
   }, {
@@ -1174,7 +1204,7 @@ var SessionForm = function (_React$Component) {
             { onSubmit: this.handleSubmit },
             _react2.default.createElement(
               'div',
-              null,
+              { className: 'user-form-font-size' },
               this.email(this.props.formType),
               this.user(this.props.formType),
               this.password(this.props.formType),
@@ -1330,7 +1360,7 @@ var SimpleSlider = function (_React$Component) {
         speed: 500,
         slidesToShow: 1,
         autoplay: true,
-        autoplaySpeed: 10000,
+        autoplaySpeed: 5000,
         fade: true
       };
       return _react2.default.createElement(

@@ -71,7 +71,7 @@ class SessionForm extends React.Component {
     if(formType === 'Sign Up'){
       return (
         <div>
-          <input className='width user-input-field' onChange={this.updateEmail} type="email" required placeholder='Email' value={this.state.email} />
+          <input className='width-email user-input-field' onChange={this.updateEmail} type="email" required placeholder='Email' value={this.state.email} />
           <br/>
         </div>
       );
@@ -81,7 +81,7 @@ class SessionForm extends React.Component {
     if(formType === 'Sign Up'){
       if(!this.state.active){
         return (
-            <input onClick={() =>{this.toggleClass();}} onChange={this.updateAge} type="text" placeholder='(mm/dd/yyyy) Optional' value={this.state.age} />
+            <input onClick={() =>{this.toggleClass();}} onChange={this.updateAge} type="text" placeholder='Birthdate (mm/dd/yyyy)' value={this.state.age} />
         );
       }else{
         return (
@@ -106,12 +106,12 @@ class SessionForm extends React.Component {
   password(formType){
     if(formType === 'Sign Up'){
       return(
-        <input onChange={this.updatePassword} className='user-password-signup user-input-field' type="password" placeholder="Password" value={this.state.password} />
+        <input onChange={this.updatePassword} className='user-password-signup user-input-field width-password-sign-up' type="password" placeholder="Password" value={this.state.password} />
 
       );
     }else{
       return(
-        <input onChange={this.updatePassword} className='user-password-login user-input-field' type="password" placeholder="Password" value={this.state.password} />
+        <input onChange={this.updatePassword} className='user-password-login user-input-field width-password' type="password" placeholder="Password" value={this.state.password} />
 
       );
     }
@@ -167,7 +167,7 @@ class SessionForm extends React.Component {
         </div>
         <div className='user-entry'>
           <form onSubmit={this.handleSubmit}>
-            <div>
+            <div className="user-form-font-size">
               {this.email(this.props.formType)}
               {this.user(this.props.formType)}
               {this.password(this.props.formType)}
