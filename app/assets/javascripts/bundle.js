@@ -269,10 +269,6 @@ var _ShowProjectContainer = __webpack_require__(/*! ./projects/ShowProjectContai
 
 var _ShowProjectContainer2 = _interopRequireDefault(_ShowProjectContainer);
 
-var _Slides = __webpack_require__(/*! ./slides/Slides */ "./frontend/components/slides/Slides.jsx");
-
-var _Slides2 = _interopRequireDefault(_Slides);
-
 var _main_page = __webpack_require__(/*! ./main_page/main_page */ "./frontend/components/main_page/main_page.jsx");
 
 var _main_page2 = _interopRequireDefault(_main_page);
@@ -341,8 +337,6 @@ var App = function App() {
         _react2.default.createElement(_reactRouterDom.Route, { path: '/project/:projectId', component: _ShowProjectContainer2.default }),
         _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/login', component: _LoginFormContainer2.default }),
         _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/signup', component: _SignupFormContainer2.default }),
-        '// ',
-        _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _Slides2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _main_page2.default })
       )
     ),
@@ -574,14 +568,26 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
 var _Slides = __webpack_require__(/*! ./../slides/Slides */ "./frontend/components/slides/Slides.jsx");
 
 var _Slides2 = _interopRequireDefault(_Slides);
 
+var _Slides_Text = __webpack_require__(/*! ./../slides/Slides_Text */ "./frontend/components/slides/Slides_Text.jsx");
+
+var _Slides_Text2 = _interopRequireDefault(_Slides_Text);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var HomePage = function HomePage() {
-  return React.createElement(_Slides2.default, null);
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(_Slides2.default, null)
+  );
 };
 
 exports.default = HomePage;
@@ -1333,6 +1339,8 @@ var _reactSlick = __webpack_require__(/*! react-slick */ "./node_modules/react-s
 
 var _reactSlick2 = _interopRequireDefault(_reactSlick);
 
+var _Slides_Text = __webpack_require__(/*! ./Slides_Text */ "./frontend/components/slides/Slides_Text.jsx");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1371,17 +1379,41 @@ var SimpleSlider = function (_React$Component) {
           null,
           _react2.default.createElement(
             "div",
-            { className: " slider two" },
+            { className: " slider two " },
             _react2.default.createElement(
-              "p",
-              { classname: "slide-share" },
-              "Share Your"
+              "div",
+              { className: "slide-overlay" },
+              _react2.default.createElement(_Slides_Text.LetsShareDesigns, null)
             )
           )
         ),
-        _react2.default.createElement("div", { className: " slider three" }),
-        _react2.default.createElement("div", { className: " slider one" }),
-        _react2.default.createElement("div", { className: " slider four" })
+        _react2.default.createElement(
+          "div",
+          { className: " slider three" },
+          _react2.default.createElement(
+            "div",
+            { className: "slide-overlay" },
+            _react2.default.createElement(_Slides_Text.LetsShareCostumes, null)
+          )
+        ),
+        _react2.default.createElement(
+          "div",
+          { className: " slider one" },
+          _react2.default.createElement(
+            "div",
+            { className: "slide-overlay" },
+            _react2.default.createElement(_Slides_Text.LetsShareRecipes, null)
+          )
+        ),
+        _react2.default.createElement(
+          "div",
+          { className: " slider four" },
+          _react2.default.createElement(
+            "div",
+            { className: "slide-overlay" },
+            _react2.default.createElement(_Slides_Text.LetsShareTechnology, null)
+          )
+        )
       );
     }
   }]);
@@ -1390,6 +1422,61 @@ var SimpleSlider = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = SimpleSlider;
+
+/***/ }),
+
+/***/ "./frontend/components/slides/Slides_Text.jsx":
+/*!****************************************************!*\
+  !*** ./frontend/components/slides/Slides_Text.jsx ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.LetsShareTechnology = exports.LetsShareRecipes = exports.LetsShareCostumes = exports.LetsShareDesigns = undefined;
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var LetsShareDesigns = exports.LetsShareDesigns = function LetsShareDesigns() {
+  return _react2.default.createElement(
+    "p",
+    { className: "slide-share" },
+    "Let's Share Designs "
+  );
+};
+
+var LetsShareCostumes = exports.LetsShareCostumes = function LetsShareCostumes() {
+  return _react2.default.createElement(
+    "p",
+    { className: "slide-share" },
+    "Let's Share Costumes "
+  );
+};
+
+var LetsShareRecipes = exports.LetsShareRecipes = function LetsShareRecipes() {
+  return _react2.default.createElement(
+    "p",
+    { className: "slide-share" },
+    "Let's Share Recipes "
+  );
+};
+
+var LetsShareTechnology = exports.LetsShareTechnology = function LetsShareTechnology() {
+  return _react2.default.createElement(
+    "p",
+    { className: "slide-share" },
+    "Let's Share Technology "
+  );
+};
 
 /***/ }),
 
