@@ -36,9 +36,9 @@ class SessionForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    if (!(this.isEmail(this.state.email))) {
-      this.state.email = '';
-    }
+    // if (!(this.isEmail(this.state.email))) {
+    //   this.state.email = '';
+    // }
     const user = Object.assign({}, this.state);
     this.props.processForm(user);
   }
@@ -71,7 +71,7 @@ class SessionForm extends React.Component {
     if(formType === 'Sign Up'){
       return (
         <div>
-          <input className='width user-input-field' onChange={this.updateEmail} type="text" required placeholder='Email' value={this.state.email} />
+          <input className='width user-input-field' onChange={this.updateEmail} type="email" required placeholder='Email' value={this.state.email} />
           <br/>
         </div>
       );

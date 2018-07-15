@@ -1005,9 +1005,9 @@ var SessionForm = function (_React$Component) {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
       e.preventDefault();
-      if (!this.isEmail(this.state.email)) {
-        this.state.email = '';
-      }
+      // if (!(this.isEmail(this.state.email))) {
+      //   this.state.email = '';
+      // }
       var user = Object.assign({}, this.state);
       this.props.processForm(user);
     }
@@ -1049,7 +1049,7 @@ var SessionForm = function (_React$Component) {
         return _react2.default.createElement(
           'div',
           null,
-          _react2.default.createElement('input', { className: 'width user-input-field', onChange: this.updateEmail, type: 'text', required: true, placeholder: 'Email', value: this.state.email }),
+          _react2.default.createElement('input', { className: 'width user-input-field', onChange: this.updateEmail, type: 'email', required: true, placeholder: 'Email', value: this.state.email }),
           _react2.default.createElement('br', null)
         );
       }
