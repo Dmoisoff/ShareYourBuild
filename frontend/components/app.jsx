@@ -15,7 +15,10 @@ import { AuthRoute, ProtectedRoute } from '../util/route_util';
 const App = () => (
   <div>
     <header className='navbar'>
-      <Link className='clickable ' to='/'> Share Your Build</Link>
+      <div className='icon-space'>
+        <div id='syb-logo'></div>
+        <Link className='clickable ' to='/'> Share Your Build</Link>
+      </div>
       <GreetingContainer />
     </header>
     <div>
@@ -26,14 +29,14 @@ const App = () => (
         <AuthRoute exact path="/login" component={LoginFormContainer} />
         <AuthRoute exact path="/signup" component={SignupFormContainer} />
         // <Route path="/" component={Slides} />
-        <Route path="/" component={MainPage} />
+        <Route exact path="/" component={MainPage} />
       </Switch>
     </div>
-    <main className='main'>
-      main content
-    </main>
     <footer class='footer'>
-      <Link className='clickable' to='/'>Share Your Build</Link>
+      <div className='icon-space'>
+        <div id='syb-logo'></div>
+        <Link className='clickable' to='/'>Share Your Build</Link>
+      </div>
     </footer>
   </div>
 );

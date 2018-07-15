@@ -289,9 +289,14 @@ var App = function App() {
       'header',
       { className: 'navbar' },
       _react2.default.createElement(
-        _reactRouterDom.Link,
-        { className: 'clickable ', to: '/' },
-        ' Share Your Build'
+        'div',
+        { className: 'icon-space' },
+        _react2.default.createElement('div', { id: 'syb-logo' }),
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          { className: 'clickable ', to: '/' },
+          ' Share Your Build'
+        )
       ),
       _react2.default.createElement(_greeting_container2.default, null)
     ),
@@ -309,21 +314,21 @@ var App = function App() {
         _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/signup', component: _SignupFormContainer2.default }),
         '// ',
         _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _Slides2.default }),
-        _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _main_page2.default })
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _main_page2.default })
       )
-    ),
-    _react2.default.createElement(
-      'main',
-      { className: 'main' },
-      'main content'
     ),
     _react2.default.createElement(
       'footer',
       { 'class': 'footer' },
       _react2.default.createElement(
-        _reactRouterDom.Link,
-        { className: 'clickable', to: '/' },
-        'Share Your Build'
+        'div',
+        { className: 'icon-space' },
+        _react2.default.createElement('div', { id: 'syb-logo' }),
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          { className: 'clickable', to: '/' },
+          'Share Your Build'
+        )
       )
     )
   );
@@ -1151,7 +1156,16 @@ var SessionForm = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: 'user-entry-background' },
+        null,
+        _react2.default.createElement(
+          'div',
+          { className: 'user-entry-background' },
+          _react2.default.createElement(
+            'div',
+            { className: 'user-entry-background-blur' },
+            _react2.default.createElement('div', { className: 'user-entry-blur' })
+          )
+        ),
         _react2.default.createElement(
           'div',
           { className: 'user-entry' },
@@ -1185,9 +1199,13 @@ var SessionForm = function (_React$Component) {
             )
           ),
           _react2.default.createElement(
-            'ul',
-            { className: 'user-errors-container' },
-            this.errors()
+            'div',
+            { className: 'user-error-position' },
+            _react2.default.createElement(
+              'ul',
+              { className: 'user-errors-container' },
+              this.errors()
+            )
           )
         )
       );
@@ -1692,6 +1710,7 @@ document.addEventListener('DOMContentLoaded', function () {
   window.createProject = _projects_actions.createProject;
   window.updateProject = _projects_actions.updateProject;
   window.deleteProject = _projects_actions.deleteProject;
+  window.icon = '<%= image_url("shareyourbuildLogo.png")  %>';
 
   var root = document.getElementById('root');
   _reactDom2.default.render(_react2.default.createElement(_root2.default, { store: store }), root);

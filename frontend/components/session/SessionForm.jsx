@@ -159,9 +159,13 @@ class SessionForm extends React.Component {
     }
   render(){
     return(
-      <div className='user-entry-background'>
+      <div>
+        <div className='user-entry-background'>
+          <div className='user-entry-background-blur'>
+            <div className='user-entry-blur'></div>
+          </div>
+        </div>
         <div className='user-entry'>
-
           <form onSubmit={this.handleSubmit}>
             <div>
               {this.email(this.props.formType)}
@@ -175,9 +179,11 @@ class SessionForm extends React.Component {
           <form className='demo-move'>
             <button className="user-demo" onClick={() => {this.DemoSubmit();} }> Demo Login</button>
           </form>
-          <ul className='user-errors-container'>
-            {this.errors()}
-          </ul>
+          <div className='user-error-position'>
+            <ul className='user-errors-container'>
+              {this.errors()}
+            </ul>
+          </div>
         </div>
       </div>
     );

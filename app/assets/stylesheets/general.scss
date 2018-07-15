@@ -9,3 +9,18 @@ form > input{
   flex-wrap: wrap;
   margin: 0;
 }
+
+#syb-logo{
+  background-image: image_url("shareyourbuildLogo.png");
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  background-size: cover;
+}
+
+.icon-space {
+  width: 192px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}

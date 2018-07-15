@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.createProject = createProject;
   window.updateProject = updateProject;
   window.deleteProject = deleteProject;
+  window.icon = '<%= image_url("shareyourbuildLogo.png")  %>';
 
   const root = document.getElementById('root');
   ReactDOM.render(<Root store={ store }/>, root);
