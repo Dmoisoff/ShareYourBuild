@@ -976,7 +976,8 @@ var SessionForm = function (_React$Component) {
       password: '',
       email: '',
       age: '',
-      about: ''
+      about: '',
+      active: false
     };
     _this.updateUsername = _this.updateUsername.bind(_this);
     _this.updatePassword = _this.updatePassword.bind(_this);
@@ -990,6 +991,7 @@ var SessionForm = function (_React$Component) {
     _this.errors = _this.errors.bind(_this);
     _this.user = _this.user.bind(_this);
     _this.password = _this.password.bind(_this);
+    _this.toggleClass = _this.toggleClass.bind(_this);
     return _this;
   }
 
@@ -1035,13 +1037,19 @@ var SessionForm = function (_React$Component) {
       this.setState({ about: e.target.value });
     }
   }, {
+    key: 'toggleClass',
+    value: function toggleClass() {
+      var currentState = this.state.active;
+      this.setState({ active: !currentState });
+    }
+  }, {
     key: 'email',
     value: function email(formType) {
       if (formType === 'Sign Up') {
         return _react2.default.createElement(
           'div',
           null,
-          _react2.default.createElement('input', { className: 'width', onChange: this.updateEmail, type: 'text', placeholder: 'Email', value: this.state.email }),
+          _react2.default.createElement('input', { className: 'width user-input-field', onChange: this.updateEmail, type: 'text', required: true, placeholder: 'Email', value: this.state.email }),
           _react2.default.createElement('br', null)
         );
       }
@@ -1049,26 +1057,34 @@ var SessionForm = function (_React$Component) {
   }, {
     key: 'age',
     value: function age(formType) {
+      var _this2 = this;
+
       if (formType === 'Sign Up') {
-        return _react2.default.createElement('input', { onChange: this.updateAge, type: 'text', placeholder: '(mm/dd/yyyy) Optional', value: this.state.age });
+        if (!this.state.active) {
+          return _react2.default.createElement('input', { onClick: function onClick() {
+              _this2.toggleClass();
+            }, onChange: this.updateAge, type: 'text', placeholder: '(mm/dd/yyyy) Optional', value: this.state.age });
+        } else {
+          return _react2.default.createElement('input', { className: 'user-date-show user-input-field', onChange: this.updateAge, type: 'date', value: this.state.age });
+        }
       }
     }
   }, {
     key: 'user',
     value: function user(formType) {
       if (formType === 'Sign Up') {
-        return _react2.default.createElement('input', { className: 'user-username-signup', onChange: this.updateUsername, type: 'text', value: this.state.username, placeholder: 'Username' });
+        return _react2.default.createElement('input', { className: 'user-username-signup user-input-field', onChange: this.updateUsername, type: 'text', value: this.state.username, placeholder: 'Username' });
       } else {
-        return _react2.default.createElement('input', { className: 'user-username-login', onChange: this.updateUsername, type: 'text', value: this.state.username, placeholder: 'Username' });
+        return _react2.default.createElement('input', { className: 'user-username-login user-input-field', onChange: this.updateUsername, type: 'text', value: this.state.username, placeholder: 'Username' });
       }
     }
   }, {
     key: 'password',
     value: function password(formType) {
       if (formType === 'Sign Up') {
-        return _react2.default.createElement('input', { onChange: this.updatePassword, className: 'user-password-signup', type: 'password', placeholder: 'Password', value: this.state.password });
+        return _react2.default.createElement('input', { onChange: this.updatePassword, className: 'user-password-signup user-input-field', type: 'password', placeholder: 'Password', value: this.state.password });
       } else {
-        return _react2.default.createElement('input', { onChange: this.updatePassword, className: 'user-password-login', type: 'password', placeholder: 'Password', value: this.state.password });
+        return _react2.default.createElement('input', { onChange: this.updatePassword, className: 'user-password-login user-input-field', type: 'password', placeholder: 'Password', value: this.state.password });
       }
     }
   }, {
@@ -1094,12 +1110,12 @@ var SessionForm = function (_React$Component) {
   }, {
     key: 'DemoSubmit',
     value: function DemoSubmit() {
-      var _this2 = this;
+      var _this3 = this;
 
       var user = 'Demo-Man';
       this.setState({ username: user, password: '123456' });
       setTimeout(function () {
-        _this2.props.demoLogin();
+        _this3.props.demoLogin();
       }, 500);
     }
   }, {
@@ -1131,7 +1147,7 @@ var SessionForm = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       return _react2.default.createElement(
         'div',
@@ -1163,7 +1179,7 @@ var SessionForm = function (_React$Component) {
             _react2.default.createElement(
               'button',
               { className: 'user-demo', onClick: function onClick() {
-                  _this3.DemoSubmit();
+                  _this4.DemoSubmit();
                 } },
               ' Demo Login'
             )

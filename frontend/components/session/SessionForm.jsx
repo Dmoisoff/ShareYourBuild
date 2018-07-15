@@ -11,7 +11,8 @@ class SessionForm extends React.Component {
       password: '',
       email: '',
       age: '',
-      about: ''
+      about: '',
+      active: false
     };
     this.updateUsername = this.updateUsername.bind(this);
     this.updatePassword = this.updatePassword.bind(this);
@@ -25,6 +26,7 @@ class SessionForm extends React.Component {
     this.errors = this.errors.bind(this);
     this.user = this.user.bind(this);
     this.password = this.password.bind(this);
+    this.toggleClass = this.toggleClass.bind(this);
   }
 
   isEmail(email) {
@@ -59,12 +61,17 @@ class SessionForm extends React.Component {
     this.setState({about: e.target.value});
   }
 
+  toggleClass() {
+    const currentState = this.state.active;
+     this.setState({active: !currentState});
+    }
+
 
   email(formType){
     if(formType === 'Sign Up'){
       return (
         <div>
-          <input className='width' onChange={this.updateEmail} type="text" placeholder='Email' value={this.state.email} />
+          <input className='width user-input-field' onChange={this.updateEmail} type="text" required placeholder='Email' value={this.state.email} />
           <br/>
         </div>
       );
@@ -72,20 +79,26 @@ class SessionForm extends React.Component {
   }
   age(formType){
     if(formType === 'Sign Up'){
-      return (
-          <input onChange={this.updateAge} type="text" placeholder='(mm/dd/yyyy) Optional' value={this.state.age} />
-      );
+      if(!this.state.active){
+        return (
+            <input onClick={() =>{this.toggleClass();}} onChange={this.updateAge} type="text" placeholder='(mm/dd/yyyy) Optional' value={this.state.age} />
+        );
+      }else{
+        return (
+          <input className="user-date-show user-input-field" onChange={this.updateAge} type="date"  value={this.state.age} />
+        );
+      }
     }
   }
 
   user(formType){
     if(formType === 'Sign Up'){
       return(
-        <input className='user-username-signup' onChange={this.updateUsername} type="text" value={this.state.username} placeholder="Username" />
+        <input className='user-username-signup user-input-field' onChange={this.updateUsername} type="text" value={this.state.username} placeholder="Username" />
       );
     }else{
       return(
-        <input className='user-username-login' onChange={this.updateUsername} type="text" value={this.state.username} placeholder="Username" />
+        <input className='user-username-login user-input-field' onChange={this.updateUsername} type="text" value={this.state.username} placeholder="Username" />
       );
     }
   }
@@ -93,12 +106,12 @@ class SessionForm extends React.Component {
   password(formType){
     if(formType === 'Sign Up'){
       return(
-        <input onChange={this.updatePassword} className='user-password-signup' type="password" placeholder="Password" value={this.state.password} />
+        <input onChange={this.updatePassword} className='user-password-signup user-input-field' type="password" placeholder="Password" value={this.state.password} />
 
       );
     }else{
       return(
-        <input onChange={this.updatePassword} className='user-password-login' type="password" placeholder="Password" value={this.state.password} />
+        <input onChange={this.updatePassword} className='user-password-login user-input-field' type="password" placeholder="Password" value={this.state.password} />
 
       );
     }
