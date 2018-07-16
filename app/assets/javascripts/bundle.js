@@ -869,7 +869,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var mstp = function mstp(state) {
   return {
-    project: { title: '', author_id: state.session.id, author_username: state.entities.users[state.session.id], keyWords: '' },
+    project: { title: '',
+      author_id: state.session.id,
+      author_username: state.entities.users[state.session.id],
+      keyWords: '',
+      photoFile: null,
+      previewUrl: null
+    },
     formType: 'New Project'
   };
 };
@@ -919,22 +925,79 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var ProjectForm = function (_React$Component) {
   _inherits(ProjectForm, _React$Component);
 
-  function ProjectForm() {
+  function ProjectForm(props) {
     _classCallCheck(this, ProjectForm);
 
-    return _possibleConstructorReturn(this, (ProjectForm.__proto__ || Object.getPrototypeOf(ProjectForm)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (ProjectForm.__proto__ || Object.getPrototypeOf(ProjectForm)).call(this, props));
+
+    _this.state = _this.props.project;
+    _this.updateTitle = _this.updateTitle.bind(_this);
+    return _this;
   }
 
   _createClass(ProjectForm, [{
+    key: 'uploadFile',
+    value: function uploadFile(e) {
+      var _this2 = this;
+
+      var file = e.currentTarget.files[0];
+      var fileReader = new FileReader();
+      fileReader.onloadend = function () {
+        _this2.setState({ photoFile: file, previewUrl: fileReader.result });
+      };
+      if (file) {
+        fileReader.readAsDataURL(file);
+      }
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      debugger;
+      e.preventDefault();
+      var formData = new FormData();
+      formData.append('project[title]', this.state.title);
+      formData.append('project[keywords]', this.state.keyWords);
+      formData.append('project[picture]', this.state.photoFile);
+      debugger;
+      this.props.submitProject(formData);
+    }
+  }, {
+    key: 'updateTitle',
+    value: function updateTitle(e) {
+      this.setState({ title: e.target.value });
+    }
+  }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(
+      var preview = this.state.previewUrl ? _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(
           'p',
           null,
-          'I\'m a real page'
+          'Thumbnail Preview'
+        ),
+        _react2.default.createElement('img', { className: 'index-image-resize', src: this.state.previewUrl })
+      ) : null;
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'form',
+          null,
+          _react2.default.createElement(
+            'button',
+            { onClick: this.handleSubmit.bind(this), className: 'submit', type: 'submit' },
+            'Publish'
+          ),
+          _react2.default.createElement('input', { type: 'text', onChange: this.updateTitle, placeholder: 'Title', value: '' + this.state.title }),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', { type: 'file', onChange: this.uploadFile.bind(this) }),
+            preview
+          )
         )
       );
     }
@@ -2128,10 +2191,13 @@ var fetchProject = exports.fetchProject = function fetchProject(id) {
 };
 
 var createProject = exports.createProject = function createProject(project) {
+  debugger;
   return $.ajax({
     method: 'POST',
     url: 'api/projects',
-    data: { project: project }
+    data: project,
+    contentType: false,
+    processData: false
   });
 };
 
@@ -2139,7 +2205,9 @@ var updateProject = exports.updateProject = function updateProject(project) {
   return $.ajax({
     method: 'PATCH',
     url: 'api/projects/' + project.id,
-    data: { project: project }
+    data: project,
+    contentType: false,
+    processData: false
   });
 };
 

@@ -1,6 +1,7 @@
 class Api::ProjectsController < ApplicationController
 
   def create
+    debugger
     @project = Project.new(project_params)
     @project.author_id = current_user.id
     if @project.save
@@ -36,7 +37,7 @@ class Api::ProjectsController < ApplicationController
   private
 
   def project_params
-    params.require(:project).permit(:title, :password, :picture_url, :featured, :view_count)
+    params.require(:project).permit(:title, :picture_url, :featured, :view_count, :picture)
   end
 
 
