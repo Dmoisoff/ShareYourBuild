@@ -13,11 +13,19 @@ class ProjectShow extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-      this.setState({
-        title: nextProps.project.title,
-        authorUsername: nextProps.project.authorUsername
-      });
+
+    if (this.props.match.params.projectId === nextProps.match.params.projectId) {
+     this.setState({title: nextProps.project.title, authorUsername: nextProps.project.authorUsername});
+   }
   }
+
+  componentDidUpdate(prevProps){
+    if (!!prevProps.project && prevProps.project.id != this.props.match.params.projectId) {
+      this.props.fetchProject(this.props.match.params.projectId);
+    }
+  }
+
+
 
   render() {
     const { project } = this.props;

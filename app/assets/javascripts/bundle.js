@@ -997,10 +997,17 @@ var ProjectShow = function (_React$Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      this.setState({
-        title: nextProps.project.title,
-        authorUsername: nextProps.project.authorUsername
-      });
+
+      if (this.props.match.params.projectId === nextProps.match.params.projectId) {
+        this.setState({ title: nextProps.project.title, authorUsername: nextProps.project.authorUsername });
+      }
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps) {
+      if (!!prevProps.project && prevProps.project.id != this.props.match.params.projectId) {
+        this.props.fetchProject(this.props.match.params.projectId);
+      }
     }
   }, {
     key: 'render',
