@@ -661,7 +661,7 @@ var IndexProjectItem = function (_React$Component) {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        'li',
+        'div',
         { className: 'index-display-container' },
         _react2.default.createElement('img', { className: 'index-image-resize', src: '' + this.props.thumbnail }),
         _react2.default.createElement(
@@ -992,17 +992,10 @@ var ProjectShow = function (_React$Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      // debugger
-      // if (!this.props.project || this.props.project.id != nextProps.match.params.projectId) {
-      //   debugger
-      //   this.props.fetchProject(nextProps.match.params.projectId);
-      // }else{
-      //   debugger
       this.setState({
         title: nextProps.project.title,
         username: nextProps.project.username
       });
-      // }
     }
   }, {
     key: 'render',
@@ -1251,7 +1244,6 @@ var SessionForm = function (_React$Component) {
     _this.updateEmail = _this.updateEmail.bind(_this);
     _this.updateAge = _this.updateAge.bind(_this);
     _this.handleSubmit = _this.handleSubmit.bind(_this);
-    _this.isEmail = _this.isEmail.bind(_this);
     _this.aboutMe = _this.aboutMe.bind(_this);
     _this.updateAboutMe = _this.updateAboutMe.bind(_this);
     _this.DemoSubmit = _this.DemoSubmit.bind(_this);
@@ -1263,18 +1255,9 @@ var SessionForm = function (_React$Component) {
   }
 
   _createClass(SessionForm, [{
-    key: 'isEmail',
-    value: function isEmail(email) {
-      var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-      return regex.test(email);
-    }
-  }, {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
       e.preventDefault();
-      // if (!(this.isEmail(this.state.email))) {
-      //   this.state.email = '';
-      // }
       var user = Object.assign({}, this.state);
       this.props.processForm(user);
     }
@@ -1589,7 +1572,6 @@ var SimpleSlider = function (_React$Component) {
   _createClass(SimpleSlider, [{
     key: "render",
     value: function render() {
-      // debugger
       var settings = {
         dots: true,
         infinite: true,
@@ -1811,7 +1793,6 @@ var projectReducer = function projectReducer() {
     case Projects_Actions.FETCH_ALL_PROJECTS:
       return (0, _merge3.default)({}, state, action.projects);
     case Projects_Actions.FETCH_PROJECT:
-      debugger;
       newState = (0, _merge3.default)({}, state, _defineProperty({}, action.project.id, action.project));
       return newState;
     case Projects_Actions.REMOVE_PROJECT:
