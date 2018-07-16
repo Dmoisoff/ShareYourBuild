@@ -1,0 +1,31 @@
+.index-image-resize{
+  width: 320px;
+  height: 268px;
+}
+
+.index-display-items{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  flex-direction: row;
+}
+
+.index-description{
+  background: #fff;
+  padding: 10px 13px;
+  margin-bottom: 10px;
+  height: 50px;
+  overflow: hidden;
+}
+
+.index-display-container{
+  padding-bottom: 10px;
+  box-shadow: 0 1px 0px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  background: #fff;
+  margin-bottom: 25px;
+}
+
+.index-background{
+  background: #f6f6f6;
+}

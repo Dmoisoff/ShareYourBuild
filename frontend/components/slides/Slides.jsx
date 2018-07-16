@@ -15,7 +15,7 @@ class SimpleSlider extends React.Component {
       fade: true
     };
     return (
-      <Slider {...settings}>
+      <Slider {...settings} className='slide-background' >
         <div>
           <div className=" slider two ">
             <div className='slide-overlay'>

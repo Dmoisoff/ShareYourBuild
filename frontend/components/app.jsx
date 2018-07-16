@@ -7,6 +7,7 @@ import SignupFormContainer from './session/SignupFormContainer';
 import NewProjectContainer from './projects/NewProjectContainer';
 import EditProjectContainer from './projects/EditProjectContainer';
 import ShowProjectContainer from './projects/ShowProjectContainer';
+import IndexProjectsContainer from './projects/IndexProjectsContainer';
 import MainPage from './main_page/main_page';
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
 
@@ -36,8 +37,9 @@ const App = () => (
     <div>
       <Switch>
         <ProtectedRoute path="/project/new" component={NewProjectContainer} />
-        // <ProtectedRoute exact path="/projects/:projectId/edit" component={EditProjectContainer} />
+        <ProtectedRoute exact path="/project/:projectId/edit" component={EditProjectContainer} />
         <Route path="/project/:projectId" component={ShowProjectContainer} />
+        <Route path="/projects" component={IndexProjectsContainer} />
         <AuthRoute exact path="/login" component={LoginFormContainer} />
         <AuthRoute exact path="/signup" component={SignupFormContainer} />
         <Route exact path="/" component={MainPage} />

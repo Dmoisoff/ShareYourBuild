@@ -269,6 +269,10 @@ var _ShowProjectContainer = __webpack_require__(/*! ./projects/ShowProjectContai
 
 var _ShowProjectContainer2 = _interopRequireDefault(_ShowProjectContainer);
 
+var _IndexProjectsContainer = __webpack_require__(/*! ./projects/IndexProjectsContainer */ "./frontend/components/projects/IndexProjectsContainer.jsx");
+
+var _IndexProjectsContainer2 = _interopRequireDefault(_IndexProjectsContainer);
+
 var _main_page = __webpack_require__(/*! ./main_page/main_page */ "./frontend/components/main_page/main_page.jsx");
 
 var _main_page2 = _interopRequireDefault(_main_page);
@@ -332,9 +336,9 @@ var App = function App() {
         _reactRouterDom.Switch,
         null,
         _react2.default.createElement(_route_util.ProtectedRoute, { path: '/project/new', component: _NewProjectContainer2.default }),
-        '// ',
-        _react2.default.createElement(_route_util.ProtectedRoute, { exact: true, path: '/projects/:projectId/edit', component: _EditProjectContainer2.default }),
+        _react2.default.createElement(_route_util.ProtectedRoute, { exact: true, path: '/project/:projectId/edit', component: _EditProjectContainer2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { path: '/project/:projectId', component: _ShowProjectContainer2.default }),
+        _react2.default.createElement(_reactRouterDom.Route, { path: '/projects', component: _IndexProjectsContainer2.default }),
         _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/login', component: _LoginFormContainer2.default }),
         _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/signup', component: _SignupFormContainer2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _main_page2.default })
@@ -585,13 +589,18 @@ var _Slides_Text = __webpack_require__(/*! ./../slides/Slides_Text */ "./fronten
 
 var _Slides_Text2 = _interopRequireDefault(_Slides_Text);
 
+var _IndexProjectsContainer = __webpack_require__(/*! ./../projects/IndexProjectsContainer */ "./frontend/components/projects/IndexProjectsContainer.jsx");
+
+var _IndexProjectsContainer2 = _interopRequireDefault(_IndexProjectsContainer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var HomePage = function HomePage() {
   return _react2.default.createElement(
     'div',
     null,
-    _react2.default.createElement(_Slides2.default, null)
+    _react2.default.createElement(_Slides2.default, null),
+    _react2.default.createElement(_IndexProjectsContainer2.default, null)
   );
 };
 
@@ -608,6 +617,218 @@ exports.default = HomePage;
 
 "use strict";
 
+
+/***/ }),
+
+/***/ "./frontend/components/projects/IndexProjectItem.jsx":
+/*!***********************************************************!*\
+  !*** ./frontend/components/projects/IndexProjectItem.jsx ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var IndexProjectItem = function (_React$Component) {
+  _inherits(IndexProjectItem, _React$Component);
+
+  function IndexProjectItem() {
+    _classCallCheck(this, IndexProjectItem);
+
+    return _possibleConstructorReturn(this, (IndexProjectItem.__proto__ || Object.getPrototypeOf(IndexProjectItem)).apply(this, arguments));
+  }
+
+  _createClass(IndexProjectItem, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'li',
+        { className: 'index-display-container' },
+        _react2.default.createElement('img', { className: 'index-image-resize', src: '' + this.props.thumbnail }),
+        _react2.default.createElement(
+          'div',
+          { className: 'index-description' },
+          _react2.default.createElement(
+            'div',
+            null,
+            this.props.title
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            'by ',
+            this.props.author
+          )
+        )
+      );
+    }
+  }]);
+
+  return IndexProjectItem;
+}(_react2.default.Component);
+
+exports.default = IndexProjectItem;
+
+/***/ }),
+
+/***/ "./frontend/components/projects/IndexProjects.jsx":
+/*!********************************************************!*\
+  !*** ./frontend/components/projects/IndexProjects.jsx ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+var _IndexProjectItem = __webpack_require__(/*! ./IndexProjectItem */ "./frontend/components/projects/IndexProjectItem.jsx");
+
+var _IndexProjectItem2 = _interopRequireDefault(_IndexProjectItem);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var IndexProjects = function (_React$Component) {
+  _inherits(IndexProjects, _React$Component);
+
+  function IndexProjects() {
+    _classCallCheck(this, IndexProjects);
+
+    return _possibleConstructorReturn(this, (IndexProjects.__proto__ || Object.getPrototypeOf(IndexProjects)).apply(this, arguments));
+  }
+
+  _createClass(IndexProjects, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.fetchProjects();
+    }
+  }, {
+    key: 'renderProjects',
+    value: function renderProjects() {
+      return this.props.projects.map(function (project) {
+        return _react2.default.createElement(
+          _reactRouterDom.Link,
+          { to: '/project/' + project.id },
+          _react2.default.createElement(_IndexProjectItem2.default, {
+            key: project.id,
+            title: project.title,
+            thumbnail: project.photoUrl,
+            author: project.authorUsername,
+            featured: project.featured,
+            viewCount: project.view_count })
+        );
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      if (!this.props.projects) {
+        return _react2.default.createElement(
+          'div',
+          null,
+          'Loading...'
+        );
+      } else {
+        return _react2.default.createElement(
+          'div',
+          { className: 'index-background' },
+          _react2.default.createElement(
+            'ul',
+            { className: 'index-display-items' },
+            this.renderProjects()
+          )
+        );
+      }
+    }
+  }]);
+
+  return IndexProjects;
+}(_react2.default.Component);
+
+exports.default = IndexProjects;
+
+/***/ }),
+
+/***/ "./frontend/components/projects/IndexProjectsContainer.jsx":
+/*!*****************************************************************!*\
+  !*** ./frontend/components/projects/IndexProjectsContainer.jsx ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _projects_actions = __webpack_require__(/*! ./../../actions/projects_actions */ "./frontend/actions/projects_actions.js");
+
+var _IndexProjects = __webpack_require__(/*! ./IndexProjects */ "./frontend/components/projects/IndexProjects.jsx");
+
+var _IndexProjects2 = _interopRequireDefault(_IndexProjects);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mstp = function mstp(state) {
+  return {
+    projects: Object.values(state.entities.projects),
+    formType: 'Index Projects'
+  };
+};
+
+var mdtp = function mdtp(dispatch) {
+  return {
+    fetchProjects: function fetchProjects() {
+      dispatch((0, _projects_actions.fetchProjects)());
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mstp, mdtp)(_IndexProjects2.default);
 
 /***/ }),
 
@@ -1334,6 +1555,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
@@ -1378,7 +1601,7 @@ var SimpleSlider = function (_React$Component) {
       };
       return _react2.default.createElement(
         _reactSlick2.default,
-        settings,
+        _extends({}, settings, { className: "slide-background" }),
         _react2.default.createElement(
           "div",
           null,

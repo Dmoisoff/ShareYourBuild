@@ -15,24 +15,18 @@
 
 .slider.two {
 	background-image: image-url("architect-architecture-build-1109541");
-  // background-size: 100%;
-  // width: 100%;
   background-size: cover;
   background-position: center center;
 }
 
 .slider.three {
 	background-image: image-url("costume-head-horn-908686");
-	// background-size: 100%;
-  // width: 100%;
   background-size: cover;
   background-position: center center;
 }
 
 .slider.four {
 	background-image: image-url("artificial-intelligence-circuit-board-computing-50711");
-	// background-size: 100%;
-  // width: 100%;
   background-size: cover;
   background-position: center center;
 }
@@ -56,4 +50,8 @@ ul.slick-dots {
 	height: 700px;
 	justify-content: center;
 	align-items: center;
+}
+
+.slide-background{
+	background: rgb(246, 246, 246);
 }
