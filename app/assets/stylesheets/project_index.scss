@@ -8,6 +8,8 @@
   flex-wrap: wrap;
   justify-content: space-around;
   flex-direction: row;
+  margin-left: 12px;
+  margin-right: 12px;
 }
 
 .index-description{
@@ -28,4 +30,15 @@
 
 .index-background{
   background: #f6f6f6;
+}
+
+.index-title {
+  text-decoration: none;
+  color: #333;
+  line-height: 40px;
+  display: block;
+  margin-left: 12px;
+  font-family: Helvetica;
+  font-size: 18px;
+  font-weight: bold;
 }

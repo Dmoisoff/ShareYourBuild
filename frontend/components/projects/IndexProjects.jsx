@@ -33,6 +33,7 @@ class IndexProjects extends React.Component{
     }else{
       return(
         <div className='index-background'>
+          <p className='index-title'>Builds</p>
           <ul className="index-display-items">
             {this.renderProjects()}
           </ul>

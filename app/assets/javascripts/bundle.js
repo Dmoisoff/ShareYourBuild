@@ -661,7 +661,7 @@ var IndexProjectItem = function (_React$Component) {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        'li',
+        'div',
         { className: 'index-display-container' },
         _react2.default.createElement('img', { className: 'index-image-resize', src: '' + this.props.thumbnail }),
         _react2.default.createElement(
@@ -768,6 +768,11 @@ var IndexProjects = function (_React$Component) {
         return _react2.default.createElement(
           'div',
           { className: 'index-background' },
+          _react2.default.createElement(
+            'p',
+            { className: 'index-title' },
+            'Builds'
+          ),
           _react2.default.createElement(
             'ul',
             { className: 'index-display-items' },
@@ -992,17 +997,10 @@ var ProjectShow = function (_React$Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      // debugger
-      // if (!this.props.project || this.props.project.id != nextProps.match.params.projectId) {
-      //   debugger
-      //   this.props.fetchProject(nextProps.match.params.projectId);
-      // }else{
-      //   debugger
       this.setState({
         title: nextProps.project.title,
-        username: nextProps.project.username
+        authorUsername: nextProps.project.authorUsername
       });
-      // }
     }
   }, {
     key: 'render',
@@ -1021,18 +1019,23 @@ var ProjectShow = function (_React$Component) {
         'div',
         null,
         _react2.default.createElement(
-          'h3',
-          null,
-          this.state.title
-        ),
-        _react2.default.createElement(
-          'h6',
-          null,
-          this.state.username
+          'div',
+          { className: 'project-header' },
+          _react2.default.createElement(
+            'p',
+            { className: 'project-title' },
+            this.state.title
+          ),
+          _react2.default.createElement(
+            'p',
+            { className: 'project-by' },
+            ' by ',
+            this.state.authorUsername
+          )
         ),
         _react2.default.createElement(
           _reactRouterDom.Link,
-          { className: 'clickable', to: '/' },
+          { className: 'clickable project-index-link', to: '/' },
           'Back to Home Page'
         )
       );
@@ -1251,7 +1254,6 @@ var SessionForm = function (_React$Component) {
     _this.updateEmail = _this.updateEmail.bind(_this);
     _this.updateAge = _this.updateAge.bind(_this);
     _this.handleSubmit = _this.handleSubmit.bind(_this);
-    _this.isEmail = _this.isEmail.bind(_this);
     _this.aboutMe = _this.aboutMe.bind(_this);
     _this.updateAboutMe = _this.updateAboutMe.bind(_this);
     _this.DemoSubmit = _this.DemoSubmit.bind(_this);
@@ -1263,18 +1265,9 @@ var SessionForm = function (_React$Component) {
   }
 
   _createClass(SessionForm, [{
-    key: 'isEmail',
-    value: function isEmail(email) {
-      var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-      return regex.test(email);
-    }
-  }, {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
       e.preventDefault();
-      // if (!(this.isEmail(this.state.email))) {
-      //   this.state.email = '';
-      // }
       var user = Object.assign({}, this.state);
       this.props.processForm(user);
     }
@@ -1589,7 +1582,6 @@ var SimpleSlider = function (_React$Component) {
   _createClass(SimpleSlider, [{
     key: "render",
     value: function render() {
-      // debugger
       var settings = {
         dots: true,
         infinite: true,
@@ -1811,7 +1803,6 @@ var projectReducer = function projectReducer() {
     case Projects_Actions.FETCH_ALL_PROJECTS:
       return (0, _merge3.default)({}, state, action.projects);
     case Projects_Actions.FETCH_PROJECT:
-      debugger;
       newState = (0, _merge3.default)({}, state, _defineProperty({}, action.project.id, action.project));
       return newState;
     case Projects_Actions.REMOVE_PROJECT:
