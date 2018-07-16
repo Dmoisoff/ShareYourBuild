@@ -4,7 +4,7 @@ class IndexProjectItem extends React.Component{
 
   render(){
     return(
-      <li className="index-display-container">
+      <div className="index-display-container">
         <img className='index-image-resize' src={`${this.props.thumbnail}`} />
         <div className='index-description'>
           <div>
@@ -14,7 +14,7 @@ class IndexProjectItem extends React.Component{
             by {this.props.author}
           </div>
         </div>
-      </li>
+      </div>
     );
   }
 
