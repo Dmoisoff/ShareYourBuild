@@ -1,4 +1,3 @@
-
 json.id @project.id
 json.title @project.title
 json.authorId @project.author_id

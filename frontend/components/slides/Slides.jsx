@@ -4,7 +4,6 @@ import {LetsShareDesigns, LetsShareCostumes, LetsShareRecipes, LetsShareTechnolo
 
 class SimpleSlider extends React.Component {
   render() {
-    // debugger
     let settings = {
       dots: true,
       infinite: true,

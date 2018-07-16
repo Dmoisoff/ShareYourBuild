@@ -9,7 +9,6 @@ const projectReducer = (state = {}, action) => {
     case Projects_Actions.FETCH_ALL_PROJECTS:
       return merge({}, state, action.projects);
     case Projects_Actions.FETCH_PROJECT:
-    debugger
       newState = merge({}, state, {[action.project.id]: action.project});
       return newState;
     case Projects_Actions.REMOVE_PROJECT:
