@@ -55,7 +55,7 @@ class ProjectForm extends React.Component{
             <input type='file' onChange={this.uploadFile.bind(this)} />
             {preview}
           </div>
-          <button onClick={this.handleSubmit.bind(this)} className='submit' type='submit'>Publish</button>
+          <button onClick={this.handleSubmit.bind(this)} className='project-submit' type='submit'>Publish</button>
         </form>
         <ul>
           {errors}

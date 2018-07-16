@@ -1053,7 +1053,7 @@ var ProjectForm = function (_React$Component) {
           ),
           _react2.default.createElement(
             'button',
-            { onClick: this.handleSubmit.bind(this), className: 'submit', type: 'submit' },
+            { onClick: this.handleSubmit.bind(this), className: 'project-submit', type: 'submit' },
             'Publish'
           )
         ),

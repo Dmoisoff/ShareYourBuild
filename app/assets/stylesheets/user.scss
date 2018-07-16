@@ -74,13 +74,13 @@
 
 .user-entry-background {
   background-image: image-url('pexels-photo-209235');
-  background-size: cover;
+  // background-size: cover;
   display: flex;
 }
 
 .user-entry-background-blur {
   background-image: image-url('pexels-photo-209235');
-  background-size: cover;
+  // background-size: cover;
   filter: blur(10.5px);
   padding-top: 100px;
 }
