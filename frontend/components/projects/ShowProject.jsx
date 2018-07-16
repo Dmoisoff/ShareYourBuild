@@ -15,7 +15,7 @@ class ProjectShow extends React.Component {
   componentWillReceiveProps(nextProps) {
       this.setState({
         title: nextProps.project.title,
-        username: nextProps.project.username
+        authorUsername: nextProps.project.authorUsername
       });
   }
 
@@ -27,9 +27,11 @@ class ProjectShow extends React.Component {
 
     return (
       <div>
-        <h3>{this.state.title}</h3>
-        <h6>{this.state.username}</h6>
-        <Link className='clickable' to="/">Back to Home Page</Link>
+        <div className="project-header">
+          <p className="project-title" >{this.state.title}</p>
+          <p className="project-by"> by {this.state.authorUsername}</p>
+        </div>
+        <Link className='clickable project-index-link' to="/">Back to Home Page</Link>
       </div>
     );
   }

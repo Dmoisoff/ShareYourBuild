@@ -769,6 +769,11 @@ var IndexProjects = function (_React$Component) {
           'div',
           { className: 'index-background' },
           _react2.default.createElement(
+            'p',
+            { className: 'index-title' },
+            'Builds'
+          ),
+          _react2.default.createElement(
             'ul',
             { className: 'index-display-items' },
             this.renderProjects()
@@ -994,7 +999,7 @@ var ProjectShow = function (_React$Component) {
     value: function componentWillReceiveProps(nextProps) {
       this.setState({
         title: nextProps.project.title,
-        username: nextProps.project.username
+        authorUsername: nextProps.project.authorUsername
       });
     }
   }, {
@@ -1014,18 +1019,23 @@ var ProjectShow = function (_React$Component) {
         'div',
         null,
         _react2.default.createElement(
-          'h3',
-          null,
-          this.state.title
-        ),
-        _react2.default.createElement(
-          'h6',
-          null,
-          this.state.username
+          'div',
+          { className: 'project-header' },
+          _react2.default.createElement(
+            'p',
+            { className: 'project-title' },
+            this.state.title
+          ),
+          _react2.default.createElement(
+            'p',
+            { className: 'project-by' },
+            ' by ',
+            this.state.authorUsername
+          )
         ),
         _react2.default.createElement(
           _reactRouterDom.Link,
-          { className: 'clickable', to: '/' },
+          { className: 'clickable project-index-link', to: '/' },
           'Back to Home Page'
         )
       );

@@ -4,6 +4,7 @@ import LetsShare from './../slides/Slides_Text';
 import IndexProjectsContainer from './../projects/IndexProjectsContainer';
 
 
+
 const HomePage = () => {
   return(
   <div>
