@@ -84,8 +84,8 @@ craft_project2 = Project.create!({title: 'craft_project2', author_id: demo.id, v
 craft_project3 = Project.create!({title: 'craft_project3', author_id: demo.id, view_count: 0, featured: false})
 craft_project4 = Project.create!({title: 'craft_project4', author_id: demo.id, view_count: 0, featured: false})
 craft_project5 = Project.create!({title: 'craft_project5', author_id: demo.id, view_count: 0, featured: false})
-craft_project6 = Project.create!({title: 'craft_project5', author_id: demo.id, view_count: 0, featured: false})
-craft_project7 = Project.create!({title: 'craft_project5', author_id: demo.id, view_count: 0, featured: false})
+craft_project6 = Project.create!({title: 'craft_project6', author_id: demo.id, view_count: 0, featured: false})
+craft_project7 = Project.create!({title: 'craft_project7', author_id: demo.id, view_count: 0, featured: false})
 
 craft_project1.picture.attach(io: craft1, filename: "blue-decoration-folded-800199.jpg")
 craft_project2.picture.attach(io: craft2, filename: "pexels-photo-194094.jpeg")
