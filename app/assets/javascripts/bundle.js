@@ -99,7 +99,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.deleteProject = exports.updateProject = exports.createProject = exports.fetchProject = exports.fetchProjects = exports.REMOVE_PROJECT = exports.FETCH_PROJECT = exports.FETCH_ALL_PROJECTS = undefined;
+exports.deleteProject = exports.updateProject = exports.createProject = exports.fetchProject = exports.fetchProjects = exports.RECEIVE_PROJECT_ERRORS = exports.REMOVE_PROJECT = exports.FETCH_PROJECT = exports.FETCH_ALL_PROJECTS = undefined;
 
 var _project_api_util = __webpack_require__(/*! ./../util/project_api_util */ "./frontend/util/project_api_util.js");
 
@@ -110,6 +110,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 var FETCH_ALL_PROJECTS = exports.FETCH_ALL_PROJECTS = 'FETCH_ALL_PROJECTS';
 var FETCH_PROJECT = exports.FETCH_PROJECT = 'FETCH_PROJECT';
 var REMOVE_PROJECT = exports.REMOVE_PROJECT = 'REMOVE_PROJECT';
+var RECEIVE_PROJECT_ERRORS = exports.RECEIVE_PROJECT_ERRORS = 'RECEIVE_PROJECT_ERRORS';
 
 var fetchProjects = exports.fetchProjects = function fetchProjects() {
   return function (dispatch) {
@@ -140,6 +141,11 @@ var createProject = exports.createProject = function createProject(project) {
         type: FETCH_PROJECT,
         project: project
       });
+    }, function (errors) {
+      return dispatch({
+        type: RECEIVE_PROJECT_ERRORS,
+        errors: errors.responseJSON
+      });
     });
   };
 };
@@ -150,6 +156,11 @@ var updateProject = exports.updateProject = function updateProject(project) {
       return dispatch({
         type: FETCH_PROJECT,
         project: project
+      });
+    }, function (errors) {
+      return dispatch({
+        type: RECEIVE_PROJECT_ERRORS,
+        errors: errors.responseJSON
       });
     });
   };
@@ -618,6 +629,46 @@ exports.default = HomePage;
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _projects_actions = __webpack_require__(/*! ./../../actions/projects_actions */ "./frontend/actions/projects_actions.js");
+
+var _ProjectForm = __webpack_require__(/*! ./ProjectForm */ "./frontend/components/projects/ProjectForm.jsx");
+
+var _ProjectForm2 = _interopRequireDefault(_ProjectForm);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mstp = function mstp(state) {
+  return {
+    project: state,
+    formType: 'Edit Project'
+  };
+};
+
+var mdtp = function mdtp(dispatch) {
+  return {
+    submitProject: function submitProject(project) {
+      dispatch((0, _projects_actions.updateProject)(project));
+    },
+    fetchProject: function fetchProject(id) {
+      dispatch((0, _projects_actions.fetchProject)(id));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mstp, mdtp)(_ProjectForm2.default);
+
 /***/ }),
 
 /***/ "./frontend/components/projects/IndexProjectItem.jsx":
@@ -876,7 +927,8 @@ var mstp = function mstp(state) {
       photoFile: null,
       previewUrl: null
     },
-    formType: 'New Project'
+    formType: 'New Project',
+    errors: state.errors.project
   };
 };
 
@@ -952,13 +1004,13 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
-      debugger;
       e.preventDefault();
       var formData = new FormData();
       formData.append('project[title]', this.state.title);
       formData.append('project[keywords]', this.state.keyWords);
-      formData.append('project[picture]', this.state.photoFile);
-      debugger;
+      if (this.state.photoFile) {
+        formData.append('project[picture]', this.state.photoFile);
+      }
       this.props.submitProject(formData);
     }
   }, {
@@ -979,25 +1031,36 @@ var ProjectForm = function (_React$Component) {
         ),
         _react2.default.createElement('img', { className: 'index-image-resize', src: this.state.previewUrl })
       ) : null;
-
+      var errors = this.props.errors.map(function (error, i) {
+        return _react2.default.createElement(
+          'li',
+          { key: i },
+          error
+        );
+      });
       return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(
           'form',
           null,
-          _react2.default.createElement(
-            'button',
-            { onClick: this.handleSubmit.bind(this), className: 'submit', type: 'submit' },
-            'Publish'
-          ),
           _react2.default.createElement('input', { type: 'text', onChange: this.updateTitle, placeholder: 'Title', value: '' + this.state.title }),
           _react2.default.createElement(
             'div',
             null,
             _react2.default.createElement('input', { type: 'file', onChange: this.uploadFile.bind(this) }),
             preview
+          ),
+          _react2.default.createElement(
+            'button',
+            { onClick: this.handleSubmit.bind(this), className: 'submit', type: 'submit' },
+            'Publish'
           )
+        ),
+        _react2.default.createElement(
+          'ul',
+          null,
+          errors
         )
       );
     }
@@ -1825,13 +1888,59 @@ var _session_errors_reducer = __webpack_require__(/*! ./session_errors_reducer *
 
 var _session_errors_reducer2 = _interopRequireDefault(_session_errors_reducer);
 
+var _project_errors_reducer = __webpack_require__(/*! ./project_errors_reducer */ "./frontend/reducers/project_errors_reducer.js");
+
+var _project_errors_reducer2 = _interopRequireDefault(_project_errors_reducer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var errorsReducer = (0, _redux.combineReducers)({
-  session: _session_errors_reducer2.default
+  session: _session_errors_reducer2.default,
+  project: _project_errors_reducer2.default
 });
 
 exports.default = errorsReducer;
+
+/***/ }),
+
+/***/ "./frontend/reducers/project_errors_reducer.js":
+/*!*****************************************************!*\
+  !*** ./frontend/reducers/project_errors_reducer.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _projects_actions = __webpack_require__(/*! ./../actions/projects_actions */ "./frontend/actions/projects_actions.js");
+
+var _merge = __webpack_require__(/*! lodash/merge */ "./node_modules/lodash/merge.js");
+
+var _merge2 = _interopRequireDefault(_merge);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var projectErrorsReducer = function projectErrorsReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments[1];
+
+  var oldState = Object.freeze(state);
+  switch (action.type) {
+    case _projects_actions.RECEIVE_PROJECT_ERRORS:
+      return action.errors;
+    case _projects_actions.FETCH_PROJECT:
+      return [];
+    default:
+      return oldState;
+  }
+};
+
+exports.default = projectErrorsReducer;
 
 /***/ }),
 
@@ -2191,7 +2300,6 @@ var fetchProject = exports.fetchProject = function fetchProject(id) {
 };
 
 var createProject = exports.createProject = function createProject(project) {
-  debugger;
   return $.ajax({
     method: 'POST',
     url: 'api/projects',

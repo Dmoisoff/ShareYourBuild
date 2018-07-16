@@ -21,13 +21,13 @@ class ProjectForm extends React.Component{
   }
 
   handleSubmit(e){
-    debugger
     e.preventDefault();
     const formData = new FormData();
     formData.append('project[title]', this.state.title);
     formData.append('project[keywords]', this.state.keyWords);
-    formData.append('project[picture]', this.state.photoFile);
-    debugger
+    if(this.state.photoFile){
+      formData.append('project[picture]', this.state.photoFile);
+    }
     this.props.submitProject(formData);
   }
 
@@ -44,17 +44,22 @@ class ProjectForm extends React.Component{
       <img className='index-image-resize' src={this.state.previewUrl} />
     </div>
      : null;
-
+     const errors = this.props.errors.map((error, i) => {
+       return <li key={i} >{error}</li>;
+     });
     return(
       <div>
         <form>
-          <button onClick={this.handleSubmit.bind(this)} className='submit' type='submit'>Publish</button>
           <input type='text' onChange={this.updateTitle} placeholder='Title' value={`${this.state.title}`} />
           <div>
             <input type='file' onChange={this.uploadFile.bind(this)} />
             {preview}
           </div>
+          <button onClick={this.handleSubmit.bind(this)} className='submit' type='submit'>Publish</button>
         </form>
+        <ul>
+          {errors}
+        </ul>
 
       </div>
     );

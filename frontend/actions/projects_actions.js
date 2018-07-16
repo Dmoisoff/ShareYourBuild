@@ -3,6 +3,7 @@ import * as Projects_Util from './../util/project_api_util';
 export const FETCH_ALL_PROJECTS = 'FETCH_ALL_PROJECTS';
 export const FETCH_PROJECT = 'FETCH_PROJECT';
 export const REMOVE_PROJECT = 'REMOVE_PROJECT';
+export const RECEIVE_PROJECT_ERRORS = 'RECEIVE_PROJECT_ERRORS';
 
 
 export const fetchProjects = () => {
@@ -34,6 +35,11 @@ export const createProject = (project) => {
         type: FETCH_PROJECT,
         project: project
       });
+    }, (errors) => {
+      return dispatch({
+        type: RECEIVE_PROJECT_ERRORS,
+        errors: errors.responseJSON
+      });
     });
   };
 };
@@ -44,6 +50,11 @@ export const updateProject = (project) => {
       return dispatch({
         type: FETCH_PROJECT,
         project: project
+      });
+    }, (errors) => {
+      return dispatch({
+        type: RECEIVE_PROJECT_ERRORS,
+        errors: errors.responseJSON
       });
     });
   };

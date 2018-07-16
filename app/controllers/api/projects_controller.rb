@@ -1,12 +1,11 @@
 class Api::ProjectsController < ApplicationController
 
   def create
-    debugger
     @project = Project.new(project_params)
     @project.author_id = current_user.id
     if @project.save
       render "api/projects/show"
-    else
+    else  
       render json: @project.errors.full_messages, status: 422
     end
   end

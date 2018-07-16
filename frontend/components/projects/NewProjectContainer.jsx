@@ -14,7 +14,8 @@ const mstp = (state) => {
       photoFile: null,
       previewUrl: null
      },
-    formType: 'New Project'
+    formType: 'New Project',
+    errors: state.errors.project
   });
 };
 

@@ -16,11 +16,20 @@ class Project < ApplicationRecord
 
   validates :title, :author_id, presence: true
 
+  validate :ensure_picture
+
   belongs_to :user,
 		foreign_key: :author_id,
     class_name: "User"
 
   has_one_attached :picture
+
+  def ensure_picture
+    unless self.picture.attached?
+      errors[:picture] << 'is needed for a thumbnail'
+    end
+  end
+
 
 
 end
