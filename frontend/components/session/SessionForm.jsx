@@ -19,7 +19,6 @@ class SessionForm extends React.Component {
     this.updateEmail = this.updateEmail.bind(this);
     this.updateAge = this.updateAge.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.isEmail = this.isEmail.bind(this);
     this.aboutMe = this.aboutMe.bind(this);
     this.updateAboutMe = this.updateAboutMe.bind(this);
     this.DemoSubmit = this.DemoSubmit.bind(this);
@@ -29,16 +28,9 @@ class SessionForm extends React.Component {
     this.toggleClass = this.toggleClass.bind(this);
   }
 
-  isEmail(email) {
-    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    return regex.test(email);
-  }
 
   handleSubmit(e) {
     e.preventDefault();
-    // if (!(this.isEmail(this.state.email))) {
-    //   this.state.email = '';
-    // }
     const user = Object.assign({}, this.state);
     this.props.processForm(user);
   }

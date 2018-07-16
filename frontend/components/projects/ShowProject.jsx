@@ -13,9 +13,6 @@ class ProjectShow extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // if (!this.props.project || this.props.project.id != nextProps.match.params.projectId) {
-    //   this.props.fetchProject(nextProps.match.params.projectId);
-    // }else{
       this.setState({
         title: nextProps.project.title,
         username: nextProps.project.username
