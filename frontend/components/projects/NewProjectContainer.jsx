@@ -6,7 +6,6 @@ import ProjectForm from './ProjectForm';
 
 
 const mstp = (state) => {
-  debugger
   return({
     project: { title: '',
       author_id: state.session.id,

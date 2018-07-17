@@ -60,7 +60,7 @@ class ProjectForm extends React.Component{
       return [];
     }else{
       return this.props.errors.map((error,i) => {
-        return <li key={i} >{error}</li>;
+        return <li className='project-errors' key={i} >{error}</li>;
         });
       }
     }
@@ -91,9 +91,9 @@ class ProjectForm extends React.Component{
             <button onClick={this.handleSubmit.bind(this)} className='project-submit' type='submit'>Publish</button>
           </div>
           </form>
-          <div>
+          <div className='project-error-position'>
             {this.uploadResult()}
-            <ul>
+            <ul className='project-errors-container'>
               {this.errors()}
             </ul>
           </div>

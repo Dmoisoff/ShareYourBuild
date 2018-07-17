@@ -33,10 +33,7 @@
   align-content: center;
   justify-content: center;
   flex-direction: column;
-  margin-top: 20px;
-  margin-bottom: 30px;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin: 20px;
 }
 
 .project-title-styling{
@@ -96,4 +93,26 @@
 
 .project-image-text{
 
+}
+
+
+.project-error-position{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+.project-errors-container{
+  background-color: #bd2121;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.project-errors{
+  padding-top: 5px;
+  padding-bottom: 5px;
+  color: white;
 }

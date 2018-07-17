@@ -987,7 +987,6 @@ var _ProjectForm2 = _interopRequireDefault(_ProjectForm);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state) {
-  debugger;
   return {
     project: { title: '',
       author_id: state.session.id,
@@ -1128,7 +1127,7 @@ var ProjectForm = function (_React$Component) {
         return this.props.errors.map(function (error, i) {
           return _react2.default.createElement(
             'li',
-            { key: i },
+            { className: 'project-errors', key: i },
             error
           );
         });
@@ -1190,11 +1189,11 @@ var ProjectForm = function (_React$Component) {
           ),
           _react2.default.createElement(
             'div',
-            null,
+            { className: 'project-error-position' },
             this.uploadResult(),
             _react2.default.createElement(
               'ul',
-              null,
+              { className: 'project-errors-container' },
               this.errors()
             )
           )
@@ -1232,6 +1231,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 
+var _reactRouter = __webpack_require__(/*! react-router */ "./node_modules/react-router/es/index.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1249,6 +1250,7 @@ var ProjectShow = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (ProjectShow.__proto__ || Object.getPrototypeOf(ProjectShow)).call(this, props));
 
     _this.state = _this.props.project;
+    _this.deleteButton = _this.deleteButton.bind(_this);
     return _this;
   }
 
@@ -1270,6 +1272,29 @@ var ProjectShow = function (_React$Component) {
     value: function componentDidUpdate(prevProps) {
       if (!!prevProps.project && prevProps.project.id != this.props.match.params.projectId) {
         this.props.fetchProject(this.props.match.params.projectId);
+      }
+    }
+  }, {
+    key: 'deleteButton',
+    value: function deleteButton() {
+      var _this2 = this;
+
+      if (this.props.project.authorId === this.props.currentUserId) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'project-show-delete-position' },
+          _react2.default.createElement(
+            'button',
+            { className: 'project-show-delete-button', onClick: function onClick() {
+                _this2.props.deleteProject(_this2.props.project.id).then(function () {
+                  _this2.props.history.push('/');
+                });
+              } },
+            'Remove Build'
+          )
+        );
+      } else {
+        return [];
       }
     }
   }, {
@@ -1319,7 +1344,8 @@ var ProjectShow = function (_React$Component) {
               { className: 'project-font-format' },
               this.props.project.description
             )
-          )
+          ),
+          this.deleteButton()
         ),
         _react2.default.createElement(
           _reactRouterDom.Link,
@@ -1370,7 +1396,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var mstp = function mstp(state, ownParams) {
   return {
     project: state.entities.projects[ownParams.match.params.projectId],
-    formType: 'Show Project'
+    formType: 'Show Project',
+    currentUserId: state.session.id
   };
 };
 
@@ -1378,6 +1405,9 @@ var mdtp = function mdtp(dispatch) {
   return {
     fetchProject: function fetchProject(id) {
       dispatch((0, _projects_actions.fetchProject)(id));
+    },
+    deleteProject: function deleteProject(id) {
+      dispatch((0, _projects_actions.deleteProject)(id));
     }
   };
 };
@@ -2098,7 +2128,6 @@ var projectErrorsReducer = function projectErrorsReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments[1];
 
-  debugger;
   var oldState = Object.freeze(state);
   switch (action.type) {
     case _projects_actions.RECEIVE_PROJECT_ERRORS:
@@ -30780,6 +30809,68 @@ var generatePath = function generatePath() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (generatePath);
+
+/***/ }),
+
+/***/ "./node_modules/react-router/es/index.js":
+/*!***********************************************!*\
+  !*** ./node_modules/react-router/es/index.js ***!
+  \***********************************************/
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _MemoryRouter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MemoryRouter */ "./node_modules/react-router/es/MemoryRouter.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MemoryRouter", function() { return _MemoryRouter__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+
+/* harmony import */ var _Prompt__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Prompt */ "./node_modules/react-router/es/Prompt.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Prompt", function() { return _Prompt__WEBPACK_IMPORTED_MODULE_1__["default"]; });
+
+/* harmony import */ var _Redirect__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Redirect */ "./node_modules/react-router/es/Redirect.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Redirect", function() { return _Redirect__WEBPACK_IMPORTED_MODULE_2__["default"]; });
+
+/* harmony import */ var _Route__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Route */ "./node_modules/react-router/es/Route.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Route", function() { return _Route__WEBPACK_IMPORTED_MODULE_3__["default"]; });
+
+/* harmony import */ var _Router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Router */ "./node_modules/react-router/es/Router.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Router", function() { return _Router__WEBPACK_IMPORTED_MODULE_4__["default"]; });
+
+/* harmony import */ var _StaticRouter__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./StaticRouter */ "./node_modules/react-router/es/StaticRouter.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "StaticRouter", function() { return _StaticRouter__WEBPACK_IMPORTED_MODULE_5__["default"]; });
+
+/* harmony import */ var _Switch__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Switch */ "./node_modules/react-router/es/Switch.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Switch", function() { return _Switch__WEBPACK_IMPORTED_MODULE_6__["default"]; });
+
+/* harmony import */ var _generatePath__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./generatePath */ "./node_modules/react-router/es/generatePath.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "generatePath", function() { return _generatePath__WEBPACK_IMPORTED_MODULE_7__["default"]; });
+
+/* harmony import */ var _matchPath__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./matchPath */ "./node_modules/react-router/es/matchPath.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "matchPath", function() { return _matchPath__WEBPACK_IMPORTED_MODULE_8__["default"]; });
+
+/* harmony import */ var _withRouter__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./withRouter */ "./node_modules/react-router/es/withRouter.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "withRouter", function() { return _withRouter__WEBPACK_IMPORTED_MODULE_9__["default"]; });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /***/ }),
 

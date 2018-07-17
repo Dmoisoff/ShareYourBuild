@@ -3,7 +3,6 @@ import merge from 'lodash/merge';
 
 
 const projectErrorsReducer = (state = [], action) => {
-  debugger
   const oldState = Object.freeze(state);
   switch (action.type) {
     case RECEIVE_PROJECT_ERRORS:

@@ -1,11 +1,13 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import {withRouter} from 'react-router';
 
 class ProjectShow extends React.Component {
   constructor(props){
     super(props);
     this.state = this.props.project;
+    this.deleteButton = this.deleteButton.bind(this);
   }
 
   componentDidMount() {
@@ -22,6 +24,15 @@ class ProjectShow extends React.Component {
   componentDidUpdate(prevProps){
     if (!!prevProps.project && prevProps.project.id != this.props.match.params.projectId) {
       this.props.fetchProject(this.props.match.params.projectId);
+    }
+  }
+
+  deleteButton(){
+    if(this.props.project.authorId === this.props.currentUserId){
+    return <div className='project-show-delete-position'><button className='project-show-delete-button' onClick={() =>{
+          this.props.deleteProject(this.props.project.id).then(()=>{this.props.history.push('/');});}}>Remove Build</button></div>;
+    }else{
+    return [];
     }
   }
 
@@ -46,6 +57,7 @@ class ProjectShow extends React.Component {
           <div>
             <p className='project-font-format'>{this.props.project.description}</p>
           </div>
+          {this.deleteButton()}
         </div>
         <Link className='clickable project-index-link' to="/">Back to Home Page</Link>
       </div>
