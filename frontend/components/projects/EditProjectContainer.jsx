@@ -56,8 +56,8 @@ const mstp = (state, ownParams) => {
 
 const mdtp = (dispatch) => {
   return({
-    submitProject: (project) => { dispatch(updateProject(project)); },
-    fetchProject: (id) => { dispatch(fetchProject(id)); }
+    submitProject: (project) =>  dispatch(updateProject(project)),
+    fetchProject: (id) =>  dispatch(fetchProject(id))
   });
 };
 

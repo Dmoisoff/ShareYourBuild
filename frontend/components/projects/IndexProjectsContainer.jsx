@@ -13,7 +13,7 @@ const mstp = (state) => {
 
 const mdtp = (dispatch) => {
   return({
-    fetchProjects: () => { dispatch(fetchProjects());}
+    fetchProjects: () => dispatch(fetchProjects())
   });
 };
 

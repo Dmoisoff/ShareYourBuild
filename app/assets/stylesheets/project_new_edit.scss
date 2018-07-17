@@ -96,7 +96,7 @@
 }
 
 
-.project-error-position{
+.project-message-position{
   display: flex;
   align-content: center;
   justify-content: center;
@@ -115,4 +115,18 @@
   padding-top: 5px;
   padding-bottom: 5px;
   color: white;
+}
+.project-success{
+  padding-top: 5px;
+  padding-bottom: 5px;
+  color: white;
+}
+
+.project-success-container{
+  background-color: #1b9430;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 }

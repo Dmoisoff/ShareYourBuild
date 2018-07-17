@@ -13,17 +13,17 @@ const mstp = (state) => {
       description: '',
       keyWords: '',
       pictureFile: null,
-      pictureUrl: null
+      pictureUrl: null,
+      uploadStatus: false
      },
     formType: 'New Project',
     errors: state.errors.project,
-    uploadStatus: false
   });
 };
 
 const mdtp = (dispatch) => {
   return({
-    submitProject: (project) => { dispatch(createProject(project)); }
+    submitProject: (project) => dispatch(createProject(project))
   });
 };
 

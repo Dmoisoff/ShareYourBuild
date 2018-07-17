@@ -720,10 +720,10 @@ var mstp = function mstp(state, ownParams) {
 var mdtp = function mdtp(dispatch) {
   return {
     submitProject: function submitProject(project) {
-      dispatch((0, _projects_actions.updateProject)(project));
+      return dispatch((0, _projects_actions.updateProject)(project));
     },
     fetchProject: function fetchProject(id) {
-      dispatch((0, _projects_actions.fetchProject)(id));
+      return dispatch((0, _projects_actions.fetchProject)(id));
     }
   };
 };
@@ -944,7 +944,7 @@ var mstp = function mstp(state) {
 var mdtp = function mdtp(dispatch) {
   return {
     fetchProjects: function fetchProjects() {
-      dispatch((0, _projects_actions.fetchProjects)());
+      return dispatch((0, _projects_actions.fetchProjects)());
     }
   };
 };
@@ -991,18 +991,18 @@ var mstp = function mstp(state) {
       description: '',
       keyWords: '',
       pictureFile: null,
-      pictureUrl: null
+      pictureUrl: null,
+      uploadStatus: false
     },
     formType: 'New Project',
-    errors: state.errors.project,
-    uploadStatus: false
+    errors: state.errors.project
   };
 };
 
 var mdtp = function mdtp(dispatch) {
   return {
     submitProject: function submitProject(project) {
-      dispatch((0, _projects_actions.createProject)(project));
+      return dispatch((0, _projects_actions.createProject)(project));
     }
   };
 };
@@ -1053,6 +1053,7 @@ var ProjectForm = function (_React$Component) {
     _this.updateTitle = _this.updateTitle.bind(_this);
     _this.errors = _this.errors.bind(_this);
     _this.uploadResult = _this.uploadResult.bind(_this);
+    _this.redirect = _this.redirect.bind(_this);
     return _this;
   }
 
@@ -1073,6 +1074,8 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
+      var _this3 = this;
+
       e.preventDefault();
       var formData = new FormData();
       formData.append('project[title]', this.state.title);
@@ -1082,23 +1085,43 @@ var ProjectForm = function (_React$Component) {
       if (this.state.pictureFile) {
         formData.append('project[picture]', this.state.pictureFile);
       }
-      this.props.submitProject(formData).then(this.setState({ uploadStatus: true }));
+      this.props.submitProject(formData).then(function (project) {
+        _this3.redirect(project.project.id);
+      });
+    }
+  }, {
+    key: 'redirect',
+    value: function redirect(id) {
+      var _this4 = this;
+
+      this.setState({ uploadStatus: true });
+      setTimeout(function () {
+        _this4.props.history.push('/project/' + id);
+      }, 1000);
     }
   }, {
     key: 'uploadResult',
     value: function uploadResult() {
       if (this.state.uploadStatus === true) {
-        if (this.state.formType === 'New Project') {
+        if (this.props.formType === 'New Project') {
           return _react2.default.createElement(
-            'p',
-            null,
-            'Build Successfully Saved'
+            'div',
+            { className: 'project-success-container' },
+            _react2.default.createElement(
+              'p',
+              { className: 'project-success' },
+              'Build Successfully Saved'
+            )
           );
         } else {
           return _react2.default.createElement(
-            'p',
-            null,
-            'Build Successfully Updated'
+            'div',
+            { className: 'project-success-container' },
+            _react2.default.createElement(
+              'p',
+              { className: 'project-success' },
+              'Build Successfully Updated'
+            )
           );
         }
       } else {
@@ -1186,8 +1209,12 @@ var ProjectForm = function (_React$Component) {
           ),
           _react2.default.createElement(
             'div',
-            { className: 'project-error-position' },
-            this.uploadResult(),
+            { className: 'project-message-position' },
+            this.uploadResult()
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'project-message-position' },
             _react2.default.createElement(
               'ul',
               { className: 'project-errors-container' },
@@ -1276,20 +1303,10 @@ var ProjectShow = function (_React$Component) {
     value: function remove() {
       var _this2 = this;
 
-      debugger;
       this.props.deleteProject(this.props.project.id).then(function () {
         return _this2.props.history.push('/');
       });
     }
-    // if(this.props.project.authorId === this.props.currentUserId){
-    // return <div className='project-show-delete-position'><button className='project-show-delete-button' onClick={() =>{
-    //     debugger
-    //       this.props.deleteProject(this.props.project.id).then(()=>{this.props.history.push('/');});}}>Remove Build</button></div>;
-    // }else{
-    // return [];
-    // }
-
-
   }, {
     key: 'render',
     value: function render() {
@@ -1697,7 +1714,7 @@ var SessionForm = function (_React$Component) {
       this.setState({ username: user, password: '123456' });
       setTimeout(function () {
         _this3.props.demoLogin();
-      }, 500);
+      }, 1000);
     }
   }, {
     key: 'aboutMe',

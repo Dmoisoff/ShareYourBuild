@@ -9,6 +9,7 @@ class ProjectForm extends React.Component{
     this.updateTitle = this.updateTitle.bind(this);
     this.errors = this.errors.bind(this);
     this.uploadResult = this.uploadResult.bind(this);
+    this.redirect = this.redirect.bind(this);
   }
 
   uploadFile(e){
@@ -32,15 +33,20 @@ class ProjectForm extends React.Component{
     if(this.state.pictureFile){
       formData.append('project[picture]', this.state.pictureFile);
     }
-    this.props.submitProject(formData).then(this.setState({uploadStatus: true}));
+    this.props.submitProject(formData).then((project) => {this.redirect(project.project.id);});
+  }
+
+  redirect(id){
+    this.setState({uploadStatus: true});
+    setTimeout(() => {this.props.history.push(`/project/${id}`);}, 1000);
   }
 
   uploadResult(){
     if(this.state.uploadStatus === true){
-      if(this.state.formType === 'New Project'){
-        return <p>Build Successfully Saved</p>;
+      if(this.props.formType === 'New Project'){
+        return <div className='project-success-container'><p className='project-success'>Build Successfully Saved</p></div>;
       }else{
-        return <p>Build Successfully Updated</p>;
+        return <div className='project-success-container'><p className='project-success'>Build Successfully Updated</p></div>;
       }
     }else{
       return [];
@@ -91,8 +97,10 @@ class ProjectForm extends React.Component{
             <button onClick={this.handleSubmit.bind(this)} className='project-submit' type='submit'>Publish</button>
           </div>
           </form>
-          <div className='project-error-position'>
+          <div className='project-message-position'>
             {this.uploadResult()}
+          </div>
+          <div className='project-message-position'>
             <ul className='project-errors-container'>
               {this.errors()}
             </ul>

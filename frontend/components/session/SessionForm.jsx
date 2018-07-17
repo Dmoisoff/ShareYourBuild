@@ -128,7 +128,7 @@ class SessionForm extends React.Component {
     e.preventDefault();
     const user = 'Demo-Man';
     this.setState({username: user, password:'123456'});
-    setTimeout(() => {this.props.demoLogin();}, 500);
+    setTimeout(() => {this.props.demoLogin();}, 1000);
   }
 
   aboutMe(formType){
