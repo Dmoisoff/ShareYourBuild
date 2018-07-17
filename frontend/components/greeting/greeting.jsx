@@ -34,7 +34,7 @@ class Greeting extends React.Component{
                 <img className='user-profile-pic clickable' src={this.props.currentUser.profilePic} onClick={() => {this.toggleClass();}} />
                 <ul className={`${active} `}>
                   <li className='user-dropDown-content'>
-                    <Link className='clickable user-drop-items' onClick={() =>{this.props.logOut();}} to='/login'>Sign Out</Link>
+                    <Link className='clickable user-drop-items' onClick={() =>{this.props.logOut();}} to='/'>Sign Out</Link>
                   </li>
                   <li className='divide'></li>
                   <li className='user-dropDown-content'>

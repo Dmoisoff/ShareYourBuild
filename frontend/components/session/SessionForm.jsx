@@ -124,7 +124,8 @@ class SessionForm extends React.Component {
     });
   }
 
-  DemoSubmit(){
+  DemoSubmit(e){
+    e.preventDefault();
     const user = 'Demo-Man';
     this.setState({username: user, password:'123456'});
     setTimeout(() => {this.props.demoLogin();}, 500);
@@ -174,7 +175,7 @@ class SessionForm extends React.Component {
             <button className="submit" onClick={this.handleSubmit} value={this.props.formType}>{this.props.formType}</button>
           </form>
           <form className='demo-move'>
-            <button className="user-demo" onClick={() => {this.DemoSubmit();} }> Demo Login</button>
+            <button className="user-demo" onClick={(e) => {this.DemoSubmit(e);} }> Demo Login</button>
           </form>
           <div className='user-error-position'>
             <ul className='user-errors-container'>

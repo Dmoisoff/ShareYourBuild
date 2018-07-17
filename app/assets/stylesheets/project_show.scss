@@ -27,7 +27,7 @@
 }
 
 .project-show-image-placement{
-  max-width: 844.423px;
+  max-width: 540px;
   margin: auto;
   padding-top: 20px;
   padding-bottom: 20px;
@@ -38,4 +38,21 @@
   height: auto;
   border-radius: 4px;
   vertical-align: middle;
+}
+
+.project-font-format{
+  box-sizing: border-box;
+  color: rgb(85, 85, 85);
+  display: block;
+  font-family: "Nunito", helvetica, arial, sans-serif;
+  font-size: 20px;
+  font-weight: 300;
+  height: 316px;
+  line-height: 32px;
+  max-width: 800px;
+  text-align: left;
+  text-size-adjust: 100%;
+  width: 800px;
+  word-wrap: break-word;
+  margin: auto;
 }

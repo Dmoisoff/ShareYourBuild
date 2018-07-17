@@ -9,7 +9,6 @@ class IndexProjects extends React.Component{
   }
 
   renderProjects(){
-    debugger
     return(
       this.props.projects.map((project) => {
         return (

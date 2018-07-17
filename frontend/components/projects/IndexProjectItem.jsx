@@ -5,7 +5,9 @@ class IndexProjectItem extends React.Component{
   render(){
     return(
       <div className="index-display-container">
-        <img className='index-image-resize' src={`${this.props.mainPicture}`} />
+        <div>
+          <img className='index-image-resize' src={`${this.props.mainPicture}`} />
+        </div>
         <div className='index-description'>
           <div>
             {this.props.title}

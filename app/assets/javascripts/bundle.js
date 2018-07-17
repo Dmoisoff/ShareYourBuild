@@ -468,7 +468,7 @@ var Greeting = function (_React$Component) {
                       _reactRouterDom.Link,
                       { className: 'clickable user-drop-items', onClick: function onClick() {
                           _this2.props.logOut();
-                        }, to: '/login' },
+                        }, to: '/' },
                       'Sign Out'
                     )
                   ),
@@ -782,7 +782,11 @@ var IndexProjectItem = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { className: 'index-display-container' },
-        _react2.default.createElement('img', { className: 'index-image-resize', src: '' + this.props.mainPicture }),
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement('img', { className: 'index-image-resize', src: '' + this.props.mainPicture })
+        ),
         _react2.default.createElement(
           'div',
           { className: 'index-description' },
@@ -860,7 +864,6 @@ var IndexProjects = function (_React$Component) {
   }, {
     key: 'renderProjects',
     value: function renderProjects() {
-      debugger;
       return this.props.projects.map(function (project) {
         return _react2.default.createElement(
           _reactRouterDom.Link,
@@ -1217,6 +1220,7 @@ var ProjectShow = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      debugger;
       var project = this.props.project;
 
       if (!project) {
@@ -1232,23 +1236,36 @@ var ProjectShow = function (_React$Component) {
         null,
         _react2.default.createElement(
           'div',
-          { className: 'project-header' },
+          null,
           _react2.default.createElement(
-            'p',
-            { className: 'project-title' },
-            this.state.title
+            'div',
+            { className: 'project-header' },
+            _react2.default.createElement(
+              'p',
+              { className: 'project-title' },
+              this.state.title
+            ),
+            _react2.default.createElement(
+              'p',
+              { className: 'project-by' },
+              ' by ',
+              this.state.authorUsername
+            )
           ),
           _react2.default.createElement(
-            'p',
-            { className: 'project-by' },
-            ' by ',
-            this.state.authorUsername
+            'div',
+            { className: 'project-show-image-placement' },
+            _react2.default.createElement('img', { className: 'project-show-image-scale', src: '' + this.props.project.picture })
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              'p',
+              { className: 'project-font-format' },
+              this.props.project.description
+            )
           )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'project-show-image-placement' },
-          _react2.default.createElement('img', { className: 'project-show-image-scale', src: '' + this.props.project.picture })
         ),
         _react2.default.createElement(
           _reactRouterDom.Link,
@@ -1584,9 +1601,10 @@ var SessionForm = function (_React$Component) {
     }
   }, {
     key: 'DemoSubmit',
-    value: function DemoSubmit() {
+    value: function DemoSubmit(e) {
       var _this3 = this;
 
+      e.preventDefault();
       var user = 'Demo-Man';
       this.setState({ username: user, password: '123456' });
       setTimeout(function () {
@@ -1679,8 +1697,8 @@ var SessionForm = function (_React$Component) {
             { className: 'demo-move' },
             _react2.default.createElement(
               'button',
-              { className: 'user-demo', onClick: function onClick() {
-                  _this4.DemoSubmit();
+              { className: 'user-demo', onClick: function onClick(e) {
+                  _this4.DemoSubmit(e);
                 } },
               ' Demo Login'
             )

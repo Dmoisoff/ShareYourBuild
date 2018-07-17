@@ -1,6 +1,9 @@
 .index-image-resize{
   width: 320px;
   height: 268px;
+  object-fit: contain;
+  object-position: center;width: 320px;
+  height: 268px;
 }
 
 .index-display-items{
@@ -26,6 +29,8 @@
   border: 1px solid rgba(0, 0, 0, 0.10);
   background: #fff;
   margin-bottom: 25px;
+  width: 320px;
+  height: 360px;
 }
 
 .index-background{

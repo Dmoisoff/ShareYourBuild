@@ -10,13 +10,14 @@
 #  picture_url :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  description :text
 #
 
 class Project < ApplicationRecord
 
-  validates :title, :author_id, presence: true
+  validates :title, :description, :author_id, presence: true
 
-  validate :ensure_picture
+  # validate :ensure_picture
 
   belongs_to :user,
 		foreign_key: :author_id,
@@ -29,6 +30,8 @@ class Project < ApplicationRecord
       errors[:picture] << 'is needed for display'
     end
   end
+
+
 
 
 
