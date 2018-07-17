@@ -39,6 +39,9 @@ class ProjectShow extends React.Component {
           <p className="project-title" >{this.state.title}</p>
           <p className="project-by"> by {this.state.authorUsername}</p>
         </div>
+        <div className="project-show-image-placement">
+          <img className="project-show-image-scale" src={`${this.props.project.picture}`} />
+        </div>
         <Link className='clickable project-index-link' to="/">Back to Home Page</Link>
       </div>
     );

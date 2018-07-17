@@ -1246,6 +1246,11 @@ var ProjectShow = function (_React$Component) {
           )
         ),
         _react2.default.createElement(
+          'div',
+          { className: 'project-show-image-placement' },
+          _react2.default.createElement('img', { className: 'project-show-image-scale', src: '' + this.props.project.picture })
+        ),
+        _react2.default.createElement(
           _reactRouterDom.Link,
           { className: 'clickable project-index-link', to: '/' },
           'Back to Home Page'
