@@ -633,6 +633,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
@@ -649,10 +651,76 @@ var _ProjectForm2 = _interopRequireDefault(_ProjectForm);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var mstp = function mstp(state) {
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var EditProjectForm = function (_React$Component) {
+  _inherits(EditProjectForm, _React$Component);
+
+  function EditProjectForm() {
+    _classCallCheck(this, EditProjectForm);
+
+    return _possibleConstructorReturn(this, (EditProjectForm.__proto__ || Object.getPrototypeOf(EditProjectForm)).apply(this, arguments));
+  }
+
+  _createClass(EditProjectForm, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.fetchProject(this.props.match.params.projectId);
+    }
+
+    // componentWillReceiveProps(nextProps) {
+    // debugger
+    //   if (this.props.match.params.projectId === nextProps.match.params.projectId) {
+    //     this.setState({title: nextProps.project.title, picture: nextProps.project.picture, pictureUrl: nextProps.project.pictureUrl});
+    //   }
+    // }
+    //
+    // componentDidUpdate(prevProps){
+    //   if (!!prevProps.project && prevProps.project.id != this.props.match.params.projectId) {
+    //     this.props.fetchProject(this.props.match.params.projectId);
+    //   }
+    // }
+
+  }, {
+    key: 'render',
+    value: function render() {
+      var projectCheck = this.props.projectCheck;
+
+      if (!projectCheck) {
+        return _react2.default.createElement(
+          'div',
+          null,
+          'Loading...'
+        );
+      }
+      var _props = this.props,
+          action = _props.action,
+          formType = _props.formType,
+          project = _props.project;
+
+      debugger;
+      return _react2.default.createElement(_ProjectForm2.default, {
+        action: action,
+        formType: formType,
+        project: project });
+    }
+  }]);
+
+  return EditProjectForm;
+}(_react2.default.Component);
+
+var mstp = function mstp(state, ownParams) {
+  debugger;
+  var defaultProject = { title: '', photoFile: null, pictureUrl: null };
+  var project = state.entities.projects[ownParams.match.params.projectId] || defaultProject;
   return {
-    project: state,
-    formType: 'Edit Project'
+    project: { title: project.title, picture: project.picture, pictureUrl: project.pictureUrl },
+    formType: 'Update Project',
+    errors: state.errors.project
   };
 };
 
@@ -667,7 +735,7 @@ var mdtp = function mdtp(dispatch) {
   };
 };
 
-exports.default = (0, _reactRedux.connect)(mstp, mdtp)(_ProjectForm2.default);
+exports.default = (0, _reactRedux.connect)(mstp, mdtp)(EditProjectForm);
 
 /***/ }),
 
@@ -714,7 +782,7 @@ var IndexProjectItem = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { className: 'index-display-container' },
-        _react2.default.createElement('img', { className: 'index-image-resize', src: '' + this.props.thumbnail }),
+        _react2.default.createElement('img', { className: 'index-image-resize', src: '' + this.props.mainPicture }),
         _react2.default.createElement(
           'div',
           { className: 'index-description' },
@@ -792,6 +860,7 @@ var IndexProjects = function (_React$Component) {
   }, {
     key: 'renderProjects',
     value: function renderProjects() {
+      debugger;
       return this.props.projects.map(function (project) {
         return _react2.default.createElement(
           _reactRouterDom.Link,
@@ -799,7 +868,7 @@ var IndexProjects = function (_React$Component) {
           _react2.default.createElement(_IndexProjectItem2.default, {
             key: project.id,
             title: project.title,
-            thumbnail: project.photoUrl,
+            mainPicture: project.picture,
             author: project.authorUsername,
             featured: project.featured,
             viewCount: project.view_count })
@@ -924,8 +993,8 @@ var mstp = function mstp(state) {
       author_id: state.session.id,
       author_username: state.entities.users[state.session.id],
       keyWords: '',
-      photoFile: null,
-      previewUrl: null
+      pictureFile: null,
+      pictureUrl: null
     },
     formType: 'New Project',
     errors: state.errors.project
@@ -995,7 +1064,7 @@ var ProjectForm = function (_React$Component) {
       var file = e.currentTarget.files[0];
       var fileReader = new FileReader();
       fileReader.onloadend = function () {
-        _this2.setState({ photoFile: file, previewUrl: fileReader.result });
+        _this2.setState({ pictureFile: file, pictureUrl: fileReader.result });
       };
       if (file) {
         fileReader.readAsDataURL(file);
@@ -1008,8 +1077,9 @@ var ProjectForm = function (_React$Component) {
       var formData = new FormData();
       formData.append('project[title]', this.state.title);
       formData.append('project[keywords]', this.state.keyWords);
-      if (this.state.photoFile) {
-        formData.append('project[picture]', this.state.photoFile);
+      formData.append('project[picture_url]', this.state.pictureUrl);
+      if (this.state.pictureFile) {
+        formData.append('project[picture]', this.state.pictureFile);
       }
       this.props.submitProject(formData);
     }
@@ -1019,25 +1089,34 @@ var ProjectForm = function (_React$Component) {
       this.setState({ title: e.target.value });
     }
   }, {
+    key: 'errors',
+    value: function errors() {
+      if (!this.props.errors) {
+        return [];
+      } else {
+        return this.props.errors.map(function (error, i) {
+          return _react2.default.createElement(
+            'li',
+            { key: i },
+            error
+          );
+        });
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var preview = this.state.previewUrl ? _react2.default.createElement(
+      var preview = this.state.pictureUrl ? _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(
           'p',
           null,
-          'Thumbnail Preview'
+          'Picture Preview'
         ),
-        _react2.default.createElement('img', { className: 'index-image-resize', src: this.state.previewUrl })
+        _react2.default.createElement('img', { className: 'index-image-resize', src: this.state.pictureUrl })
       ) : null;
-      var errors = this.props.errors.map(function (error, i) {
-        return _react2.default.createElement(
-          'li',
-          { key: i },
-          error
-        );
-      });
+
       return _react2.default.createElement(
         'div',
         null,
@@ -1060,7 +1139,7 @@ var ProjectForm = function (_React$Component) {
         _react2.default.createElement(
           'ul',
           null,
-          errors
+          this.errors.bind(this)
         )
       );
     }
@@ -1306,15 +1385,13 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 var mstp = function mstp(state) {
   return {
     errors: state.errors.session.logIn,
     formType: 'Log In',
     navLink: _react2.default.createElement(
       _reactRouterDom.Link,
-      _defineProperty({ className: 'clickable', to: '/signup' }, 'className', 'link'),
+      { className: 'clickable user-welcome-link', to: '/signup' },
       ' Sign up here'
     )
   };
@@ -1558,6 +1635,23 @@ var SessionForm = function (_React$Component) {
           'div',
           { className: 'user-entry' },
           _react2.default.createElement(
+            'div',
+            { className: 'user-welcome' },
+            _react2.default.createElement(
+              'p',
+              null,
+              'Welcome to Share Your Build!'
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              'Please ',
+              this.props.formType,
+              ' or ',
+              this.props.navLink
+            )
+          ),
+          _react2.default.createElement(
             'form',
             { onSubmit: this.handleSubmit },
             _react2.default.createElement(
@@ -1637,15 +1731,13 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 var mstp = function mstp(state) {
   return {
     errors: state.errors.session.signUp,
     formType: 'Sign Up',
     navLink: _react2.default.createElement(
       _reactRouterDom.Link,
-      _defineProperty({ className: 'clickable', to: '/login' }, 'className', 'link'),
+      { className: 'clickable user-welcome-link', to: '/login' },
       ' Sign in here'
     )
   };

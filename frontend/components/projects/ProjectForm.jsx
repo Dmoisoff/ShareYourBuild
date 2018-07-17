@@ -13,7 +13,7 @@ class ProjectForm extends React.Component{
     const file = e.currentTarget.files[0];
     const fileReader = new FileReader();
     fileReader.onloadend = () => {
-      this.setState({photoFile: file, previewUrl: fileReader.result});
+      this.setState({pictureFile: file, pictureUrl: fileReader.result });
     };
     if(file){
       fileReader.readAsDataURL(file);
@@ -25,8 +25,9 @@ class ProjectForm extends React.Component{
     const formData = new FormData();
     formData.append('project[title]', this.state.title);
     formData.append('project[keywords]', this.state.keyWords);
-    if(this.state.photoFile){
-      formData.append('project[picture]', this.state.photoFile);
+    formData.append('project[picture_url]', this.state.pictureUrl);
+    if(this.state.pictureFile){
+      formData.append('project[picture]', this.state.pictureFile);
     }
     this.props.submitProject(formData);
   }
@@ -36,17 +37,25 @@ class ProjectForm extends React.Component{
   }
 
 
+  errors(){
+    if(!this.props.errors){
+      return [];
+    }else{
+      return this.props.errors.map((error,i) => {
+        return <li key={i} >{error}</li>;
+        });
+      }
+    }
+
 
   render(){
-    const preview = this.state.previewUrl ?
+    const preview = this.state.pictureUrl ?
     <div>
-      <p>Thumbnail Preview</p>
-      <img className='index-image-resize' src={this.state.previewUrl} />
+      <p>Picture Preview</p>
+      <img className='index-image-resize' src={this.state.pictureUrl} />
     </div>
      : null;
-     const errors = this.props.errors.map((error, i) => {
-       return <li key={i} >{error}</li>;
-     });
+
     return(
       <div>
         <form>
@@ -58,7 +67,7 @@ class ProjectForm extends React.Component{
           <button onClick={this.handleSubmit.bind(this)} className='project-submit' type='submit'>Publish</button>
         </form>
         <ul>
-          {errors}
+          {this.errors.bind(this)}
         </ul>
 
       </div>

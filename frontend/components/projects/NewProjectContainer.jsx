@@ -11,8 +11,8 @@ const mstp = (state) => {
       author_id: state.session.id,
       author_username: state.entities.users[state.session.id],
       keyWords: '',
-      photoFile: null,
-      previewUrl: null
+      pictureFile: null,
+      pictureUrl: null
      },
     formType: 'New Project',
     errors: state.errors.project

@@ -149,6 +149,7 @@ class SessionForm extends React.Component {
         });
       }
     }
+
   render(){
     return(
       <div>
@@ -158,6 +159,10 @@ class SessionForm extends React.Component {
           </div>
         </div>
         <div className='user-entry'>
+          <div className='user-welcome'>
+            <p>Welcome to Share Your Build!</p>
+            <p>Please {this.props.formType} or {this.props.navLink}</p>
+          </div>
           <form onSubmit={this.handleSubmit}>
             <div className="user-form-font-size">
               {this.email(this.props.formType)}

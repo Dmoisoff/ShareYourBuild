@@ -23,7 +23,7 @@ const App = () => (
       </div>
       <div className='nav_spacing'>
         <div className='search-bar-formating'>
-          <form className='search-bar-form'>
+          <form className='search-bar-form' >
             <input type="text" placeholder="Let's Build ..." name="search2" className='search-bar-input' />
             <button className='search-bar-button' type='submit'><i class="fas fa-search"></i></button>
           </form>

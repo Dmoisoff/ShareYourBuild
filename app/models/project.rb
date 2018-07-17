@@ -26,7 +26,7 @@ class Project < ApplicationRecord
 
   def ensure_picture
     unless self.picture.attached?
-      errors[:picture] << 'is needed for a thumbnail'
+      errors[:picture] << 'is needed for display'
     end
   end
 

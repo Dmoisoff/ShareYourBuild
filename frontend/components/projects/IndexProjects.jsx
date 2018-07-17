@@ -9,6 +9,7 @@ class IndexProjects extends React.Component{
   }
 
   renderProjects(){
+    debugger
     return(
       this.props.projects.map((project) => {
         return (
@@ -16,7 +17,7 @@ class IndexProjects extends React.Component{
             <IndexProjectItem
               key={project.id}
               title={project.title}
-              thumbnail={project.photoUrl}
+              mainPicture={project.picture}
               author={project.authorUsername}
               featured={project.featured}
               viewCount={project.view_count} />
