@@ -336,8 +336,6 @@ var App = function App() {
           )
         )
       ),
-      _react2.default.createElement('div', { className: 'add-space' }),
-      _react2.default.createElement('div', null),
       _react2.default.createElement(_greeting_container2.default, null)
     ),
     _react2.default.createElement(
@@ -989,16 +987,19 @@ var _ProjectForm2 = _interopRequireDefault(_ProjectForm);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state) {
+  debugger;
   return {
     project: { title: '',
       author_id: state.session.id,
       author_username: state.entities.users[state.session.id],
+      description: '',
       keyWords: '',
       pictureFile: null,
       pictureUrl: null
     },
     formType: 'New Project',
-    errors: state.errors.project
+    errors: state.errors.project,
+    uploadStatus: false
   };
 };
 
@@ -1054,6 +1055,8 @@ var ProjectForm = function (_React$Component) {
 
     _this.state = _this.props.project;
     _this.updateTitle = _this.updateTitle.bind(_this);
+    _this.errors = _this.errors.bind(_this);
+    _this.uploadResult = _this.uploadResult.bind(_this);
     return _this;
   }
 
@@ -1079,15 +1082,42 @@ var ProjectForm = function (_React$Component) {
       formData.append('project[title]', this.state.title);
       formData.append('project[keywords]', this.state.keyWords);
       formData.append('project[picture_url]', this.state.pictureUrl);
+      formData.append('project[description]', this.state.description);
       if (this.state.pictureFile) {
         formData.append('project[picture]', this.state.pictureFile);
       }
-      this.props.submitProject(formData);
+      this.props.submitProject(formData).then(this.setState({ uploadStatus: true }));
+    }
+  }, {
+    key: 'uploadResult',
+    value: function uploadResult() {
+      if (this.state.uploadStatus === true) {
+        if (this.state.formType === 'New Project') {
+          return _react2.default.createElement(
+            'p',
+            null,
+            'Build Successfully Saved'
+          );
+        } else {
+          return _react2.default.createElement(
+            'p',
+            null,
+            'Build Successfully Updated'
+          );
+        }
+      } else {
+        return [];
+      }
     }
   }, {
     key: 'updateTitle',
     value: function updateTitle(e) {
       this.setState({ title: e.target.value });
+    }
+  }, {
+    key: 'updateDescription',
+    value: function updateDescription(e) {
+      this.setState({ description: e.target.value });
     }
   }, {
     key: 'errors',
@@ -1109,38 +1139,65 @@ var ProjectForm = function (_React$Component) {
     value: function render() {
       var preview = this.state.pictureUrl ? _react2.default.createElement(
         'div',
-        null,
+        { className: 'project-picture-preview-format' },
         _react2.default.createElement(
           'p',
           null,
           'Picture Preview'
         ),
-        _react2.default.createElement('img', { className: 'index-image-resize', src: this.state.pictureUrl })
+        _react2.default.createElement('img', { className: 'project-image-resize', src: this.state.pictureUrl })
       ) : null;
 
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'project-background' },
         _react2.default.createElement(
-          'form',
-          null,
-          _react2.default.createElement('input', { type: 'text', onChange: this.updateTitle, placeholder: 'Title', value: '' + this.state.title }),
+          'div',
+          { className: 'project-form-positioning' },
+          _react2.default.createElement(
+            'form',
+            { className: 'project-form-styling' },
+            _react2.default.createElement(
+              'div',
+              { className: 'project-input-format' },
+              _react2.default.createElement('input', { className: 'project-title-styling', type: 'text', onChange: this.updateTitle, placeholder: 'Title', value: '' + this.state.title }),
+              _react2.default.createElement(
+                'div',
+                { className: 'project-image-input-format' },
+                _react2.default.createElement(
+                  'p',
+                  { className: 'project-image-text' },
+                  'Please select a main picture for your build'
+                ),
+                _react2.default.createElement('input', { className: 'project-body-input', type: 'file', onChange: this.uploadFile.bind(this) })
+              ),
+              preview,
+              _react2.default.createElement(
+                'textarea',
+                { onChange: this.updateDescription.bind(this), placeholder: 'Please enter a brief description of your build', className: 'project-body-text', rows: '8', cols: '80' },
+                this.state.description
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'project-button-placement' },
+              _react2.default.createElement(
+                'button',
+                { onClick: this.handleSubmit.bind(this), className: 'project-submit', type: 'submit' },
+                'Publish'
+              )
+            )
+          ),
           _react2.default.createElement(
             'div',
             null,
-            _react2.default.createElement('input', { type: 'file', onChange: this.uploadFile.bind(this) }),
-            preview
-          ),
-          _react2.default.createElement(
-            'button',
-            { onClick: this.handleSubmit.bind(this), className: 'project-submit', type: 'submit' },
-            'Publish'
+            this.uploadResult(),
+            _react2.default.createElement(
+              'ul',
+              null,
+              this.errors()
+            )
           )
-        ),
-        _react2.default.createElement(
-          'ul',
-          null,
-          this.errors.bind(this)
         )
       );
     }
@@ -2041,6 +2098,7 @@ var projectErrorsReducer = function projectErrorsReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments[1];
 
+  debugger;
   var oldState = Object.freeze(state);
   switch (action.type) {
     case _projects_actions.RECEIVE_PROJECT_ERRORS:

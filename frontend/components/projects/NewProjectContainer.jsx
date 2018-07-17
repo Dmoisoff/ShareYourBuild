@@ -6,16 +6,19 @@ import ProjectForm from './ProjectForm';
 
 
 const mstp = (state) => {
+  debugger
   return({
     project: { title: '',
       author_id: state.session.id,
       author_username: state.entities.users[state.session.id],
+      description: '',
       keyWords: '',
       pictureFile: null,
       pictureUrl: null
      },
     formType: 'New Project',
-    errors: state.errors.project
+    errors: state.errors.project,
+    uploadStatus: false
   });
 };
 

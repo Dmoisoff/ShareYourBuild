@@ -30,8 +30,6 @@ const App = () => (
           <Link to="/project/new" className="create-build-button" >Create a Build</Link>
         </div>
       </div>
-      <div className='add-space'></div>
-      <div></div>
       <GreetingContainer />
     </header>
     <div>

@@ -17,7 +17,7 @@ class Project < ApplicationRecord
 
   validates :title, :description, :author_id, presence: true
 
-  # validate :ensure_picture
+  validate :ensure_picture
 
   belongs_to :user,
 		foreign_key: :author_id,
