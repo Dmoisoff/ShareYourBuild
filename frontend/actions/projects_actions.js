@@ -60,13 +60,8 @@ export const updateProject = (project) => {
   };
 };
 
-export const deleteProject = (id) => {
-  return dispatch => {
-    return Projects_Util.deleteProject(id).then(() =>{
-      return dispatch({
-        type: FETCH_PROJECT,
-        projectId: id
-      });
-    });
+export const deleteProject = (id) => dispatch => {
+    return Projects_Util.deleteProject(id).then(
+      (deletedId) => dispatch({ type: REMOVE_PROJECT, projectId: deletedId})
+    );
   };
-};

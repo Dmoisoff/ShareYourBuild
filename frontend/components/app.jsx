@@ -25,7 +25,7 @@ const App = () => (
         <div className='search-bar-formating'>
           <form className='search-bar-form' >
             <input type="text" placeholder="Let's Build ..." name="search2" className='search-bar-input' />
-            <button className='search-bar-button' type='submit'><i class="fas fa-search"></i></button>
+            <button className='search-bar-button' type='submit'><i className="fas fa-search"></i></button>
           </form>
           <Link to="/project/new" className="create-build-button" >Create a Build</Link>
         </div>
@@ -43,7 +43,7 @@ const App = () => (
         <Route exact path="/" component={MainPage} />
       </Switch>
     </div>
-    <footer class='footer'>
+    <footer className='footer'>
       <div className='icon-space'>
         <div id='syb-logo'></div>
         <Link className='clickable' to='/'>Share Your Build</Link>

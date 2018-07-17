@@ -6,17 +6,20 @@ import ShowProject from './ShowProject';
 
 
 const mstp = (state, ownParams) => {
+  const userId = state.session.id;
+  const project = state.entities.projects[ownParams.match.params.projectId] || {};
   return({
-    project: state.entities.projects[ownParams.match.params.projectId],
+    project: project,
     formType: 'Show Project',
-    currentUserId: state.session.id
+    currentUserId: userId,
+    ownsProject: userId === project.authorId
   });
 };
 
 const mdtp = (dispatch) => {
   return({
-    fetchProject: (id) => { dispatch(fetchProject(id)); },
-    deleteProject: (id) => {dispatch(deleteProject(id));}
+    fetchProject: (id) => dispatch(fetchProject(id)),
+    deleteProject: (id) => dispatch(deleteProject(id))
   });
 };
 

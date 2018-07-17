@@ -7,7 +7,7 @@ class ProjectShow extends React.Component {
   constructor(props){
     super(props);
     this.state = this.props.project;
-    this.deleteButton = this.deleteButton.bind(this);
+    this.remove = this.remove.bind(this);
   }
 
   componentDidMount() {
@@ -27,14 +27,20 @@ class ProjectShow extends React.Component {
     }
   }
 
-  deleteButton(){
-    if(this.props.project.authorId === this.props.currentUserId){
-    return <div className='project-show-delete-position'><button className='project-show-delete-button' onClick={() =>{
-          this.props.deleteProject(this.props.project.id).then(()=>{this.props.history.push('/');});}}>Remove Build</button></div>;
-    }else{
-    return [];
-    }
+  remove(){
+    debugger
+    this.props.deleteProject(this.props.project.id).then(
+      () => this.props.history.push('/')
+    );
   }
+    // if(this.props.project.authorId === this.props.currentUserId){
+    // return <div className='project-show-delete-position'><button className='project-show-delete-button' onClick={() =>{
+    //     debugger
+    //       this.props.deleteProject(this.props.project.id).then(()=>{this.props.history.push('/');});}}>Remove Build</button></div>;
+    // }else{
+    // return [];
+    // }
+
 
 
 
@@ -57,7 +63,7 @@ class ProjectShow extends React.Component {
           <div>
             <p className='project-font-format'>{this.props.project.description}</p>
           </div>
-          {this.deleteButton()}
+          {this.props.ownsProject ? <div className='project-show-delete-position'><button className='project-show-delete-button' onClick={this.remove}>Remove Build</button></div> : null}
         </div>
         <Link className='clickable project-index-link' to="/">Back to Home Page</Link>
       </div>

@@ -168,11 +168,8 @@ var updateProject = exports.updateProject = function updateProject(project) {
 
 var deleteProject = exports.deleteProject = function deleteProject(id) {
   return function (dispatch) {
-    return Projects_Util.deleteProject(id).then(function () {
-      return dispatch({
-        type: FETCH_PROJECT,
-        projectId: id
-      });
+    return Projects_Util.deleteProject(id).then(function (deletedId) {
+      return dispatch({ type: REMOVE_PROJECT, projectId: deletedId });
     });
   };
 };
@@ -326,7 +323,7 @@ var App = function App() {
             _react2.default.createElement(
               'button',
               { className: 'search-bar-button', type: 'submit' },
-              _react2.default.createElement('i', { 'class': 'fas fa-search' })
+              _react2.default.createElement('i', { className: 'fas fa-search' })
             )
           ),
           _react2.default.createElement(
@@ -355,7 +352,7 @@ var App = function App() {
     ),
     _react2.default.createElement(
       'footer',
-      { 'class': 'footer' },
+      { className: 'footer' },
       _react2.default.createElement(
         'div',
         { className: 'icon-space' },
@@ -863,7 +860,7 @@ var IndexProjects = function (_React$Component) {
       return this.props.projects.map(function (project) {
         return _react2.default.createElement(
           _reactRouterDom.Link,
-          { to: '/project/' + project.id },
+          { key: project.id, to: '/project/' + project.id },
           _react2.default.createElement(_IndexProjectItem2.default, {
             key: project.id,
             title: project.title,
@@ -1250,7 +1247,7 @@ var ProjectShow = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (ProjectShow.__proto__ || Object.getPrototypeOf(ProjectShow)).call(this, props));
 
     _this.state = _this.props.project;
-    _this.deleteButton = _this.deleteButton.bind(_this);
+    _this.remove = _this.remove.bind(_this);
     return _this;
   }
 
@@ -1275,28 +1272,24 @@ var ProjectShow = function (_React$Component) {
       }
     }
   }, {
-    key: 'deleteButton',
-    value: function deleteButton() {
+    key: 'remove',
+    value: function remove() {
       var _this2 = this;
 
-      if (this.props.project.authorId === this.props.currentUserId) {
-        return _react2.default.createElement(
-          'div',
-          { className: 'project-show-delete-position' },
-          _react2.default.createElement(
-            'button',
-            { className: 'project-show-delete-button', onClick: function onClick() {
-                _this2.props.deleteProject(_this2.props.project.id).then(function () {
-                  _this2.props.history.push('/');
-                });
-              } },
-            'Remove Build'
-          )
-        );
-      } else {
-        return [];
-      }
+      debugger;
+      this.props.deleteProject(this.props.project.id).then(function () {
+        return _this2.props.history.push('/');
+      });
     }
+    // if(this.props.project.authorId === this.props.currentUserId){
+    // return <div className='project-show-delete-position'><button className='project-show-delete-button' onClick={() =>{
+    //     debugger
+    //       this.props.deleteProject(this.props.project.id).then(()=>{this.props.history.push('/');});}}>Remove Build</button></div>;
+    // }else{
+    // return [];
+    // }
+
+
   }, {
     key: 'render',
     value: function render() {
@@ -1345,7 +1338,15 @@ var ProjectShow = function (_React$Component) {
               this.props.project.description
             )
           ),
-          this.deleteButton()
+          this.props.ownsProject ? _react2.default.createElement(
+            'div',
+            { className: 'project-show-delete-position' },
+            _react2.default.createElement(
+              'button',
+              { className: 'project-show-delete-button', onClick: this.remove },
+              'Remove Build'
+            )
+          ) : null
         ),
         _react2.default.createElement(
           _reactRouterDom.Link,
@@ -1394,20 +1395,23 @@ var _ShowProject2 = _interopRequireDefault(_ShowProject);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state, ownParams) {
+  var userId = state.session.id;
+  var project = state.entities.projects[ownParams.match.params.projectId] || {};
   return {
-    project: state.entities.projects[ownParams.match.params.projectId],
+    project: project,
     formType: 'Show Project',
-    currentUserId: state.session.id
+    currentUserId: userId,
+    ownsProject: userId === project.authorId
   };
 };
 
 var mdtp = function mdtp(dispatch) {
   return {
     fetchProject: function fetchProject(id) {
-      dispatch((0, _projects_actions.fetchProject)(id));
+      return dispatch((0, _projects_actions.fetchProject)(id));
     },
     deleteProject: function deleteProject(id) {
-      dispatch((0, _projects_actions.deleteProject)(id));
+      return dispatch((0, _projects_actions.deleteProject)(id));
     }
   };
 };

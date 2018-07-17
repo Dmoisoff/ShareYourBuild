@@ -12,7 +12,7 @@ class IndexProjects extends React.Component{
     return(
       this.props.projects.map((project) => {
         return (
-          <Link to={`/project/${project.id}`}>
+          <Link key={project.id} to={`/project/${project.id}`}>
             <IndexProjectItem
               key={project.id}
               title={project.title}
