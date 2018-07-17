@@ -150,9 +150,11 @@ var createProject = exports.createProject = function createProject(project) {
   };
 };
 
-var updateProject = exports.updateProject = function updateProject(project) {
+var updateProject = exports.updateProject = function updateProject(project, id) {
+  debugger;
   return function (dispatch) {
-    return Projects_Util.updateProject(project.id).then(function (project) {
+    return Projects_Util.updateProject(project, id).then(function (project) {
+      debugger;
       return dispatch({
         type: FETCH_PROJECT,
         project: project
@@ -666,13 +668,13 @@ var EditProjectForm = function (_React$Component) {
     value: function componentDidMount() {
       this.props.fetchProject(this.props.match.params.projectId);
     }
-
-    // componentWillReceiveProps(nextProps) {
-    //
-    //   if (this.props.match.params.projectId === nextProps.match.params.projectId) {
-    //     this.setState({title: nextProps.project.title, picture: nextProps.project.picture, pictureUrl: nextProps.project.pictureUrl});
-    //   }
-    // }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (this.props.project.id != nextProps.match.params.projectId) {
+        this.setState({ title: nextProps.project.title, picture: nextProps.project.picture, pictureUrl: nextProps.project.pictureUrl, description: nextProps.project.description, uploadStatus: false });
+      }
+    }
     //
     // componentDidUpdate(prevProps){
     //   if (!!prevProps.project && prevProps.project.id != this.props.match.params.projectId) {
@@ -683,9 +685,7 @@ var EditProjectForm = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var projectCheck = this.props.projectCheck;
-
-      if (!projectCheck) {
+      if (!this.state) {
         return _react2.default.createElement(
           'div',
           null,
@@ -693,12 +693,12 @@ var EditProjectForm = function (_React$Component) {
         );
       }
       var _props = this.props,
-          action = _props.action,
+          submitProject = _props.submitProject,
           formType = _props.formType,
           project = _props.project;
 
       return _react2.default.createElement(_ProjectForm2.default, {
-        action: action,
+        submitProject: submitProject,
         formType: formType,
         project: project });
     }
@@ -708,10 +708,17 @@ var EditProjectForm = function (_React$Component) {
 }(_react2.default.Component);
 
 var mstp = function mstp(state, ownParams) {
-  var defaultProject = { title: '', photoFile: null, pictureUrl: null };
-  var project = state.entities.projects[ownParams.match.params.projectId] || defaultProject;
+  var defaultProject = { title: '',
+    author_id: state.session.id,
+    author_username: state.entities.users[state.session.id],
+    description: '',
+    keyWords: '',
+    pictureFile: null,
+    pictureUrl: null,
+    uploadStatus: false };
+  var currentProject = state.entities.projects[ownParams.match.params.projectId] || defaultProject;
   return {
-    project: { title: project.title, picture: project.picture, pictureUrl: project.pictureUrl },
+    project: { title: currentProject.title, picture: currentProject.picture, pictureUrl: currentProject.pictureUrl, description: currentProject.description, uploadStatus: false },
     formType: 'Update Project',
     errors: state.errors.project
   };
@@ -719,8 +726,8 @@ var mstp = function mstp(state, ownParams) {
 
 var mdtp = function mdtp(dispatch) {
   return {
-    submitProject: function submitProject(project) {
-      return dispatch((0, _projects_actions.updateProject)(project));
+    submitProject: function submitProject(project, id) {
+      return dispatch((0, _projects_actions.updateProject)(project, id));
     },
     fetchProject: function fetchProject(id) {
       return dispatch((0, _projects_actions.fetchProject)(id));
@@ -1076,7 +1083,9 @@ var ProjectForm = function (_React$Component) {
     value: function handleSubmit(e) {
       var _this3 = this;
 
+      debugger;
       e.preventDefault();
+      var projectId = this.props.match.params.projectId;
       var formData = new FormData();
       formData.append('project[title]', this.state.title);
       formData.append('project[keywords]', this.state.keyWords);
@@ -1085,7 +1094,10 @@ var ProjectForm = function (_React$Component) {
       if (this.state.pictureFile) {
         formData.append('project[picture]', this.state.pictureFile);
       }
-      this.props.submitProject(formData).then(function (payload) {
+      // if(this.props.formType === 'Update Project'){
+      //   formData.append('project[id]', this.props.match.params.projectId);
+      // }
+      this.props.submitProject(formData, projectId).then(function (payload) {
         _this3.redirect(payload.project.id);
       });
     }
@@ -2520,6 +2532,7 @@ var fetchProject = exports.fetchProject = function fetchProject(id) {
 };
 
 var createProject = exports.createProject = function createProject(project) {
+  debugger;
   return $.ajax({
     method: 'POST',
     url: 'api/projects',
@@ -2529,10 +2542,11 @@ var createProject = exports.createProject = function createProject(project) {
   });
 };
 
-var updateProject = exports.updateProject = function updateProject(project) {
+var updateProject = exports.updateProject = function updateProject(project, id) {
+  debugger;
   return $.ajax({
     method: 'PATCH',
-    url: 'api/projects/' + project.id,
+    url: 'api/projects/' + id,
     data: project,
     contentType: false,
     processData: false

@@ -24,7 +24,9 @@ class ProjectForm extends React.Component{
   }
 
   handleSubmit(e){
+    debugger
     e.preventDefault();
+    const projectId = this.props.match.params.projectId;
     const formData = new FormData();
     formData.append('project[title]', this.state.title);
     formData.append('project[keywords]', this.state.keyWords);
@@ -33,7 +35,10 @@ class ProjectForm extends React.Component{
     if(this.state.pictureFile){
       formData.append('project[picture]', this.state.pictureFile);
     }
-    this.props.submitProject(formData).then((payload) => {this.redirect(payload.project.id);});
+    // if(this.props.formType === 'Update Project'){
+    //   formData.append('project[id]', this.props.match.params.projectId);
+    // }
+    this.props.submitProject(formData, projectId).then((payload) => {this.redirect(payload.project.id);});
   }
 
   redirect(id){

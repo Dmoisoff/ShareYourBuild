@@ -13,12 +13,11 @@ class EditProjectForm extends React.Component{
     this.props.fetchProject(this.props.match.params.projectId);
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //
-  //   if (this.props.match.params.projectId === nextProps.match.params.projectId) {
-  //     this.setState({title: nextProps.project.title, picture: nextProps.project.picture, pictureUrl: nextProps.project.pictureUrl});
-  //   }
-  // }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.project.id != nextProps.match.params.projectId) {
+      this.setState({title: nextProps.project.title, picture: nextProps.project.picture, pictureUrl: nextProps.project.pictureUrl, description: nextProps.project.description, uploadStatus: false });
+    }
+  }
   //
   // componentDidUpdate(prevProps){
   //   if (!!prevProps.project && prevProps.project.id != this.props.match.params.projectId) {
@@ -27,14 +26,13 @@ class EditProjectForm extends React.Component{
   // }
 
   render() {
-    const { projectCheck } = this.props;
-    if (!projectCheck) {
+    if (!this.state) {
       return <div>Loading...</div>;
     }
-    const { action, formType, project } = this.props;
+    const { submitProject, formType, project } = this.props;
     return (
       <ProjectForm
-        action={action}
+        submitProject={submitProject}
         formType={formType}
         project={project} />
     );
@@ -44,11 +42,18 @@ class EditProjectForm extends React.Component{
 
 
 
-const mstp = (state, ownParams) => {
-  const defaultProject = {title: '', photoFile: null, pictureUrl: null};
-  const project = state.entities.projects[ownParams.match.params.projectId] || defaultProject;
+const mstp = (state, ownParams) =>{
+  const defaultProject = {title: '',
+    author_id: state.session.id,
+    author_username: state.entities.users[state.session.id],
+    description: '',
+    keyWords: '',
+    pictureFile: null,
+    pictureUrl: null,
+    uploadStatus: false};
+  const currentProject = state.entities.projects[ownParams.match.params.projectId] || defaultProject;
   return({
-    project: {title: project.title, picture: project.picture, pictureUrl: project.pictureUrl},
+    project: {title: currentProject.title, picture: currentProject.picture, pictureUrl: currentProject.pictureUrl, description: currentProject.description, uploadStatus: false},
     formType: 'Update Project',
     errors: state.errors.project
   });
@@ -56,7 +61,7 @@ const mstp = (state, ownParams) => {
 
 const mdtp = (dispatch) => {
   return({
-    submitProject: (project) =>  dispatch(updateProject(project)),
+    submitProject: (project, id) =>  dispatch(updateProject(project, id)),
     fetchProject: (id) =>  dispatch(fetchProject(id))
   });
 };
