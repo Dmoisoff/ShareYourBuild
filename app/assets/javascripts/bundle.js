@@ -1085,8 +1085,8 @@ var ProjectForm = function (_React$Component) {
       if (this.state.pictureFile) {
         formData.append('project[picture]', this.state.pictureFile);
       }
-      this.props.submitProject(formData).then(function (project) {
-        _this3.redirect(project.project.id);
+      this.props.submitProject(formData).then(function (payload) {
+        _this3.redirect(payload.project.id);
       });
     }
   }, {

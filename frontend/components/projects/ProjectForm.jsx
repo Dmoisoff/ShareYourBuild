@@ -33,7 +33,7 @@ class ProjectForm extends React.Component{
     if(this.state.pictureFile){
       formData.append('project[picture]', this.state.pictureFile);
     }
-    this.props.submitProject(formData).then((project) => {this.redirect(project.project.id);});
+    this.props.submitProject(formData).then((payload) => {this.redirect(payload.project.id);});
   }
 
   redirect(id){
