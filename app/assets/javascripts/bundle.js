@@ -673,7 +673,7 @@ var EditProjectForm = function (_React$Component) {
     }
 
     // componentWillReceiveProps(nextProps) {
-    // debugger
+    //
     //   if (this.props.match.params.projectId === nextProps.match.params.projectId) {
     //     this.setState({title: nextProps.project.title, picture: nextProps.project.picture, pictureUrl: nextProps.project.pictureUrl});
     //   }
@@ -702,7 +702,6 @@ var EditProjectForm = function (_React$Component) {
           formType = _props.formType,
           project = _props.project;
 
-      debugger;
       return _react2.default.createElement(_ProjectForm2.default, {
         action: action,
         formType: formType,
@@ -714,7 +713,6 @@ var EditProjectForm = function (_React$Component) {
 }(_react2.default.Component);
 
 var mstp = function mstp(state, ownParams) {
-  debugger;
   var defaultProject = { title: '', photoFile: null, pictureUrl: null };
   var project = state.entities.projects[ownParams.match.params.projectId] || defaultProject;
   return {
@@ -1220,7 +1218,6 @@ var ProjectShow = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      debugger;
       var project = this.props.project;
 
       if (!project) {

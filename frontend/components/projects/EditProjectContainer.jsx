@@ -14,7 +14,7 @@ class EditProjectForm extends React.Component{
   }
 
   // componentWillReceiveProps(nextProps) {
-  // debugger
+  //
   //   if (this.props.match.params.projectId === nextProps.match.params.projectId) {
   //     this.setState({title: nextProps.project.title, picture: nextProps.project.picture, pictureUrl: nextProps.project.pictureUrl});
   //   }
@@ -32,7 +32,6 @@ class EditProjectForm extends React.Component{
       return <div>Loading...</div>;
     }
     const { action, formType, project } = this.props;
-    debugger
     return (
       <ProjectForm
         action={action}
@@ -46,7 +45,6 @@ class EditProjectForm extends React.Component{
 
 
 const mstp = (state, ownParams) => {
-  debugger
   const defaultProject = {title: '', photoFile: null, pictureUrl: null};
   const project = state.entities.projects[ownParams.match.params.projectId] || defaultProject;
   return({

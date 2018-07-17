@@ -28,7 +28,6 @@ class ProjectShow extends React.Component {
 
 
   render() {
-    debugger
     const { project } = this.props;
     if (!project) {
       return <div>Loading...</div>;
