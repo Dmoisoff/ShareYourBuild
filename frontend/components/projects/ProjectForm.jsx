@@ -24,7 +24,6 @@ class ProjectForm extends React.Component{
   }
 
   handleSubmit(e){
-    debugger
     e.preventDefault();
     const projectId = this.props.match.params.projectId;
     const formData = new FormData();
@@ -84,6 +83,7 @@ class ProjectForm extends React.Component{
       <img className='project-image-resize' src={this.state.pictureUrl} />
     </div>
      : null;
+     const submitButton = this.props.formType === 'New Project' ? "Publish" : "Update";
 
     return(
       <div className='project-background'>
@@ -99,7 +99,7 @@ class ProjectForm extends React.Component{
               <textarea onChange={this.updateDescription.bind(this)} placeholder='Please enter a brief description of your build' className='project-body-text' rows="8" cols="80">{this.state.description}</textarea>
             </div>
           <div className='project-button-placement'>
-            <button onClick={this.handleSubmit.bind(this)} className='project-submit' type='submit'>Publish</button>
+            <button onClick={this.handleSubmit.bind(this)} className='project-submit' type='submit'>{submitButton}</button>
           </div>
           </form>
           <div className='project-message-position'>

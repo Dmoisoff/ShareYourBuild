@@ -151,10 +151,8 @@ var createProject = exports.createProject = function createProject(project) {
 };
 
 var updateProject = exports.updateProject = function updateProject(project, id) {
-  debugger;
   return function (dispatch) {
     return Projects_Util.updateProject(project, id).then(function (project) {
-      debugger;
       return dispatch({
         type: FETCH_PROJECT,
         project: project
@@ -675,13 +673,6 @@ var EditProjectForm = function (_React$Component) {
         this.setState({ title: nextProps.project.title, picture: nextProps.project.picture, pictureUrl: nextProps.project.pictureUrl, description: nextProps.project.description, uploadStatus: false });
       }
     }
-    //
-    // componentDidUpdate(prevProps){
-    //   if (!!prevProps.project && prevProps.project.id != this.props.match.params.projectId) {
-    //     this.props.fetchProject(this.props.match.params.projectId);
-    //   }
-    // }
-
   }, {
     key: 'render',
     value: function render() {
@@ -695,11 +686,13 @@ var EditProjectForm = function (_React$Component) {
       var _props = this.props,
           submitProject = _props.submitProject,
           formType = _props.formType,
-          project = _props.project;
+          project = _props.project,
+          errors = _props.errors;
 
       return _react2.default.createElement(_ProjectForm2.default, {
         submitProject: submitProject,
         formType: formType,
+        errors: errors,
         project: project });
     }
   }]);
@@ -718,9 +711,15 @@ var mstp = function mstp(state, ownParams) {
     uploadStatus: false };
   var currentProject = state.entities.projects[ownParams.match.params.projectId] || defaultProject;
   return {
-    project: { title: currentProject.title, picture: currentProject.picture, pictureUrl: currentProject.pictureUrl, description: currentProject.description, uploadStatus: false },
-    formType: 'Update Project',
-    errors: state.errors.project
+    project: {
+      title: currentProject.title,
+      picture: currentProject.picture,
+      pictureUrl: currentProject.pictureUrl,
+      description: currentProject.description,
+      uploadStatus: false
+    },
+    errors: state.errors.project,
+    formType: 'Update Project'
   };
 };
 
@@ -1083,7 +1082,6 @@ var ProjectForm = function (_React$Component) {
     value: function handleSubmit(e) {
       var _this3 = this;
 
-      debugger;
       e.preventDefault();
       var projectId = this.props.match.params.projectId;
       var formData = new FormData();
@@ -1178,6 +1176,7 @@ var ProjectForm = function (_React$Component) {
         ),
         _react2.default.createElement('img', { className: 'project-image-resize', src: this.state.pictureUrl })
       ) : null;
+      var submitButton = this.props.formType === 'New Project' ? "Publish" : "Update";
 
       return _react2.default.createElement(
         'div',
@@ -1215,7 +1214,7 @@ var ProjectForm = function (_React$Component) {
               _react2.default.createElement(
                 'button',
                 { onClick: this.handleSubmit.bind(this), className: 'project-submit', type: 'submit' },
-                'Publish'
+                submitButton
               )
             )
           ),
@@ -1287,6 +1286,7 @@ var ProjectShow = function (_React$Component) {
 
     _this.state = _this.props.project;
     _this.remove = _this.remove.bind(_this);
+    _this.edit = _this.edit.bind(_this);
     return _this;
   }
 
@@ -1318,6 +1318,11 @@ var ProjectShow = function (_React$Component) {
       this.props.deleteProject(this.props.project.id).then(function () {
         return _this2.props.history.push('/');
       });
+    }
+  }, {
+    key: 'edit',
+    value: function edit() {
+      this.props.history.push('/project/' + this.props.project.id + '/edit');
     }
   }, {
     key: 'render',
@@ -1370,6 +1375,11 @@ var ProjectShow = function (_React$Component) {
           this.props.ownsProject ? _react2.default.createElement(
             'div',
             { className: 'project-show-delete-position' },
+            _react2.default.createElement(
+              'button',
+              { className: 'project-show-delete-button', onClick: this.edit },
+              'Edit Build'
+            ),
             _react2.default.createElement(
               'button',
               { className: 'project-show-delete-button', onClick: this.remove },
@@ -2532,7 +2542,6 @@ var fetchProject = exports.fetchProject = function fetchProject(id) {
 };
 
 var createProject = exports.createProject = function createProject(project) {
-  debugger;
   return $.ajax({
     method: 'POST',
     url: 'api/projects',
@@ -2543,7 +2552,6 @@ var createProject = exports.createProject = function createProject(project) {
 };
 
 var updateProject = exports.updateProject = function updateProject(project, id) {
-  debugger;
   return $.ajax({
     method: 'PATCH',
     url: 'api/projects/' + id,

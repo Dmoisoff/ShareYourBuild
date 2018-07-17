@@ -45,10 +45,8 @@ export const createProject = (project) => {
 };
 
 export const updateProject = (project, id) => {
-  debugger
   return dispatch => {
     return Projects_Util.updateProject(project, id).then((project) =>{
-      debugger
       return dispatch({
         type: FETCH_PROJECT,
         project: project

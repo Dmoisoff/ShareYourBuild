@@ -8,6 +8,7 @@ class ProjectShow extends React.Component {
     super(props);
     this.state = this.props.project;
     this.remove = this.remove.bind(this);
+    this.edit = this.edit.bind(this);
   }
 
   componentDidMount() {
@@ -31,6 +32,9 @@ class ProjectShow extends React.Component {
     this.props.deleteProject(this.props.project.id).then(
       () => this.props.history.push('/')
     );
+  }
+  edit(){
+    this.props.history.push(`/project/${this.props.project.id}/edit`);
   }
 
 
@@ -56,7 +60,10 @@ class ProjectShow extends React.Component {
           <div>
             <p className='project-font-format'>{this.props.project.description}</p>
           </div>
-          {this.props.ownsProject ? <div className='project-show-delete-position'><button className='project-show-delete-button' onClick={this.remove}>Remove Build</button></div> : null}
+          {this.props.ownsProject ? <div className='project-show-delete-position'>
+            <button className='project-show-delete-button' onClick={this.edit}>Edit Build</button>
+            <button className='project-show-delete-button' onClick={this.remove}>Remove Build</button>
+          </div> : null}
         </div>
         <Link className='clickable project-index-link' to="/">Back to Home Page</Link>
       </div>

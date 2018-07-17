@@ -18,22 +18,17 @@ class EditProjectForm extends React.Component{
       this.setState({title: nextProps.project.title, picture: nextProps.project.picture, pictureUrl: nextProps.project.pictureUrl, description: nextProps.project.description, uploadStatus: false });
     }
   }
-  //
-  // componentDidUpdate(prevProps){
-  //   if (!!prevProps.project && prevProps.project.id != this.props.match.params.projectId) {
-  //     this.props.fetchProject(this.props.match.params.projectId);
-  //   }
-  // }
 
   render() {
     if (!this.state) {
       return <div>Loading...</div>;
     }
-    const { submitProject, formType, project } = this.props;
+    const { submitProject, formType, project, errors } = this.props;
     return (
       <ProjectForm
         submitProject={submitProject}
         formType={formType}
+        errors={errors}
         project={project} />
     );
   }
@@ -53,9 +48,15 @@ const mstp = (state, ownParams) =>{
     uploadStatus: false};
   const currentProject = state.entities.projects[ownParams.match.params.projectId] || defaultProject;
   return({
-    project: {title: currentProject.title, picture: currentProject.picture, pictureUrl: currentProject.pictureUrl, description: currentProject.description, uploadStatus: false},
-    formType: 'Update Project',
-    errors: state.errors.project
+    project: {
+      title: currentProject.title,
+      picture: currentProject.picture,
+      pictureUrl: currentProject.pictureUrl,
+      description: currentProject.description,
+      uploadStatus: false
+    },
+    errors: state.errors.project,
+    formType: 'Update Project'
   });
 };
 
