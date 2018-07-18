@@ -23,6 +23,10 @@ class Project < ApplicationRecord
 		foreign_key: :author_id,
     class_name: "User"
 
+  has_many :instructions,
+    foreign_key: :project_id,
+    class_name: 'Instruction'
+
   has_one_attached :picture
 
   def ensure_picture
