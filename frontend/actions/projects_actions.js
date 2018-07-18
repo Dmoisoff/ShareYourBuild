@@ -19,10 +19,11 @@ export const fetchProjects = () => {
 
 export const fetchProject = (id) => {
   return dispatch => {
-    return Projects_Util.fetchProject(id).then((project) =>{
+    return Projects_Util.fetchProject(id).then(({project, instructions}) =>{
       return dispatch({
         type: FETCH_PROJECT,
-        project
+        project: project,
+        instructions: instructions
       });
     });
   };

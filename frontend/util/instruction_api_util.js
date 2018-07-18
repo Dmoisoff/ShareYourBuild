@@ -5,12 +5,18 @@ export const fetchInstructions = (id) => {
   });
 };
 
+export const fetchInstruction = (id) => {
+  return $.ajax({
+    method: 'GET',
+    url: `/api/instructions/${id}`
+  });
+};
+
 export const createInstruction = (instruction,id) => {
-  debugger
   return $.ajax({
     method: 'POST',
     url: `/api/projects/${id}/instructions`,
-    data: instruction ,
+    data: instruction,
     // contentType: false,
     // processData: false
   });
@@ -20,7 +26,7 @@ export const updateInstruction = (instruction, id) => {
   return $.ajax({
     method: 'PATCH',
     url: `api/instructions/${id}`,
-    data: instruction ,
+    data: instruction,
     // contentType: false,
     // processData: false
   });

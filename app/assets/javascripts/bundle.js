@@ -86,6 +86,86 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./frontend/actions/instructions_actions.js":
+/*!**************************************************!*\
+  !*** ./frontend/actions/instructions_actions.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.deleteInstruction = exports.updateInstruction = exports.createInstruction = exports.fetchInstruction = exports.RECEIVE_INSTRUCTION_ERRORS = exports.REMOVE_INSTRUCTION = exports.FETCH_INSTRUCTION = undefined;
+
+var _instruction_api_util = __webpack_require__(/*! ./../util/instruction_api_util */ "./frontend/util/instruction_api_util.js");
+
+var Instruction_Util = _interopRequireWildcard(_instruction_api_util);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var FETCH_INSTRUCTION = exports.FETCH_INSTRUCTION = 'FETCH_INSTRUCTION';
+var REMOVE_INSTRUCTION = exports.REMOVE_INSTRUCTION = 'REMOVE_INSTRUCTION';
+var RECEIVE_INSTRUCTION_ERRORS = exports.RECEIVE_INSTRUCTION_ERRORS = 'RECEIVE_INSTRUCTION_ERRORS';
+
+var fetchInstruction = exports.fetchInstruction = function fetchInstruction(id) {
+  return function (dispatch) {
+    return Instruction_Util.fetchInstruction(id).then(function (instruction) {
+      return dispatch({
+        type: FETCH_INSTRUCTION,
+        instruction: instruction
+      });
+    });
+  };
+};
+
+var createInstruction = exports.createInstruction = function createInstruction(instruction, id) {
+  return function (dispatch) {
+    return Instruction_Util.createInstruction(instruction, id).then(function (instruction) {
+      return dispatch({
+        type: FETCH_INSTRUCTION,
+        instruction: instruction
+      });
+    }, function (errors) {
+      return dispatch({
+        type: RECEIVE_INSTRUCTION_ERRORS,
+        errors: errors.responseJSON
+      });
+    });
+  };
+};
+
+var updateInstruction = exports.updateInstruction = function updateInstruction(instruction, id) {
+  return function (dispatch) {
+    return Instruction_Util.updateInstruction(instruction, id).then(function (instruction) {
+      return dispatch({
+        type: FETCH_INSTRUCTION,
+        instruction: instruction
+      });
+    }, function (errors) {
+      return dispatch({
+        type: RECEIVE_INSTRUCTION_ERRORS,
+        errors: errors.responseJSON
+      });
+    });
+  };
+};
+
+var deleteInstruction = exports.deleteInstruction = function deleteInstruction(id) {
+  return function (dispatch) {
+    return Instruction_Util.deleteInstruction(id).then(function () {
+      return dispatch({ type: REMOVE_INSTRUCTION, instructionId: id });
+    });
+  };
+};
+
+// {instruction: {project_id: 88, instruction_step: 10, body: "5", media_url: nil}}
+
+/***/ }),
+
 /***/ "./frontend/actions/projects_actions.js":
 /*!**********************************************!*\
   !*** ./frontend/actions/projects_actions.js ***!
@@ -125,10 +205,14 @@ var fetchProjects = exports.fetchProjects = function fetchProjects() {
 
 var fetchProject = exports.fetchProject = function fetchProject(id) {
   return function (dispatch) {
-    return Projects_Util.fetchProject(id).then(function (project) {
+    return Projects_Util.fetchProject(id).then(function (_ref) {
+      var project = _ref.project,
+          instructions = _ref.instructions;
+
       return dispatch({
         type: FETCH_PROJECT,
-        project: project
+        project: project,
+        instructions: instructions
       });
     });
   };
@@ -2112,11 +2196,16 @@ var _project_reducer = __webpack_require__(/*! ./project_reducer */ "./frontend/
 
 var _project_reducer2 = _interopRequireDefault(_project_reducer);
 
+var _instruction_reducer = __webpack_require__(/*! ./instruction_reducer */ "./frontend/reducers/instruction_reducer.js");
+
+var _instruction_reducer2 = _interopRequireDefault(_instruction_reducer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var entitiesReducer = (0, _redux.combineReducers)({
   users: _user_reducer2.default,
-  projects: _project_reducer2.default
+  projects: _project_reducer2.default,
+  instruction: _instruction_reducer2.default
 });
 
 exports.default = entitiesReducer;
@@ -2155,6 +2244,64 @@ var errorsReducer = (0, _redux.combineReducers)({
 });
 
 exports.default = errorsReducer;
+
+/***/ }),
+
+/***/ "./frontend/reducers/instruction_reducer.js":
+/*!**************************************************!*\
+  !*** ./frontend/reducers/instruction_reducer.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _instructions_actions = __webpack_require__(/*! ./../actions/instructions_actions */ "./frontend/actions/instructions_actions.js");
+
+var Instruction_Actions = _interopRequireWildcard(_instructions_actions);
+
+var _projects_actions = __webpack_require__(/*! ./../actions/projects_actions */ "./frontend/actions/projects_actions.js");
+
+var Projects_Actions = _interopRequireWildcard(_projects_actions);
+
+var _merge2 = __webpack_require__(/*! lodash/merge */ "./node_modules/lodash/merge.js");
+
+var _merge3 = _interopRequireDefault(_merge2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var instructionReducer = function instructionReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments[1];
+
+  var newState = void 0;
+  var oldState = Object.freeze(state);
+  switch (action.type) {
+    case Projects_Actions.FETCH_PROJECT:
+      newState = (0, _merge3.default)({}, state, action.instructions);
+      return newState;
+    case Instruction_Actions.FETCH_INSTRUCTION:
+      newState = (0, _merge3.default)({}, state, _defineProperty({}, action.instruction.id, action.instruction));
+      return newState;
+    case Instruction_Actions.REMOVE_INSTRUCTION:
+      newState = (0, _merge3.default)({}, state);
+      delete newState[action.instructionId];
+      return newState;
+    default:
+      return oldState;
+  }
+};
+
+exports.default = instructionReducer;
 
 /***/ }),
 
@@ -2453,7 +2600,7 @@ var _root2 = _interopRequireDefault(_root);
 
 var _projects_actions = __webpack_require__(/*! ./actions/projects_actions */ "./frontend/actions/projects_actions.js");
 
-var _instruction_api_util = __webpack_require__(/*! ./util/instruction_api_util */ "./frontend/util/instruction_api_util.js");
+var _instructions_actions = __webpack_require__(/*! ./actions/instructions_actions */ "./frontend/actions/instructions_actions.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2477,10 +2624,11 @@ document.addEventListener('DOMContentLoaded', function () {
   // testing
   window.getState = store.getState;
   window.dispatch = store.dispatch;
-  window.fetchInstructions = _instruction_api_util.fetchInstructions;
-  window.createInstruction = _instruction_api_util.createInstruction;
-  window.updateInstruction = _instruction_api_util.updateInstruction;
-  window.deleteInstruction = _instruction_api_util.deleteInstruction;
+  window.fetchProject = _projects_actions.fetchProject;
+  window.fetchInstruction = _instructions_actions.fetchInstruction;
+  window.createInstruction = _instructions_actions.createInstruction;
+  window.updateInstruction = _instructions_actions.updateInstruction;
+  window.deleteInstruction = _instructions_actions.deleteInstruction;
   window.icon = '<%= image_url("shareyourbuildLogo.png")  %>';
 
   var root = document.getElementById('root');
@@ -2548,8 +2696,14 @@ var fetchInstructions = exports.fetchInstructions = function fetchInstructions(i
   });
 };
 
+var fetchInstruction = exports.fetchInstruction = function fetchInstruction(id) {
+  return $.ajax({
+    method: 'GET',
+    url: '/api/instructions/' + id
+  });
+};
+
 var createInstruction = exports.createInstruction = function createInstruction(instruction, id) {
-  debugger;
   return $.ajax({
     method: 'POST',
     url: '/api/projects/' + id + '/instructions',

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import configureStore from './store/store';
 import Root from './components/root';
 import { fetchProjects, fetchProject, createProject, updateProject, deleteProject} from './actions/projects_actions';
-import { fetchInstructions, createInstruction, updateInstruction, deleteInstruction } from './util/instruction_api_util';
+import { fetchInstruction, createInstruction, updateInstruction, deleteInstruction } from './actions/instructions_actions';
 
 
 
@@ -25,7 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // testing
   window.getState = store.getState;
   window.dispatch = store.dispatch;
-  window.fetchInstructions = fetchInstructions;
+  window.fetchProject = fetchProject;
+  window.fetchInstruction = fetchInstruction;
   window.createInstruction = createInstruction;
   window.updateInstruction = updateInstruction;
   window.deleteInstruction = deleteInstruction;

@@ -1,7 +1,6 @@
 class Api::InstructionsController < ApplicationController
 
   def create
-    debugger
     @instruction = Instruction.new(instruction_params)
     if @instruction.save
       render "api/instructions/show"
@@ -11,13 +10,15 @@ class Api::InstructionsController < ApplicationController
   end
 
   def index
-    debugger
     @instructions = Instruction.where(params[:project_id] === :project_id)
     render "api/instructions/index"
   end
 
+  def show
+    @instruction = Instruction.find(params[:id])
+  end
+
   def update
-    debugger
     @instruction = Instruction.find(params[:id])
     if @instruction.update_attributes(instruction_params)
       render "api/instructions/show"
@@ -27,14 +28,13 @@ class Api::InstructionsController < ApplicationController
   end
 
   def destroy
-    @project = Instruction.find(params[:id])
-    @project.destroy
+    @instruction = Instruction.find(params[:id])
+    @instruction.destroy
   end
 
 
   private
   def instruction_params
-    debugger
     params.require(:instruction).permit(:project_id, :instruction_step, :body, :media)
 
   end
