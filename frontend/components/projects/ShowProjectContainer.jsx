@@ -3,16 +3,23 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchProject, deleteProject } from './../../actions/projects_actions';
 import ShowProject from './ShowProject';
+import instructionSorter from './../instruction/InstructionsSorter';
 
 
-const mstp = (state, ownParams) => {
+const mstp = (state, ownProps) => {
+  const projectId = ownProps.match.params.projectId;
+  const instructionsArray = Object.values(state.entities.instructions);
+  debugger
+  const sortedInstructions = instructionSorter(instructionsArray);
+  debugger
   const userId = state.session.id;
-  const project = state.entities.projects[ownParams.match.params.projectId] || {};
+  const project = state.entities.projects[ownProps.match.params.projectId] || {};
   return({
     project: project,
     formType: 'Show Project',
     currentUserId: userId,
-    ownsProject: userId === project.authorId
+    ownsProject: userId === project.authorId,
+    instructions: sortedInstructions
   });
 };
 

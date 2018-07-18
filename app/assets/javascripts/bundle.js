@@ -118,11 +118,6 @@ var fetchInstruction = exports.fetchInstruction = function fetchInstruction(id) 
         type: FETCH_INSTRUCTION,
         instruction: instruction
       });
-    }, function (errors) {
-      return dispatch({
-        type: RECEIVE_INSTRUCTION_ERRORS,
-        errors: errors.responseJSON
-      });
     });
   };
 };
@@ -135,7 +130,6 @@ var createInstruction = exports.createInstruction = function createInstruction(i
         instruction: instruction
       });
     }, function (errors) {
-      debugger;
       return dispatch({
         type: RECEIVE_INSTRUCTION_ERRORS,
         errors: errors.responseJSON
@@ -371,6 +365,10 @@ var _IndexProjectsContainer = __webpack_require__(/*! ./projects/IndexProjectsCo
 
 var _IndexProjectsContainer2 = _interopRequireDefault(_IndexProjectsContainer);
 
+var _NewInstructionContainer = __webpack_require__(/*! ./instruction/NewInstructionContainer */ "./frontend/components/instruction/NewInstructionContainer.jsx");
+
+var _NewInstructionContainer2 = _interopRequireDefault(_NewInstructionContainer);
+
 var _main_page = __webpack_require__(/*! ./main_page/main_page */ "./frontend/components/main_page/main_page.jsx");
 
 var _main_page2 = _interopRequireDefault(_main_page);
@@ -435,6 +433,7 @@ var App = function App() {
         _react2.default.createElement(_route_util.ProtectedRoute, { exact: true, path: '/project/:projectId/edit', component: _EditProjectContainer2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { path: '/project/:projectId', component: _ShowProjectContainer2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { path: '/projects', component: _IndexProjectsContainer2.default }),
+        _react2.default.createElement(_reactRouterDom.Route, { path: '/test', component: _NewInstructionContainer2.default }),
         _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/login', component: _LoginFormContainer2.default }),
         _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/signup', component: _SignupFormContainer2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _main_page2.default })
@@ -659,6 +658,158 @@ exports.default = (0, _reactRedux.connect)(mstp, mdtp)(_greeting2.default);
 
 /***/ }),
 
+/***/ "./frontend/components/instruction/Instructions.jsx":
+/*!**********************************************************!*\
+  !*** ./frontend/components/instruction/Instructions.jsx ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Instructions = function (_React$Component) {
+  _inherits(Instructions, _React$Component);
+
+  function Instructions() {
+    _classCallCheck(this, Instructions);
+
+    return _possibleConstructorReturn(this, (Instructions.__proto__ || Object.getPrototypeOf(Instructions)).apply(this, arguments));
+  }
+
+  _createClass(Instructions, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        'I\'m here'
+      );
+    }
+  }]);
+
+  return Instructions;
+}(_react2.default.Component);
+
+exports.default = Instructions;
+
+/***/ }),
+
+/***/ "./frontend/components/instruction/InstructionsSorter.jsx":
+/*!****************************************************************!*\
+  !*** ./frontend/components/instruction/InstructionsSorter.jsx ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var bubbleSort = function bubbleSort(arr) {
+  debugger;
+  var len = arr.length;
+  for (var i = len - 1; i >= 0; i--) {
+    for (var j = 1; j <= i; j++) {
+      if (arr[j - 1].instructionStep > arr[j].instructionStep) {
+        var temp = arr[j - 1];
+        arr[j - 1] = arr[j];
+        arr[j] = temp;
+      }
+    }
+  }
+  return arr;
+};
+
+exports.default = bubbleSort;
+
+/***/ }),
+
+/***/ "./frontend/components/instruction/NewInstructionContainer.jsx":
+/*!*********************************************************************!*\
+  !*** ./frontend/components/instruction/NewInstructionContainer.jsx ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _Instructions = __webpack_require__(/*! ./Instructions */ "./frontend/components/instruction/Instructions.jsx");
+
+var _Instructions2 = _interopRequireDefault(_Instructions);
+
+var _instructions_actions = __webpack_require__(/*! ./../../actions/instructions_actions */ "./frontend/actions/instructions_actions.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mstp = function mstp(state, ownProps) {
+  var projectId = ownProps.match.params.projectId;
+  var lastStep = 0;
+  Object.values(state.entities.instructions).forEach(function (instruction) {
+    if (lastStep < instruction.instructionStep && instruction.projectId === projectId) {
+      lastStep = instruction.instructionStep;
+    }
+  });
+  return {
+    instruction: {
+      projectId: projectId,
+      body: "",
+      instructionStep: lastStep + 1,
+      media: null,
+      mediaUrl: null,
+      uploadStatus: false
+    },
+    formType: 'New Instruction',
+    errors: state.errors.instruction
+  };
+};
+
+var mdtp = function mdtp(dispatch) {
+  return {
+    submitProject: function submitProject(instruction) {
+      return dispatch((0, _instructions_actions.createInstruction)(instruction));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mstp, mdtp)(_Instructions2.default);
+
+/***/ }),
+
 /***/ "./frontend/components/main_page/main_page.jsx":
 /*!*****************************************************!*\
   !*** ./frontend/components/main_page/main_page.jsx ***!
@@ -800,6 +951,7 @@ var mstp = function mstp(state, ownParams) {
     pictureUrl: null,
     uploadStatus: false };
   var currentProject = state.entities.projects[ownParams.match.params.projectId] || defaultProject;
+  debugger;
   return {
     project: {
       title: currentProject.title,
@@ -1150,7 +1302,6 @@ var ProjectForm = function (_React$Component) {
     _this.errors = _this.errors.bind(_this);
     _this.uploadResult = _this.uploadResult.bind(_this);
     _this.redirect = _this.redirect.bind(_this);
-    _this.picturePreview = _this.picturePreview.bind(_this);
     return _this;
   }
 
@@ -1168,15 +1319,6 @@ var ProjectForm = function (_React$Component) {
         fileReader.readAsDataURL(file);
       }
     }
-
-    // picturePreview(){
-    //   if(this.props.project.picture && !this.props.project.pictureUrl){
-    //     const file = this.props.project.picture;
-    //     const fileReader = new FileReader();
-    //       fileReader.readAsDataURL(file);
-    //   }
-    // }
-
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
@@ -1266,9 +1408,7 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      // this.picturePreview();
-
-      var preview = this.state.pictureUrl ? _react2.default.createElement(
+      var preview = this.state.picture ? _react2.default.createElement(
         'div',
         { className: 'project-picture-preview-format' },
         _react2.default.createElement(
@@ -1276,7 +1416,7 @@ var ProjectForm = function (_React$Component) {
           null,
           'Picture Preview'
         ),
-        _react2.default.createElement('img', { className: 'project-image-resize', src: this.state.pictureUrl })
+        _react2.default.createElement('img', { className: 'project-image-resize', src: this.state.picture })
       ) : null;
 
       var submitButton = this.props.formType === 'New Project' ? "Publish" : "Update";
@@ -1305,11 +1445,7 @@ var ProjectForm = function (_React$Component) {
                 _react2.default.createElement('input', { className: 'project-body-input', type: 'file', onChange: this.uploadFile.bind(this) })
               ),
               preview,
-              _react2.default.createElement(
-                'textarea',
-                { onChange: this.updateDescription.bind(this), placeholder: 'Please enter a brief description of your build', className: 'project-body-text', rows: '8', cols: '80' },
-                this.state.description
-              )
+              _react2.default.createElement('textarea', { onChange: this.updateDescription.bind(this), placeholder: 'Please enter a brief description of your build', className: 'project-body-text', rows: '8', cols: '80', value: '' + this.state.description })
             ),
             _react2.default.createElement(
               'div',
@@ -1439,6 +1575,14 @@ var ProjectShow = function (_React$Component) {
           'Loading...'
         );
       }
+      var instructions = this.props.instructions.map(function (instruction, i) {
+        return _react2.default.createElement(
+          'li',
+          { key: i },
+          instruction
+        );
+      });
+      debugger;
 
       return _react2.default.createElement(
         'div',
@@ -1473,6 +1617,15 @@ var ProjectShow = function (_React$Component) {
               'p',
               { className: 'project-font-format' },
               this.props.project.description
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              'ul',
+              null,
+              instructions
             )
           ),
           this.props.ownsProject ? _react2.default.createElement(
@@ -1534,16 +1687,26 @@ var _ShowProject = __webpack_require__(/*! ./ShowProject */ "./frontend/componen
 
 var _ShowProject2 = _interopRequireDefault(_ShowProject);
 
+var _InstructionsSorter = __webpack_require__(/*! ./../instruction/InstructionsSorter */ "./frontend/components/instruction/InstructionsSorter.jsx");
+
+var _InstructionsSorter2 = _interopRequireDefault(_InstructionsSorter);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var mstp = function mstp(state, ownParams) {
+var mstp = function mstp(state, ownProps) {
+  var projectId = ownProps.match.params.projectId;
+  var instructionsArray = Object.values(state.entities.instructions);
+  debugger;
+  var sortedInstructions = (0, _InstructionsSorter2.default)(instructionsArray);
+  debugger;
   var userId = state.session.id;
-  var project = state.entities.projects[ownParams.match.params.projectId] || {};
+  var project = state.entities.projects[ownProps.match.params.projectId] || {};
   return {
     project: project,
     formType: 'Show Project',
     currentUserId: userId,
-    ownsProject: userId === project.authorId
+    ownsProject: userId === project.authorId,
+    instructions: sortedInstructions
   };
 };
 
@@ -2211,7 +2374,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var entitiesReducer = (0, _redux.combineReducers)({
   users: _user_reducer2.default,
   projects: _project_reducer2.default,
-  instruction: _instruction_reducer2.default
+  instructions: _instruction_reducer2.default
 });
 
 exports.default = entitiesReducer;
@@ -2286,11 +2449,9 @@ var instructionErrorsReducer = function instructionErrorsReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments[1];
 
-  debugger;
   var oldState = Object.freeze(state);
   switch (action.type) {
     case _instructions_actions.RECEIVE_INSTRUCTION_ERRORS:
-      debugger;
       return action.errors;
     case _projects_actions.FETCH_PROJECT:
       return [];

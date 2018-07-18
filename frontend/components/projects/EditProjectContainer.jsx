@@ -47,6 +47,7 @@ const mstp = (state, ownParams) =>{
     pictureUrl: null,
     uploadStatus: false};
   const currentProject = state.entities.projects[ownParams.match.params.projectId] || defaultProject;
+  debugger
   return({
     project: {
       title: currentProject.title,

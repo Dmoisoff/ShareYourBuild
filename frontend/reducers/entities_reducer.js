@@ -7,7 +7,7 @@ import instructionReducer from './instruction_reducer';
 const entitiesReducer = combineReducers({
   users: usersReducer,
   projects: projectReducer,
-  instruction: instructionReducer
+  instructions: instructionReducer
 });
 
 export default entitiesReducer;

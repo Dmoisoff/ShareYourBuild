@@ -8,6 +8,7 @@ import NewProjectContainer from './projects/NewProjectContainer';
 import EditProjectContainer from './projects/EditProjectContainer';
 import ShowProjectContainer from './projects/ShowProjectContainer';
 import IndexProjectsContainer from './projects/IndexProjectsContainer';
+import NewInstructionContainer from './instruction/NewInstructionContainer';
 import MainPage from './main_page/main_page';
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
 
@@ -38,6 +39,7 @@ const App = () => (
         <ProtectedRoute exact path="/project/:projectId/edit" component={EditProjectContainer} />
         <Route path="/project/:projectId" component={ShowProjectContainer} />
         <Route path="/projects" component={IndexProjectsContainer} />
+        <Route path="/test" component={NewInstructionContainer} />
         <AuthRoute exact path="/login" component={LoginFormContainer} />
         <AuthRoute exact path="/signup" component={SignupFormContainer} />
         <Route exact path="/" component={MainPage} />

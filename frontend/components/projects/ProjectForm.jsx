@@ -10,7 +10,6 @@ class ProjectForm extends React.Component{
     this.errors = this.errors.bind(this);
     this.uploadResult = this.uploadResult.bind(this);
     this.redirect = this.redirect.bind(this);
-    this.picturePreview = this.picturePreview.bind(this);
   }
 
   uploadFile(e){
@@ -24,13 +23,6 @@ class ProjectForm extends React.Component{
     }
   }
 
-  // picturePreview(){
-  //   if(this.props.project.picture && !this.props.project.pictureUrl){
-  //     const file = this.props.project.picture;
-  //     const fileReader = new FileReader();
-  //       fileReader.readAsDataURL(file);
-  //   }
-  // }
 
   handleSubmit(e){
     e.preventDefault();
@@ -86,12 +78,10 @@ class ProjectForm extends React.Component{
 
 
   render(){
-    // this.picturePreview();
-
-    const preview = this.state.pictureUrl ?
+    let preview = this.state.picture ?
     <div className='project-picture-preview-format'>
       <p>Picture Preview</p>
-      <img className='project-image-resize' src={this.state.pictureUrl} />
+      <img className='project-image-resize' src={this.state.picture} />
     </div>
      : null;
 
@@ -108,7 +98,7 @@ class ProjectForm extends React.Component{
                 <input className='project-body-input' type='file' onChange={this.uploadFile.bind(this)} />
               </div>
               {preview}
-              <textarea onChange={this.updateDescription.bind(this)} placeholder='Please enter a brief description of your build' className='project-body-text' rows="8" cols="80">{this.state.description}</textarea>
+              <textarea onChange={this.updateDescription.bind(this)} placeholder='Please enter a brief description of your build' className='project-body-text' rows="8" cols="80" value={`${this.state.description}`}></textarea>
             </div>
           <div className='project-button-placement'>
             <button onClick={this.handleSubmit.bind(this)} className='project-submit' type='submit'>{submitButton}</button>

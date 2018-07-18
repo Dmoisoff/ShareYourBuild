@@ -46,6 +46,10 @@ class ProjectShow extends React.Component {
     if (!project) {
       return <div>Loading...</div>;
     }
+    const instructions = this.props.instructions.map((instruction,i) => {
+      return <li key={i}>{instruction}</li>;
+    });
+    debugger
 
     return (
       <div>
@@ -59,6 +63,11 @@ class ProjectShow extends React.Component {
           </div>
           <div>
             <p className='project-font-format'>{this.props.project.description}</p>
+          </div>
+          <div>
+            <ul>
+              {instructions}
+            </ul>
           </div>
           {this.props.ownsProject ? <div className='project-show-delete-position'>
             <button className='project-show-delete-button' onClick={this.edit}>Edit Build</button>
