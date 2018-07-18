@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {withRouter} from 'react-router';
+import InstructionStep from './../instruction/InstructionStep';
 
 class ProjectShow extends React.Component {
   constructor(props){
@@ -38,18 +39,18 @@ class ProjectShow extends React.Component {
   }
 
 
-
-
-
   render() {
     const { project } = this.props;
     if (!project) {
       return <div>Loading...</div>;
     }
     const instructions = this.props.instructions.map((instruction,i) => {
-      return <li key={i}>{instruction.body}</li>;
+      return <li key={i}><InstructionStep
+                        step={instruction.InstructionStep}
+                        body={instruction.body}
+                        projectId={instruction.projectId}
+                        /></li>;
     });
-
 
     return (
       <div>
@@ -74,7 +75,6 @@ class ProjectShow extends React.Component {
             <button className='project-show-delete-button' onClick={this.remove}>Remove Build</button>
           </div> : null}
         </div>
-        <Link className='clickable project-index-link' to="/">Back to Home Page</Link>
       </div>
     );
   }

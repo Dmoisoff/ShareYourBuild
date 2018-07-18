@@ -30,11 +30,11 @@
 .search-bar-formating{
   display: flex;
   align-items: center;
-  width: 300px;
+  /* width: 300px; */
 }
 
 .create-build-button{
-  margin-left: 15px;
+  /* margin-left: 15px; */
   border-radius: 5px;
   box-sizing: content-box;
   color: #333;
@@ -66,8 +66,8 @@
 }
 
 .nav_spacing{
-  margin-left: 60px;
-  margin-right: 80px;
+  /* margin-left: 60px;
+  margin-right: 80px; */
 }
 
 .add-space{

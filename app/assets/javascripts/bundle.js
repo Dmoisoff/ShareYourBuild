@@ -571,7 +571,7 @@ var Greeting = function (_React$Component) {
                     { className: 'user-dropDown-content create' },
                     _react2.default.createElement(
                       _reactRouterDom.Link,
-                      { className: 'clickable user-drop-items', to: 'project/new' },
+                      { className: 'clickable user-drop-items', to: '/project/new' },
                       'Create Your Build >>'
                     )
                   )
@@ -655,6 +655,63 @@ var mdtp = function mdtp(dispatch) {
 };
 
 exports.default = (0, _reactRedux.connect)(mstp, mdtp)(_greeting2.default);
+
+/***/ }),
+
+/***/ "./frontend/components/instruction/InstructionStep.jsx":
+/*!*************************************************************!*\
+  !*** ./frontend/components/instruction/InstructionStep.jsx ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var InstructionStep = function (_React$Component) {
+  _inherits(InstructionStep, _React$Component);
+
+  function InstructionStep(props) {
+    _classCallCheck(this, InstructionStep);
+
+    return _possibleConstructorReturn(this, (InstructionStep.__proto__ || Object.getPrototypeOf(InstructionStep)).call(this, props));
+  }
+
+  _createClass(InstructionStep, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        'I\'m here'
+      );
+    }
+  }]);
+
+  return InstructionStep;
+}(_react2.default.Component);
+
+exports.default = InstructionStep;
 
 /***/ }),
 
@@ -951,7 +1008,6 @@ var mstp = function mstp(state, ownParams) {
     pictureUrl: null,
     uploadStatus: false };
   var currentProject = state.entities.projects[ownParams.match.params.projectId] || defaultProject;
-  debugger;
   return {
     project: {
       title: currentProject.title,
@@ -1507,6 +1563,10 @@ var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_module
 
 var _reactRouter = __webpack_require__(/*! react-router */ "./node_modules/react-router/es/index.js");
 
+var _InstructionStep = __webpack_require__(/*! ./../instruction/InstructionStep */ "./frontend/components/instruction/InstructionStep.jsx");
+
+var _InstructionStep2 = _interopRequireDefault(_InstructionStep);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1579,7 +1639,11 @@ var ProjectShow = function (_React$Component) {
         return _react2.default.createElement(
           'li',
           { key: i },
-          instruction.body
+          _react2.default.createElement(_InstructionStep2.default, {
+            step: instruction.InstructionStep,
+            body: instruction.body,
+            projectId: instruction.projectId
+          })
         );
       });
 
@@ -1641,11 +1705,6 @@ var ProjectShow = function (_React$Component) {
               'Remove Build'
             )
           ) : null
-        ),
-        _react2.default.createElement(
-          _reactRouterDom.Link,
-          { className: 'clickable project-index-link', to: '/' },
-          'Back to Home Page'
         )
       );
     }
@@ -1695,9 +1754,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var mstp = function mstp(state, ownProps) {
   var projectId = ownProps.match.params.projectId;
   var instructionsArray = Object.values(state.entities.instructions);
-  debugger;
   var sortedInstructions = (0, _InstructionsSorter2.default)(instructionsArray);
-  debugger;
   var userId = state.session.id;
   var project = state.entities.projects[ownProps.match.params.projectId] || {};
   return {

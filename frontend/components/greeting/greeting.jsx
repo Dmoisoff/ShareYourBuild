@@ -41,7 +41,7 @@ class Greeting extends React.Component{
                     <Link className='clickable user-drop-items' to={`/${this.props.currentUser.username}/project`}>Your Builds</Link>
                   </li>
                   <li className='user-dropDown-content create'>
-                    <Link className='clickable user-drop-items' to={`project/new`}>Create Your Build >></Link>
+                    <Link className='clickable user-drop-items' to={`/project/new`}>Create Your Build >></Link>
                   </li>
                 </ul>
               </li>

@@ -9,9 +9,7 @@ import instructionSorter from './../instruction/InstructionsSorter';
 const mstp = (state, ownProps) => {
   const projectId = ownProps.match.params.projectId;
   const instructionsArray = Object.values(state.entities.instructions);
-  debugger
   const sortedInstructions = instructionSorter(instructionsArray);
-  debugger
   const userId = state.session.id;
   const project = state.entities.projects[ownProps.match.params.projectId] || {};
   return({
