@@ -1,10 +1,12 @@
 class Api::InstructionsController < ApplicationController
 
   def create
+    debugger
     @instruction = Instruction.new(instruction_params)
     if @instruction.save
       render "api/instructions/show"
     else
+      debugger
       render json: @instruction.errors.full_messages, status: 422
     end
   end

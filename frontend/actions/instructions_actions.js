@@ -15,6 +15,11 @@ export const fetchInstruction = (id) => {
         type: FETCH_INSTRUCTION,
         instruction
       });
+    }, (errors) => {
+      return dispatch({
+        type: RECEIVE_INSTRUCTION_ERRORS,
+        errors: errors.responseJSON
+      });
     });
   };
 };
@@ -27,6 +32,7 @@ export const createInstruction = (instruction,id) => {
         instruction: instruction
       });
     }, (errors) => {
+            debugger
       return dispatch({
         type: RECEIVE_INSTRUCTION_ERRORS,
         errors: errors.responseJSON

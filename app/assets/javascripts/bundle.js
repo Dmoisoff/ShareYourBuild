@@ -118,6 +118,11 @@ var fetchInstruction = exports.fetchInstruction = function fetchInstruction(id) 
         type: FETCH_INSTRUCTION,
         instruction: instruction
       });
+    }, function (errors) {
+      return dispatch({
+        type: RECEIVE_INSTRUCTION_ERRORS,
+        errors: errors.responseJSON
+      });
     });
   };
 };
@@ -130,6 +135,7 @@ var createInstruction = exports.createInstruction = function createInstruction(i
         instruction: instruction
       });
     }, function (errors) {
+      debugger;
       return dispatch({
         type: RECEIVE_INSTRUCTION_ERRORS,
         errors: errors.responseJSON
@@ -2236,14 +2242,66 @@ var _project_errors_reducer = __webpack_require__(/*! ./project_errors_reducer *
 
 var _project_errors_reducer2 = _interopRequireDefault(_project_errors_reducer);
 
+var _instruction_error_reducer = __webpack_require__(/*! ./instruction_error_reducer */ "./frontend/reducers/instruction_error_reducer.js");
+
+var _instruction_error_reducer2 = _interopRequireDefault(_instruction_error_reducer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var errorsReducer = (0, _redux.combineReducers)({
   session: _session_errors_reducer2.default,
-  project: _project_errors_reducer2.default
+  project: _project_errors_reducer2.default,
+  instruction: _instruction_error_reducer2.default
 });
 
 exports.default = errorsReducer;
+
+/***/ }),
+
+/***/ "./frontend/reducers/instruction_error_reducer.js":
+/*!********************************************************!*\
+  !*** ./frontend/reducers/instruction_error_reducer.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _projects_actions = __webpack_require__(/*! ./../actions/projects_actions */ "./frontend/actions/projects_actions.js");
+
+var _instructions_actions = __webpack_require__(/*! ./../actions/instructions_actions */ "./frontend/actions/instructions_actions.js");
+
+var _merge = __webpack_require__(/*! lodash/merge */ "./node_modules/lodash/merge.js");
+
+var _merge2 = _interopRequireDefault(_merge);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var instructionErrorsReducer = function instructionErrorsReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments[1];
+
+  debugger;
+  var oldState = Object.freeze(state);
+  switch (action.type) {
+    case _instructions_actions.RECEIVE_INSTRUCTION_ERRORS:
+      debugger;
+      return action.errors;
+    case _projects_actions.FETCH_PROJECT:
+      return [];
+    case _instructions_actions.FETCH_INSTRUCTION:
+      return [];
+    default:
+      return oldState;
+  }
+};
+
+exports.default = instructionErrorsReducer;
 
 /***/ }),
 
