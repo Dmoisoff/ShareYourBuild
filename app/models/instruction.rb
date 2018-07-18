@@ -10,14 +10,12 @@
 #
 
 class Instruction < ApplicationRecord
-  validates :project_id, :instruction_step, :body
+  # validates :project_id, :instruction_step, :body, presence: true
 
   belongs_to :project,
     foreign_key: :project_id,
     class_name: 'Project'
 
-  def project_instructions(project_id)
-    self
-  end
+  has_one_attached :media
 
 end

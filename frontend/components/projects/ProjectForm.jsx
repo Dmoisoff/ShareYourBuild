@@ -10,6 +10,7 @@ class ProjectForm extends React.Component{
     this.errors = this.errors.bind(this);
     this.uploadResult = this.uploadResult.bind(this);
     this.redirect = this.redirect.bind(this);
+    this.picturePreview = this.picturePreview.bind(this);
   }
 
   uploadFile(e){
@@ -22,6 +23,14 @@ class ProjectForm extends React.Component{
       fileReader.readAsDataURL(file);
     }
   }
+
+  // picturePreview(){
+  //   if(this.props.project.picture && !this.props.project.pictureUrl){
+  //     const file = this.props.project.picture;
+  //     const fileReader = new FileReader();
+  //       fileReader.readAsDataURL(file);
+  //   }
+  // }
 
   handleSubmit(e){
     e.preventDefault();
@@ -77,12 +86,15 @@ class ProjectForm extends React.Component{
 
 
   render(){
+    // this.picturePreview();
+
     const preview = this.state.pictureUrl ?
     <div className='project-picture-preview-format'>
       <p>Picture Preview</p>
       <img className='project-image-resize' src={this.state.pictureUrl} />
     </div>
      : null;
+
      const submitButton = this.props.formType === 'New Project' ? "Publish" : "Update";
 
     return(

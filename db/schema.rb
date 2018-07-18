@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_18_004137) do
+ActiveRecord::Schema.define(version: 2018_07_18_133329) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,8 +41,6 @@ ActiveRecord::Schema.define(version: 2018_07_18_004137) do
     t.integer "instruction_step", null: false
     t.text "body", null: false
     t.string "media_url"
-    t.index ["instruction_step"], name: "index_instructions_on_instruction_step", unique: true
-    t.index ["project_id"], name: "index_instructions_on_project_id", unique: true
   end
 
   create_table "projects", force: :cascade do |t|

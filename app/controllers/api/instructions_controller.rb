@@ -10,7 +10,7 @@ class Api::InstructionsController < ApplicationController
   end
 
   def index
-    @instructions = Instruction.where(:project_id = (params:id))
+    @instructions = Instruction.where(params:id)
   end
 
   def update
@@ -30,7 +30,7 @@ class Api::InstructionsController < ApplicationController
 
   private
   def instruction_params
-    params.require(:instruction).permit(:project_id, :instruction_step,:body)
+    params.require(:instruction).permit(:project_id, :instruction_step, :body, :media)
 
   end
 

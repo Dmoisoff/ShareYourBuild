@@ -1060,6 +1060,7 @@ var ProjectForm = function (_React$Component) {
     _this.errors = _this.errors.bind(_this);
     _this.uploadResult = _this.uploadResult.bind(_this);
     _this.redirect = _this.redirect.bind(_this);
+    _this.picturePreview = _this.picturePreview.bind(_this);
     return _this;
   }
 
@@ -1077,6 +1078,15 @@ var ProjectForm = function (_React$Component) {
         fileReader.readAsDataURL(file);
       }
     }
+
+    // picturePreview(){
+    //   if(this.props.project.picture && !this.props.project.pictureUrl){
+    //     const file = this.props.project.picture;
+    //     const fileReader = new FileReader();
+    //       fileReader.readAsDataURL(file);
+    //   }
+    // }
+
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
@@ -1166,6 +1176,8 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      // this.picturePreview();
+
       var preview = this.state.pictureUrl ? _react2.default.createElement(
         'div',
         { className: 'project-picture-preview-format' },
@@ -1176,6 +1188,7 @@ var ProjectForm = function (_React$Component) {
         ),
         _react2.default.createElement('img', { className: 'project-image-resize', src: this.state.pictureUrl })
       ) : null;
+
       var submitButton = this.props.formType === 'New Project' ? "Publish" : "Update";
 
       return _react2.default.createElement(
