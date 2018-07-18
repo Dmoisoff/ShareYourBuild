@@ -2453,6 +2453,8 @@ var _root2 = _interopRequireDefault(_root);
 
 var _projects_actions = __webpack_require__(/*! ./actions/projects_actions */ "./frontend/actions/projects_actions.js");
 
+var _instruction_api_util = __webpack_require__(/*! ./util/instruction_api_util */ "./frontend/util/instruction_api_util.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -2475,11 +2477,10 @@ document.addEventListener('DOMContentLoaded', function () {
   // testing
   window.getState = store.getState;
   window.dispatch = store.dispatch;
-  window.fetchProjects = _projects_actions.fetchProjects;
-  window.fetchProject = _projects_actions.fetchProject;
-  window.createProject = _projects_actions.createProject;
-  window.updateProject = _projects_actions.updateProject;
-  window.deleteProject = _projects_actions.deleteProject;
+  window.fetchInstructions = _instruction_api_util.fetchInstructions;
+  window.createInstruction = _instruction_api_util.createInstruction;
+  window.updateInstruction = _instruction_api_util.updateInstruction;
+  window.deleteInstruction = _instruction_api_util.deleteInstruction;
   window.icon = '<%= image_url("shareyourbuildLogo.png")  %>';
 
   var root = document.getElementById('root');
@@ -2524,6 +2525,58 @@ var configureStore = function configureStore() {
 };
 
 exports.default = configureStore;
+
+/***/ }),
+
+/***/ "./frontend/util/instruction_api_util.js":
+/*!***********************************************!*\
+  !*** ./frontend/util/instruction_api_util.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var fetchInstructions = exports.fetchInstructions = function fetchInstructions(id) {
+  return $.ajax({
+    method: 'GET',
+    url: '/api/projects/' + id + '/instructions'
+  });
+};
+
+var createInstruction = exports.createInstruction = function createInstruction(instruction, id) {
+  debugger;
+  return $.ajax({
+    method: 'POST',
+    url: '/api/projects/' + id + '/instructions',
+    data: instruction
+    // contentType: false,
+    // processData: false
+  });
+};
+
+var updateInstruction = exports.updateInstruction = function updateInstruction(instruction, id) {
+  return $.ajax({
+    method: 'PATCH',
+    url: 'api/instructions/' + id,
+    data: instruction
+    // contentType: false,
+    // processData: false
+  });
+};
+
+var deleteInstruction = exports.deleteInstruction = function deleteInstruction(id) {
+  return $.ajax({
+    method: 'DELETE',
+    url: 'api/instructions/' + id
+  });
+};
+
+// {instruction: {project_id: 88, instruction_step: 7, body:'test'}}
 
 /***/ }),
 

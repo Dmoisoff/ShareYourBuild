@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import configureStore from './store/store';
 import Root from './components/root';
 import { fetchProjects, fetchProject, createProject, updateProject, deleteProject} from './actions/projects_actions';
+import { fetchInstructions, createInstruction, updateInstruction, deleteInstruction } from './util/instruction_api_util';
 
 
 
@@ -24,11 +25,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // testing
   window.getState = store.getState;
   window.dispatch = store.dispatch;
-  window.fetchProjects = fetchProjects;
-  window.fetchProject = fetchProject;
-  window.createProject = createProject;
-  window.updateProject = updateProject;
-  window.deleteProject = deleteProject;
+  window.fetchInstructions = fetchInstructions;
+  window.createInstruction = createInstruction;
+  window.updateInstruction = updateInstruction;
+  window.deleteInstruction = deleteInstruction;
   window.icon = '<%= image_url("shareyourbuildLogo.png")  %>';
 
   const root = document.getElementById('root');
