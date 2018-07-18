@@ -47,9 +47,9 @@ class ProjectShow extends React.Component {
       return <div>Loading...</div>;
     }
     const instructions = this.props.instructions.map((instruction,i) => {
-      return <li key={i}>{instruction}</li>;
+      return <li key={i}>{instruction.body}</li>;
     });
-    debugger
+
 
     return (
       <div>

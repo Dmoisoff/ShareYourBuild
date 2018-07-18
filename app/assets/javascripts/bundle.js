@@ -1579,10 +1579,9 @@ var ProjectShow = function (_React$Component) {
         return _react2.default.createElement(
           'li',
           { key: i },
-          instruction
+          instruction.body
         );
       });
-      debugger;
 
       return _react2.default.createElement(
         'div',
