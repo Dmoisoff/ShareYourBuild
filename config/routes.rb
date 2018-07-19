@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: 'json' } do
    resources :users
+   get 'user/:id/projects', to: 'projects#projects_by_user'
    resources :projects do
      resources :instructions, only: [:create, :index]
    end

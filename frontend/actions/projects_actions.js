@@ -4,11 +4,25 @@ export const FETCH_ALL_PROJECTS = 'FETCH_ALL_PROJECTS';
 export const FETCH_PROJECT = 'FETCH_PROJECT';
 export const REMOVE_PROJECT = 'REMOVE_PROJECT';
 export const RECEIVE_PROJECT_ERRORS = 'RECEIVE_PROJECT_ERRORS';
+export const FETCH_PROJECTS_BY_USER = 'FETCH_PROJECTS_BY_USER';
+
 
 
 export const fetchProjects = () => {
   return dispatch => {
     return Projects_Util.fetchProjects().then((projects) =>{
+      return dispatch({
+        type: FETCH_ALL_PROJECTS,
+        projects: projects
+      });
+    });
+  };
+};
+
+export const fetchProjectsByUser = (id) => {
+  return dispatch => {
+    return Projects_Util.fetchProjectsByUser(id).then((projects) =>{
+      debugger
       return dispatch({
         type: FETCH_ALL_PROJECTS,
         projects: projects

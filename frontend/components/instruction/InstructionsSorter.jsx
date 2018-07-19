@@ -1,3 +1,4 @@
+// will come back to redo sorting, placeholder sorter
 const bubbleSort = (arr) => {
    const len = arr.length;
    for (let i = len-1; i>=0; i--){

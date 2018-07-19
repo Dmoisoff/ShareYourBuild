@@ -33,6 +33,11 @@ class Api::ProjectsController < ApplicationController
     render json: @project.id
   end
 
+  def projects_by_user
+    @projects = Project.where(author_id: params[:id])
+    render "api/projects/project_by_user"
+  end
+
   private
 
   def project_params

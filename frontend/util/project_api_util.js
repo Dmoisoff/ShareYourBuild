@@ -38,3 +38,10 @@ export const deleteProject = (id) => {
     url: `api/projects/${id}`
   });
 };
+
+export const fetchProjectsByUser = (id) => {
+  return $.ajax({
+    method: 'GET',
+    url: `/api/user/${id}/projects`
+  });
+};

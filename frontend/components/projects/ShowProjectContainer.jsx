@@ -9,7 +9,6 @@ import instructionSorter from './../instruction/InstructionsSorter';
 const mstp = (state, ownProps) => {
   const projectId = ownProps.match.params.projectId;
   const instructionsArray = Object.values(state.entities.instructions).map((instruction) =>{
-    debugger
     if(instruction.projectId == projectId){
       return instruction;
     }

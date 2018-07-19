@@ -179,7 +179,7 @@ var deleteInstruction = exports.deleteInstruction = function deleteInstruction(i
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.deleteProject = exports.updateProject = exports.createProject = exports.fetchProject = exports.fetchProjects = exports.RECEIVE_PROJECT_ERRORS = exports.REMOVE_PROJECT = exports.FETCH_PROJECT = exports.FETCH_ALL_PROJECTS = undefined;
+exports.deleteProject = exports.updateProject = exports.createProject = exports.fetchProject = exports.fetchProjectsByUser = exports.fetchProjects = exports.FETCH_PROJECTS_BY_USER = exports.RECEIVE_PROJECT_ERRORS = exports.REMOVE_PROJECT = exports.FETCH_PROJECT = exports.FETCH_ALL_PROJECTS = undefined;
 
 var _project_api_util = __webpack_require__(/*! ./../util/project_api_util */ "./frontend/util/project_api_util.js");
 
@@ -191,10 +191,23 @@ var FETCH_ALL_PROJECTS = exports.FETCH_ALL_PROJECTS = 'FETCH_ALL_PROJECTS';
 var FETCH_PROJECT = exports.FETCH_PROJECT = 'FETCH_PROJECT';
 var REMOVE_PROJECT = exports.REMOVE_PROJECT = 'REMOVE_PROJECT';
 var RECEIVE_PROJECT_ERRORS = exports.RECEIVE_PROJECT_ERRORS = 'RECEIVE_PROJECT_ERRORS';
+var FETCH_PROJECTS_BY_USER = exports.FETCH_PROJECTS_BY_USER = 'FETCH_PROJECTS_BY_USER';
 
 var fetchProjects = exports.fetchProjects = function fetchProjects() {
   return function (dispatch) {
     return Projects_Util.fetchProjects().then(function (projects) {
+      return dispatch({
+        type: FETCH_ALL_PROJECTS,
+        projects: projects
+      });
+    });
+  };
+};
+
+var fetchProjectsByUser = exports.fetchProjectsByUser = function fetchProjectsByUser(id) {
+  return function (dispatch) {
+    return Projects_Util.fetchProjectsByUser(id).then(function (projects) {
+      debugger;
       return dispatch({
         type: FETCH_ALL_PROJECTS,
         projects: projects
@@ -369,6 +382,10 @@ var _NewInstructionContainer = __webpack_require__(/*! ./instruction/NewInstruct
 
 var _NewInstructionContainer2 = _interopRequireDefault(_NewInstructionContainer);
 
+var _UserProjectsIndexContainer = __webpack_require__(/*! ./projects/UserProjectsIndexContainer */ "./frontend/components/projects/UserProjectsIndexContainer.jsx");
+
+var _UserProjectsIndexContainer2 = _interopRequireDefault(_UserProjectsIndexContainer);
+
 var _main_page = __webpack_require__(/*! ./main_page/main_page */ "./frontend/components/main_page/main_page.jsx");
 
 var _main_page2 = _interopRequireDefault(_main_page);
@@ -429,14 +446,15 @@ var App = function App() {
       _react2.default.createElement(
         _reactRouterDom.Switch,
         null,
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _main_page2.default }),
         _react2.default.createElement(_route_util.ProtectedRoute, { path: '/project/new', component: _NewProjectContainer2.default }),
         _react2.default.createElement(_route_util.ProtectedRoute, { exact: true, path: '/project/:projectId/edit', component: _EditProjectContainer2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { path: '/project/:projectId', component: _ShowProjectContainer2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { path: '/projects', component: _IndexProjectsContainer2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { path: '/test', component: _NewInstructionContainer2.default }),
+        _react2.default.createElement(_reactRouterDom.Route, { path: '/:username/:id/projects', component: _UserProjectsIndexContainer2.default }),
         _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/login', component: _LoginFormContainer2.default }),
-        _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/signup', component: _SignupFormContainer2.default }),
-        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _main_page2.default })
+        _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/signup', component: _SignupFormContainer2.default })
       )
     ),
     _react2.default.createElement(
@@ -572,7 +590,7 @@ var Greeting = function (_React$Component) {
                     { className: 'user-dropDown-content' },
                     _react2.default.createElement(
                       _reactRouterDom.Link,
-                      { className: 'clickable user-drop-items', to: '/' + this.props.currentUser.username + '/project' },
+                      { className: 'clickable user-drop-items', to: this.props.currentUser.username + '/' + this.props.currentUser.id + '/projects' },
                       'Your Builds'
                     )
                   ),
@@ -814,6 +832,7 @@ exports.default = Instructions;
 Object.defineProperty(exports, "__esModule", {
    value: true
 });
+// will come back to redo sorting, placeholder sorter
 var bubbleSort = function bubbleSort(arr) {
    var len = arr.length;
    for (var i = len - 1; i >= 0; i--) {
@@ -1189,13 +1208,19 @@ var IndexProjects = function (_React$Component) {
   _createClass(IndexProjects, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      this.props.fetchProjects();
+      if (this.props.formType === 'User Index Projects') {
+        this.props.fetchProjectsByUser(this.props.displayedUser);
+      } else {
+        this.props.fetchProjects();
+      }
     }
   }, {
     key: 'renderProjects',
     value: function renderProjects() {
+      var _this2 = this;
+
       return this.props.projects.map(function (project) {
-        return _react2.default.createElement(
+        var display = _react2.default.createElement(
           _reactRouterDom.Link,
           { key: project.id, to: '/project/' + project.id },
           _react2.default.createElement(_IndexProjectItem2.default, {
@@ -1206,6 +1231,11 @@ var IndexProjects = function (_React$Component) {
             featured: project.featured,
             viewCount: project.view_count })
         );
+        if (project.author_id == _this2.props.displayedUser && _this2.props.formType === 'User Index Projects') {
+          return display;
+        } else if (_this2.props.formType === 'Index Projects') {
+          return display;
+        }
       });
     }
   }, {
@@ -1218,14 +1248,20 @@ var IndexProjects = function (_React$Component) {
           'Loading...'
         );
       } else {
+        var header = this.props.formType === 'User Index Projects' ? _react2.default.createElement(
+          'p',
+          { className: 'index-title' },
+          this.props.username,
+          ' builds'
+        ) : _react2.default.createElement(
+          'p',
+          { className: 'index-title' },
+          'Builds'
+        );
         return _react2.default.createElement(
           'div',
           { className: 'index-background' },
-          _react2.default.createElement(
-            'p',
-            { className: 'index-title' },
-            'Builds'
-          ),
+          header,
           _react2.default.createElement(
             'ul',
             { className: 'index-display-items' },
@@ -1272,6 +1308,7 @@ var _IndexProjects2 = _interopRequireDefault(_IndexProjects);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state) {
+  debugger;
   return {
     projects: Object.values(state.entities.projects),
     formType: 'Index Projects'
@@ -1854,7 +1891,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var mstp = function mstp(state, ownProps) {
   var projectId = ownProps.match.params.projectId;
   var instructionsArray = Object.values(state.entities.instructions).map(function (instruction) {
-    debugger;
     if (instruction.projectId == projectId) {
       return instruction;
     }
@@ -1883,6 +1919,57 @@ var mdtp = function mdtp(dispatch) {
 };
 
 exports.default = (0, _reactRedux.connect)(mstp, mdtp)(_ShowProject2.default);
+
+/***/ }),
+
+/***/ "./frontend/components/projects/UserProjectsIndexContainer.jsx":
+/*!*********************************************************************!*\
+  !*** ./frontend/components/projects/UserProjectsIndexContainer.jsx ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _projects_actions = __webpack_require__(/*! ./../../actions/projects_actions */ "./frontend/actions/projects_actions.js");
+
+var _IndexProjects = __webpack_require__(/*! ./IndexProjects */ "./frontend/components/projects/IndexProjects.jsx");
+
+var _IndexProjects2 = _interopRequireDefault(_IndexProjects);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mstp = function mstp(state, ownProps) {
+  var displayedUser = ownProps.match.url.split('/')[2];
+  var username = ownProps.match.url.split('/')[1];
+  return {
+    projects: Object.values(state.entities.projects),
+    formType: 'User Index Projects',
+    displayedUser: displayedUser,
+    username: username
+  };
+};
+
+var mdtp = function mdtp(dispatch) {
+  return {
+    fetchProjectsByUser: function fetchProjectsByUser(id) {
+      return dispatch((0, _projects_actions.fetchProjectsByUser)(id));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mstp, mdtp)(_IndexProjects2.default);
 
 /***/ }),
 
@@ -3009,7 +3096,7 @@ document.addEventListener('DOMContentLoaded', function () {
   window.createInstruction = _instructions_actions.createInstruction;
   window.updateInstruction = _instructions_actions.updateInstruction;
   window.deleteInstruction = _instructions_actions.deleteInstruction;
-  window.icon = '<%= image_url("shareyourbuildLogo.png")  %>';
+  window.fetchProjectsByUser = _projects_actions.fetchProjectsByUser;
 
   var root = document.getElementById('root');
   _reactDom2.default.render(_react2.default.createElement(_root2.default, { store: store }), root);
@@ -3165,6 +3252,13 @@ var deleteProject = exports.deleteProject = function deleteProject(id) {
   return $.ajax({
     method: 'DELETE',
     url: 'api/projects/' + id
+  });
+};
+
+var fetchProjectsByUser = exports.fetchProjectsByUser = function fetchProjectsByUser(id) {
+  return $.ajax({
+    method: 'GET',
+    url: '/api/user/' + id + '/projects'
   });
 };
 

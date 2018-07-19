@@ -10,7 +10,7 @@ class Api::InstructionsController < ApplicationController
   end
 
   def index
-    @instructions = Instruction.where(params[:project_id] === :project_id)
+    @instructions = Instruction.where(project_id: params[:project_id])
     render "api/instructions/index"
   end
 

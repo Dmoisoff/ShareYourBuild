@@ -5,22 +5,30 @@ import IndexProjectItem from './IndexProjectItem';
 class IndexProjects extends React.Component{
 
   componentDidMount(){
-    this.props.fetchProjects();
+    if(this.props.formType === 'User Index Projects'){
+      this.props.fetchProjectsByUser(this.props.displayedUser);
+    }else{
+      this.props.fetchProjects();
+    }
   }
 
   renderProjects(){
     return(
       this.props.projects.map((project) => {
-        return (
-          <Link key={project.id} to={`/project/${project.id}`}>
-            <IndexProjectItem
-              key={project.id}
-              title={project.title}
-              mainPicture={project.picture}
-              author={project.authorUsername}
-              featured={project.featured}
-              viewCount={project.view_count} />
-          </Link>);
+        const display = <Link key={project.id} to={`/project/${project.id}`}>
+                          <IndexProjectItem
+                            key={project.id}
+                            title={project.title}
+                            mainPicture={project.picture}
+                            author={project.authorUsername}
+                            featured={project.featured}
+                            viewCount={project.view_count} />
+                        </Link>;
+        if(project.author_id == this.props.displayedUser && this.props.formType === 'User Index Projects'){
+          return display;
+        }else if(this.props.formType === 'Index Projects'){
+          return display;
+        }
       })
     );
   }
@@ -31,9 +39,11 @@ class IndexProjects extends React.Component{
     if (!this.props.projects) {
       return <div>Loading...</div>;
     }else{
+      const header = this.props.formType === 'User Index Projects' ?
+      <p className='index-title'>{this.props.username} builds</p> : <p className='index-title'>Builds</p>;
       return(
         <div className='index-background'>
-          <p className='index-title'>Builds</p>
+          {header}
           <ul className="index-display-items">
             {this.renderProjects()}
           </ul>

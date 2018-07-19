@@ -9,6 +9,7 @@ import EditProjectContainer from './projects/EditProjectContainer';
 import ShowProjectContainer from './projects/ShowProjectContainer';
 import IndexProjectsContainer from './projects/IndexProjectsContainer';
 import NewInstructionContainer from './instruction/NewInstructionContainer';
+import UserProjectsIndexContainer from './projects/UserProjectsIndexContainer';
 import MainPage from './main_page/main_page';
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
 
@@ -35,14 +36,15 @@ const App = () => (
     </header>
     <div>
       <Switch>
+        <Route exact path="/" component={MainPage} />
         <ProtectedRoute path="/project/new" component={NewProjectContainer} />
         <ProtectedRoute exact path="/project/:projectId/edit" component={EditProjectContainer} />
         <Route path="/project/:projectId" component={ShowProjectContainer} />
         <Route path="/projects" component={IndexProjectsContainer} />
         <Route path="/test" component={NewInstructionContainer} />
+        <Route path="/:username/:id/projects" component={UserProjectsIndexContainer} />
         <AuthRoute exact path="/login" component={LoginFormContainer} />
         <AuthRoute exact path="/signup" component={SignupFormContainer} />
-        <Route exact path="/" component={MainPage} />
       </Switch>
     </div>
     <footer className='footer'>
