@@ -1770,8 +1770,10 @@ var ProjectShow = function (_React$Component) {
     value: function remove() {
       var _this2 = this;
 
+      var userId = this.props.project.authorId;
+      var username = this.state.authorUsername;
       this.props.deleteProject(this.props.project.id).then(function () {
-        return _this2.props.history.push('/');
+        return _this2.props.history.push('/' + username + '/' + userId + '/projects');
       });
     }
   }, {

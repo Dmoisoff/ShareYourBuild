@@ -30,8 +30,10 @@ class ProjectShow extends React.Component {
   }
 
   remove(){
+    const userId = this.props.project.authorId;
+    const username = this.state.authorUsername;
     this.props.deleteProject(this.props.project.id).then(
-      () => this.props.history.push('/')
+      () => this.props.history.push(`/${username}/${userId}/projects`)
     );
   }
 
