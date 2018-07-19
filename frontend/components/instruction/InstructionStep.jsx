@@ -13,7 +13,7 @@ class InstructionStep extends React.Component{
     return(
       <div className='instruction-step-format'>
         <div>
-          <p className='instruction-step-title'>{this.props.step}</p>
+          <p className='instruction-step-title'> Step {this.props.step}: {this.props.title}</p>
         </div>
         {media}
         <div>

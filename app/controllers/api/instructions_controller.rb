@@ -35,7 +35,7 @@ class Api::InstructionsController < ApplicationController
 
   private
   def instruction_params
-    params.require(:instruction).permit(:project_id, :instruction_step, :body, :media)
+    params.require(:instruction).permit(:project_id, :instruction_step, :title, :body, :media)
 
   end
 

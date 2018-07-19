@@ -54,6 +54,7 @@ class ProjectShow extends React.Component {
       return <InstructionStep
               step={instruction.instructionStep}
               body={instruction.body}
+              title={instruction.title}
               projectId={instruction.projectId}
               key={i}
               media={instruction.media}

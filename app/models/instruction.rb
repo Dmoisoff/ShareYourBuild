@@ -10,7 +10,7 @@
 #
 
 class Instruction < ApplicationRecord
-  validates :project_id, :instruction_step, :body, presence: true
+  validates :project_id, :instruction_step, :title, :body, presence: true
 
   belongs_to :project,
     foreign_key: :project_id,

@@ -737,7 +737,10 @@ var InstructionStep = function (_React$Component) {
           _react2.default.createElement(
             'p',
             { className: 'instruction-step-title' },
-            this.props.step
+            ' Step ',
+            this.props.step,
+            ': ',
+            this.props.title
           )
         ),
         media,
@@ -1799,6 +1802,7 @@ var ProjectShow = function (_React$Component) {
         return _react2.default.createElement(_InstructionStep2.default, {
           step: instruction.instructionStep,
           body: instruction.body,
+          title: instruction.title,
           projectId: instruction.projectId,
           key: i,
           media: instruction.media
