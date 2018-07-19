@@ -207,7 +207,6 @@ var fetchProjects = exports.fetchProjects = function fetchProjects() {
 var fetchProjectsByUser = exports.fetchProjectsByUser = function fetchProjectsByUser(id) {
   return function (dispatch) {
     return Projects_Util.fetchProjectsByUser(id).then(function (projects) {
-      debugger;
       return dispatch({
         type: FETCH_ALL_PROJECTS,
         projects: projects
@@ -590,7 +589,7 @@ var Greeting = function (_React$Component) {
                     { className: 'user-dropDown-content' },
                     _react2.default.createElement(
                       _reactRouterDom.Link,
-                      { className: 'clickable user-drop-items', to: this.props.currentUser.username + '/' + this.props.currentUser.id + '/projects' },
+                      { className: 'clickable user-drop-items', to: '/' + this.props.currentUser.username + '/' + this.props.currentUser.id + '/projects' },
                       'Your Builds'
                     )
                   ),
@@ -1199,10 +1198,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var IndexProjects = function (_React$Component) {
   _inherits(IndexProjects, _React$Component);
 
-  function IndexProjects() {
+  function IndexProjects(props) {
     _classCallCheck(this, IndexProjects);
 
-    return _possibleConstructorReturn(this, (IndexProjects.__proto__ || Object.getPrototypeOf(IndexProjects)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (IndexProjects.__proto__ || Object.getPrototypeOf(IndexProjects)).call(this, props));
+
+    _this.state = {
+      key: Math.random()
+    };
+    return _this;
   }
 
   _createClass(IndexProjects, [{
@@ -1215,9 +1219,20 @@ var IndexProjects = function (_React$Component) {
       }
     }
   }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      var _this2 = this;
+
+      if (this.props.displayedUser !== nextProps.displayedUser && this.props.formType === 'User Index Projects') {
+        this.props.fetchProjectsByUser(nextProps.displayedUser).then(function () {
+          _this2.setState({ key: Math.random() });
+        });
+      }
+    }
+  }, {
     key: 'renderProjects',
     value: function renderProjects() {
-      var _this2 = this;
+      var _this3 = this;
 
       return this.props.projects.map(function (project) {
         var display = _react2.default.createElement(
@@ -1231,9 +1246,9 @@ var IndexProjects = function (_React$Component) {
             featured: project.featured,
             viewCount: project.view_count })
         );
-        if (project.author_id == _this2.props.displayedUser && _this2.props.formType === 'User Index Projects') {
+        if (project.author_id == _this3.props.displayedUser && _this3.props.formType === 'User Index Projects') {
           return display;
-        } else if (_this2.props.formType === 'Index Projects') {
+        } else if (_this3.props.formType === 'Index Projects') {
           return display;
         }
       });
@@ -1308,7 +1323,6 @@ var _IndexProjects2 = _interopRequireDefault(_IndexProjects);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state) {
-  debugger;
   return {
     projects: Object.values(state.entities.projects),
     formType: 'Index Projects'
@@ -1765,9 +1779,8 @@ var ProjectShow = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var project = this.props.project;
-
-      if (!project) {
+      // const { project } = this.props;
+      if (!this.props.project.authorUsername) {
         return _react2.default.createElement(
           'div',
           null,
@@ -1801,8 +1814,13 @@ var ProjectShow = function (_React$Component) {
             _react2.default.createElement(
               'p',
               { className: 'project-by' },
-              ' by ',
-              this.state.authorUsername
+              ' by',
+              _react2.default.createElement(
+                _reactRouterDom.Link,
+                { className: 'clickable', to: '/' + this.state.authorUsername + '/' + this.props.project.authorId + '/projects' },
+                ' ',
+                this.state.authorUsername
+              )
             )
           ),
           _react2.default.createElement(

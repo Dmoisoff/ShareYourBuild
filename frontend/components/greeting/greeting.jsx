@@ -39,7 +39,7 @@ class Greeting extends React.Component{
                   </li>
                   <li className='divide'></li>
                   <li className='user-dropDown-content'>
-                    <Link className='clickable user-drop-items' to={`${this.props.currentUser.username}/${this.props.currentUser.id}/projects`}>Your Builds</Link>
+                    <Link className='clickable user-drop-items' to={`/${this.props.currentUser.username}/${this.props.currentUser.id}/projects`}>Your Builds</Link>
                   </li>
                   <li className='user-dropDown-content create'>
                     <Link className='clickable user-drop-items' to={`/project/new`}>Create Your Build >></Link>

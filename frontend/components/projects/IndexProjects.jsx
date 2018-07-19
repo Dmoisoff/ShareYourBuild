@@ -3,12 +3,26 @@ import { withRouter, Link } from 'react-router-dom';
 import IndexProjectItem from './IndexProjectItem';
 
 class IndexProjects extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      key: Math.random()
+    };
+  }
 
   componentDidMount(){
     if(this.props.formType === 'User Index Projects'){
       this.props.fetchProjectsByUser(this.props.displayedUser);
     }else{
       this.props.fetchProjects();
+    }
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(this.props.displayedUser !== nextProps.displayedUser && this.props.formType === 'User Index Projects'){
+      this.props.fetchProjectsByUser(nextProps.displayedUser).then(() => {
+        this.setState({key: Math.random()});
+      });
     }
   }
 

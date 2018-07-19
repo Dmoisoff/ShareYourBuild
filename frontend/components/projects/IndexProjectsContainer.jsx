@@ -5,7 +5,6 @@ import IndexProjects from './IndexProjects';
 
 
 const mstp = (state) => {
-  debugger
   return({
     projects: Object.values(state.entities.projects),
     formType: 'Index Projects'

@@ -22,7 +22,6 @@ export const fetchProjects = () => {
 export const fetchProjectsByUser = (id) => {
   return dispatch => {
     return Projects_Util.fetchProjectsByUser(id).then((projects) =>{
-      debugger
       return dispatch({
         type: FETCH_ALL_PROJECTS,
         projects: projects

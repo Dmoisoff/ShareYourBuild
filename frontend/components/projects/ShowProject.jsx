@@ -41,8 +41,8 @@ class ProjectShow extends React.Component {
 
 
   render() {
-    const { project } = this.props;
-    if (!project) {
+    // const { project } = this.props;
+    if (!this.props.project.authorUsername) {
       return <div>Loading...</div>;
     }
     const instructions = this.props.instructions.map((instruction,i) => {
@@ -60,7 +60,9 @@ class ProjectShow extends React.Component {
         <div>
           <div className="project-header">
             <p className="project-title" >{this.state.title}</p>
-            <p className="project-by"> by {this.state.authorUsername}</p>
+            <p className="project-by"> by
+              <Link className='clickable' to={`/${this.state.authorUsername}/${this.props.project.authorId}/projects`}> {this.state.authorUsername}</Link>
+            </p>
           </div>
           <div className="project-show-image-placement">
             <img className="project-show-image-scale" src={`${this.props.project.picture}`} />
