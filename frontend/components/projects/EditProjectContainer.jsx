@@ -39,6 +39,7 @@ class EditProjectForm extends React.Component{
 
 
 const mstp = (state, ownParams) =>{
+  debugger
   const defaultProject = {title: '',
     author_id: state.session.id,
     author_username: state.entities.users[state.session.id],
@@ -48,6 +49,11 @@ const mstp = (state, ownParams) =>{
     pictureUrl: null,
     uploadStatus: false};
   const currentProject = state.entities.projects[ownParams.match.params.projectId] || defaultProject;
+  debugger
+  if ( state.entities.projects[ownParams.match.params.projectId] && state.session.id != state.entities.projects[ownParams.match.params.projectId].authorId ) {
+    ownParams.history.push('/');
+  }
+  debugger
   return({
     project: {
       title: currentProject.title,

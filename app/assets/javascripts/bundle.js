@@ -1011,6 +1011,7 @@ var EditProjectForm = function (_React$Component) {
 }(_react2.default.Component);
 
 var mstp = function mstp(state, ownParams) {
+  debugger;
   var defaultProject = { title: '',
     author_id: state.session.id,
     author_username: state.entities.users[state.session.id],
@@ -1020,6 +1021,11 @@ var mstp = function mstp(state, ownParams) {
     pictureUrl: null,
     uploadStatus: false };
   var currentProject = state.entities.projects[ownParams.match.params.projectId] || defaultProject;
+  debugger;
+  if (state.entities.projects[ownParams.match.params.projectId] && state.session.id != state.entities.projects[ownParams.match.params.projectId].authorId) {
+    ownParams.history.push('/');
+  }
+  debugger;
   return {
     project: {
       title: currentProject.title,
