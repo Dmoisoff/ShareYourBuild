@@ -1790,7 +1790,6 @@ var ProjectShow = function (_React$Component) {
           'Loading...'
         );
       }
-      debugger;
       var instructions = this.props.instructions ? this.props.instructions.map(function (instruction, i) {
         if (!instruction) {
           return [];

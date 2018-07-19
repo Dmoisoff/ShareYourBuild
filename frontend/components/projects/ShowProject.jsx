@@ -45,7 +45,6 @@ class ProjectShow extends React.Component {
     if (!this.props.project.authorUsername) {
       return <div>Loading...</div>;
     }
-    debugger
     const instructions = this.props.instructions ? this.props.instructions.map((instruction,i) => {
       if(!instruction){
         return [];
