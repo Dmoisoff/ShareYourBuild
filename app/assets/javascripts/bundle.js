@@ -1394,6 +1394,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 
+var _NewInstructionContainer = __webpack_require__(/*! ./../instruction/NewInstructionContainer */ "./frontend/components/instruction/NewInstructionContainer.jsx");
+
+var _NewInstructionContainer2 = _interopRequireDefault(_NewInstructionContainer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2063,7 +2067,7 @@ var mstp = function mstp(state) {
 };
 
 var mdtp = function mdtp(dispatch) {
-  var demo = { username: 'Demo-Man', password: '123456' };
+  var demo = { username: 'Demo-Bot', password: '123456' };
   return {
     processForm: function processForm(user) {
       dispatch((0, _session_actions.logIn)(user));
@@ -2248,7 +2252,7 @@ var SessionForm = function (_React$Component) {
       var _this3 = this;
 
       e.preventDefault();
-      var user = 'Demo-Man';
+      var user = 'Demo-Bot';
       this.setState({ username: user, password: '123456' });
       setTimeout(function () {
         _this3.props.demoLogin();
@@ -2410,7 +2414,7 @@ var mstp = function mstp(state) {
 };
 
 var mdtp = function mdtp(dispatch) {
-  var demo = { username: 'Demo-Man', password: '123456' };
+  var demo = { username: 'Demo-Bot', password: '123456' };
   return {
     processForm: function processForm(user) {
       dispatch((0, _session_actions.signUp)(user));

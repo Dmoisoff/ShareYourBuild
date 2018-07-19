@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import NewInstructionContainer from './../instruction/NewInstructionContainer';
 
 
 class ProjectForm extends React.Component{

@@ -14,7 +14,7 @@ const mstp = (state) => {
 };
 
 const mdtp = (dispatch) => {
-  const demo = {username: 'Demo-Man', password:'123456'};
+  const demo = {username: 'Demo-Bot', password:'123456'};
   return({
     processForm: (user) => { dispatch(signUp(user));},
     demoLogin: () => { dispatch(logIn(demo));}
