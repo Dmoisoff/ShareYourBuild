@@ -710,7 +710,6 @@ var InstructionStep = function (_React$Component) {
   _createClass(InstructionStep, [{
     key: 'render',
     value: function render() {
-      debugger;
       var media = this.props.media ? _react2.default.createElement('img', { className: 'project-show-image-scale', src: '' + this.props.media }) : null;
       return _react2.default.createElement(
         'div',
@@ -718,13 +717,21 @@ var InstructionStep = function (_React$Component) {
         _react2.default.createElement(
           'div',
           null,
-          this.props.step
+          _react2.default.createElement(
+            'p',
+            { className: 'instruction-step-title' },
+            this.props.step
+          )
         ),
         media,
         _react2.default.createElement(
           'div',
           null,
-          this.props.body
+          _react2.default.createElement(
+            'p',
+            { className: 'project-font-format' },
+            this.props.body
+          )
         )
       );
     }
@@ -1417,7 +1424,7 @@ var ProjectForm = function (_React$Component) {
         formData.append('project[picture]', this.state.pictureFile);
       }
       this.props.submitProject(formData, projectId).then(function (payload) {
-        _this3.redirect(payload.project.id);
+        _this3.redirect(payload.project.project.id);
       });
     }
   }, {
@@ -1427,7 +1434,7 @@ var ProjectForm = function (_React$Component) {
 
       this.setState({ uploadStatus: true });
       setTimeout(function () {
-        _this4.props.history.push('/project/' + _this4.props.match.params.projectId);
+        _this4.props.history.push('/project/' + id);
       }, 1000);
     }
   }, {

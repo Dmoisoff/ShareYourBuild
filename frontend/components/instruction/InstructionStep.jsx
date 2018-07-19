@@ -9,16 +9,15 @@ class InstructionStep extends React.Component{
   }
 
   render(){
-    debugger
     const media = this.props.media ? <img className="project-show-image-scale" src={`${this.props.media}`} /> : null;
     return(
       <div className='instruction-step-format'>
         <div>
-          {this.props.step}
+          <p className='instruction-step-title'>{this.props.step}</p>
         </div>
         {media}
         <div>
-          {this.props.body}
+          <p className='project-font-format' >{this.props.body}</p>
         </div>
       </div>
     );

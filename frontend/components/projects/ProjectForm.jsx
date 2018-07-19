@@ -35,12 +35,13 @@ class ProjectForm extends React.Component{
     if(this.state.pictureFile){
       formData.append('project[picture]', this.state.pictureFile);
     }
-    this.props.submitProject(formData, projectId).then((payload) => {this.redirect(payload.project.id);});
+    this.props.submitProject(formData, projectId).then((payload) => {
+      this.redirect(payload.project.project.id);});
   }
 
   redirect(id){
     this.setState({uploadStatus: true});
-    setTimeout(() => {this.props.history.push(`/project/${this.props.match.params.projectId}`);}, 1000);
+    setTimeout(() => {this.props.history.push(`/project/${id}`);}, 1000);
   }
 
   uploadResult(){

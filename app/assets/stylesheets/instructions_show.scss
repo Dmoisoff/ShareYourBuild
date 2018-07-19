@@ -9,3 +9,19 @@
   flex-direction: column;
   align-items: center;
 }
+
+.instruction-step-title{
+  font-size: 26px;
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.instruction-show-image-scale{
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  vertical-align: middle;
+  max-width: 600px;
+  max-height: 600px;
+}
