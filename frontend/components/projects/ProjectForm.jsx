@@ -35,9 +35,6 @@ class ProjectForm extends React.Component{
     if(this.state.pictureFile){
       formData.append('project[picture]', this.state.pictureFile);
     }
-    // if(this.props.formType === 'Update Project'){
-    //   formData.append('project[id]', this.props.match.params.projectId);
-    // }
     this.props.submitProject(formData, projectId).then((payload) => {this.redirect(payload.project.id);});
   }
 
@@ -100,26 +97,45 @@ class ProjectForm extends React.Component{
 
      const submitButton = this.props.formType === 'New Project' ? "Publish" : "Update";
 
+     let update = null;
+     let create = null;
+     if(this.props.formType === 'Update Project'){
+       update = <div className='project-input-format'>
+                   <p className='project-edit-title-text'>Edit Title Below</p>
+                   <input className='project-title-styling' type='text' onChange={this.updateTitle} placeholder='Title' value={`${this.state.title}`} />
+                   <div className='project-images-display-update-format'>
+                     {previousPicture}
+                     <div className='project-image-input-format'>
+                       <p className='project-image-text' >Please select a main picture for your build</p>
+                       <input className='project-body-input' type='file' onChange={this.uploadFile.bind(this)} />
+                       {preview}
+                     </div>
+                   </div>
+                   <p className='project-edit-body-text'>Edit Main Description Below</p>
+                   <textarea onChange={this.updateDescription.bind(this)} placeholder='Please enter a brief description of your build' className='project-body-text' rows="8" cols="80" value={`${this.state.description}`}></textarea>
+                 </div>;
+     }else{
+       create = <div className='project-input-format'>
+                 {titleEdit}
+                 <input className='project-title-styling' type='text' onChange={this.updateTitle} placeholder='Title' value={`${this.state.title}`} />
+                 <div className='project-images-display-create-format'>
+                   <div className='project-image-input-format'>
+                     <p className='project-image-text' >Please select a main picture for your build</p>
+                     <input className='project-body-input' type='file' onChange={this.uploadFile.bind(this)} />
+                     {preview}
+                   </div>
+                 </div>
+                 {bodyEdit}
+                 <textarea onChange={this.updateDescription.bind(this)} placeholder='Please enter a brief description of your build' className='project-body-text' rows="8" cols="80" value={`${this.state.description}`}></textarea>
+               </div>;
+     }
+
     return(
       <div className='project-background'>
         <div className='project-form-positioning'>
           <form className='project-form-styling'>
-            <div className='project-input-format'>
-              {titleEdit}
-              <input className='project-title-styling' type='text' onChange={this.updateTitle} placeholder='Title' value={`${this.state.title}`} />
-              <div className='project-images-display-format'>
-                <div>
-                  {previousPicture}
-                </div>
-                <div className='project-image-input-format'>
-                  <p className='project-image-text' >Please select a main picture for your build</p>
-                  <input className='project-body-input' type='file' onChange={this.uploadFile.bind(this)} />
-                  {preview}
-                </div>
-              </div>
-              {bodyEdit}
-              <textarea onChange={this.updateDescription.bind(this)} placeholder='Please enter a brief description of your build' className='project-body-text' rows="8" cols="80" value={`${this.state.description}`}></textarea>
-            </div>
+              {create}
+              {update}
           <div className='project-button-placement'>
             <button onClick={this.handleSubmit.bind(this)} className='project-submit' type='submit'>{submitButton}</button>
           </div>

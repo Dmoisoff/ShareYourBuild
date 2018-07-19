@@ -148,7 +148,15 @@
   border: solid 1px #CCC;
 }
 
-.project-images-display-format{
+.project-images-display-update-format{
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.project-images-display-create-format{
   display: flex;
   justify-content: space-evenly;
   flex-direction: row;
