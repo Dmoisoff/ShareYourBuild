@@ -50,6 +50,11 @@ const App = () => (
         <div id='syb-logo'></div>
         <Link className='clickable' to='/'>Share Your Build</Link>
       </div>
+      <div className='icon-space'>
+        <a href="https://github.com/Dmoisoff">
+          <div id='github-logo'></div>
+        </a>
+      </div>
     </footer>
   </div>
 );

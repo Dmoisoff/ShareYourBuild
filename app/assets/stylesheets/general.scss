@@ -18,6 +18,15 @@ form > input{
   background-size: cover;
 }
 
+#github-logo{
+  background-image: image_url("GitHub-Mark-120px-plus.png");
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  background-size: cover;
+  margin-right: 20px;
+}
+
 .icon-space {
   width: 192px;
   display: flex;

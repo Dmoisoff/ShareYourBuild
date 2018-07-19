@@ -451,6 +451,15 @@ var App = function App() {
           { className: 'clickable', to: '/' },
           'Share Your Build'
         )
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'icon-space' },
+        _react2.default.createElement(
+          'a',
+          { href: 'https://github.com/Dmoisoff' },
+          _react2.default.createElement('div', { id: 'github-logo' })
+        )
       )
     )
   );
