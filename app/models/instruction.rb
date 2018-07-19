@@ -18,4 +18,8 @@ class Instruction < ApplicationRecord
 
   has_one_attached :media
 
+
 end
+
+
+  # i = Instruction.create!({project_id: 131, instruction_step: 2, title: 'test', body: 'temp' })

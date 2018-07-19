@@ -15,6 +15,7 @@ const mstp = (state, ownProps) => {
       instruction: {
         projectId: projectId,
         body: "",
+        title: "",
         instructionStep: (lastStep+1),
         media: null,
         mediaUrl: null,

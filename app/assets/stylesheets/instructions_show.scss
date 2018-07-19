@@ -15,6 +15,7 @@
   text-align: center;
   margin-bottom: 15px;
   font-weight: 700;
+  margin-top: 20px;
 }
 
 .instruction-show-image-scale{
@@ -24,4 +25,19 @@
   vertical-align: middle;
   max-width: 600px;
   max-height: 600px;
+}
+
+.instruction-divider{
+  display: block;
+  width: 100px;
+  margin: 40px auto 0;
+  border-top: 1px solid #d6d6d6;
+}
+
+.project-instruction-image-scale{
+  position: relative;
+  text-align: center;
+  min-height: 109px;
+  margin: -2.5px -2.5px 30px;
+  line-height: 0;
 }

@@ -727,7 +727,8 @@ var InstructionStep = function (_React$Component) {
   _createClass(InstructionStep, [{
     key: 'render',
     value: function render() {
-      var media = this.props.media ? _react2.default.createElement('img', { className: 'project-show-image-scale', src: '' + this.props.media }) : null;
+      debugger;
+      var media = this.props.media ? _react2.default.createElement('img', { className: 'instruction-show-image-scale', src: '' + this.props.media }) : null;
       return _react2.default.createElement(
         'div',
         { className: 'instruction-step-format' },
@@ -752,7 +753,8 @@ var InstructionStep = function (_React$Component) {
             { className: 'project-font-format' },
             this.props.body
           )
-        )
+        ),
+        _react2.default.createElement('div', { className: 'instruction-divider' })
       );
     }
   }]);
@@ -896,6 +898,7 @@ var mstp = function mstp(state, ownProps) {
     instruction: {
       projectId: projectId,
       body: "",
+      title: "",
       instructionStep: lastStep + 1,
       media: null,
       mediaUrl: null,
@@ -1751,6 +1754,7 @@ var ProjectShow = function (_React$Component) {
   _createClass(ProjectShow, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      debugger;
       this.props.fetchProject(this.props.match.params.projectId);
     }
   }, {
@@ -1799,12 +1803,13 @@ var ProjectShow = function (_React$Component) {
         if (!instruction) {
           return [];
         }
+        debugger;
         return _react2.default.createElement(_InstructionStep2.default, {
           step: instruction.instructionStep,
           body: instruction.body,
           title: instruction.title,
           projectId: instruction.projectId,
-          key: i,
+          key: instruction.id,
           media: instruction.media
         });
       }) : null;
@@ -1919,6 +1924,7 @@ var _InstructionsSorter2 = _interopRequireDefault(_InstructionsSorter);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state, ownProps) {
+  debugger;
   var projectId = ownProps.match.params.projectId;
   var instructionsArray = Object.values(state.entities.instructions).map(function (instruction) {
     if (instruction.projectId == projectId) {

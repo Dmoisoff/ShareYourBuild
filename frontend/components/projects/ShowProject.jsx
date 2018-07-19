@@ -13,6 +13,7 @@ class ProjectShow extends React.Component {
   }
 
   componentDidMount() {
+    debugger
     this.props.fetchProject(this.props.match.params.projectId);
   }
 
@@ -51,12 +52,13 @@ class ProjectShow extends React.Component {
       if(!instruction){
         return [];
       }
+      debugger
       return <InstructionStep
               step={instruction.instructionStep}
               body={instruction.body}
               title={instruction.title}
               projectId={instruction.projectId}
-              key={i}
+              key={instruction.id}
               media={instruction.media}
               />;
           }) : null;

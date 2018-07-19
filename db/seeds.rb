@@ -7,9 +7,10 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 User.destroy_all
 Project.destroy_all
+Instruction.destroy_all
 
 defaultProfilePicture = File.open('app/assets/images/user_profile_pic.png')
-demo = User.new(username: 'Demo-Man', email: 'Demo@demo.com', age: DateTime.strptime('09/15/1991 0:00', "%m/%d/%Y %H:%M"), password: 123456, about: 'Demo' )
+demo = User.new(username: 'Demo-Bot', email: 'Demo@demo.com', age: DateTime.strptime('09/15/1991 0:00', "%m/%d/%Y %H:%M"), password: 123456, about: 'Demo' )
 demo.picture.attach(io: defaultProfilePicture, filename: 'user_profile_pic.png')
 demo.save!
 
@@ -37,6 +38,49 @@ recipe_project1.save!
 recipe_project2.save!
 recipe_project3.save!
 recipe_project4.save!
+
+recipe_1_step_1 = File.open("app/assets/images/recipe_seeds/bacon_dates/step_one_LARGE.jpg")
+recipe_1_step_2 = File.open("app/assets/images/recipe_seeds/bacon_dates/step_two.jpg")
+recipe_1_step_3 = File.open("app/assets/images/recipe_seeds/bacon_dates/step_three.jpg")
+recipe_1_step_4 = File.open("app/assets/images/recipe_seeds/bacon_dates/step_four.jpg")
+
+recipe_project1_step_1 = Instruction.new({project_id: recipe_project1.id, instruction_step: 1, title: 'Material and Tools:', body: 'What you need per date package:
+	•	2 slices of streaky bacon
+	•	2 dates, dried but as juicy as possible
+	•	2 toothpicks
+1 plate (to keep the sand from your food)
+1 knive
+Tadaa, thats all (yes, I know, thats almost to less to count as a recipe, but you need to get the idea and to try it, believe me.)' })
+
+recipe_project1_step_2 = Instruction.new({project_id: recipe_project1.id, instruction_step: 2, title: 'How to Prep', body: "1.	Slice the dates and take of the cores
+	2.	Press the 2 dates cut face to cut face.
+	3.	Wrap the first slice of bacon around.
+	4.	Turn around 90° and wrap the second slice around it.
+	5.	Pick one of the toothpicks horizontal through the package and the other one vertically.
+	6.	You're finished with the first dates and bacon wonder. Repeat with your other ingredients…
+" })
+
+recipe_project1_step_3 = Instruction.new({project_id: recipe_project1.id, instruction_step: 3, title: 'Baking Process', body: "	1.	Set the packages to your BBQ and turn in regular intervals.
+	2.	Start with the dessert preparation while you are still having some main meat/veggies on the fire, since it takes a while until it is ready.
+	3.	Yes, it will really take a while until the bacon is crispy and the dates soft and tender.
+	4.	Yes, it is definitely worth it." })
+
+recipe_project1_step_4 = Instruction.new({project_id: recipe_project1.id, instruction_step: 4, title: 'Enjoy', body: "When the bacon is crispy from all sides your camp fires / BBQ dessert is ready.
+The combination of crispy salty bacon and soft sweet dates is really delicious. But it also fills your stomach up, so be careful not to overeat, even though it will be difficult :-)
+Also be careful it will be really hot at the beginning - don't ask me why I know :-)" })
+
+
+#
+recipe_project1_step_1.media.attach(io: recipe_1_step_1, filename: 'step_one_LARGE.jpg')
+recipe_project1_step_2.media.attach(io: recipe_1_step_2, filename: 'step_two.jpg')
+recipe_project1_step_3.media.attach(io: recipe_1_step_3, filename: 'step_three.jpg')
+recipe_project1_step_4.media.attach(io: recipe_1_step_4, filename: 'step_four.jpg')
+
+recipe_project1_step_1.save!
+recipe_project1_step_2.save!
+recipe_project1_step_3.save!
+recipe_project1_step_4.save!
+
 
 
 costume1 = File.open("app/assets/images/costumes_seeds/master_roshi/main_pic.jpg")

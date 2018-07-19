@@ -11,6 +11,7 @@ json.project do
 end
 
 json.instructions do
+  debugger
   @project.instructions.each do |instruction|
     json.set! instruction.id do
       json.projectId instruction.project_id
