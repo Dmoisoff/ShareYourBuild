@@ -9,6 +9,7 @@ class InstructionStep extends React.Component{
   }
 
   render(){
+    debugger
     const media = this.props.media ? <img className="project-show-image-scale" src={`${this.props.media}`} /> : null;
     return(
       <div className='instruction-step-format'>

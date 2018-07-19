@@ -8,7 +8,12 @@ import instructionSorter from './../instruction/InstructionsSorter';
 
 const mstp = (state, ownProps) => {
   const projectId = ownProps.match.params.projectId;
-  const instructionsArray = Object.values(state.entities.instructions);
+  const instructionsArray = Object.values(state.entities.instructions).map((instruction) =>{
+    debugger
+    if(instruction.projectId == projectId){
+      return instruction;
+    }
+  });
   const sortedInstructions = instructionSorter(instructionsArray);
   const userId = state.session.id;
   const project = state.entities.projects[ownProps.match.params.projectId] || {};

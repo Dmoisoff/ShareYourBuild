@@ -3,6 +3,8 @@
     json.extract! project, :id, :title, :author_id, :view_count, :featured, :description
     json.pictureUrl project.picture_url
     json.authorUsername project.user.username
-    json.picture url_for(project.picture)
+    if project.picture.attached?
+      json.picture url_for(project.picture)
+    end
   end
 end

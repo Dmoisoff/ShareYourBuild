@@ -701,6 +701,7 @@ var InstructionStep = function (_React$Component) {
   _createClass(InstructionStep, [{
     key: 'render',
     value: function render() {
+      debugger;
       var media = this.props.media ? _react2.default.createElement('img', { className: 'project-show-image-scale', src: '' + this.props.media }) : null;
       return _react2.default.createElement(
         'div',
@@ -991,6 +992,7 @@ var EditProjectForm = function (_React$Component) {
           'Loading...'
         );
       }
+      debugger;
       var _props = this.props,
           submitProject = _props.submitProject,
           formType = _props.formType,
@@ -1474,7 +1476,18 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var preview = this.state.picture ? _react2.default.createElement(
+      var previousPicture = this.state.picture && this.props.formType === 'Update Project' ? _react2.default.createElement(
+        'div',
+        { className: 'project-picture-preview-format' },
+        _react2.default.createElement(
+          'p',
+          null,
+          'Previous Image'
+        ),
+        _react2.default.createElement('img', { className: 'project-previous-picture-format', src: this.state.picture })
+      ) : null;
+
+      var preview = this.state.pictureUrl ? _react2.default.createElement(
         'div',
         { className: 'project-picture-preview-format' },
         _react2.default.createElement(
@@ -1482,8 +1495,23 @@ var ProjectForm = function (_React$Component) {
           null,
           'Picture Preview'
         ),
-        _react2.default.createElement('img', { className: 'project-image-resize', src: this.state.picture })
+        _react2.default.createElement('img', { className: 'project-image-resize', src: this.state.pictureUrl })
       ) : null;
+
+      var titleEdit = null;
+      var bodyEdit = null;
+      if (this.props.formType === 'Update Project') {
+        titleEdit = _react2.default.createElement(
+          'p',
+          { className: 'project-edit-title-text' },
+          'Edit Title Below'
+        );
+        bodyEdit = _react2.default.createElement(
+          'p',
+          { className: 'project-edit-body-text' },
+          'Edit Main Description Below'
+        );
+      }
 
       var submitButton = this.props.formType === 'New Project' ? "Publish" : "Update";
 
@@ -1499,18 +1527,29 @@ var ProjectForm = function (_React$Component) {
             _react2.default.createElement(
               'div',
               { className: 'project-input-format' },
+              titleEdit,
               _react2.default.createElement('input', { className: 'project-title-styling', type: 'text', onChange: this.updateTitle, placeholder: 'Title', value: '' + this.state.title }),
               _react2.default.createElement(
                 'div',
-                { className: 'project-image-input-format' },
+                { className: 'project-images-display-format' },
                 _react2.default.createElement(
-                  'p',
-                  { className: 'project-image-text' },
-                  'Please select a main picture for your build'
+                  'div',
+                  null,
+                  previousPicture
                 ),
-                _react2.default.createElement('input', { className: 'project-body-input', type: 'file', onChange: this.uploadFile.bind(this) })
+                _react2.default.createElement(
+                  'div',
+                  { className: 'project-image-input-format' },
+                  _react2.default.createElement(
+                    'p',
+                    { className: 'project-image-text' },
+                    'Please select a main picture for your build'
+                  ),
+                  _react2.default.createElement('input', { className: 'project-body-input', type: 'file', onChange: this.uploadFile.bind(this) }),
+                  preview
+                )
               ),
-              preview,
+              bodyEdit,
               _react2.default.createElement('textarea', { onChange: this.updateDescription.bind(this), placeholder: 'Please enter a brief description of your build', className: 'project-body-text', rows: '8', cols: '80', value: '' + this.state.description })
             ),
             _react2.default.createElement(
@@ -1761,7 +1800,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var mstp = function mstp(state, ownProps) {
   var projectId = ownProps.match.params.projectId;
-  var instructionsArray = Object.values(state.entities.instructions);
+  var instructionsArray = Object.values(state.entities.instructions).map(function (instruction) {
+    debugger;
+    if (instruction.projectId == projectId) {
+      return instruction;
+    }
+  });
   var sortedInstructions = (0, _InstructionsSorter2.default)(instructionsArray);
   var userId = state.session.id;
   var project = state.entities.projects[ownProps.match.params.projectId] || {};

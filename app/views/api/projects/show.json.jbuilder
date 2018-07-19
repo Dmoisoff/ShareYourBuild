@@ -5,7 +5,9 @@ json.project do
   json.pictureUrl @project.picture_url
   json.description @project.description
   json.authorUsername @project.user.username
-  json.picture url_for(@project.picture)
+  if @project.picture.attached?
+    json.picture url_for(@project.picture)
+  end
 end
 
 json.instructions do
@@ -14,7 +16,9 @@ json.instructions do
       json.projectId instruction.project_id
       json.instructionStep instruction.instruction_step
       json.body instruction.body
-      json.media url_for(instruction.media) unless instruction.media
+      if instruction.media.attached?
+        json.media url_for(instruction.media)
+      end
     end
   end
 end

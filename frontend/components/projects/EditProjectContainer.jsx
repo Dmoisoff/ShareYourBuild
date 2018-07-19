@@ -23,6 +23,7 @@ class EditProjectForm extends React.Component{
     if (!this.state) {
       return <div>Loading...</div>;
     }
+    debugger
     const { submitProject, formType, project, errors } = this.props;
     return (
       <ProjectForm

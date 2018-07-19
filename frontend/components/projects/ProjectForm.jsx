@@ -78,12 +78,25 @@ class ProjectForm extends React.Component{
 
 
   render(){
-    let preview = this.state.picture ?
+    const previousPicture = this.state.picture && this.props.formType === 'Update Project' ?
+    <div className='project-picture-preview-format'>
+      <p>Previous Image</p>
+      <img className='project-previous-picture-format' src={this.state.picture} />
+    </div> : null;
+
+    const preview = this.state.pictureUrl ?
     <div className='project-picture-preview-format'>
       <p>Picture Preview</p>
-      <img className='project-image-resize' src={this.state.picture} />
+      <img className='project-image-resize' src={this.state.pictureUrl} />
     </div>
      : null;
+
+     let titleEdit = null;
+     let bodyEdit = null;
+     if(this.props.formType === 'Update Project'){
+        titleEdit = <p className='project-edit-title-text'>Edit Title Below</p>;
+        bodyEdit = <p className='project-edit-body-text'>Edit Main Description Below</p>;
+     }
 
      const submitButton = this.props.formType === 'New Project' ? "Publish" : "Update";
 
@@ -92,12 +105,19 @@ class ProjectForm extends React.Component{
         <div className='project-form-positioning'>
           <form className='project-form-styling'>
             <div className='project-input-format'>
+              {titleEdit}
               <input className='project-title-styling' type='text' onChange={this.updateTitle} placeholder='Title' value={`${this.state.title}`} />
-              <div className='project-image-input-format'>
-                <p className='project-image-text' >Please select a main picture for your build</p>
-                <input className='project-body-input' type='file' onChange={this.uploadFile.bind(this)} />
+              <div className='project-images-display-format'>
+                <div>
+                  {previousPicture}
+                </div>
+                <div className='project-image-input-format'>
+                  <p className='project-image-text' >Please select a main picture for your build</p>
+                  <input className='project-body-input' type='file' onChange={this.uploadFile.bind(this)} />
+                  {preview}
+                </div>
               </div>
-              {preview}
+              {bodyEdit}
               <textarea onChange={this.updateDescription.bind(this)} placeholder='Please enter a brief description of your build' className='project-body-text' rows="8" cols="80" value={`${this.state.description}`}></textarea>
             </div>
           <div className='project-button-placement'>
