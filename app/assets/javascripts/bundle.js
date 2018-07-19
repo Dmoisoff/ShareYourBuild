@@ -829,21 +829,24 @@ exports.default = Instructions;
 
 
 Object.defineProperty(exports, "__esModule", {
-   value: true
+  value: true
 });
 // will come back to redo sorting, placeholder sorter
 var bubbleSort = function bubbleSort(arr) {
-   var len = arr.length;
-   for (var i = len - 1; i >= 0; i--) {
-      for (var j = 1; j <= i; j++) {
-         if (arr[j - 1].instructionStep > arr[j].instructionStep) {
-            var temp = arr[j - 1];
-            arr[j - 1] = arr[j];
-            arr[j] = temp;
-         }
+  if (arr.length < 1) {
+    return [];
+  }
+  var len = arr.length;
+  for (var i = len - 1; i >= 0; i--) {
+    for (var j = 1; j <= i; j++) {
+      if (arr[j - 1].instructionStep > arr[j].instructionStep) {
+        var temp = arr[j - 1];
+        arr[j - 1] = arr[j];
+        arr[j] = temp;
       }
-   }
-   return arr;
+    }
+  }
+  return arr;
 };
 
 exports.default = bubbleSort;
@@ -1787,7 +1790,11 @@ var ProjectShow = function (_React$Component) {
           'Loading...'
         );
       }
-      var instructions = this.props.instructions.map(function (instruction, i) {
+      debugger;
+      var instructions = this.props.instructions ? this.props.instructions.map(function (instruction, i) {
+        if (!instruction) {
+          return [];
+        }
         return _react2.default.createElement(_InstructionStep2.default, {
           step: instruction.instructionStep,
           body: instruction.body,
@@ -1795,7 +1802,7 @@ var ProjectShow = function (_React$Component) {
           key: i,
           media: instruction.media
         });
-      });
+      }) : null;
 
       return _react2.default.createElement(
         'div',
