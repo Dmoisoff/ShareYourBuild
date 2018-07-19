@@ -727,7 +727,6 @@ var InstructionStep = function (_React$Component) {
   _createClass(InstructionStep, [{
     key: 'render',
     value: function render() {
-      debugger;
       var media = this.props.media ? _react2.default.createElement('img', { className: 'instruction-show-image-scale', src: '' + this.props.media }) : null;
       return _react2.default.createElement(
         'div',
@@ -820,41 +819,6 @@ var Instructions = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = Instructions;
-
-/***/ }),
-
-/***/ "./frontend/components/instruction/InstructionsSorter.jsx":
-/*!****************************************************************!*\
-  !*** ./frontend/components/instruction/InstructionsSorter.jsx ***!
-  \****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-// will come back to redo sorting, placeholder sorter
-var bubbleSort = function bubbleSort(arr) {
-  if (arr.length < 1) {
-    return [];
-  }
-  var len = arr.length;
-  for (var i = len - 1; i >= 0; i--) {
-    for (var j = 1; j <= i; j++) {
-      if (arr[j - 1].instructionStep > arr[j].instructionStep) {
-        var temp = arr[j - 1];
-        arr[j - 1] = arr[j];
-        arr[j] = temp;
-      }
-    }
-  }
-  return arr;
-};
-
-exports.default = bubbleSort;
 
 /***/ }),
 
@@ -1799,11 +1763,12 @@ var ProjectShow = function (_React$Component) {
           'Loading...'
         );
       }
+      debugger;
       var instructions = this.props.instructions ? this.props.instructions.map(function (instruction, i) {
+        debugger;
         if (!instruction) {
           return [];
         }
-        debugger;
         return _react2.default.createElement(_InstructionStep2.default, {
           step: instruction.instructionStep,
           body: instruction.body,
@@ -1917,23 +1882,24 @@ var _ShowProject = __webpack_require__(/*! ./ShowProject */ "./frontend/componen
 
 var _ShowProject2 = _interopRequireDefault(_ShowProject);
 
-var _InstructionsSorter = __webpack_require__(/*! ./../instruction/InstructionsSorter */ "./frontend/components/instruction/InstructionsSorter.jsx");
-
-var _InstructionsSorter2 = _interopRequireDefault(_InstructionsSorter);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state, ownProps) {
-  debugger;
+  // debugger
   var projectId = ownProps.match.params.projectId;
+
   var instructionsArray = Object.values(state.entities.instructions).map(function (instruction) {
     if (instruction.projectId == projectId) {
       return instruction;
     }
   });
-  var sortedInstructions = (0, _InstructionsSorter2.default)(instructionsArray);
+
+  var sortedInstructions = instructionsArray.sort(function (x, y) {
+    return x.instructionStep > y.instructionStep;
+  });
   var userId = state.session.id;
   var project = state.entities.projects[ownProps.match.params.projectId] || {};
+  debugger;
   return {
     project: project,
     formType: 'Show Project',

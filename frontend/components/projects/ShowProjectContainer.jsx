@@ -3,20 +3,24 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchProject, deleteProject } from './../../actions/projects_actions';
 import ShowProject from './ShowProject';
-import instructionSorter from './../instruction/InstructionsSorter';
 
 
 const mstp = (state, ownProps) => {
-  debugger
+  // debugger
   const projectId = ownProps.match.params.projectId;
+
   const instructionsArray = Object.values(state.entities.instructions).map((instruction) =>{
     if(instruction.projectId == projectId){
       return instruction;
     }
   });
-  const sortedInstructions = instructionSorter(instructionsArray);
+
+  const sortedInstructions = instructionsArray.sort((x,y) => {
+    return  x.instructionStep > y.instructionStep;
+  });
   const userId = state.session.id;
   const project = state.entities.projects[ownProps.match.params.projectId] || {};
+  debugger
   return({
     project: project,
     formType: 'Show Project',
