@@ -527,6 +527,7 @@ var Greeting = function (_React$Component) {
         } else {
           active = 'hidden';
         }
+
         return _react2.default.createElement(
           'div',
           null,
@@ -700,10 +701,21 @@ var InstructionStep = function (_React$Component) {
   _createClass(InstructionStep, [{
     key: 'render',
     value: function render() {
+      var media = this.props.media ? _react2.default.createElement('img', { className: 'project-show-image-scale', src: '' + this.props.media }) : null;
       return _react2.default.createElement(
         'div',
-        null,
-        'I\'m here'
+        { className: 'instruction-step-format' },
+        _react2.default.createElement(
+          'div',
+          null,
+          this.props.step
+        ),
+        media,
+        _react2.default.createElement(
+          'div',
+          null,
+          this.props.body
+        )
       );
     }
   }]);
@@ -783,22 +795,20 @@ exports.default = Instructions;
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+   value: true
 });
-
 var bubbleSort = function bubbleSort(arr) {
-  debugger;
-  var len = arr.length;
-  for (var i = len - 1; i >= 0; i--) {
-    for (var j = 1; j <= i; j++) {
-      if (arr[j - 1].instructionStep > arr[j].instructionStep) {
-        var temp = arr[j - 1];
-        arr[j - 1] = arr[j];
-        arr[j] = temp;
+   var len = arr.length;
+   for (var i = len - 1; i >= 0; i--) {
+      for (var j = 1; j <= i; j++) {
+         if (arr[j - 1].instructionStep > arr[j].instructionStep) {
+            var temp = arr[j - 1];
+            arr[j - 1] = arr[j];
+            arr[j] = temp;
+         }
       }
-    }
-  }
-  return arr;
+   }
+   return arr;
 };
 
 exports.default = bubbleSort;
@@ -1404,7 +1414,7 @@ var ProjectForm = function (_React$Component) {
 
       this.setState({ uploadStatus: true });
       setTimeout(function () {
-        _this4.props.history.push('/project/' + id);
+        _this4.props.history.push('/project/' + _this4.props.match.params.projectId);
       }, 1000);
     }
   }, {
@@ -1636,15 +1646,13 @@ var ProjectShow = function (_React$Component) {
         );
       }
       var instructions = this.props.instructions.map(function (instruction, i) {
-        return _react2.default.createElement(
-          'li',
-          { key: i },
-          _react2.default.createElement(_InstructionStep2.default, {
-            step: instruction.InstructionStep,
-            body: instruction.body,
-            projectId: instruction.projectId
-          })
-        );
+        return _react2.default.createElement(_InstructionStep2.default, {
+          step: instruction.instructionStep,
+          body: instruction.body,
+          projectId: instruction.projectId,
+          key: i,
+          media: instruction.media
+        });
       });
 
       return _react2.default.createElement(
@@ -1687,7 +1695,7 @@ var ProjectShow = function (_React$Component) {
             null,
             _react2.default.createElement(
               'ul',
-              null,
+              { className: 'instructions-show-format' },
               instructions
             )
           ),

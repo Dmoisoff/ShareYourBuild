@@ -43,7 +43,7 @@ class ProjectForm extends React.Component{
 
   redirect(id){
     this.setState({uploadStatus: true});
-    setTimeout(() => {this.props.history.push(`/project/${id}`);}, 1000);
+    setTimeout(() => {this.props.history.push(`/project/${this.props.match.params.projectId}`);}, 1000);
   }
 
   uploadResult(){

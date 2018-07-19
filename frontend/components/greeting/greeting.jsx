@@ -26,6 +26,7 @@ class Greeting extends React.Component{
       }else {
         active = 'hidden';
       }
+
       return(
         <div>
           <div className='user-dropdown-position'>

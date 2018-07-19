@@ -34,6 +34,7 @@ class ProjectShow extends React.Component {
       () => this.props.history.push('/')
     );
   }
+
   edit(){
     this.props.history.push(`/project/${this.props.project.id}/edit`);
   }
@@ -45,11 +46,13 @@ class ProjectShow extends React.Component {
       return <div>Loading...</div>;
     }
     const instructions = this.props.instructions.map((instruction,i) => {
-      return <li key={i}><InstructionStep
-                        step={instruction.InstructionStep}
-                        body={instruction.body}
-                        projectId={instruction.projectId}
-                        /></li>;
+      return <InstructionStep
+              step={instruction.instructionStep}
+              body={instruction.body}
+              projectId={instruction.projectId}
+              key={i}
+              media={instruction.media}
+              />;
     });
 
     return (
@@ -66,7 +69,7 @@ class ProjectShow extends React.Component {
             <p className='project-font-format'>{this.props.project.description}</p>
           </div>
           <div>
-            <ul>
+            <ul className='instructions-show-format'>
               {instructions}
             </ul>
           </div>
