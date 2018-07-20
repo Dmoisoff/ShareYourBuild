@@ -38,7 +38,9 @@ class IndexProjects extends React.Component{
                             featured={project.featured}
                             viewCount={project.view_count} />
                         </Link>;
-        if(project.author_id == this.props.displayedUser && this.props.formType === 'User Index Projects'){
+        if (!project.picture) {
+          return [];
+        }else if(project.author_id == this.props.displayedUser && this.props.formType === 'User Index Projects'){
           return display;
         }else if(this.props.formType === 'Index Projects'){
           return display;

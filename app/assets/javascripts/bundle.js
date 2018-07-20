@@ -1333,7 +1333,9 @@ var IndexProjects = function (_React$Component) {
             featured: project.featured,
             viewCount: project.view_count })
         );
-        if (project.author_id == _this3.props.displayedUser && _this3.props.formType === 'User Index Projects') {
+        if (!project.picture) {
+          return [];
+        } else if (project.author_id == _this3.props.displayedUser && _this3.props.formType === 'User Index Projects') {
           return display;
         } else if (_this3.props.formType === 'Index Projects') {
           return display;
