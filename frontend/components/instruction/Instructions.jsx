@@ -40,7 +40,7 @@ class Instructions extends React.Component{
     }
 
     handleSubmit(){
-
+      debugger
       const projectId = this.props.projectId;
       const formData = new FormData();
       formData.append('instruction[title]', this.state.title);
@@ -64,7 +64,7 @@ class Instructions extends React.Component{
     </div>
      : null;
     const submit = this.props.projectId ? <input className='hidden' onClick={this.handleSubmit()}/> : null;
-
+    debugger
     return(
         <div className='instruction-form-positioning'>
           <div className='project-form-styling'>
@@ -75,8 +75,10 @@ class Instructions extends React.Component{
               </div>
               <div className='project-images-display-create-format'>
                 <div className='project-image-input-format'>
-                  <p className='project-image-text' >Please select a picture for your step</p>
-                  <input className='project-body-input' type='file' onChange={this.uploadFile.bind(this)} />
+                  <div>
+                    <p className='project-image-text' >Please select a picture for your step</p>
+                    <input className='project-body-input' type='file' onChange={this.uploadFile.bind(this)} />
+                  </div>
                   {preview}
                 </div>
               </div>

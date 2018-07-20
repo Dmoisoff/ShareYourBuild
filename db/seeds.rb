@@ -20,7 +20,7 @@ shibe.save!
 
 recipe1 = File.open("app/assets/images/recipe_seeds/bacon_dates/FFGKPMNJJLTRIFY.LARGE.jpg")
 
-recipe_project1 = Project.new({title: 'Bacon Dates', author_id: shibe.id, view_count: 0, featured: false, description: "Having a BBQ is a really nice thing. Very easy in preparation if you keep it simple and really delicious. Just meat (or vegetables), some bread and a nice dessert.\n Yes, an easy dessert directly from the fire.\nWelcome to the two ingredients campfire dessert.\nIt can be better prepared before hand in your kitchen, but since it was a very spontaneous idea I did the preparation directly at the beach."})
+recipe_project1 = Project.new({title: 'Bacon Dates', author_id: shibe.id, view_count: 0, featured: false, description: "Having a BBQ is a really nice thing. Very easy in preparation if you keep it simple and really delicious. Just meat (or vegetables), some bread and a nice dessert. Yes, an easy dessert directly from the fire.Welcome to the two ingredients campfire dessert.It can be better prepared before hand in your kitchen, but since it was a very spontaneous idea I did the preparation directly at the beach."})
 
 recipe_project1.picture.attach(io: recipe1, filename: 'FFGKPMNJJLTRIFY.LARGE.jpg')
 
@@ -32,33 +32,33 @@ recipe_1_step_3 = File.open("app/assets/images/recipe_seeds/bacon_dates/step_thr
 recipe_1_step_4 = File.open("app/assets/images/recipe_seeds/bacon_dates/step_four.jpg")
 
 recipe_project1_step_1 = Instruction.new({project_id: recipe_project1.id, instruction_step: 1, title: 'Material and Tools:', body: "What you need per date package:
-	\n•	2 slices of streaky bacon
-	\n•	2 dates, dried but as juicy as possible
-	\n•	2 toothpicks
-	\n1 plate (to keep the sand from your food)
-	\n1 knive
+	•	2 slices of streaky bacon
+	•	2 dates, dried but as juicy as possible
+	•	2 toothpicks
+	1 plate (to keep the sand from your food)
+	1 knive
 	Tadaa, thats all (yes, I know, thats almost to less to count as a recipe, but you need to get the idea and to try it, believe me.)" })
 
 recipe_project1_step_2 = Instruction.new({project_id: recipe_project1.id, instruction_step: 2, title: 'How to Prep', body: "1.	Slice the dates and take of the cores
 
-	\n2.	Press the 2 dates cut face to cut face.
+	2.	Press the 2 dates cut face to cut face.
 
-	\n3.	Wrap the first slice of bacon around.
+	3.	Wrap the first slice of bacon around.
 
-	\n4.	Turn around 90° and wrap the second slice around it.
+	4.	Turn around 90° and wrap the second slice around it.
 
-	\n5.	Pick one of the toothpicks horizontal through the package and the other one vertically.
+	5.	Pick one of the toothpicks horizontal through the package and the other one vertically.
 
-	\n6.	You're finished with the first dates and bacon wonder. Repeat with your other ingredients…
+	6.	You're finished with the first dates and bacon wonder. Repeat with your other ingredients…
 " })
 
 recipe_project1_step_3 = Instruction.new({project_id: recipe_project1.id, instruction_step: 3, title: 'Baking Process', body: "	1.	Set the packages to your BBQ and turn in regular intervals.
 
-	\n2.	Start with the dessert preparation while you are still having some main meat/veggies on the fire, since it takes a while until it is ready.
+	2.	Start with the dessert preparation while you are still having some main meat/veggies on the fire, since it takes a while until it is ready.
 
-	\n3.	Yes, it will really take a while until the bacon is crispy and the dates soft and tender.
+	3.	Yes, it will really take a while until the bacon is crispy and the dates soft and tender.
 
-	\n4.	Yes, it is definitely worth it." })
+	4.	Yes, it is definitely worth it." })
 
 recipe_project1_step_4 = Instruction.new({project_id: recipe_project1.id, instruction_step: 4, title: 'Enjoy', body: "When the bacon is crispy from all sides your camp fires / BBQ dessert is ready.
 

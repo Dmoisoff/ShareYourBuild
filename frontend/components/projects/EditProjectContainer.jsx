@@ -38,7 +38,12 @@ class EditProjectForm extends React.Component{
 
 
 
-const mstp = (state, ownParams) =>{
+const mstp = (state, ownProps) =>{
+
+  if ( state.entities.projects[ownProps.match.params.projectId] && state.session.id != state.entities.projects[ownProps.match.params.projectId].authorId ) {
+    ownProps.history.push('/');
+  }
+
   const defaultProject = {title: '',
     author_id: state.session.id,
     author_username: state.entities.users[state.session.id],
@@ -46,20 +51,36 @@ const mstp = (state, ownParams) =>{
     keyWords: '',
     pictureFile: null,
     pictureUrl: null,
-    uploadStatus: false};
+    uploadStatus: false,
+    instructions: [],
+    newlyAddedSteps: 0
+    };
 
-  const currentProject = state.entities.projects[ownParams.match.params.projectId] || defaultProject;
-
-  if ( state.entities.projects[ownParams.match.params.projectId] && state.session.id != state.entities.projects[ownParams.match.params.projectId].authorId ) {
-    ownParams.history.push('/');
-  }
+  const currentProject = state.entities.projects[ownProps.match.params.projectId] || defaultProject;
+  const projectId = ownProps.match.params.projectId;
+  const instructionsArray = Object.values(state.entities.instructions).map((instruction) =>{
+    if(instruction.projectId == projectId){
+      return instruction;
+    }
+  });
+  const sortedInstructions = instructionsArray.sort((x,y) => {
+    return  x.instructionStep > y.instructionStep;
+  });
+  const nextStep = (sortedInstructions[sortedInstructions.length-1].instructionStep)+1;
+  debugger
   return({
     project: {
+      projectId: projectId,
       title: currentProject.title,
       picture: currentProject.picture,
-      pictureUrl: currentProject.pictureUrl,
+      pictureUrl: currentProject.picture,
       description: currentProject.description,
-      uploadStatus: false
+      uploadStatus: false,
+      instructions: sortedInstructions,
+      stepNum: nextStep,
+      lastPrefilledInstruction: nextStep,
+      submitted: false,
+      newlyAddedSteps: 0
     },
     errors: state.errors.project,
     formType: 'Update Project'

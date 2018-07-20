@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import NewInstructionContainer from './../instruction/NewInstructionContainer';
+import EditInstructionContainer from './../instruction/EditInstructionContainer';
 
 
 class ProjectForm extends React.Component{
@@ -37,16 +38,30 @@ class ProjectForm extends React.Component{
     if(this.state.pictureFile){
       formData.append('project[picture]', this.state.pictureFile);
     }
-    this.props.submitProject(formData, projectId).then((payload) => {
-      const projectId = payload.project.project.id;
-      this.setState({projectId: projectId});
-      setTimeout(() =>{this.redirect(payload.project.project.id);},1000);
+    if(this.props.formType === 'New Project'){
+      this.props.submitProject(formData, projectId).then((payload) => {
+        const projectId = payload.project.project.id;
+        this.setState({projectId: projectId});
+        setTimeout(() =>{this.redirect(payload.project.project.id);},1000);
       });
-  }
+    }else if (this.props.formType === 'Update Project') {
+      let newInstructions = this.state.instructions.slice(-(this.state.newlyAddedSteps));
+        newInstructions = newInstructions.map((instruction) => {
+          instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
+          return instruction;
+        });
+      let updatedInstructions = this.state.instructions.slice(0,-(this.state.newlyAddedSteps)).concat(newInstructions);
+      this.props.submitProject(formData, projectId).then((payload) => {
+        this.setState({instructions: updatedInstructions});
+        setTimeout(() =>{this.redirect(payload.project.project.id);},1000);
+      });
+    }
+
+    }
 
   redirect(id){
     this.setState({uploadStatus: true});
-    setTimeout(() => {this.props.history.push(`/project/${id}`);}, 1000);
+    setTimeout(() => {this.props.history.push(`/project/${id}`);}, 1500);
   }
 
   uploadResult(){
@@ -80,10 +95,30 @@ class ProjectForm extends React.Component{
     }
 
     instructions(){
-      this.setState({stepNum: (this.state.stepNum + 1), instructions: [...this.state.instructions, <NewInstructionContainer key={this.state.stepNum} stepNum={this.state.stepNum} />]});
-      this.state.instructions;
+        this.setState({stepNum: (this.state.stepNum + 1), newlyAddedSteps: (this.state.newlyAddedSteps +1), instructions: [...this.state.instructions, <NewInstructionContainer key={this.state.stepNum} stepNum={this.state.stepNum} />]});
+        this.state.instructions;
     }
 
+    componentWillMount(){
+      debugger
+            if(this.props.project.lastPrefilledInstruction === this.state.stepNum && this.props.formType === 'Update Project'){
+              debugger
+              let instructions = this.state.instructions.map((instruction) => {
+                if(!instruction){
+                  return [];
+                }
+                return <EditInstructionContainer
+                        step={instruction.instructionStep}
+                        body={instruction.body}
+                        title={instruction.title}
+                        projectId={this.props.pro}
+                        key={instruction.instructionStep}
+                        media={instruction.media}
+                        />;
+              });
+                   this.setState({instructions: instructions});
+    }
+  }
 
 
 
@@ -145,13 +180,48 @@ class ProjectForm extends React.Component{
                </div>;
      }
      let instructions = this.state.instructions;
-
-     if (this.state.projectId) {
+debugger
+     if (this.state.projectId && this.props.formType === 'New Project') {
        instructions = instructions.map((instruction) => {
          instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
          return instruction;
        });
+
      }
+//      }else if (this.props.formType === 'Update Project' && this.state.newlyAddedSteps !== 0) {
+// debugger
+//       let newInstructions = this.state.instructions.slice(-(this.state.newlyAddedSteps));
+//         newInstructions = newInstructions.map((instruction) => {
+//           instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
+//           return instruction;
+//         });
+//         debugger
+//       let updatedInstructions = this.state.instructions.slice(0,-(this.state.newlyAddedSteps)).concat(newInstructions);
+      // this.setState({instructions: updatedInstructions});
+// debugger
+//       if(this.props.project.lastPrefilledInstruction === this.state.stepNum && this.props.formType === 'Update Project'){
+//         debugger
+//         instructions = this.state.instructions.map((instruction) => {
+//           if(!instruction){
+//             return [];
+//           }
+//           return <EditInstructionContainer
+//                   step={instruction.instructionStep}
+//                   body={instruction.body}
+//                   title={instruction.title}
+//                   projectId={this.props.pro}
+//                   key={instruction.instructionStep}
+//                   media={instruction.media}
+//                   />;
+//         });
+//              this.state.instructions = instructions;
+      // }
+      // else if (this.props.formType === 'Update Project') {
+      //   this.state.instructions[this.state.instructions.length -1]
+      //   instructions.push(<NewInstructionContainer projectId={this.state.projectId} key={this.state.stepNum} stepNum={this.state.stepNum} />);
+      // }
+
+     debugger
     return(
       <div className='project-background'>
         <div className='project-form-positioning'>

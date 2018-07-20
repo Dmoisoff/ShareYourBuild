@@ -685,6 +685,64 @@ exports.default = (0, _reactRedux.connect)(mstp, mdtp)(_greeting2.default);
 
 /***/ }),
 
+/***/ "./frontend/components/instruction/EditInstructionContainer.jsx":
+/*!**********************************************************************!*\
+  !*** ./frontend/components/instruction/EditInstructionContainer.jsx ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _Instructions = __webpack_require__(/*! ./Instructions */ "./frontend/components/instruction/Instructions.jsx");
+
+var _Instructions2 = _interopRequireDefault(_Instructions);
+
+var _instructions_actions = __webpack_require__(/*! ./../../actions/instructions_actions */ "./frontend/actions/instructions_actions.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mstp = function mstp(state, ownProps) {
+  debugger;
+  return {
+    instruction: {
+      body: ownProps.body || '',
+      title: ownProps.title || '',
+      media: ownProps.media || '',
+      mediaUrl: ownProps.media || null,
+      uploadStatus: false,
+      step: ownProps.step,
+      projectId: ownProps.projectId,
+      rendered: false
+    },
+    formType: 'Update Instruction',
+    errors: state.errors.instruction
+  };
+};
+
+var mdtp = function mdtp(dispatch) {
+  return {
+    submitInstruction: function submitInstruction(instruction) {
+      return dispatch((0, _instructions_actions.createInstruction)(instruction));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mstp, mdtp)(_Instructions2.default);
+
+/***/ }),
+
 /***/ "./frontend/components/instruction/InstructionStep.jsx":
 /*!*************************************************************!*\
   !*** ./frontend/components/instruction/InstructionStep.jsx ***!
@@ -851,7 +909,7 @@ var Instructions = function (_React$Component) {
   }, {
     key: 'handleSubmit',
     value: function handleSubmit() {
-
+      debugger;
       var projectId = this.props.projectId;
       var formData = new FormData();
       formData.append('instruction[title]', this.state.title);
@@ -880,7 +938,7 @@ var Instructions = function (_React$Component) {
         _react2.default.createElement('img', { className: 'project-image-resize', src: this.state.mediaUrl })
       ) : null;
       var submit = this.props.projectId ? _react2.default.createElement('input', { className: 'hidden', onClick: this.handleSubmit() }) : null;
-
+      debugger;
       return _react2.default.createElement(
         'div',
         { className: 'instruction-form-positioning' },
@@ -909,11 +967,15 @@ var Instructions = function (_React$Component) {
                 'div',
                 { className: 'project-image-input-format' },
                 _react2.default.createElement(
-                  'p',
-                  { className: 'project-image-text' },
-                  'Please select a picture for your step'
+                  'div',
+                  null,
+                  _react2.default.createElement(
+                    'p',
+                    { className: 'project-image-text' },
+                    'Please select a picture for your step'
+                  ),
+                  _react2.default.createElement('input', { className: 'project-body-input', type: 'file', onChange: this.uploadFile.bind(this) })
                 ),
-                _react2.default.createElement('input', { className: 'project-body-input', type: 'file', onChange: this.uploadFile.bind(this) }),
                 preview
               )
             ),
@@ -1131,7 +1193,12 @@ var EditProjectForm = function (_React$Component) {
   return EditProjectForm;
 }(_react2.default.Component);
 
-var mstp = function mstp(state, ownParams) {
+var mstp = function mstp(state, ownProps) {
+
+  if (state.entities.projects[ownProps.match.params.projectId] && state.session.id != state.entities.projects[ownProps.match.params.projectId].authorId) {
+    ownProps.history.push('/');
+  }
+
   var defaultProject = { title: '',
     author_id: state.session.id,
     author_username: state.entities.users[state.session.id],
@@ -1139,20 +1206,36 @@ var mstp = function mstp(state, ownParams) {
     keyWords: '',
     pictureFile: null,
     pictureUrl: null,
-    uploadStatus: false };
+    uploadStatus: false,
+    instructions: [],
+    newlyAddedSteps: 0
+  };
 
-  var currentProject = state.entities.projects[ownParams.match.params.projectId] || defaultProject;
-
-  if (state.entities.projects[ownParams.match.params.projectId] && state.session.id != state.entities.projects[ownParams.match.params.projectId].authorId) {
-    ownParams.history.push('/');
-  }
+  var currentProject = state.entities.projects[ownProps.match.params.projectId] || defaultProject;
+  var projectId = ownProps.match.params.projectId;
+  var instructionsArray = Object.values(state.entities.instructions).map(function (instruction) {
+    if (instruction.projectId == projectId) {
+      return instruction;
+    }
+  });
+  var sortedInstructions = instructionsArray.sort(function (x, y) {
+    return x.instructionStep > y.instructionStep;
+  });
+  var nextStep = sortedInstructions[sortedInstructions.length - 1].instructionStep + 1;
+  debugger;
   return {
     project: {
+      projectId: projectId,
       title: currentProject.title,
       picture: currentProject.picture,
-      pictureUrl: currentProject.pictureUrl,
+      pictureUrl: currentProject.picture,
       description: currentProject.description,
-      uploadStatus: false
+      uploadStatus: false,
+      instructions: sortedInstructions,
+      stepNum: nextStep,
+      lastPrefilledInstruction: nextStep,
+      submitted: false,
+      newlyAddedSteps: 0
     },
     errors: state.errors.project,
     formType: 'Update Project'
@@ -1518,6 +1601,10 @@ var _NewInstructionContainer = __webpack_require__(/*! ./../instruction/NewInstr
 
 var _NewInstructionContainer2 = _interopRequireDefault(_NewInstructionContainer);
 
+var _EditInstructionContainer = __webpack_require__(/*! ./../instruction/EditInstructionContainer */ "./frontend/components/instruction/EditInstructionContainer.jsx");
+
+var _EditInstructionContainer2 = _interopRequireDefault(_EditInstructionContainer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -1574,13 +1661,28 @@ var ProjectForm = function (_React$Component) {
       if (this.state.pictureFile) {
         formData.append('project[picture]', this.state.pictureFile);
       }
-      this.props.submitProject(formData, projectId).then(function (payload) {
-        var projectId = payload.project.project.id;
-        _this3.setState({ projectId: projectId });
-        setTimeout(function () {
-          _this3.redirect(payload.project.project.id);
-        }, 1000);
-      });
+      if (this.props.formType === 'New Project') {
+        this.props.submitProject(formData, projectId).then(function (payload) {
+          var projectId = payload.project.project.id;
+          _this3.setState({ projectId: projectId });
+          setTimeout(function () {
+            _this3.redirect(payload.project.project.id);
+          }, 1000);
+        });
+      } else if (this.props.formType === 'Update Project') {
+        var newInstructions = this.state.instructions.slice(-this.state.newlyAddedSteps);
+        newInstructions = newInstructions.map(function (instruction) {
+          instruction = _react2.default.cloneElement(instruction, { projectId: _this3.state.projectId });
+          return instruction;
+        });
+        var updatedInstructions = this.state.instructions.slice(0, -this.state.newlyAddedSteps).concat(newInstructions);
+        this.props.submitProject(formData, projectId).then(function (payload) {
+          _this3.setState({ instructions: updatedInstructions });
+          setTimeout(function () {
+            _this3.redirect(payload.project.project.id);
+          }, 1000);
+        });
+      }
     }
   }, {
     key: 'redirect',
@@ -1590,7 +1692,7 @@ var ProjectForm = function (_React$Component) {
       this.setState({ uploadStatus: true });
       setTimeout(function () {
         _this4.props.history.push('/project/' + id);
-      }, 1000);
+      }, 1500);
     }
   }, {
     key: 'uploadResult',
@@ -1649,13 +1751,37 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'instructions',
     value: function instructions() {
-      this.setState({ stepNum: this.state.stepNum + 1, instructions: [].concat(_toConsumableArray(this.state.instructions), [_react2.default.createElement(_NewInstructionContainer2.default, { key: this.state.stepNum, stepNum: this.state.stepNum })]) });
+      this.setState({ stepNum: this.state.stepNum + 1, newlyAddedSteps: this.state.newlyAddedSteps + 1, instructions: [].concat(_toConsumableArray(this.state.instructions), [_react2.default.createElement(_NewInstructionContainer2.default, { key: this.state.stepNum, stepNum: this.state.stepNum })]) });
       this.state.instructions;
+    }
+  }, {
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      var _this5 = this;
+
+      debugger;
+      if (this.props.project.lastPrefilledInstruction === this.state.stepNum && this.props.formType === 'Update Project') {
+        debugger;
+        var instructions = this.state.instructions.map(function (instruction) {
+          if (!instruction) {
+            return [];
+          }
+          return _react2.default.createElement(_EditInstructionContainer2.default, {
+            step: instruction.instructionStep,
+            body: instruction.body,
+            title: instruction.title,
+            projectId: _this5.props.pro,
+            key: instruction.instructionStep,
+            media: instruction.media
+          });
+        });
+        this.setState({ instructions: instructions });
+      }
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this5 = this;
+      var _this6 = this;
 
       var previousPicture = this.state.picture && this.props.formType === 'Update Project' ? _react2.default.createElement(
         'div',
@@ -1757,13 +1883,47 @@ var ProjectForm = function (_React$Component) {
         );
       }
       var instructions = this.state.instructions;
-
-      if (this.state.projectId) {
+      debugger;
+      if (this.state.projectId && this.props.formType === 'New Project') {
         instructions = instructions.map(function (instruction) {
-          instruction = _react2.default.cloneElement(instruction, { projectId: _this5.state.projectId });
+          instruction = _react2.default.cloneElement(instruction, { projectId: _this6.state.projectId });
           return instruction;
         });
       }
+      //      }else if (this.props.formType === 'Update Project' && this.state.newlyAddedSteps !== 0) {
+      // debugger
+      //       let newInstructions = this.state.instructions.slice(-(this.state.newlyAddedSteps));
+      //         newInstructions = newInstructions.map((instruction) => {
+      //           instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
+      //           return instruction;
+      //         });
+      //         debugger
+      //       let updatedInstructions = this.state.instructions.slice(0,-(this.state.newlyAddedSteps)).concat(newInstructions);
+      // this.setState({instructions: updatedInstructions});
+      // debugger
+      //       if(this.props.project.lastPrefilledInstruction === this.state.stepNum && this.props.formType === 'Update Project'){
+      //         debugger
+      //         instructions = this.state.instructions.map((instruction) => {
+      //           if(!instruction){
+      //             return [];
+      //           }
+      //           return <EditInstructionContainer
+      //                   step={instruction.instructionStep}
+      //                   body={instruction.body}
+      //                   title={instruction.title}
+      //                   projectId={this.props.pro}
+      //                   key={instruction.instructionStep}
+      //                   media={instruction.media}
+      //                   />;
+      //         });
+      //              this.state.instructions = instructions;
+      // }
+      // else if (this.props.formType === 'Update Project') {
+      //   this.state.instructions[this.state.instructions.length -1]
+      //   instructions.push(<NewInstructionContainer projectId={this.state.projectId} key={this.state.stepNum} stepNum={this.state.stepNum} />);
+      // }
+
+      debugger;
       return _react2.default.createElement(
         'div',
         { className: 'project-background' },
@@ -1791,7 +1951,7 @@ var ProjectForm = function (_React$Component) {
             _react2.default.createElement(
               'button',
               { className: 'add-instruction', onClick: function onClick() {
-                  _this5.instructions();
+                  _this6.instructions();
                 } },
               'Add Instruction'
             )
@@ -1927,12 +2087,13 @@ var ProjectShow = function (_React$Component) {
         if (!instruction) {
           return [];
         }
+
         return _react2.default.createElement(_InstructionStep2.default, {
           step: instruction.instructionStep,
           body: instruction.body,
           title: instruction.title,
           projectId: instruction.projectId,
-          key: instruction.id,
+          key: instruction.instructionStep,
           media: instruction.media
         });
       }) : null;

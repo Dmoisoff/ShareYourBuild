@@ -51,12 +51,13 @@ class ProjectShow extends React.Component {
       if(!instruction){
         return [];
       }
+
       return <InstructionStep
               step={instruction.instructionStep}
               body={instruction.body}
               title={instruction.title}
               projectId={instruction.projectId}
-              key={instruction.id}
+              key={instruction.instructionStep}
               media={instruction.media}
               />;
           }) : null;
