@@ -15,7 +15,7 @@ class Api::ProjectsController < ApplicationController
   end
 
   def show
-    @project = Project.find_by(id: params[:id])
+    @project = Project.includes(:instructions).find_by(id: params[:id])
   end
 
   def update

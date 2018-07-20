@@ -3,6 +3,11 @@ import Slider from "react-slick";
 import {LetsShareDesigns, LetsShareCostumes, LetsShareRecipes, LetsShareTechnology } from './Slides_Text';
 
 class SimpleSlider extends React.Component {
+
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   render() {
     let settings = {
       dots: true,

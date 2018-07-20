@@ -58,15 +58,17 @@ const mstp = (state, ownProps) =>{
 
   const currentProject = state.entities.projects[ownProps.match.params.projectId] || defaultProject;
   const projectId = ownProps.match.params.projectId;
-  const instructionsArray = Object.values(state.entities.instructions).map((instruction) =>{
-    if(instruction.projectId == projectId){
-      return instruction;
-    }
+  const instructionsArray = Object.values(state.entities.instructions).filter((instruction) =>{
+    // debugger
+    return instruction.projectId === Number(projectId);
+
   });
   const sortedInstructions = instructionsArray.sort((x,y) => {
     return  x.instructionStep > y.instructionStep;
   });
-  const nextStep = (sortedInstructions[sortedInstructions.length-1].instructionStep)+1;
+  debugger
+  const nextStep = sortedInstructions[0] ? (sortedInstructions[sortedInstructions.length-1].instructionStep)+1 : 1;
+
   return({
     project: {
       projectId: projectId,

@@ -1211,15 +1211,16 @@ var mstp = function mstp(state, ownProps) {
 
   var currentProject = state.entities.projects[ownProps.match.params.projectId] || defaultProject;
   var projectId = ownProps.match.params.projectId;
-  var instructionsArray = Object.values(state.entities.instructions).map(function (instruction) {
-    if (instruction.projectId == projectId) {
-      return instruction;
-    }
+  var instructionsArray = Object.values(state.entities.instructions).filter(function (instruction) {
+    // debugger
+    return instruction.projectId === Number(projectId);
   });
   var sortedInstructions = instructionsArray.sort(function (x, y) {
     return x.instructionStep > y.instructionStep;
   });
-  var nextStep = sortedInstructions[sortedInstructions.length - 1].instructionStep + 1;
+  debugger;
+  var nextStep = sortedInstructions[0] ? sortedInstructions[sortedInstructions.length - 1].instructionStep + 1 : 1;
+
   return {
     project: {
       projectId: projectId,
@@ -2001,6 +2002,7 @@ var ProjectShow = function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       this.props.fetchProject(this.props.match.params.projectId);
+      window.scrollTo(0, 0);
     }
   }, {
     key: 'componentWillReceiveProps',
@@ -2749,6 +2751,11 @@ var SimpleSlider = function (_React$Component) {
   }
 
   _createClass(SimpleSlider, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      window.scrollTo(0, 0);
+    }
+  }, {
     key: "render",
     value: function render() {
       var settings = {
