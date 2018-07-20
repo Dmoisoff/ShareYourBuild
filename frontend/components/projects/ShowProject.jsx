@@ -13,7 +13,6 @@ class ProjectShow extends React.Component {
   }
 
   componentDidMount() {
-    debugger
     this.props.fetchProject(this.props.match.params.projectId);
   }
 
@@ -48,9 +47,7 @@ class ProjectShow extends React.Component {
     if (!this.props.project.authorUsername) {
       return <div>Loading...</div>;
     }
-    debugger
     const instructions = this.props.instructions ? this.props.instructions.map((instruction,i) => {
-      debugger
       if(!instruction){
         return [];
       }

@@ -4,12 +4,94 @@ import { withRouter } from 'react-router-dom';
 
 
 class Instructions extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = this.props.instruction;
+    this.updateTitle = this.updateTitle.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  updateTitle(e){
+    this.setState({title: e.target.value});
+  }
+  updateDescription(e){
+    this.setState({body: e.target.value});
+  }
+
+  uploadFile(e){
+    const file = e.currentTarget.files[0];
+    const fileReader = new FileReader();
+    fileReader.onloadend = () => {
+      this.setState({media: file, mediaUrl: fileReader.result });
+    };
+    if(file){
+      fileReader.readAsDataURL(file);
+    }
+  }
+
+  errors(){
+    if(!this.props.errors){
+      return [];
+    }else{
+      return this.props.errors.map((error,i) => {
+        return <li className='project-errors' key={i} >{error}</li>;
+        });
+      }
+    }
+
+    handleSubmit(){
+
+      const projectId = this.props.projectId;
+      const formData = new FormData();
+      formData.append('instruction[title]', this.state.title);
+      formData.append('instruction[project_id]', this.props.projectId);
+      formData.append('instruction[instruction_step]', this.state.step);
+      formData.append('instruction[body]', this.state.body);
+      if(this.state.media){
+        formData.append('instruction[media]', this.state.media);
+      }
+      if(!this.state.rendered){
+        this.setState({rendered: true});
+        this.props.submitInstruction(formData, projectId);
+      }
+    }
 
   render(){
+    const preview = this.state.mediaUrl ?
+    <div className='project-picture-preview-format'>
+      <p>Picture Preview</p>
+      <img className='project-image-resize' src={this.state.mediaUrl} />
+    </div>
+     : null;
+    const submit = this.props.projectId ? <input className='hidden' onClick={this.handleSubmit()}/> : null;
+
     return(
-      <div>
-        I'm here
-      </div>
+        <div className='instruction-form-positioning'>
+          <div className='project-form-styling'>
+            <form className='project-input-format'>
+              <div>
+                <p>Step {this.state.step}:</p>
+                <input className='project-title-styling' type='text' onChange={this.updateTitle} placeholder='Step title' value={`${this.state.title}`} />
+              </div>
+              <div className='project-images-display-create-format'>
+                <div className='project-image-input-format'>
+                  <p className='project-image-text' >Please select a picture for your step</p>
+                  <input className='project-body-input' type='file' onChange={this.uploadFile.bind(this)} />
+                  {preview}
+                </div>
+              </div>
+              <textarea onChange={this.updateDescription.bind(this)} placeholder='Please enter a brief description of your process' className='project-body-text' rows="8" cols="80" value={`${this.state.body}`}></textarea>
+              {submit}
+            </form>
+          </div>
+          <div className='project-message-position'>
+          </div>
+          <div className='project-message-position'>
+            <ul className='project-errors-container'>
+              {this.errors()}
+            </ul>
+          </div>
+        </div>
     );
   }
 

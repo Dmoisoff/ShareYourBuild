@@ -4,22 +4,16 @@ import Instructions from './Instructions';
 import { createInstruction } from './../../actions/instructions_actions';
 
 const mstp = (state, ownProps) => {
-  const projectId = ownProps.match.params.projectId;
-  let lastStep = 0;
-   Object.values(state.entities.instructions).forEach((instruction) => {
-      if((lastStep < instruction.instructionStep) && (instruction.projectId === projectId)) {
-        lastStep = instruction.instructionStep;
-      }
-    });
     return({
       instruction: {
-        projectId: projectId,
         body: "",
         title: "",
-        instructionStep: (lastStep+1),
         media: null,
         mediaUrl: null,
-        uploadStatus: false
+        uploadStatus: false,
+        step: ownProps.stepNum,
+        projectId: ownProps.projectId,
+        rendered: false
        },
       formType: 'New Instruction',
       errors: state.errors.instruction,
@@ -28,7 +22,7 @@ const mstp = (state, ownProps) => {
 
 const mdtp = (dispatch) => {
   return({
-    submitProject: (instruction) => dispatch(createInstruction(instruction))
+    submitInstruction: (instruction) => dispatch(createInstruction(instruction))
   });
 };
 

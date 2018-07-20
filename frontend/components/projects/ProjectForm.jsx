@@ -11,6 +11,7 @@ class ProjectForm extends React.Component{
     this.errors = this.errors.bind(this);
     this.uploadResult = this.uploadResult.bind(this);
     this.redirect = this.redirect.bind(this);
+    this.instructions = this.instructions.bind(this);
   }
 
   uploadFile(e){
@@ -37,7 +38,10 @@ class ProjectForm extends React.Component{
       formData.append('project[picture]', this.state.pictureFile);
     }
     this.props.submitProject(formData, projectId).then((payload) => {
-      this.redirect(payload.project.project.id);});
+      const projectId = payload.project.project.id;
+      this.setState({projectId: projectId});
+      setTimeout(() =>{this.redirect(payload.project.project.id);},1000);
+      });
   }
 
   redirect(id){
@@ -75,8 +79,17 @@ class ProjectForm extends React.Component{
       }
     }
 
+    instructions(){
+      this.setState({stepNum: (this.state.stepNum + 1), instructions: [...this.state.instructions, <NewInstructionContainer key={this.state.stepNum} stepNum={this.state.stepNum} />]});
+      this.state.instructions;
+    }
+
+
+
+
 
   render(){
+
     const previousPicture = this.state.picture && this.props.formType === 'Update Project' ?
     <div className='project-picture-preview-format'>
       <p>Previous Image</p>
@@ -131,7 +144,14 @@ class ProjectForm extends React.Component{
                  <textarea onChange={this.updateDescription.bind(this)} placeholder='Please enter a brief description of your build' className='project-body-text' rows="8" cols="80" value={`${this.state.description}`}></textarea>
                </div>;
      }
+     let instructions = this.state.instructions;
 
+     if (this.state.projectId) {
+       instructions = instructions.map((instruction) => {
+         instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
+         return instruction;
+       });
+     }
     return(
       <div className='project-background'>
         <div className='project-form-positioning'>
@@ -142,12 +162,17 @@ class ProjectForm extends React.Component{
             <button onClick={this.handleSubmit.bind(this)} className='project-submit' type='submit'>{submitButton}</button>
           </div>
           </form>
-          <div className='project-message-position'>
-            {this.uploadResult()}
+          <div>
+            <button className='add-instruction' onClick={() =>{this.instructions();}}>Add Instruction</button>
           </div>
           <div className='project-message-position'>
             <ul className='project-errors-container'>
               {this.errors()}
+            </ul>
+          </div>
+          <div className='project-message-position '>
+            <ul>
+              {instructions}
             </ul>
           </div>
         </div>

@@ -798,19 +798,139 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Instructions = function (_React$Component) {
   _inherits(Instructions, _React$Component);
 
-  function Instructions() {
+  function Instructions(props) {
     _classCallCheck(this, Instructions);
 
-    return _possibleConstructorReturn(this, (Instructions.__proto__ || Object.getPrototypeOf(Instructions)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Instructions.__proto__ || Object.getPrototypeOf(Instructions)).call(this, props));
+
+    _this.state = _this.props.instruction;
+    _this.updateTitle = _this.updateTitle.bind(_this);
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    return _this;
   }
 
   _createClass(Instructions, [{
+    key: 'updateTitle',
+    value: function updateTitle(e) {
+      this.setState({ title: e.target.value });
+    }
+  }, {
+    key: 'updateDescription',
+    value: function updateDescription(e) {
+      this.setState({ body: e.target.value });
+    }
+  }, {
+    key: 'uploadFile',
+    value: function uploadFile(e) {
+      var _this2 = this;
+
+      var file = e.currentTarget.files[0];
+      var fileReader = new FileReader();
+      fileReader.onloadend = function () {
+        _this2.setState({ media: file, mediaUrl: fileReader.result });
+      };
+      if (file) {
+        fileReader.readAsDataURL(file);
+      }
+    }
+  }, {
+    key: 'errors',
+    value: function errors() {
+      if (!this.props.errors) {
+        return [];
+      } else {
+        return this.props.errors.map(function (error, i) {
+          return _react2.default.createElement(
+            'li',
+            { className: 'project-errors', key: i },
+            error
+          );
+        });
+      }
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit() {
+
+      var projectId = this.props.projectId;
+      var formData = new FormData();
+      formData.append('instruction[title]', this.state.title);
+      formData.append('instruction[project_id]', this.props.projectId);
+      formData.append('instruction[instruction_step]', this.state.step);
+      formData.append('instruction[body]', this.state.body);
+      if (this.state.media) {
+        formData.append('instruction[media]', this.state.media);
+      }
+      if (!this.state.rendered) {
+        this.setState({ rendered: true });
+        this.props.submitInstruction(formData, projectId);
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var preview = this.state.mediaUrl ? _react2.default.createElement(
+        'div',
+        { className: 'project-picture-preview-format' },
+        _react2.default.createElement(
+          'p',
+          null,
+          'Picture Preview'
+        ),
+        _react2.default.createElement('img', { className: 'project-image-resize', src: this.state.mediaUrl })
+      ) : null;
+      var submit = this.props.projectId ? _react2.default.createElement('input', { className: 'hidden', onClick: this.handleSubmit() }) : null;
+
       return _react2.default.createElement(
         'div',
-        null,
-        'I\'m here'
+        { className: 'instruction-form-positioning' },
+        _react2.default.createElement(
+          'div',
+          { className: 'project-form-styling' },
+          _react2.default.createElement(
+            'form',
+            { className: 'project-input-format' },
+            _react2.default.createElement(
+              'div',
+              null,
+              _react2.default.createElement(
+                'p',
+                null,
+                'Step ',
+                this.state.step,
+                ':'
+              ),
+              _react2.default.createElement('input', { className: 'project-title-styling', type: 'text', onChange: this.updateTitle, placeholder: 'Step title', value: '' + this.state.title })
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'project-images-display-create-format' },
+              _react2.default.createElement(
+                'div',
+                { className: 'project-image-input-format' },
+                _react2.default.createElement(
+                  'p',
+                  { className: 'project-image-text' },
+                  'Please select a picture for your step'
+                ),
+                _react2.default.createElement('input', { className: 'project-body-input', type: 'file', onChange: this.uploadFile.bind(this) }),
+                preview
+              )
+            ),
+            _react2.default.createElement('textarea', { onChange: this.updateDescription.bind(this), placeholder: 'Please enter a brief description of your process', className: 'project-body-text', rows: '8', cols: '80', value: '' + this.state.body }),
+            submit
+          )
+        ),
+        _react2.default.createElement('div', { className: 'project-message-position' }),
+        _react2.default.createElement(
+          'div',
+          { className: 'project-message-position' },
+          _react2.default.createElement(
+            'ul',
+            { className: 'project-errors-container' },
+            this.errors()
+          )
+        )
       );
     }
   }]);
@@ -851,22 +971,16 @@ var _instructions_actions = __webpack_require__(/*! ./../../actions/instructions
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state, ownProps) {
-  var projectId = ownProps.match.params.projectId;
-  var lastStep = 0;
-  Object.values(state.entities.instructions).forEach(function (instruction) {
-    if (lastStep < instruction.instructionStep && instruction.projectId === projectId) {
-      lastStep = instruction.instructionStep;
-    }
-  });
   return {
     instruction: {
-      projectId: projectId,
       body: "",
       title: "",
-      instructionStep: lastStep + 1,
       media: null,
       mediaUrl: null,
-      uploadStatus: false
+      uploadStatus: false,
+      step: ownProps.stepNum,
+      projectId: ownProps.projectId,
+      rendered: false
     },
     formType: 'New Instruction',
     errors: state.errors.instruction
@@ -875,7 +989,7 @@ var mstp = function mstp(state, ownProps) {
 
 var mdtp = function mdtp(dispatch) {
   return {
-    submitProject: function submitProject(instruction) {
+    submitInstruction: function submitInstruction(instruction) {
       return dispatch((0, _instructions_actions.createInstruction)(instruction));
     }
   };
@@ -1348,12 +1462,16 @@ var mstp = function mstp(state) {
   return {
     project: { title: '',
       author_id: state.session.id,
-      author_username: state.entities.users[state.session.id],
+      author_username: state.entities.users[state.session.id].username,
       description: '',
       keyWords: '',
       pictureFile: null,
       pictureUrl: null,
-      uploadStatus: false
+      uploadStatus: false,
+      projectId: null,
+      stepNum: 1,
+      instructions: [],
+      submitted: false
     },
     formType: 'New Project',
     errors: state.errors.project
@@ -1400,6 +1518,8 @@ var _NewInstructionContainer2 = _interopRequireDefault(_NewInstructionContainer)
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -1419,6 +1539,7 @@ var ProjectForm = function (_React$Component) {
     _this.errors = _this.errors.bind(_this);
     _this.uploadResult = _this.uploadResult.bind(_this);
     _this.redirect = _this.redirect.bind(_this);
+    _this.instructions = _this.instructions.bind(_this);
     return _this;
   }
 
@@ -1452,7 +1573,11 @@ var ProjectForm = function (_React$Component) {
         formData.append('project[picture]', this.state.pictureFile);
       }
       this.props.submitProject(formData, projectId).then(function (payload) {
-        _this3.redirect(payload.project.project.id);
+        var projectId = payload.project.project.id;
+        _this3.setState({ projectId: projectId });
+        setTimeout(function () {
+          _this3.redirect(payload.project.project.id);
+        }, 1000);
       });
     }
   }, {
@@ -1520,8 +1645,16 @@ var ProjectForm = function (_React$Component) {
       }
     }
   }, {
+    key: 'instructions',
+    value: function instructions() {
+      this.setState({ stepNum: this.state.stepNum + 1, instructions: [].concat(_toConsumableArray(this.state.instructions), [_react2.default.createElement(_NewInstructionContainer2.default, { key: this.state.stepNum, stepNum: this.state.stepNum })]) });
+      this.state.instructions;
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this5 = this;
+
       var previousPicture = this.state.picture && this.props.formType === 'Update Project' ? _react2.default.createElement(
         'div',
         { className: 'project-picture-preview-format' },
@@ -1621,7 +1754,14 @@ var ProjectForm = function (_React$Component) {
           _react2.default.createElement('textarea', { onChange: this.updateDescription.bind(this), placeholder: 'Please enter a brief description of your build', className: 'project-body-text', rows: '8', cols: '80', value: '' + this.state.description })
         );
       }
+      var instructions = this.state.instructions;
 
+      if (this.state.projectId) {
+        instructions = instructions.map(function (instruction) {
+          instruction = _react2.default.cloneElement(instruction, { projectId: _this5.state.projectId });
+          return instruction;
+        });
+      }
       return _react2.default.createElement(
         'div',
         { className: 'project-background' },
@@ -1645,8 +1785,14 @@ var ProjectForm = function (_React$Component) {
           ),
           _react2.default.createElement(
             'div',
-            { className: 'project-message-position' },
-            this.uploadResult()
+            null,
+            _react2.default.createElement(
+              'button',
+              { className: 'add-instruction', onClick: function onClick() {
+                  _this5.instructions();
+                } },
+              'Add Instruction'
+            )
           ),
           _react2.default.createElement(
             'div',
@@ -1655,6 +1801,15 @@ var ProjectForm = function (_React$Component) {
               'ul',
               { className: 'project-errors-container' },
               this.errors()
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'project-message-position ' },
+            _react2.default.createElement(
+              'ul',
+              null,
+              instructions
             )
           )
         )
@@ -1722,7 +1877,6 @@ var ProjectShow = function (_React$Component) {
   _createClass(ProjectShow, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      debugger;
       this.props.fetchProject(this.props.match.params.projectId);
     }
   }, {
@@ -1767,9 +1921,7 @@ var ProjectShow = function (_React$Component) {
           'Loading...'
         );
       }
-      debugger;
       var instructions = this.props.instructions ? this.props.instructions.map(function (instruction, i) {
-        debugger;
         if (!instruction) {
           return [];
         }
@@ -1889,7 +2041,6 @@ var _ShowProject2 = _interopRequireDefault(_ShowProject);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state, ownProps) {
-  // debugger
   var projectId = ownProps.match.params.projectId;
 
   var instructionsArray = Object.values(state.entities.instructions).map(function (instruction) {
@@ -1903,7 +2054,6 @@ var mstp = function mstp(state, ownProps) {
   });
   var userId = state.session.id;
   var project = state.entities.projects[ownProps.match.params.projectId] || {};
-  debugger;
   return {
     project: project,
     formType: 'Show Project',
@@ -3180,9 +3330,9 @@ var createInstruction = exports.createInstruction = function createInstruction(i
   return $.ajax({
     method: 'POST',
     url: '/api/projects/' + id + '/instructions',
-    data: instruction
-    // contentType: false,
-    // processData: false
+    data: instruction,
+    contentType: false,
+    processData: false
   });
 };
 

@@ -9,12 +9,16 @@ const mstp = (state) => {
   return({
     project: { title: '',
       author_id: state.session.id,
-      author_username: state.entities.users[state.session.id],
+      author_username: state.entities.users[state.session.id].username,
       description: '',
       keyWords: '',
       pictureFile: null,
       pictureUrl: null,
-      uploadStatus: false
+      uploadStatus: false,
+      projectId: null,
+      stepNum: 1,
+      instructions: [],
+      submitted: false
      },
     formType: 'New Project',
     errors: state.errors.project,

@@ -6,7 +6,6 @@ import ShowProject from './ShowProject';
 
 
 const mstp = (state, ownProps) => {
-  // debugger
   const projectId = ownProps.match.params.projectId;
 
   const instructionsArray = Object.values(state.entities.instructions).map((instruction) =>{
@@ -20,7 +19,6 @@ const mstp = (state, ownProps) => {
   });
   const userId = state.session.id;
   const project = state.entities.projects[ownProps.match.params.projectId] || {};
-  debugger
   return({
     project: project,
     formType: 'Show Project',

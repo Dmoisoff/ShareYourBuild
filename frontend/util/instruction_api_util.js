@@ -17,8 +17,8 @@ export const createInstruction = (instruction,id) => {
     method: 'POST',
     url: `/api/projects/${id}/instructions`,
     data: instruction,
-    // contentType: false,
-    // processData: false
+    contentType: false,
+    processData: false
   });
 };
 
