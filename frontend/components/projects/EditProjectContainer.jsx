@@ -67,7 +67,6 @@ const mstp = (state, ownProps) =>{
     return  x.instructionStep > y.instructionStep;
   });
   const nextStep = (sortedInstructions[sortedInstructions.length-1].instructionStep)+1;
-  debugger
   return({
     project: {
       projectId: projectId,

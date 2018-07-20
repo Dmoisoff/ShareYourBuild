@@ -557,6 +557,7 @@ var Greeting = function (_React$Component) {
         return _react2.default.createElement(
           'div',
           null,
+          _react2.default.createElement('div', null),
           _react2.default.createElement(
             'div',
             { className: 'user-dropdown-position' },
@@ -714,7 +715,6 @@ var _instructions_actions = __webpack_require__(/*! ./../../actions/instructions
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state, ownProps) {
-  debugger;
   return {
     instruction: {
       body: ownProps.body || '',
@@ -909,7 +909,6 @@ var Instructions = function (_React$Component) {
   }, {
     key: 'handleSubmit',
     value: function handleSubmit() {
-      debugger;
       var projectId = this.props.projectId;
       var formData = new FormData();
       formData.append('instruction[title]', this.state.title);
@@ -938,7 +937,6 @@ var Instructions = function (_React$Component) {
         _react2.default.createElement('img', { className: 'project-image-resize', src: this.state.mediaUrl })
       ) : null;
       var submit = this.props.projectId ? _react2.default.createElement('input', { className: 'hidden', onClick: this.handleSubmit() }) : null;
-      debugger;
       return _react2.default.createElement(
         'div',
         { className: 'instruction-form-positioning' },
@@ -1222,7 +1220,6 @@ var mstp = function mstp(state, ownProps) {
     return x.instructionStep > y.instructionStep;
   });
   var nextStep = sortedInstructions[sortedInstructions.length - 1].instructionStep + 1;
-  debugger;
   return {
     project: {
       projectId: projectId,
@@ -1759,9 +1756,7 @@ var ProjectForm = function (_React$Component) {
     value: function componentWillMount() {
       var _this5 = this;
 
-      debugger;
       if (this.props.project.lastPrefilledInstruction === this.state.stepNum && this.props.formType === 'Update Project') {
-        debugger;
         var instructions = this.state.instructions.map(function (instruction) {
           if (!instruction) {
             return [];
@@ -1883,47 +1878,13 @@ var ProjectForm = function (_React$Component) {
         );
       }
       var instructions = this.state.instructions;
-      debugger;
       if (this.state.projectId && this.props.formType === 'New Project') {
         instructions = instructions.map(function (instruction) {
           instruction = _react2.default.cloneElement(instruction, { projectId: _this6.state.projectId });
           return instruction;
         });
       }
-      //      }else if (this.props.formType === 'Update Project' && this.state.newlyAddedSteps !== 0) {
-      // debugger
-      //       let newInstructions = this.state.instructions.slice(-(this.state.newlyAddedSteps));
-      //         newInstructions = newInstructions.map((instruction) => {
-      //           instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
-      //           return instruction;
-      //         });
-      //         debugger
-      //       let updatedInstructions = this.state.instructions.slice(0,-(this.state.newlyAddedSteps)).concat(newInstructions);
-      // this.setState({instructions: updatedInstructions});
-      // debugger
-      //       if(this.props.project.lastPrefilledInstruction === this.state.stepNum && this.props.formType === 'Update Project'){
-      //         debugger
-      //         instructions = this.state.instructions.map((instruction) => {
-      //           if(!instruction){
-      //             return [];
-      //           }
-      //           return <EditInstructionContainer
-      //                   step={instruction.instructionStep}
-      //                   body={instruction.body}
-      //                   title={instruction.title}
-      //                   projectId={this.props.pro}
-      //                   key={instruction.instructionStep}
-      //                   media={instruction.media}
-      //                   />;
-      //         });
-      //              this.state.instructions = instructions;
-      // }
-      // else if (this.props.formType === 'Update Project') {
-      //   this.state.instructions[this.state.instructions.length -1]
-      //   instructions.push(<NewInstructionContainer projectId={this.state.projectId} key={this.state.stepNum} stepNum={this.state.stepNum} />);
-      // }
 
-      debugger;
       return _react2.default.createElement(
         'div',
         { className: 'project-background' },

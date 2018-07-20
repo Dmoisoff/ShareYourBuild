@@ -100,9 +100,8 @@ class ProjectForm extends React.Component{
     }
 
     componentWillMount(){
-      debugger
+
             if(this.props.project.lastPrefilledInstruction === this.state.stepNum && this.props.formType === 'Update Project'){
-              debugger
               let instructions = this.state.instructions.map((instruction) => {
                 if(!instruction){
                   return [];
@@ -180,7 +179,6 @@ class ProjectForm extends React.Component{
                </div>;
      }
      let instructions = this.state.instructions;
-debugger
      if (this.state.projectId && this.props.formType === 'New Project') {
        instructions = instructions.map((instruction) => {
          instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
@@ -188,40 +186,8 @@ debugger
        });
 
      }
-//      }else if (this.props.formType === 'Update Project' && this.state.newlyAddedSteps !== 0) {
-// debugger
-//       let newInstructions = this.state.instructions.slice(-(this.state.newlyAddedSteps));
-//         newInstructions = newInstructions.map((instruction) => {
-//           instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
-//           return instruction;
-//         });
-//         debugger
-//       let updatedInstructions = this.state.instructions.slice(0,-(this.state.newlyAddedSteps)).concat(newInstructions);
-      // this.setState({instructions: updatedInstructions});
-// debugger
-//       if(this.props.project.lastPrefilledInstruction === this.state.stepNum && this.props.formType === 'Update Project'){
-//         debugger
-//         instructions = this.state.instructions.map((instruction) => {
-//           if(!instruction){
-//             return [];
-//           }
-//           return <EditInstructionContainer
-//                   step={instruction.instructionStep}
-//                   body={instruction.body}
-//                   title={instruction.title}
-//                   projectId={this.props.pro}
-//                   key={instruction.instructionStep}
-//                   media={instruction.media}
-//                   />;
-//         });
-//              this.state.instructions = instructions;
-      // }
-      // else if (this.props.formType === 'Update Project') {
-      //   this.state.instructions[this.state.instructions.length -1]
-      //   instructions.push(<NewInstructionContainer projectId={this.state.projectId} key={this.state.stepNum} stepNum={this.state.stepNum} />);
-      // }
 
-     debugger
+
     return(
       <div className='project-background'>
         <div className='project-form-positioning'>

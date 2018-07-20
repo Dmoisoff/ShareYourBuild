@@ -40,7 +40,6 @@ class Instructions extends React.Component{
     }
 
     handleSubmit(){
-      debugger
       const projectId = this.props.projectId;
       const formData = new FormData();
       formData.append('instruction[title]', this.state.title);
@@ -64,7 +63,6 @@ class Instructions extends React.Component{
     </div>
      : null;
     const submit = this.props.projectId ? <input className='hidden' onClick={this.handleSubmit()}/> : null;
-    debugger
     return(
         <div className='instruction-form-positioning'>
           <div className='project-form-styling'>

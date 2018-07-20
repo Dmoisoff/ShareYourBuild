@@ -29,6 +29,8 @@ class Greeting extends React.Component{
 
       return(
         <div>
+          <div>
+          </div>
           <div className='user-dropdown-position'>
             <ul>
               <li>
