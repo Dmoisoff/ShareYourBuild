@@ -1654,7 +1654,7 @@ var ProjectForm = function (_React$Component) {
       var formData = new FormData();
       formData.append('project[title]', this.state.title);
       formData.append('project[keywords]', this.state.keyWords);
-      formData.append('project[picture_url]', this.state.pictureUrl);
+      // formData.append('project[picture_url]', this.state.pictureUrl);
       formData.append('project[description]', this.state.description);
       if (this.state.pictureFile) {
         formData.append('project[picture]', this.state.pictureFile);
@@ -1749,7 +1749,11 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'instructions',
     value: function instructions() {
-      this.setState({ stepNum: this.state.stepNum + 1, newlyAddedSteps: this.state.newlyAddedSteps + 1, instructions: [].concat(_toConsumableArray(this.state.instructions), [_react2.default.createElement(_NewInstructionContainer2.default, { key: this.state.stepNum, stepNum: this.state.stepNum })]) });
+      this.setState({
+        stepNum: this.state.stepNum + 1,
+        newlyAddedSteps: this.state.newlyAddedSteps + 1,
+        instructions: [].concat(_toConsumableArray(this.state.instructions), [_react2.default.createElement(_NewInstructionContainer2.default, { key: this.state.stepNum, stepNum: this.state.stepNum })])
+      });
       this.state.instructions;
     }
   }, {

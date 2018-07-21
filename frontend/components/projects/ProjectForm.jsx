@@ -33,7 +33,7 @@ class ProjectForm extends React.Component{
     const formData = new FormData();
     formData.append('project[title]', this.state.title);
     formData.append('project[keywords]', this.state.keyWords);
-    formData.append('project[picture_url]', this.state.pictureUrl);
+    // formData.append('project[picture_url]', this.state.pictureUrl);
     formData.append('project[description]', this.state.description);
     if(this.state.pictureFile){
       formData.append('project[picture]', this.state.pictureFile);
@@ -95,13 +95,19 @@ class ProjectForm extends React.Component{
     }
 
     instructions(){
-        this.setState({stepNum: (this.state.stepNum + 1), newlyAddedSteps: (this.state.newlyAddedSteps +1), instructions: [...this.state.instructions, <NewInstructionContainer key={this.state.stepNum} stepNum={this.state.stepNum} />]});
+        this.setState({
+          stepNum: (this.state.stepNum + 1),
+          newlyAddedSteps: (this.state.newlyAddedSteps +1),
+          instructions: [...this.state.instructions,
+            <NewInstructionContainer key={this.state.stepNum} stepNum={this.state.stepNum} />]
+          });
         this.state.instructions;
     }
 
     componentWillMount(){
 
-            if(this.props.project.lastPrefilledInstruction === this.state.stepNum && this.props.formType === 'Update Project'){
+            if(this.props.project.lastPrefilledInstruction === this.state.stepNum &&
+              this.props.formType === 'Update Project'){
               let instructions = this.state.instructions.map((instruction) => {
                 if(!instruction){
                   return [];
