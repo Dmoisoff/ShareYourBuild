@@ -33,7 +33,6 @@ class ProjectShow extends React.Component {
   remove(){
     const userId = this.props.project.authorId;
     const username = this.state.authorUsername;
-    debugger
     this.props.deleteInstruction(this.props.instructions);
     this.props.deleteProject(this.props.project.id).then(
       () => this.props.history.push(`/${username}/${userId}/projects`)

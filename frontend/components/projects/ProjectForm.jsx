@@ -200,24 +200,24 @@ class ProjectForm extends React.Component{
     return(
       <div className='project-background'>
         <div className='project-form-positioning'>
-          <form className='project-form-styling'>
+          <form className='project-form-styling' id='submit-project'>
               {create}
               {update}
-          <div className='project-button-placement'>
-            <button onClick={this.handleSubmit.bind(this)} className='project-submit' type='submit'>{submitButton}</button>
-          </div>
           </form>
+          <div className='project-message-position '>
+            <ul>
+              {instructions}
+            </ul>
+          </div>
           <div>
+            <div className='project-button-placement'>
+              <button form='submit-project' onClick={this.handleSubmit.bind(this)} className='project-submit' type='submit'>{submitButton}</button>
+            </div>
             <button className='add-instruction' onClick={() =>{this.instructions();}}>Add Instruction</button>
           </div>
           <div className='project-message-position'>
             <ul className='project-errors-container'>
               {this.errors()}
-            </ul>
-          </div>
-          <div className='project-message-position '>
-            <ul>
-              {instructions}
             </ul>
           </div>
         </div>

@@ -1901,22 +1901,31 @@ var ProjectForm = function (_React$Component) {
           { className: 'project-form-positioning' },
           _react2.default.createElement(
             'form',
-            { className: 'project-form-styling' },
+            { className: 'project-form-styling', id: 'submit-project' },
             create,
-            update,
+            update
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'project-message-position ' },
             _react2.default.createElement(
-              'div',
-              { className: 'project-button-placement' },
-              _react2.default.createElement(
-                'button',
-                { onClick: this.handleSubmit.bind(this), className: 'project-submit', type: 'submit' },
-                submitButton
-              )
+              'ul',
+              null,
+              instructions
             )
           ),
           _react2.default.createElement(
             'div',
             null,
+            _react2.default.createElement(
+              'div',
+              { className: 'project-button-placement' },
+              _react2.default.createElement(
+                'button',
+                { form: 'submit-project', onClick: this.handleSubmit.bind(this), className: 'project-submit', type: 'submit' },
+                submitButton
+              )
+            ),
             _react2.default.createElement(
               'button',
               { className: 'add-instruction', onClick: function onClick() {
@@ -1932,15 +1941,6 @@ var ProjectForm = function (_React$Component) {
               'ul',
               { className: 'project-errors-container' },
               this.errors()
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'project-message-position ' },
-            _react2.default.createElement(
-              'ul',
-              null,
-              instructions
             )
           )
         )
@@ -2033,7 +2033,6 @@ var ProjectShow = function (_React$Component) {
 
       var userId = this.props.project.authorId;
       var username = this.state.authorUsername;
-      debugger;
       this.props.deleteInstruction(this.props.instructions);
       this.props.deleteProject(this.props.project.id).then(function () {
         return _this2.props.history.push('/' + username + '/' + userId + '/projects');
