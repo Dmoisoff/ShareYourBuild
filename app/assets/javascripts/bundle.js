@@ -1534,6 +1534,8 @@ var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-r
 
 var _projects_actions = __webpack_require__(/*! ./../../actions/projects_actions */ "./frontend/actions/projects_actions.js");
 
+var _project_errors_reducer = __webpack_require__(/*! ./../../reducers/project_errors_reducer */ "./frontend/reducers/project_errors_reducer.js");
+
 var _ProjectForm = __webpack_require__(/*! ./ProjectForm */ "./frontend/components/projects/ProjectForm.jsx");
 
 var _ProjectForm2 = _interopRequireDefault(_ProjectForm);
@@ -1630,6 +1632,16 @@ var ProjectForm = function (_React$Component) {
   }
 
   _createClass(ProjectForm, [{
+    key: 'updateTitle',
+    value: function updateTitle(e) {
+      this.setState({ title: e.target.value });
+    }
+  }, {
+    key: 'updateDescription',
+    value: function updateDescription(e) {
+      this.setState({ description: e.target.value });
+    }
+  }, {
     key: 'uploadFile',
     value: function uploadFile(e) {
       var _this2 = this;
@@ -1649,6 +1661,7 @@ var ProjectForm = function (_React$Component) {
       var _this3 = this;
 
       e.preventDefault();
+      debugger;
       var projectId = this.props.match.params.projectId;
       var formData = new FormData();
       formData.append('project[title]', this.state.title);
@@ -1660,13 +1673,14 @@ var ProjectForm = function (_React$Component) {
       }
       if (this.props.formType === 'New Project') {
         this.props.submitProject(formData, projectId).then(function (payload) {
+          debugger;
           var projectId = payload.project.project.id;
           _this3.setState({ projectId: projectId });
-          setTimeout(function () {
-            _this3.redirect(payload.project.project.id);
-          }, 1000);
+          _this3.redirect(payload.project.project.id);
+          // setTimeout(() =>{this.redirect(payload.project.project.id);},1000);
         });
       } else if (this.props.formType === 'Update Project') {
+        debugger;
         var newInstructions = this.state.instructions.slice(-this.state.newlyAddedSteps);
         newInstructions = newInstructions.map(function (instruction) {
           instruction = _react2.default.cloneElement(instruction, { projectId: _this3.state.projectId });
@@ -1675,9 +1689,8 @@ var ProjectForm = function (_React$Component) {
         var updatedInstructions = this.state.instructions.slice(0, -this.state.newlyAddedSteps).concat(newInstructions);
         this.props.submitProject(formData, projectId).then(function (payload) {
           _this3.setState({ instructions: updatedInstructions });
-          setTimeout(function () {
-            _this3.redirect(payload.project.project.id);
-          }, 1000);
+          _this3.redirect(payload.project.project.id);
+          // setTimeout(() =>{this.redirect(payload.project.project.id);},1000);
         });
       }
     }
@@ -1686,6 +1699,7 @@ var ProjectForm = function (_React$Component) {
     value: function redirect(id) {
       var _this4 = this;
 
+      debugger;
       this.setState({ uploadStatus: true });
       setTimeout(function () {
         _this4.props.history.push('/project/' + id);
@@ -1694,6 +1708,7 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'uploadResult',
     value: function uploadResult() {
+      debugger;
       if (this.state.uploadStatus === true) {
         if (this.props.formType === 'New Project') {
           return _react2.default.createElement(
@@ -1719,16 +1734,6 @@ var ProjectForm = function (_React$Component) {
       } else {
         return [];
       }
-    }
-  }, {
-    key: 'updateTitle',
-    value: function updateTitle(e) {
-      this.setState({ title: e.target.value });
-    }
-  }, {
-    key: 'updateDescription',
-    value: function updateDescription(e) {
-      this.setState({ description: e.target.value });
     }
   }, {
     key: 'errors',
@@ -1866,13 +1871,27 @@ var ProjectForm = function (_React$Component) {
           _react2.default.createElement('textarea', { onChange: this.updateDescription.bind(this),
             placeholder: 'Please enter a brief description of your build',
             className: 'project-body-text', rows: '8', cols: '80',
-            value: '' + this.state.description })
+            value: '' + this.state.description }),
+          _react2.default.createElement(
+            'div',
+            { className: 'project-message-position' },
+            _react2.default.createElement(
+              'ul',
+              { className: 'project-errors-container' },
+              this.errors()
+            )
+          )
         );
       } else {
         // this is the view for creating a new project
         create = _react2.default.createElement(
           'div',
           { className: 'project-input-format' },
+          _react2.default.createElement(
+            'p',
+            { className: 'project-edit-title-text' },
+            'Please select a title for your project'
+          ),
           titleEdit,
           _react2.default.createElement('input', { className: 'project-title-styling',
             type: 'text', onChange: this.updateTitle,
@@ -1899,7 +1918,16 @@ var ProjectForm = function (_React$Component) {
           _react2.default.createElement('textarea', { onChange: this.updateDescription.bind(this),
             placeholder: 'Please enter a brief description of your build',
             className: 'project-body-text', rows: '8', cols: '80',
-            value: '' + this.state.description })
+            value: '' + this.state.description }),
+          _react2.default.createElement(
+            'div',
+            { className: 'project-message-position' },
+            _react2.default.createElement(
+              'ul',
+              { className: 'project-errors-container' },
+              this.errors()
+            )
+          )
         );
       }
       var instructions = this.state.instructions;
@@ -1945,24 +1973,16 @@ var ProjectForm = function (_React$Component) {
                   className: 'project-submit',
                   type: 'submit' },
                 submitButton
+              ),
+              this.uploadResult(),
+              _react2.default.createElement(
+                'button',
+                { className: 'add-instruction',
+                  onClick: function onClick() {
+                    _this6.instructions();
+                  } },
+                'Add Instruction'
               )
-            ),
-            _react2.default.createElement(
-              'button',
-              { className: 'add-instruction',
-                onClick: function onClick() {
-                  _this6.instructions();
-                } },
-              'Add Instruction'
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'project-message-position' },
-            _react2.default.createElement(
-              'ul',
-              { className: 'project-errors-container' },
-              this.errors()
             )
           )
         )
@@ -3122,6 +3142,7 @@ var _merge2 = _interopRequireDefault(_merge);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var CLEAR_ERRORS = "CLEAR_ERRORS";
 var projectErrorsReducer = function projectErrorsReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments[1];

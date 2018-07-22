@@ -61,7 +61,11 @@
 
 .project-button-placement{
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
 }
 
 .project-body-text{
@@ -114,9 +118,9 @@
   background-color: #bd2121;
   border-radius: 5px;
   text-align: center;
-  margin-bottom: 20px;
   padding-left: 20px;
   padding-right: 20px;
+  margin-top: 15px;
 }
 
 .project-errors{
@@ -134,9 +138,10 @@
   background-color: #1b9430;
   border-radius: 5px;
   text-align: center;
-  margin-bottom: 20px;
+  margin-top: 15px;
   padding-left: 20px;
   padding-right: 20px;
+  margin-bottom: 5px;
 }
 
 .project-previous-picture-format{

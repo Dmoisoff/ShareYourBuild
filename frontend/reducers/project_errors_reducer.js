@@ -3,7 +3,7 @@ import { FETCH_INSTRUCTION } from './../actions/instructions_actions';
 import { RECEIVE_CURRENT_USER } from './../actions/session_actions';
 import merge from 'lodash/merge';
 
-
+const CLEAR_ERRORS = "CLEAR_ERRORS";
 const projectErrorsReducer = (state = [], action) => {
   const oldState = Object.freeze(state);
   switch (action.type) {

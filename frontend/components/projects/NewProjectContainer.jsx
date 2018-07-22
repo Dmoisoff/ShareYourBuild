@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import React from 'react';
 import { connect } from 'react-redux';
 import { createProject } from './../../actions/projects_actions';
+import { projectErrorsReducer } from './../../reducers/project_errors_reducer';
 import ProjectForm from './ProjectForm';
 
 

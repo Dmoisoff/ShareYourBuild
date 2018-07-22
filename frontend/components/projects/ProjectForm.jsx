@@ -15,6 +15,14 @@ class ProjectForm extends React.Component{
     this.instructions = this.instructions.bind(this);
   }
 
+  updateTitle(e){
+    this.setState({title: e.target.value});
+  }
+
+  updateDescription(e){
+    this.setState({description: e.target.value});
+  }
+
   uploadFile(e){
     const file = e.currentTarget.files[0];
     const fileReader = new FileReader();
@@ -29,6 +37,7 @@ class ProjectForm extends React.Component{
 
   handleSubmit(e){
     e.preventDefault();
+    debugger
     const projectId = this.props.match.params.projectId;
     const formData = new FormData();
     formData.append('project[title]', this.state.title);
@@ -40,11 +49,14 @@ class ProjectForm extends React.Component{
     }
     if(this.props.formType === 'New Project'){
       this.props.submitProject(formData, projectId).then((payload) => {
+        debugger
         const projectId = payload.project.project.id;
         this.setState({projectId: projectId});
-        setTimeout(() =>{this.redirect(payload.project.project.id);},1000);
+        this.redirect(payload.project.project.id);
+        // setTimeout(() =>{this.redirect(payload.project.project.id);},1000);
       });
     }else if (this.props.formType === 'Update Project') {
+      debugger
       let newInstructions = this.state.instructions.slice(-(this.state.newlyAddedSteps));
         newInstructions = newInstructions.map((instruction) => {
           instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
@@ -53,18 +65,21 @@ class ProjectForm extends React.Component{
       let updatedInstructions = this.state.instructions.slice(0,-(this.state.newlyAddedSteps)).concat(newInstructions);
       this.props.submitProject(formData, projectId).then((payload) => {
         this.setState({instructions: updatedInstructions});
-        setTimeout(() =>{this.redirect(payload.project.project.id);},1000);
+        this.redirect(payload.project.project.id);
+        // setTimeout(() =>{this.redirect(payload.project.project.id);},1000);
       });
     }
 
     }
 
   redirect(id){
+    debugger
     this.setState({uploadStatus: true});
     setTimeout(() => {this.props.history.push(`/project/${id}`);}, 1500);
   }
 
   uploadResult(){
+    debugger
     if(this.state.uploadStatus === true){
       if(this.props.formType === 'New Project'){
         return <div className='project-success-container'><p className='project-success'>Build Successfully Saved</p></div>;
@@ -76,12 +91,6 @@ class ProjectForm extends React.Component{
     }
   }
 
-  updateTitle(e){
-    this.setState({title: e.target.value});
-  }
-  updateDescription(e){
-    this.setState({description: e.target.value});
-  }
 
 
   errors(){
@@ -127,9 +136,6 @@ class ProjectForm extends React.Component{
        this.setState({instructions: instructions});
       }
     }
-
-
-
 
   render(){
     const previousPicture = this.state.picture &&
@@ -181,10 +187,16 @@ class ProjectForm extends React.Component{
                      placeholder='Please enter a brief description of your build'
                      className='project-body-text' rows="8" cols="80"
                      value={`${this.state.description}`}></textarea>
+                     <div className='project-message-position'>
+                       <ul className='project-errors-container'>
+                         {this.errors()}
+                       </ul>
+                     </div>
                  </div>;
      }else{
        // this is the view for creating a new project
        create = <div className='project-input-format'>
+                 <p className='project-edit-title-text'>Please select a title for your project</p>
                  {titleEdit}
                  <input className='project-title-styling'
                    type='text' onChange={this.updateTitle}
@@ -204,6 +216,11 @@ class ProjectForm extends React.Component{
                    placeholder='Please enter a brief description of your build'
                    className='project-body-text' rows="8" cols="80"
                    value={`${this.state.description}`}></textarea>
+                   <div className='project-message-position'>
+                     <ul className='project-errors-container'>
+                       {this.errors()}
+                     </ul>
+                   </div>
                </div>;
      }
      let instructions = this.state.instructions;
@@ -225,6 +242,7 @@ class ProjectForm extends React.Component{
               {update}
           </form>
           <div className='project-message-position '>
+
             <ul>
               {instructions}
             </ul>
@@ -235,14 +253,10 @@ class ProjectForm extends React.Component{
                 onClick={this.handleSubmit.bind(this)}
                 className='project-submit'
                 type='submit'>{submitButton}</button>
+              {this.uploadResult()}
+              <button className='add-instruction'
+                onClick={() =>{this.instructions();}}>Add Instruction</button>
             </div>
-            <button className='add-instruction'
-              onClick={() =>{this.instructions();}}>Add Instruction</button>
-          </div>
-          <div className='project-message-position'>
-            <ul className='project-errors-container'>
-              {this.errors()}
-            </ul>
           </div>
         </div>
       </div>
