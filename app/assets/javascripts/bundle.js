@@ -1825,6 +1825,7 @@ var ProjectForm = function (_React$Component) {
       var update = null;
       var create = null;
       if (this.props.formType === 'Update Project') {
+        // this is the view for updating a new project
         update = _react2.default.createElement(
           'div',
           { className: 'project-input-format' },
@@ -1858,6 +1859,7 @@ var ProjectForm = function (_React$Component) {
           _react2.default.createElement('textarea', { onChange: this.updateDescription.bind(this), placeholder: 'Please enter a brief description of your build', className: 'project-body-text', rows: '8', cols: '80', value: '' + this.state.description })
         );
       } else {
+        // this is the view for creating a new project
         create = _react2.default.createElement(
           'div',
           { className: 'project-input-format' },
@@ -1883,6 +1885,7 @@ var ProjectForm = function (_React$Component) {
         );
       }
       var instructions = this.state.instructions;
+      // this will pass the project
       if (this.state.projectId && this.props.formType === 'New Project') {
         instructions = instructions.map(function (instruction) {
           instruction = _react2.default.cloneElement(instruction, { projectId: _this6.state.projectId });
@@ -2030,6 +2033,8 @@ var ProjectShow = function (_React$Component) {
 
       var userId = this.props.project.authorId;
       var username = this.state.authorUsername;
+      debugger;
+      this.props.deleteInstruction(this.props.instructions);
       this.props.deleteProject(this.props.project.id).then(function () {
         return _this2.props.history.push('/' + username + '/' + userId + '/projects');
       });
@@ -2164,6 +2169,8 @@ var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-r
 
 var _projects_actions = __webpack_require__(/*! ./../../actions/projects_actions */ "./frontend/actions/projects_actions.js");
 
+var _instructions_actions = __webpack_require__(/*! ./../../actions/instructions_actions */ "./frontend/actions/instructions_actions.js");
+
 var _ShowProject = __webpack_require__(/*! ./ShowProject */ "./frontend/components/projects/ShowProject.jsx");
 
 var _ShowProject2 = _interopRequireDefault(_ShowProject);
@@ -2200,6 +2207,11 @@ var mdtp = function mdtp(dispatch) {
     },
     deleteProject: function deleteProject(id) {
       return dispatch((0, _projects_actions.deleteProject)(id));
+    },
+    deleteInstruction: function deleteInstruction(instructions) {
+      instructions.forEach(function (instructions) {
+        dispatch((0, _instructions_actions.deleteInstruction)(instructions.id));
+      });
     }
   };
 };

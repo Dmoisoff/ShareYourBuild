@@ -155,6 +155,7 @@ class ProjectForm extends React.Component{
      let update = null;
      let create = null;
      if(this.props.formType === 'Update Project'){
+       // this is the view for updating a new project
        update = <div className='project-input-format'>
                    <p className='project-edit-title-text'>Edit Title Below</p>
                    <input className='project-title-styling' type='text' onChange={this.updateTitle} placeholder='Title' value={`${this.state.title}`} />
@@ -170,6 +171,7 @@ class ProjectForm extends React.Component{
                    <textarea onChange={this.updateDescription.bind(this)} placeholder='Please enter a brief description of your build' className='project-body-text' rows="8" cols="80" value={`${this.state.description}`}></textarea>
                  </div>;
      }else{
+       // this is the view for creating a new project
        create = <div className='project-input-format'>
                  {titleEdit}
                  <input className='project-title-styling' type='text' onChange={this.updateTitle} placeholder='Title' value={`${this.state.title}`} />
@@ -185,6 +187,7 @@ class ProjectForm extends React.Component{
                </div>;
      }
      let instructions = this.state.instructions;
+     // this will pass the project
      if (this.state.projectId && this.props.formType === 'New Project') {
        instructions = instructions.map((instruction) => {
          instruction = React.cloneElement(instruction, {projectId: this.state.projectId});

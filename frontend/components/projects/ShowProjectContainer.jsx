@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchProject, deleteProject } from './../../actions/projects_actions';
+import { deleteInstruction } from './../../actions/instructions_actions';
 import ShowProject from './ShowProject';
 
 
@@ -31,7 +32,11 @@ const mstp = (state, ownProps) => {
 const mdtp = (dispatch) => {
   return({
     fetchProject: (id) => dispatch(fetchProject(id)),
-    deleteProject: (id) => dispatch(deleteProject(id))
+    deleteProject: (id) => dispatch(deleteProject(id)),
+    deleteInstruction: (instructions) => { instructions.forEach((instructions) => {
+      dispatch(deleteInstruction(instructions.id));
+      });
+    }
   });
 };
 
