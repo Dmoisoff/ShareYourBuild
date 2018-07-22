@@ -66,7 +66,6 @@ const mstp = (state, ownProps) =>{
   const sortedInstructions = instructionsArray.sort((x,y) => {
     return  x.instructionStep > y.instructionStep;
   });
-  debugger
   const nextStep = sortedInstructions[0] ? (sortedInstructions[sortedInstructions.length-1].instructionStep)+1 : 1;
 
   return({

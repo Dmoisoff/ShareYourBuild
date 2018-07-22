@@ -1218,7 +1218,6 @@ var mstp = function mstp(state, ownProps) {
   var sortedInstructions = instructionsArray.sort(function (x, y) {
     return x.instructionStep > y.instructionStep;
   });
-  debugger;
   var nextStep = sortedInstructions[0] ? sortedInstructions[sortedInstructions.length - 1].instructionStep + 1 : 1;
 
   return {
@@ -1752,7 +1751,9 @@ var ProjectForm = function (_React$Component) {
       this.setState({
         stepNum: this.state.stepNum + 1,
         newlyAddedSteps: this.state.newlyAddedSteps + 1,
-        instructions: [].concat(_toConsumableArray(this.state.instructions), [_react2.default.createElement(_NewInstructionContainer2.default, { key: this.state.stepNum, stepNum: this.state.stepNum })])
+        instructions: [].concat(_toConsumableArray(this.state.instructions), [_react2.default.createElement(_NewInstructionContainer2.default, {
+          key: this.state.stepNum,
+          stepNum: this.state.stepNum })])
       });
       this.state.instructions;
     }
@@ -1834,7 +1835,11 @@ var ProjectForm = function (_React$Component) {
             { className: 'project-edit-title-text' },
             'Edit Title Below'
           ),
-          _react2.default.createElement('input', { className: 'project-title-styling', type: 'text', onChange: this.updateTitle, placeholder: 'Title', value: '' + this.state.title }),
+          _react2.default.createElement('input', { className: 'project-title-styling',
+            type: 'text',
+            onChange: this.updateTitle,
+            placeholder: 'Title',
+            value: '' + this.state.title }),
           _react2.default.createElement(
             'div',
             { className: 'project-images-display-update-format' },
@@ -1847,7 +1852,9 @@ var ProjectForm = function (_React$Component) {
                 { className: 'project-image-text' },
                 'Please select a main picture for your build'
               ),
-              _react2.default.createElement('input', { className: 'project-body-input', type: 'file', onChange: this.uploadFile.bind(this) }),
+              _react2.default.createElement('input', { className: 'project-body-input',
+                type: 'file',
+                onChange: this.uploadFile.bind(this) }),
               preview
             )
           ),
@@ -1856,7 +1863,10 @@ var ProjectForm = function (_React$Component) {
             { className: 'project-edit-body-text' },
             'Edit Main Description Below'
           ),
-          _react2.default.createElement('textarea', { onChange: this.updateDescription.bind(this), placeholder: 'Please enter a brief description of your build', className: 'project-body-text', rows: '8', cols: '80', value: '' + this.state.description })
+          _react2.default.createElement('textarea', { onChange: this.updateDescription.bind(this),
+            placeholder: 'Please enter a brief description of your build',
+            className: 'project-body-text', rows: '8', cols: '80',
+            value: '' + this.state.description })
         );
       } else {
         // this is the view for creating a new project
@@ -1864,7 +1874,10 @@ var ProjectForm = function (_React$Component) {
           'div',
           { className: 'project-input-format' },
           titleEdit,
-          _react2.default.createElement('input', { className: 'project-title-styling', type: 'text', onChange: this.updateTitle, placeholder: 'Title', value: '' + this.state.title }),
+          _react2.default.createElement('input', { className: 'project-title-styling',
+            type: 'text', onChange: this.updateTitle,
+            placeholder: 'Title',
+            value: '' + this.state.title }),
           _react2.default.createElement(
             'div',
             { className: 'project-images-display-create-format' },
@@ -1876,12 +1889,17 @@ var ProjectForm = function (_React$Component) {
                 { className: 'project-image-text' },
                 'Please select a main picture for your build'
               ),
-              _react2.default.createElement('input', { className: 'project-body-input', type: 'file', onChange: this.uploadFile.bind(this) }),
+              _react2.default.createElement('input', { className: 'project-body-input',
+                type: 'file',
+                onChange: this.uploadFile.bind(this) }),
               preview
             )
           ),
           bodyEdit,
-          _react2.default.createElement('textarea', { onChange: this.updateDescription.bind(this), placeholder: 'Please enter a brief description of your build', className: 'project-body-text', rows: '8', cols: '80', value: '' + this.state.description })
+          _react2.default.createElement('textarea', { onChange: this.updateDescription.bind(this),
+            placeholder: 'Please enter a brief description of your build',
+            className: 'project-body-text', rows: '8', cols: '80',
+            value: '' + this.state.description })
         );
       }
       var instructions = this.state.instructions;
@@ -1922,13 +1940,17 @@ var ProjectForm = function (_React$Component) {
               { className: 'project-button-placement' },
               _react2.default.createElement(
                 'button',
-                { form: 'submit-project', onClick: this.handleSubmit.bind(this), className: 'project-submit', type: 'submit' },
+                { form: 'submit-project',
+                  onClick: this.handleSubmit.bind(this),
+                  className: 'project-submit',
+                  type: 'submit' },
                 submitButton
               )
             ),
             _react2.default.createElement(
               'button',
-              { className: 'add-instruction', onClick: function onClick() {
+              { className: 'add-instruction',
+                onClick: function onClick() {
                   _this6.instructions();
                 } },
               'Add Instruction'
@@ -3090,6 +3112,10 @@ Object.defineProperty(exports, "__esModule", {
 
 var _projects_actions = __webpack_require__(/*! ./../actions/projects_actions */ "./frontend/actions/projects_actions.js");
 
+var _instructions_actions = __webpack_require__(/*! ./../actions/instructions_actions */ "./frontend/actions/instructions_actions.js");
+
+var _session_actions = __webpack_require__(/*! ./../actions/session_actions */ "./frontend/actions/session_actions.js");
+
 var _merge = __webpack_require__(/*! lodash/merge */ "./node_modules/lodash/merge.js");
 
 var _merge2 = _interopRequireDefault(_merge);
@@ -3104,7 +3130,9 @@ var projectErrorsReducer = function projectErrorsReducer() {
   switch (action.type) {
     case _projects_actions.RECEIVE_PROJECT_ERRORS:
       return action.errors;
+    case _instructions_actions.FETCH_INSTRUCTION:
     case _projects_actions.FETCH_PROJECT:
+    case _session_actions.RECEIVE_CURRENT_USER:
       return [];
     default:
       return oldState;

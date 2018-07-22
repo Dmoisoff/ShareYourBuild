@@ -95,53 +95,56 @@ class ProjectForm extends React.Component{
     }
 
     instructions(){
-        this.setState({
-          stepNum: (this.state.stepNum + 1),
-          newlyAddedSteps: (this.state.newlyAddedSteps +1),
-          instructions: [...this.state.instructions,
-            <NewInstructionContainer key={this.state.stepNum} stepNum={this.state.stepNum} />]
-          });
-        this.state.instructions;
+      this.setState({
+        stepNum: (this.state.stepNum + 1),
+        newlyAddedSteps: (this.state.newlyAddedSteps +1),
+        instructions: [
+          ...this.state.instructions,
+          <NewInstructionContainer
+            key={this.state.stepNum}
+            stepNum={this.state.stepNum} />
+        ]
+      });
+      this.state.instructions;
     }
 
     componentWillMount(){
-
-            if(this.props.project.lastPrefilledInstruction === this.state.stepNum &&
-              this.props.formType === 'Update Project'){
-              let instructions = this.state.instructions.map((instruction) => {
-                if(!instruction){
-                  return [];
-                }
-                return <EditInstructionContainer
-                        step={instruction.instructionStep}
-                        body={instruction.body}
-                        title={instruction.title}
-                        projectId={this.props.pro}
-                        key={instruction.instructionStep}
-                        media={instruction.media}
-                        />;
-              });
-                   this.setState({instructions: instructions});
+      if(this.props.project.lastPrefilledInstruction === this.state.stepNum &&
+        this.props.formType === 'Update Project'){
+        let instructions = this.state.instructions.map((instruction) => {
+          if(!instruction){
+            return [];
+          }
+          return <EditInstructionContainer
+                  step={instruction.instructionStep}
+                  body={instruction.body}
+                  title={instruction.title}
+                  projectId={this.props.pro}
+                  key={instruction.instructionStep}
+                  media={instruction.media}
+                  />;
+        });
+       this.setState({instructions: instructions});
+      }
     }
-  }
 
 
 
 
   render(){
-
-    const previousPicture = this.state.picture && this.props.formType === 'Update Project' ?
-    <div className='project-picture-preview-format'>
-      <p>Previous Image</p>
-      <img className='project-previous-picture-format' src={this.state.picture} />
-    </div> : null;
+    const previousPicture = this.state.picture &&
+          this.props.formType === 'Update Project' ?
+          <div className='project-picture-preview-format'>
+            <p>Previous Image</p>
+            <img className='project-previous-picture-format' src={this.state.picture} />
+          </div> : null;
 
     const preview = this.state.pictureUrl ?
-    <div className='project-picture-preview-format'>
-      <p>Picture Preview</p>
-      <img className='project-image-resize' src={this.state.pictureUrl} />
-    </div>
-     : null;
+          <div className='project-picture-preview-format'>
+            <p>Picture Preview</p>
+            <img className='project-image-resize' src={this.state.pictureUrl} />
+          </div>
+           : null;
 
      let titleEdit = null;
      let bodyEdit = null;
@@ -158,41 +161,58 @@ class ProjectForm extends React.Component{
        // this is the view for updating a new project
        update = <div className='project-input-format'>
                    <p className='project-edit-title-text'>Edit Title Below</p>
-                   <input className='project-title-styling' type='text' onChange={this.updateTitle} placeholder='Title' value={`${this.state.title}`} />
+                   <input className='project-title-styling'
+                     type='text'
+                     onChange={this.updateTitle}
+                     placeholder='Title'
+                     value={`${this.state.title}`} />
                    <div className='project-images-display-update-format'>
                      {previousPicture}
                      <div className='project-image-input-format'>
-                       <p className='project-image-text' >Please select a main picture for your build</p>
-                       <input className='project-body-input' type='file' onChange={this.uploadFile.bind(this)} />
+                      <p className='project-image-text' >Please select a main picture for your build</p>
+                      <input className='project-body-input'
+                        type='file'
+                        onChange={this.uploadFile.bind(this)} />
                        {preview}
                      </div>
                    </div>
                    <p className='project-edit-body-text'>Edit Main Description Below</p>
-                   <textarea onChange={this.updateDescription.bind(this)} placeholder='Please enter a brief description of your build' className='project-body-text' rows="8" cols="80" value={`${this.state.description}`}></textarea>
+                   <textarea onChange={this.updateDescription.bind(this)}
+                     placeholder='Please enter a brief description of your build'
+                     className='project-body-text' rows="8" cols="80"
+                     value={`${this.state.description}`}></textarea>
                  </div>;
      }else{
        // this is the view for creating a new project
        create = <div className='project-input-format'>
                  {titleEdit}
-                 <input className='project-title-styling' type='text' onChange={this.updateTitle} placeholder='Title' value={`${this.state.title}`} />
+                 <input className='project-title-styling'
+                   type='text' onChange={this.updateTitle}
+                   placeholder='Title'
+                   value={`${this.state.title}`} />
                  <div className='project-images-display-create-format'>
                    <div className='project-image-input-format'>
                      <p className='project-image-text' >Please select a main picture for your build</p>
-                     <input className='project-body-input' type='file' onChange={this.uploadFile.bind(this)} />
+                     <input className='project-body-input'
+                       type='file'
+                       onChange={this.uploadFile.bind(this)} />
                      {preview}
                    </div>
                  </div>
                  {bodyEdit}
-                 <textarea onChange={this.updateDescription.bind(this)} placeholder='Please enter a brief description of your build' className='project-body-text' rows="8" cols="80" value={`${this.state.description}`}></textarea>
+                 <textarea onChange={this.updateDescription.bind(this)}
+                   placeholder='Please enter a brief description of your build'
+                   className='project-body-text' rows="8" cols="80"
+                   value={`${this.state.description}`}></textarea>
                </div>;
      }
      let instructions = this.state.instructions;
      // this will pass the project
      if (this.state.projectId && this.props.formType === 'New Project') {
-       instructions = instructions.map((instruction) => {
-         instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
-         return instruction;
-       });
+      instructions = instructions.map((instruction) => {
+        instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
+        return instruction;
+      });
 
      }
 
@@ -211,9 +231,13 @@ class ProjectForm extends React.Component{
           </div>
           <div>
             <div className='project-button-placement'>
-              <button form='submit-project' onClick={this.handleSubmit.bind(this)} className='project-submit' type='submit'>{submitButton}</button>
+              <button form='submit-project'
+                onClick={this.handleSubmit.bind(this)}
+                className='project-submit'
+                type='submit'>{submitButton}</button>
             </div>
-            <button className='add-instruction' onClick={() =>{this.instructions();}}>Add Instruction</button>
+            <button className='add-instruction'
+              onClick={() =>{this.instructions();}}>Add Instruction</button>
           </div>
           <div className='project-message-position'>
             <ul className='project-errors-container'>
