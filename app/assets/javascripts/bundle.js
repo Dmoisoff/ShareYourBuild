@@ -878,6 +878,13 @@ var Instructions = function (_React$Component) {
       this.setState({ body: e.target.value });
     }
   }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps) {
+      if (this.props.projectId !== prevProps.projectId) {
+        this.handleSubmit();
+      }
+    }
+  }, {
     key: 'uploadFile',
     value: function uploadFile(e) {
       var _this2 = this;
@@ -936,7 +943,7 @@ var Instructions = function (_React$Component) {
         ),
         _react2.default.createElement('img', { className: 'project-image-resize', src: this.state.mediaUrl })
       ) : null;
-      var submit = this.props.projectId ? _react2.default.createElement('input', { className: 'hidden', onClick: this.handleSubmit() }) : null;
+
       return _react2.default.createElement(
         'div',
         { className: 'instruction-form-positioning' },
@@ -977,8 +984,7 @@ var Instructions = function (_React$Component) {
                 preview
               )
             ),
-            _react2.default.createElement('textarea', { onChange: this.updateDescription.bind(this), placeholder: 'Please enter a brief description of your process', className: 'project-body-text', rows: '8', cols: '80', value: '' + this.state.body }),
-            submit
+            _react2.default.createElement('textarea', { onChange: this.updateDescription.bind(this), placeholder: 'Please enter a brief description of your process', className: 'project-body-text', rows: '8', cols: '80', value: '' + this.state.body })
           )
         ),
         _react2.default.createElement('div', { className: 'project-message-position' }),
@@ -1660,6 +1666,7 @@ var ProjectForm = function (_React$Component) {
     value: function handleSubmit(e) {
       var _this3 = this;
 
+      debugger;
       e.preventDefault();
       debugger;
       var projectId = this.props.match.params.projectId;
@@ -1753,6 +1760,7 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'instructions',
     value: function instructions() {
+      debugger;
       this.setState({
         stepNum: this.state.stepNum + 1,
         newlyAddedSteps: this.state.newlyAddedSteps + 1,
@@ -1761,6 +1769,7 @@ var ProjectForm = function (_React$Component) {
           stepNum: this.state.stepNum })])
       });
       this.state.instructions;
+      debugger;
     }
   }, {
     key: 'componentWillMount',

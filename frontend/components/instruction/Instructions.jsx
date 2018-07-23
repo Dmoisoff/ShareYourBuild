@@ -18,6 +18,12 @@ class Instructions extends React.Component{
     this.setState({body: e.target.value});
   }
 
+  componentDidUpdate(prevProps){
+    if(this.props.projectId !== prevProps.projectId){
+     this.handleSubmit();
+    }
+  }
+
   uploadFile(e){
     const file = e.currentTarget.files[0];
     const fileReader = new FileReader();
@@ -62,7 +68,8 @@ class Instructions extends React.Component{
       <img className='project-image-resize' src={this.state.mediaUrl} />
     </div>
      : null;
-    const submit = this.props.projectId ? <input className='hidden' onClick={this.handleSubmit()}/> : null;
+
+
     return(
         <div className='instruction-form-positioning'>
           <div className='project-form-styling'>
@@ -81,7 +88,7 @@ class Instructions extends React.Component{
                 </div>
               </div>
               <textarea onChange={this.updateDescription.bind(this)} placeholder='Please enter a brief description of your process' className='project-body-text' rows="8" cols="80" value={`${this.state.body}`}></textarea>
-              {submit}
+
             </form>
           </div>
           <div className='project-message-position'>

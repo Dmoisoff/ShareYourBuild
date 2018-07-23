@@ -36,6 +36,7 @@ class ProjectForm extends React.Component{
 
 
   handleSubmit(e){
+    debugger
     e.preventDefault();
     debugger
     const projectId = this.props.match.params.projectId;
@@ -104,6 +105,7 @@ class ProjectForm extends React.Component{
     }
 
     instructions(){
+      debugger
       this.setState({
         stepNum: (this.state.stepNum + 1),
         newlyAddedSteps: (this.state.newlyAddedSteps +1),
@@ -115,6 +117,7 @@ class ProjectForm extends React.Component{
         ]
       });
       this.state.instructions;
+      debugger
     }
 
     componentWillMount(){
