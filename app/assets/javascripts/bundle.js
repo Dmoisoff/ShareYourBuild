@@ -1561,7 +1561,8 @@ var mstp = function mstp(state) {
       projectId: null,
       stepNum: 1,
       instructions: [],
-      submitted: false
+      submitted: false,
+      lastInstructionBody: ''
     },
     formType: 'New Project',
     errors: state.errors.project
@@ -1743,6 +1744,11 @@ var ProjectForm = function (_React$Component) {
       }
     }
   }, {
+    key: 'lastInstructionBodyState',
+    value: function lastInstructionBodyState(instructionBody) {
+      this.setState({ lastInstructionBody: instructionBody });
+    }
+  }, {
     key: 'errors',
     value: function errors() {
       if (!this.props.errors) {
@@ -1766,7 +1772,8 @@ var ProjectForm = function (_React$Component) {
         newlyAddedSteps: this.state.newlyAddedSteps + 1,
         instructions: [].concat(_toConsumableArray(this.state.instructions), [_react2.default.createElement(_NewInstructionContainer2.default, {
           key: this.state.stepNum,
-          stepNum: this.state.stepNum })])
+          stepNum: this.state.stepNum,
+          lastInstructionBodyState: this.lastInstructionBodyState.bind(this) })])
       });
       this.state.instructions;
       debugger;
@@ -1939,8 +1946,8 @@ var ProjectForm = function (_React$Component) {
           )
         );
       }
-      var instructions = this.state.instructions;
       // this will pass the project
+      var instructions = this.state.instructions;
       if (this.state.projectId && this.props.formType === 'New Project') {
         instructions = instructions.map(function (instruction) {
           instruction = _react2.default.cloneElement(instruction, { projectId: _this6.state.projectId });
@@ -2082,11 +2089,15 @@ var ProjectShow = function (_React$Component) {
     value: function remove() {
       var _this2 = this;
 
+      var projectId = this.props.match.params.projectId;
+      var instructions = this.props.instructions;
       var userId = this.props.project.authorId;
       var username = this.state.authorUsername;
-      this.props.deleteInstruction(this.props.instructions);
       this.props.deleteProject(this.props.project.id).then(function () {
-        return _this2.props.history.push('/' + username + '/' + userId + '/projects');
+        setTimeout(function () {
+          _this2.props.deleteInstruction(instructions, projectId);
+        }, 500);
+        _this2.props.history.push('/' + username + '/' + userId + '/projects');
       });
     }
   }, {
@@ -2230,10 +2241,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var mstp = function mstp(state, ownProps) {
   var projectId = ownProps.match.params.projectId;
 
-  var instructionsArray = Object.values(state.entities.instructions).map(function (instruction) {
-    if (instruction.projectId == projectId) {
-      return instruction;
-    }
+  var instructionsArray = Object.values(state.entities.instructions).filter(function (instruction) {
+    return instruction.projectId === Number(projectId);
   });
 
   var sortedInstructions = instructionsArray.sort(function (x, y) {
@@ -2258,9 +2267,12 @@ var mdtp = function mdtp(dispatch) {
     deleteProject: function deleteProject(id) {
       return dispatch((0, _projects_actions.deleteProject)(id));
     },
-    deleteInstruction: function deleteInstruction(instructions) {
-      instructions.forEach(function (instructions) {
-        dispatch((0, _instructions_actions.deleteInstruction)(instructions.id));
+    deleteInstruction: function deleteInstruction(instructions, projectId) {
+      debugger;
+      instructions.forEach(function (instruction) {
+        if (instruction.projectId === Number(projectId)) {
+          dispatch((0, _instructions_actions.deleteInstruction)(instruction.id));
+        }
       });
     }
   };

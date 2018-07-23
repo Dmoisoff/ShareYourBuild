@@ -35,6 +35,7 @@ class ProjectForm extends React.Component{
   }
 
 
+
   handleSubmit(e){
     debugger
     e.preventDefault();
@@ -92,7 +93,9 @@ class ProjectForm extends React.Component{
     }
   }
 
-
+  lastInstructionBodyState(instructionBody){
+    this.setState({lastInstructionBody: instructionBody});
+  }
 
   errors(){
     if(!this.props.errors){
@@ -113,7 +116,8 @@ class ProjectForm extends React.Component{
           ...this.state.instructions,
           <NewInstructionContainer
             key={this.state.stepNum}
-            stepNum={this.state.stepNum} />
+            stepNum={this.state.stepNum}
+            lastInstructionBodyState={this.lastInstructionBodyState.bind(this)} />
         ]
       });
       this.state.instructions;
@@ -155,17 +159,17 @@ class ProjectForm extends React.Component{
           </div>
            : null;
 
-     let titleEdit = null;
-     let bodyEdit = null;
+    let titleEdit = null;
+    let bodyEdit = null;
      if(this.props.formType === 'Update Project'){
         titleEdit = <p className='project-edit-title-text'>Edit Title Below</p>;
         bodyEdit = <p className='project-edit-body-text'>Edit Main Description Below</p>;
      }
 
-     const submitButton = this.props.formType === 'New Project' ? "Publish" : "Update";
+    const submitButton = this.props.formType === 'New Project' ? "Publish" : "Update";
 
-     let update = null;
-     let create = null;
+    let update = null;
+    let create = null;
      if(this.props.formType === 'Update Project'){
        // this is the view for updating a new project
        update = <div className='project-input-format'>
@@ -226,15 +230,14 @@ class ProjectForm extends React.Component{
                    </div>
                </div>;
      }
-     let instructions = this.state.instructions;
      // this will pass the project
-     if (this.state.projectId && this.props.formType === 'New Project') {
-      instructions = instructions.map((instruction) => {
-        instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
-        return instruction;
-      });
-
-     }
+    let instructions = this.state.instructions;
+      if (this.state.projectId && this.props.formType === 'New Project') {
+        instructions = instructions.map((instruction) => {
+          instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
+          return instruction;
+        });
+    }
 
 
     return(

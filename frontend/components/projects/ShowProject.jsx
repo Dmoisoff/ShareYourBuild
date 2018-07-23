@@ -31,12 +31,16 @@ class ProjectShow extends React.Component {
   }
 
   remove(){
+    const projectId = this.props.match.params.projectId;
+    const instructions = this.props.instructions;
     const userId = this.props.project.authorId;
     const username = this.state.authorUsername;
-    this.props.deleteInstruction(this.props.instructions);
     this.props.deleteProject(this.props.project.id).then(
-      () => this.props.history.push(`/${username}/${userId}/projects`)
-    );
+      () => {
+        setTimeout(() => {this.props.deleteInstruction(instructions,projectId);},500);
+        this.props.history.push(`/${username}/${userId}/projects`);
+    });
+
   }
 
   edit(){

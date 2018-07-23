@@ -9,10 +9,8 @@ import ShowProject from './ShowProject';
 const mstp = (state, ownProps) => {
   const projectId = ownProps.match.params.projectId;
 
-  const instructionsArray = Object.values(state.entities.instructions).map((instruction) =>{
-    if(instruction.projectId == projectId){
-      return instruction;
-    }
+  const instructionsArray = Object.values(state.entities.instructions).filter((instruction) =>{
+    return instruction.projectId === Number(projectId);
   });
 
   const sortedInstructions = instructionsArray.sort((x,y) => {
@@ -33,8 +31,12 @@ const mdtp = (dispatch) => {
   return({
     fetchProject: (id) => dispatch(fetchProject(id)),
     deleteProject: (id) => dispatch(deleteProject(id)),
-    deleteInstruction: (instructions) => { instructions.forEach((instructions) => {
-      dispatch(deleteInstruction(instructions.id));
+    deleteInstruction: (instructions,projectId) => {
+      debugger
+      instructions.forEach((instruction) => {
+        if(instruction.projectId === Number(projectId)){
+          dispatch(deleteInstruction(instruction.id));
+        }
       });
     }
   });

@@ -19,7 +19,8 @@ const mstp = (state) => {
       projectId: null,
       stepNum: 1,
       instructions: [],
-      submitted: false
+      submitted: false,
+      lastInstructionBody: ''
      },
     formType: 'New Project',
     errors: state.errors.project,
