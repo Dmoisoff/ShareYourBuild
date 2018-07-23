@@ -12,7 +12,7 @@ const mstp = (state, ownProps) => {
         media: null,
         mediaUrl: null,
         uploadStatus: false,
-        step: ownProps.stepNum,
+        step: ownProps.step,
         projectId: ownProps.projectId,
         rendered: false,
         // instructionBody: false

@@ -55,7 +55,8 @@ const mstp = (state, ownProps) =>{
     instructions: [],
     newlyAddedSteps: 0,
     instructionBodies: [],
-    instructionIssues: []
+    instructionIssues: [],
+    removedInstructions: []
     };
 
   const currentProject = state.entities.projects[ownProps.match.params.projectId] || defaultProject;
@@ -84,7 +85,8 @@ const mstp = (state, ownProps) =>{
       submitted: false,
       newlyAddedSteps: 0,
       instructionBodies: [],
-      instructionIssues: []
+      instructionIssues: [],
+      removedInstructions: []
     },
     errors: state.errors.project,
     formType: 'Update Project'

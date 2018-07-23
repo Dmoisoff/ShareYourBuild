@@ -21,7 +21,8 @@ const mstp = (state) => {
       instructions: [],
       submitted: false,
       instructionBodies: [],
-      instructionIssues: []
+      instructionIssues: [],
+      removedInstructions: []
      },
     formType: 'New Project',
     errors: state.errors.project,

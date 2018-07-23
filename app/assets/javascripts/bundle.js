@@ -1053,7 +1053,7 @@ var mstp = function mstp(state, ownProps) {
       media: null,
       mediaUrl: null,
       uploadStatus: false,
-      step: ownProps.stepNum,
+      step: ownProps.step,
       projectId: ownProps.projectId,
       rendered: false
       // instructionBody: false
@@ -1225,7 +1225,8 @@ var mstp = function mstp(state, ownProps) {
     instructions: [],
     newlyAddedSteps: 0,
     instructionBodies: [],
-    instructionIssues: []
+    instructionIssues: [],
+    removedInstructions: []
   };
 
   var currentProject = state.entities.projects[ownProps.match.params.projectId] || defaultProject;
@@ -1253,7 +1254,8 @@ var mstp = function mstp(state, ownProps) {
       submitted: false,
       newlyAddedSteps: 0,
       instructionBodies: [],
-      instructionIssues: []
+      instructionIssues: [],
+      removedInstructions: []
     },
     errors: state.errors.project,
     formType: 'Update Project'
@@ -1578,7 +1580,8 @@ var mstp = function mstp(state) {
       instructions: [],
       submitted: false,
       instructionBodies: [],
-      instructionIssues: []
+      instructionIssues: [],
+      removedInstructions: []
     },
     formType: 'New Project',
     errors: state.errors.project
@@ -1683,6 +1686,27 @@ var ProjectForm = function (_React$Component) {
         fileReader.readAsDataURL(file);
       }
     }
+  }, {
+    key: 'removeInstruction',
+    value: function removeInstruction(instructionStep) {
+      var instructions = this.state.instructions;
+      var removedInstruction = instructions[instructionStep - 1];
+      var newOrderInstructions = instructions.slice(0, instructionStep - 1).concat(instructions.slice(instructionStep));
+      var modifiedStepNumberInstructions = newOrderInstructions.map(function (instruction, i) {
+        return instruction = _react2.default.cloneElement(instruction, { step: i + 1 });
+      });
+      this.setState({
+        removedInstructions: [].concat(_toConsumableArray(this.state.removedInstructions), [removedInstruction]),
+        instructions: modifiedStepNumberInstructions
+      });
+    }
+
+    // instructions = instructions.map((instruction) => {
+    //   instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
+    //   return instruction;
+    // });
+
+
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
@@ -1828,7 +1852,7 @@ var ProjectForm = function (_React$Component) {
       var instructionBodyErrors = [];
       this.state.instructionBodies.forEach(function (instructionBody) {
         if (!Object.values(instructionBody)[0]) {
-          instructionBodyErrors.push(['Please finish filling out the body for s ' + Object.keys(instructionBody)]);
+          instructionBodyErrors.push(['Please finish filling out the body for step ' + Object.keys(instructionBody)]);
         }
       });
       if (instructionBodyErrors.length) {
@@ -1844,7 +1868,7 @@ var ProjectForm = function (_React$Component) {
           newlyAddedSteps: this.state.newlyAddedSteps + 1,
           instructions: [].concat(_toConsumableArray(this.state.instructions), [_react2.default.createElement(_NewInstructionContainer2.default, {
             key: this.state.stepNum,
-            stepNum: this.state.stepNum,
+            step: this.state.stepNum,
             instructionBodiesState: this.instructionBodiesState.bind(this) })])
         });
       }

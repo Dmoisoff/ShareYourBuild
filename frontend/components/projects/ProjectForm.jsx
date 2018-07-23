@@ -36,6 +36,24 @@ class ProjectForm extends React.Component{
     }
   }
 
+  removeInstruction(instructionStep){
+    const instructions = this.state.instructions;
+    const removedInstruction = instructions[instructionStep-1];
+    const newOrderInstructions = instructions.slice(0, instructionStep-1).concat(instructions.slice(instructionStep));
+    const modifiedStepNumberInstructions = newOrderInstructions.map((instruction,i) => {
+      return instruction = React.cloneElement(instruction, {step: (i + 1)});
+    });
+    this.setState({
+      removedInstructions: [...this.state.removedInstructions,removedInstruction],
+      instructions: modifiedStepNumberInstructions
+    });
+  }
+
+  // instructions = instructions.map((instruction) => {
+  //   instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
+  //   return instruction;
+  // });
+
 
 
   handleSubmit(e){
@@ -146,7 +164,7 @@ class ProjectForm extends React.Component{
       const instructionBodyErrors = [];
       this.state.instructionBodies.forEach((instructionBody) => {
         if(!Object.values(instructionBody)[0]){
-          instructionBodyErrors.push([`Please finish filling out the body for s ${Object.keys(instructionBody)}`]);
+          instructionBodyErrors.push([`Please finish filling out the body for step ${Object.keys(instructionBody)}`]);
         }
       });
       if(instructionBodyErrors.length){
@@ -164,7 +182,7 @@ class ProjectForm extends React.Component{
             ...this.state.instructions,
             <NewInstructionContainer
               key={this.state.stepNum}
-              stepNum={this.state.stepNum}
+              step={this.state.stepNum}
               instructionBodiesState={this.instructionBodiesState.bind(this)} />
           ]
         });
