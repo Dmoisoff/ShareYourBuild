@@ -146,7 +146,7 @@ class ProjectForm extends React.Component{
       const instructionBodyErrors = [];
       this.state.instructionBodies.forEach((instructionBody) => {
         if(!Object.values(instructionBody)[0]){
-          instructionBodyErrors.push([`Please finish filling out the body for instuction ${Object.keys(instructionBody)}`]);
+          instructionBodyErrors.push([`Please finish filling out the body for s ${Object.keys(instructionBody)}`]);
         }
       });
       if(instructionBodyErrors.length){

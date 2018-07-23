@@ -1223,8 +1223,9 @@ var mstp = function mstp(state, ownProps) {
     pictureUrl: null,
     uploadStatus: false,
     instructions: [],
-    newlyAddedSteps: 0
-    // instructionBodies: []
+    newlyAddedSteps: 0,
+    instructionBodies: [],
+    instructionIssues: []
   };
 
   var currentProject = state.entities.projects[ownProps.match.params.projectId] || defaultProject;
@@ -1250,8 +1251,9 @@ var mstp = function mstp(state, ownProps) {
       stepNum: nextStep,
       lastPrefilledInstruction: nextStep,
       submitted: false,
-      newlyAddedSteps: 0
-      // instructionBodies: []
+      newlyAddedSteps: 0,
+      instructionBodies: [],
+      instructionIssues: []
     },
     errors: state.errors.project,
     formType: 'Update Project'
@@ -1826,7 +1828,7 @@ var ProjectForm = function (_React$Component) {
       var instructionBodyErrors = [];
       this.state.instructionBodies.forEach(function (instructionBody) {
         if (!Object.values(instructionBody)[0]) {
-          instructionBodyErrors.push(['Please finish filling out the body for instuction ' + Object.keys(instructionBody)]);
+          instructionBodyErrors.push(['Please finish filling out the body for s ' + Object.keys(instructionBody)]);
         }
       });
       if (instructionBodyErrors.length) {
