@@ -629,6 +629,7 @@ var Greeting = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+
       return _react2.default.createElement(
         'div',
         null,
@@ -1574,7 +1575,8 @@ var mstp = function mstp(state) {
       stepNum: 1,
       instructions: [],
       submitted: false,
-      instructionBodies: []
+      instructionBodies: [],
+      instructionIssues: []
     },
     formType: 'New Project',
     errors: state.errors.project
@@ -1648,6 +1650,7 @@ var ProjectForm = function (_React$Component) {
     _this.state = _this.props.project;
     _this.updateTitle = _this.updateTitle.bind(_this);
     _this.errors = _this.errors.bind(_this);
+    _this.instructionErrors = _this.instructionErrors.bind(_this);
     _this.uploadResult = _this.uploadResult.bind(_this);
     _this.redirect = _this.redirect.bind(_this);
     _this.instructions = _this.instructions.bind(_this);
@@ -1802,17 +1805,47 @@ var ProjectForm = function (_React$Component) {
       }
     }
   }, {
+    key: 'instructionErrors',
+    value: function instructionErrors() {
+      if (!this.state.instructionIssues.length) {
+        return [];
+      } else {
+        return this.state.instructionIssues.map(function (error, i) {
+          return _react2.default.createElement(
+            'li',
+            { className: 'project-errors', key: i },
+            error
+          );
+        });
+      }
+    }
+  }, {
     key: 'instructions',
     value: function instructions() {
       debugger;
-      this.setState({
-        stepNum: this.state.stepNum + 1,
-        newlyAddedSteps: this.state.newlyAddedSteps + 1,
-        instructions: [].concat(_toConsumableArray(this.state.instructions), [_react2.default.createElement(_NewInstructionContainer2.default, {
-          key: this.state.stepNum,
-          stepNum: this.state.stepNum,
-          instructionBodiesState: this.instructionBodiesState.bind(this) })])
+      var instructionBodyErrors = [];
+      this.state.instructionBodies.forEach(function (instructionBody) {
+        if (!Object.values(instructionBody)[0]) {
+          instructionBodyErrors.push(['Please finish filling out the body for instuction ' + Object.keys(instructionBody)]);
+        }
       });
+      if (instructionBodyErrors.length) {
+        this.setState({ instructionIssues: instructionBodyErrors });
+      } else {
+        var stepNumber = this.state.stepNum;
+        var newlyAddedInstruction = {};
+        newlyAddedInstruction[stepNumber] = false;
+        this.setState({
+          instructionBodies: [].concat(_toConsumableArray(this.state.instructionBodies), [newlyAddedInstruction]),
+          instructionIssues: instructionBodyErrors,
+          stepNum: stepNumber + 1,
+          newlyAddedSteps: this.state.newlyAddedSteps + 1,
+          instructions: [].concat(_toConsumableArray(this.state.instructions), [_react2.default.createElement(_NewInstructionContainer2.default, {
+            key: this.state.stepNum,
+            stepNum: this.state.stepNum,
+            instructionBodiesState: this.instructionBodiesState.bind(this) })])
+        });
+      }
       this.state.instructions;
       debugger;
     }
@@ -1994,6 +2027,16 @@ var ProjectForm = function (_React$Component) {
         });
       }
 
+      var instructionErrors = this.state.instructionIssues.length ? _react2.default.createElement(
+        'div',
+        { className: 'project-instruction-error-message' },
+        _react2.default.createElement(
+          'ul',
+          { className: 'project-errors-container' },
+          this.instructionErrors()
+        )
+      ) : null;
+
       return _react2.default.createElement(
         'div',
         { className: 'project-background' },
@@ -2038,7 +2081,8 @@ var ProjectForm = function (_React$Component) {
                   } },
                 'Add Instruction'
               )
-            )
+            ),
+            instructionErrors
           )
         )
       );

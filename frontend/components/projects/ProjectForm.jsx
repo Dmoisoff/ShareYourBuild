@@ -11,6 +11,7 @@ class ProjectForm extends React.Component{
     this.state = this.props.project;
     this.updateTitle = this.updateTitle.bind(this);
     this.errors = this.errors.bind(this);
+    this.instructionErrors = this.instructionErrors.bind(this);
     this.uploadResult = this.uploadResult.bind(this);
     this.redirect = this.redirect.bind(this);
     this.instructions = this.instructions.bind(this);
@@ -130,19 +131,44 @@ class ProjectForm extends React.Component{
       }
     }
 
+  instructionErrors(){
+    if(!this.state.instructionIssues.length){
+      return [];
+    }else{
+      return this.state.instructionIssues.map((error,i) => {
+        return <li className='project-errors' key={i} >{error}</li>;
+        });
+      }
+    }
+
     instructions(){
       debugger
-      this.setState({
-        stepNum: (this.state.stepNum + 1),
-        newlyAddedSteps: (this.state.newlyAddedSteps +1),
-        instructions: [
-          ...this.state.instructions,
-          <NewInstructionContainer
-            key={this.state.stepNum}
-            stepNum={this.state.stepNum}
-            instructionBodiesState={this.instructionBodiesState.bind(this)} />
-        ]
+      const instructionBodyErrors = [];
+      this.state.instructionBodies.forEach((instructionBody) => {
+        if(!Object.values(instructionBody)[0]){
+          instructionBodyErrors.push([`Please finish filling out the body for instuction ${Object.keys(instructionBody)}`]);
+        }
       });
+      if(instructionBodyErrors.length){
+        this.setState({instructionIssues: instructionBodyErrors});
+      }else{
+        const stepNumber = this.state.stepNum;
+        let newlyAddedInstruction = {};
+        newlyAddedInstruction[stepNumber] = false;
+        this.setState({
+          instructionBodies: [...this.state.instructionBodies,newlyAddedInstruction],
+          instructionIssues: instructionBodyErrors,
+          stepNum: (stepNumber + 1),
+          newlyAddedSteps: (this.state.newlyAddedSteps +1),
+          instructions: [
+            ...this.state.instructions,
+            <NewInstructionContainer
+              key={this.state.stepNum}
+              stepNum={this.state.stepNum}
+              instructionBodiesState={this.instructionBodiesState.bind(this)} />
+          ]
+        });
+      }
       this.state.instructions;
       debugger
     }
@@ -263,6 +289,13 @@ class ProjectForm extends React.Component{
         });
     }
 
+    const instructionErrors = this.state.instructionIssues.length ?
+                              <div className='project-instruction-error-message'>
+                                <ul className='project-errors-container'>
+                                  {this.instructionErrors()}
+                                </ul>
+                              </div> : null;
+
 
     return(
       <div className='project-background'>
@@ -287,6 +320,7 @@ class ProjectForm extends React.Component{
               <button className='add-instruction'
                 onClick={() =>{this.instructions();}}>Add Instruction</button>
             </div>
+            {instructionErrors}
           </div>
         </div>
       </div>
