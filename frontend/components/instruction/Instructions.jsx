@@ -14,7 +14,14 @@ class Instructions extends React.Component{
   updateTitle(e){
     this.setState({title: e.target.value});
   }
+
   updateDescription(e){
+    debugger
+    if (e.target.value === '') {
+      this.props.instructionBodiesState(false,this.state.step);
+    }else{
+      this.props.instructionBodiesState(true,this.state.step);
+    }
     this.setState({body: e.target.value});
   }
 

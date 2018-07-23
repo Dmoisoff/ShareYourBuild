@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import NewInstructionContainer from './../instruction/NewInstructionContainer';
 import EditInstructionContainer from './../instruction/EditInstructionContainer';
+import merge from 'lodash/merge';
 
 
 class ProjectForm extends React.Component{
@@ -93,8 +94,30 @@ class ProjectForm extends React.Component{
     }
   }
 
-  lastInstructionBodyState(instructionBody){
-    this.setState({lastInstructionBody: instructionBody});
+  instructionBodiesState(instructionBodyFilled,instructionStep){
+    debugger
+    let newInstructions = {};
+    newInstructions[instructionStep] = instructionBodyFilled;
+    if (!this.state.instructionBodies.length) {
+      this.setState({instructionBodies: [newInstructions]});
+    }else {
+      let present = false;
+      const updatedInstructions = this.state.instructionBodies.map((instruction) =>{
+        debugger
+        if(Object.keys(instruction)[0] === Object.keys(newInstructions)[0]){
+          debugger
+          present = true;
+          return newInstructions;
+        }else{
+          return instruction;
+        }
+      });
+      if (!present) {
+        updatedInstructions.push(newInstructions);
+      }
+    this.setState({instructionBodies: updatedInstructions});
+    }
+    debugger
   }
 
   errors(){
@@ -117,7 +140,7 @@ class ProjectForm extends React.Component{
           <NewInstructionContainer
             key={this.state.stepNum}
             stepNum={this.state.stepNum}
-            lastInstructionBodyState={this.lastInstructionBodyState.bind(this)} />
+            instructionBodiesState={this.instructionBodiesState.bind(this)} />
         ]
       });
       this.state.instructions;
@@ -138,6 +161,7 @@ class ProjectForm extends React.Component{
                   projectId={this.props.pro}
                   key={instruction.instructionStep}
                   media={instruction.media}
+                  instructionBodiesState={this.instructionBodiesState.bind(this)}
                   />;
         });
        this.setState({instructions: instructions});

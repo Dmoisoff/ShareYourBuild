@@ -4,6 +4,7 @@ import Instructions from './Instructions';
 import { createInstruction } from './../../actions/instructions_actions';
 
 const mstp = (state, ownProps) => {
+  debugger
     return({
       instruction: {
         body: "",
@@ -13,10 +14,12 @@ const mstp = (state, ownProps) => {
         uploadStatus: false,
         step: ownProps.stepNum,
         projectId: ownProps.projectId,
-        rendered: false
+        rendered: false,
+        // instructionBody: false
        },
       formType: 'New Instruction',
       errors: state.errors.instruction,
+      instructionBodiesState: ownProps.instructionBodiesState
     });
 };
 

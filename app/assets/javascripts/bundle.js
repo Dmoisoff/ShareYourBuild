@@ -717,14 +717,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var mstp = function mstp(state, ownProps) {
   return {
     instruction: {
-      body: ownProps.body || '',
-      title: ownProps.title || '',
-      media: ownProps.media || '',
-      mediaUrl: ownProps.media || null,
+      body: ownProps.body,
+      title: ownProps.title,
+      media: ownProps.media,
+      mediaUrl: ownProps.media,
       uploadStatus: false,
       step: ownProps.step,
       projectId: ownProps.projectId,
-      rendered: false
+      rendered: false,
+      instructionBody: true
     },
     formType: 'Update Instruction',
     errors: state.errors.instruction
@@ -875,6 +876,12 @@ var Instructions = function (_React$Component) {
   }, {
     key: 'updateDescription',
     value: function updateDescription(e) {
+      debugger;
+      if (e.target.value === '') {
+        this.props.instructionBodiesState(false, this.state.step);
+      } else {
+        this.props.instructionBodiesState(true, this.state.step);
+      }
       this.setState({ body: e.target.value });
     }
   }, {
@@ -1037,6 +1044,7 @@ var _instructions_actions = __webpack_require__(/*! ./../../actions/instructions
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state, ownProps) {
+  debugger;
   return {
     instruction: {
       body: "",
@@ -1047,9 +1055,11 @@ var mstp = function mstp(state, ownProps) {
       step: ownProps.stepNum,
       projectId: ownProps.projectId,
       rendered: false
+      // instructionBody: false
     },
     formType: 'New Instruction',
-    errors: state.errors.instruction
+    errors: state.errors.instruction,
+    instructionBodiesState: ownProps.instructionBodiesState
   };
 };
 
@@ -1213,6 +1223,7 @@ var mstp = function mstp(state, ownProps) {
     uploadStatus: false,
     instructions: [],
     newlyAddedSteps: 0
+    // instructionBodies: []
   };
 
   var currentProject = state.entities.projects[ownProps.match.params.projectId] || defaultProject;
@@ -1239,6 +1250,7 @@ var mstp = function mstp(state, ownProps) {
       lastPrefilledInstruction: nextStep,
       submitted: false,
       newlyAddedSteps: 0
+      // instructionBodies: []
     },
     errors: state.errors.project,
     formType: 'Update Project'
@@ -1562,7 +1574,7 @@ var mstp = function mstp(state) {
       stepNum: 1,
       instructions: [],
       submitted: false,
-      lastInstructionBody: ''
+      instructionBodies: []
     },
     formType: 'New Project',
     errors: state.errors.project
@@ -1610,6 +1622,10 @@ var _NewInstructionContainer2 = _interopRequireDefault(_NewInstructionContainer)
 var _EditInstructionContainer = __webpack_require__(/*! ./../instruction/EditInstructionContainer */ "./frontend/components/instruction/EditInstructionContainer.jsx");
 
 var _EditInstructionContainer2 = _interopRequireDefault(_EditInstructionContainer);
+
+var _merge = __webpack_require__(/*! lodash/merge */ "./node_modules/lodash/merge.js");
+
+var _merge2 = _interopRequireDefault(_merge);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1744,9 +1760,31 @@ var ProjectForm = function (_React$Component) {
       }
     }
   }, {
-    key: 'lastInstructionBodyState',
-    value: function lastInstructionBodyState(instructionBody) {
-      this.setState({ lastInstructionBody: instructionBody });
+    key: 'instructionBodiesState',
+    value: function instructionBodiesState(instructionBodyFilled, instructionStep) {
+      debugger;
+      var newInstructions = {};
+      newInstructions[instructionStep] = instructionBodyFilled;
+      if (!this.state.instructionBodies.length) {
+        this.setState({ instructionBodies: [newInstructions] });
+      } else {
+        var present = false;
+        var updatedInstructions = this.state.instructionBodies.map(function (instruction) {
+          debugger;
+          if (Object.keys(instruction)[0] === Object.keys(newInstructions)[0]) {
+            debugger;
+            present = true;
+            return newInstructions;
+          } else {
+            return instruction;
+          }
+        });
+        if (!present) {
+          updatedInstructions.push(newInstructions);
+        }
+        this.setState({ instructionBodies: updatedInstructions });
+      }
+      debugger;
     }
   }, {
     key: 'errors',
@@ -1773,7 +1811,7 @@ var ProjectForm = function (_React$Component) {
         instructions: [].concat(_toConsumableArray(this.state.instructions), [_react2.default.createElement(_NewInstructionContainer2.default, {
           key: this.state.stepNum,
           stepNum: this.state.stepNum,
-          lastInstructionBodyState: this.lastInstructionBodyState.bind(this) })])
+          instructionBodiesState: this.instructionBodiesState.bind(this) })])
       });
       this.state.instructions;
       debugger;
@@ -1794,7 +1832,8 @@ var ProjectForm = function (_React$Component) {
             title: instruction.title,
             projectId: _this5.props.pro,
             key: instruction.instructionStep,
-            media: instruction.media
+            media: instruction.media,
+            instructionBodiesState: _this5.instructionBodiesState.bind(_this5)
           });
         });
         this.setState({ instructions: instructions });
