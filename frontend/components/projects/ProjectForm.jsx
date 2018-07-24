@@ -37,16 +37,44 @@ class ProjectForm extends React.Component{
   }
 
   removeInstruction(instructionStep){
+    debugger
     const instructions = this.state.instructions;
     const removedInstruction = instructions[instructionStep-1];
     const newOrderInstructions = instructions.slice(0, instructionStep-1).concat(instructions.slice(instructionStep));
     const modifiedStepNumberInstructions = newOrderInstructions.map((instruction,i) => {
-      return instruction = React.cloneElement(instruction, {step: (i + 1)});
+      return instruction = React.cloneElement(instruction, {step: (i + 1)} );
     });
-    this.setState({
-      removedInstructions: [...this.state.removedInstructions,removedInstruction],
-      instructions: modifiedStepNumberInstructions
-    });
+    if(this.state.newlyAddedSteps.includes(instructionStep)){
+      debugger
+      this.setState({
+        newlyAddedSteps: this.state.newlyAddedSteps.filter((num) =>{
+          if(num !== instructionStep){
+            return num;
+          }
+        }),
+        instructionBodies: this.state.instructionBodies.filter((instructionBody) =>{
+          debugger
+          const key = Number(Object.keys(instructionBody)[0]);
+          if(key !== instructionStep){
+            return instructionBody;
+          }
+        }),
+        removedInstructions: [...this.state.removedInstructions,removedInstruction],
+        instructions: modifiedStepNumberInstructions,
+        stepNum: (this.state.stepNum-1)
+      });
+    }else{
+      this.setState({
+        instructionBodies: this.state.instructionBodies.filter((instructionBody) =>{
+          if(Object.keys(instructionBody)[0] !== instructionStep){
+            return instructionBody;
+          }
+        }),
+        removedInstructions: [...this.state.removedInstructions,removedInstruction],
+        instructions: modifiedStepNumberInstructions,
+        stepNum: (this.state.stepNum-1)
+      });
+    }
   }
 
   // instructions = instructions.map((instruction) => {
@@ -79,14 +107,16 @@ class ProjectForm extends React.Component{
       });
     }else if (this.props.formType === 'Update Project') {
       debugger
-      let newInstructions = this.state.instructions.slice(-(this.state.newlyAddedSteps));
+      let newInstructions = this.state.instructions.slice(-(this.state.newlyAddedSteps.length));
         newInstructions = newInstructions.map((instruction) => {
           instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
           return instruction;
         });
-      let updatedInstructions = this.state.instructions.slice(0,-(this.state.newlyAddedSteps)).concat(newInstructions);
+      let updatedInstructions = this.state.instructions.slice(0,-(this.state.newlyAddedSteps.length)).concat(newInstructions);
       this.props.submitProject(formData, projectId).then((payload) => {
         this.setState({instructions: updatedInstructions});
+        debugger
+        this.props.deleteInstruction(this.state.removedInstructions, projectId);
         this.redirect(payload.project.project.id);
         // setTimeout(() =>{this.redirect(payload.project.project.id);},1000);
       });
@@ -171,20 +201,24 @@ class ProjectForm extends React.Component{
         this.setState({instructionIssues: instructionBodyErrors});
       }else{
         const stepNumber = this.state.stepNum;
+        let keyValue = (this.state.key + 1);
         let newlyAddedInstruction = {};
         newlyAddedInstruction[stepNumber] = false;
         this.setState({
           instructionBodies: [...this.state.instructionBodies,newlyAddedInstruction],
           instructionIssues: instructionBodyErrors,
           stepNum: (stepNumber + 1),
-          newlyAddedSteps: (this.state.newlyAddedSteps +1),
+          newlyAddedSteps: [...this.state.newlyAddedSteps,stepNumber],
           instructions: [
             ...this.state.instructions,
             <NewInstructionContainer
-              key={this.state.stepNum}
+              key={keyValue}
               step={this.state.stepNum}
-              instructionBodiesState={this.instructionBodiesState.bind(this)} />
-          ]
+              instructionBodiesState={this.instructionBodiesState.bind(this)}
+              removeInstruction={this.removeInstruction.bind(this)}
+              />
+          ],
+          key: keyValue
         });
       }
       this.state.instructions;
@@ -192,23 +226,27 @@ class ProjectForm extends React.Component{
     }
 
     componentWillMount(){
+      debugger
       if(this.props.project.lastPrefilledInstruction === this.state.stepNum &&
         this.props.formType === 'Update Project'){
-        let instructions = this.state.instructions.map((instruction) => {
+          let keyValue = this.state.key;
+        let instructions = this.state.instructions.map((instruction,i) => {
           if(!instruction){
             return [];
           }
+          keyValue += 1;
           return <EditInstructionContainer
                   step={instruction.instructionStep}
                   body={instruction.body}
                   title={instruction.title}
                   projectId={this.props.pro}
-                  key={instruction.instructionStep}
+                  key={keyValue}
                   media={instruction.media}
                   instructionBodiesState={this.instructionBodiesState.bind(this)}
+                  removeInstruction={this.removeInstruction.bind(this)}
                   />;
         });
-       this.setState({instructions: instructions});
+       this.setState({instructions: instructions, key: keyValue});
       }
     }
 

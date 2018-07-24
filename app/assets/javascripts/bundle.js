@@ -893,6 +893,14 @@ var Instructions = function (_React$Component) {
       }
     }
   }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      debugger;
+      if (this.props.step !== nextProps.step) {
+        this.setState({ step: nextProps.step });
+      }
+    }
+  }, {
     key: 'uploadFile',
     value: function uploadFile(e) {
       var _this2 = this;
@@ -941,6 +949,8 @@ var Instructions = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _this3 = this;
+
       var preview = this.state.mediaUrl ? _react2.default.createElement(
         'div',
         { className: 'project-picture-preview-format' },
@@ -971,7 +981,7 @@ var Instructions = function (_React$Component) {
                 this.state.step,
                 ':'
               ),
-              _react2.default.createElement('input', { className: 'project-title-styling', type: 'text', onChange: this.updateTitle, placeholder: 'Step title', value: '' + this.state.title })
+              _react2.default.createElement('input', { className: 'project-title-styling', type: 'text', onChange: this.updateTitle, placeholder: 'Step title (optional)', value: '' + this.state.title })
             ),
             _react2.default.createElement(
               'div',
@@ -992,7 +1002,21 @@ var Instructions = function (_React$Component) {
                 preview
               )
             ),
-            _react2.default.createElement('textarea', { onChange: this.updateDescription.bind(this), placeholder: 'Please enter a brief description of your process', className: 'project-body-text', rows: '8', cols: '80', value: '' + this.state.body })
+            _react2.default.createElement('textarea', { onChange: this.updateDescription.bind(this), placeholder: 'Please enter a brief description of your process', className: 'project-body-text', rows: '8', cols: '80', value: '' + this.state.body }),
+            _react2.default.createElement(
+              'div',
+              null,
+              _react2.default.createElement(
+                'button',
+                { form: 'submit-project',
+                  onClick: function onClick() {
+                    return _this3.props.removeInstruction(_this3.state.step);
+                  },
+                  className: 'project-submit',
+                  type: 'submit' },
+                'Remove Instruction'
+              )
+            )
           )
         ),
         _react2.default.createElement('div', { className: 'project-message-position' }),
@@ -1065,6 +1089,7 @@ var mstp = function mstp(state, ownProps) {
 };
 
 var mdtp = function mdtp(dispatch) {
+  debugger;
   return {
     submitInstruction: function submitInstruction(instruction) {
       return dispatch((0, _instructions_actions.createInstruction)(instruction));
@@ -1151,6 +1176,8 @@ var _ProjectForm = __webpack_require__(/*! ./ProjectForm */ "./frontend/componen
 
 var _ProjectForm2 = _interopRequireDefault(_ProjectForm);
 
+var _instructions_actions = __webpack_require__(/*! ./../../actions/instructions_actions */ "./frontend/actions/instructions_actions.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1195,10 +1222,12 @@ var EditProjectForm = function (_React$Component) {
           submitProject = _props.submitProject,
           formType = _props.formType,
           project = _props.project,
-          errors = _props.errors;
+          errors = _props.errors,
+          deleteInstruction = _props.deleteInstruction;
 
       return _react2.default.createElement(_ProjectForm2.default, {
         submitProject: submitProject,
+        deleteInstruction: deleteInstruction,
         formType: formType,
         errors: errors,
         project: project });
@@ -1223,10 +1252,11 @@ var mstp = function mstp(state, ownProps) {
     pictureUrl: null,
     uploadStatus: false,
     instructions: [],
-    newlyAddedSteps: 0,
+    newlyAddedSteps: [],
     instructionBodies: [],
     instructionIssues: [],
-    removedInstructions: []
+    removedInstructions: [],
+    key: 0
   };
 
   var currentProject = state.entities.projects[ownProps.match.params.projectId] || defaultProject;
@@ -1252,10 +1282,11 @@ var mstp = function mstp(state, ownProps) {
       stepNum: nextStep,
       lastPrefilledInstruction: nextStep,
       submitted: false,
-      newlyAddedSteps: 0,
+      newlyAddedSteps: [],
       instructionBodies: [],
       instructionIssues: [],
-      removedInstructions: []
+      removedInstructions: [],
+      key: 0
     },
     errors: state.errors.project,
     formType: 'Update Project'
@@ -1269,6 +1300,17 @@ var mdtp = function mdtp(dispatch) {
     },
     fetchProject: function fetchProject(id) {
       return dispatch((0, _projects_actions.fetchProject)(id));
+    },
+    createProject: function createProject(instruction) {
+      return dispatch((0, _projects_actions.createProject)(instruction));
+    },
+    deleteInstruction: function deleteInstruction(instructions, projectId) {
+      debugger;
+      instructions.forEach(function (instruction) {
+        if (instruction.projectId === Number(projectId)) {
+          dispatch((0, _instructions_actions.deleteInstruction)(instruction.id));
+        }
+      });
     }
   };
 };
@@ -1579,9 +1621,11 @@ var mstp = function mstp(state) {
       stepNum: 1,
       instructions: [],
       submitted: false,
+      newlyAddedSteps: [],
       instructionBodies: [],
       instructionIssues: [],
-      removedInstructions: []
+      removedInstructions: [],
+      key: 0
     },
     formType: 'New Project',
     errors: state.errors.project
@@ -1689,16 +1733,44 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'removeInstruction',
     value: function removeInstruction(instructionStep) {
+      debugger;
       var instructions = this.state.instructions;
       var removedInstruction = instructions[instructionStep - 1];
       var newOrderInstructions = instructions.slice(0, instructionStep - 1).concat(instructions.slice(instructionStep));
       var modifiedStepNumberInstructions = newOrderInstructions.map(function (instruction, i) {
         return instruction = _react2.default.cloneElement(instruction, { step: i + 1 });
       });
-      this.setState({
-        removedInstructions: [].concat(_toConsumableArray(this.state.removedInstructions), [removedInstruction]),
-        instructions: modifiedStepNumberInstructions
-      });
+      if (this.state.newlyAddedSteps.includes(instructionStep)) {
+        debugger;
+        this.setState({
+          newlyAddedSteps: this.state.newlyAddedSteps.filter(function (num) {
+            if (num !== instructionStep) {
+              return num;
+            }
+          }),
+          instructionBodies: this.state.instructionBodies.filter(function (instructionBody) {
+            debugger;
+            var key = Number(Object.keys(instructionBody)[0]);
+            if (key !== instructionStep) {
+              return instructionBody;
+            }
+          }),
+          removedInstructions: [].concat(_toConsumableArray(this.state.removedInstructions), [removedInstruction]),
+          instructions: modifiedStepNumberInstructions,
+          stepNum: this.state.stepNum - 1
+        });
+      } else {
+        this.setState({
+          instructionBodies: this.state.instructionBodies.filter(function (instructionBody) {
+            if (Object.keys(instructionBody)[0] !== instructionStep) {
+              return instructionBody;
+            }
+          }),
+          removedInstructions: [].concat(_toConsumableArray(this.state.removedInstructions), [removedInstruction]),
+          instructions: modifiedStepNumberInstructions,
+          stepNum: this.state.stepNum - 1
+        });
+      }
     }
 
     // instructions = instructions.map((instruction) => {
@@ -1734,14 +1806,16 @@ var ProjectForm = function (_React$Component) {
         });
       } else if (this.props.formType === 'Update Project') {
         debugger;
-        var newInstructions = this.state.instructions.slice(-this.state.newlyAddedSteps);
+        var newInstructions = this.state.instructions.slice(-this.state.newlyAddedSteps.length);
         newInstructions = newInstructions.map(function (instruction) {
           instruction = _react2.default.cloneElement(instruction, { projectId: _this3.state.projectId });
           return instruction;
         });
-        var updatedInstructions = this.state.instructions.slice(0, -this.state.newlyAddedSteps).concat(newInstructions);
+        var updatedInstructions = this.state.instructions.slice(0, -this.state.newlyAddedSteps.length).concat(newInstructions);
         this.props.submitProject(formData, projectId).then(function (payload) {
           _this3.setState({ instructions: updatedInstructions });
+          debugger;
+          _this3.props.deleteInstruction(_this3.state.removedInstructions, projectId);
           _this3.redirect(payload.project.project.id);
           // setTimeout(() =>{this.redirect(payload.project.project.id);},1000);
         });
@@ -1859,17 +1933,21 @@ var ProjectForm = function (_React$Component) {
         this.setState({ instructionIssues: instructionBodyErrors });
       } else {
         var stepNumber = this.state.stepNum;
+        var keyValue = this.state.key + 1;
         var newlyAddedInstruction = {};
         newlyAddedInstruction[stepNumber] = false;
         this.setState({
           instructionBodies: [].concat(_toConsumableArray(this.state.instructionBodies), [newlyAddedInstruction]),
           instructionIssues: instructionBodyErrors,
           stepNum: stepNumber + 1,
-          newlyAddedSteps: this.state.newlyAddedSteps + 1,
+          newlyAddedSteps: [].concat(_toConsumableArray(this.state.newlyAddedSteps), [stepNumber]),
           instructions: [].concat(_toConsumableArray(this.state.instructions), [_react2.default.createElement(_NewInstructionContainer2.default, {
-            key: this.state.stepNum,
+            key: keyValue,
             step: this.state.stepNum,
-            instructionBodiesState: this.instructionBodiesState.bind(this) })])
+            instructionBodiesState: this.instructionBodiesState.bind(this),
+            removeInstruction: this.removeInstruction.bind(this)
+          })]),
+          key: keyValue
         });
       }
       this.state.instructions;
@@ -1880,22 +1958,26 @@ var ProjectForm = function (_React$Component) {
     value: function componentWillMount() {
       var _this5 = this;
 
+      debugger;
       if (this.props.project.lastPrefilledInstruction === this.state.stepNum && this.props.formType === 'Update Project') {
-        var instructions = this.state.instructions.map(function (instruction) {
+        var keyValue = this.state.key;
+        var instructions = this.state.instructions.map(function (instruction, i) {
           if (!instruction) {
             return [];
           }
+          keyValue += 1;
           return _react2.default.createElement(_EditInstructionContainer2.default, {
             step: instruction.instructionStep,
             body: instruction.body,
             title: instruction.title,
             projectId: _this5.props.pro,
-            key: instruction.instructionStep,
+            key: keyValue,
             media: instruction.media,
-            instructionBodiesState: _this5.instructionBodiesState.bind(_this5)
+            instructionBodiesState: _this5.instructionBodiesState.bind(_this5),
+            removeInstruction: _this5.removeInstruction.bind(_this5)
           });
         });
-        this.setState({ instructions: instructions });
+        this.setState({ instructions: instructions, key: keyValue });
       }
     }
   }, {

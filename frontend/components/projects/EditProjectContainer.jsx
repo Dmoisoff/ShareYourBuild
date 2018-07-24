@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchProject, updateProject } from './../../actions/projects_actions';
+import { fetchProject, updateProject, createProject } from './../../actions/projects_actions';
 import ProjectForm from './ProjectForm';
-
+import { deleteInstruction } from './../../actions/instructions_actions';
 
 
 
@@ -24,10 +24,11 @@ class EditProjectForm extends React.Component{
       return <div>Loading...</div>;
     }
 
-    const { submitProject, formType, project, errors } = this.props;
+    const { submitProject, formType, project, errors, deleteInstruction } = this.props;
     return (
       <ProjectForm
         submitProject={submitProject}
+        deleteInstruction={deleteInstruction}
         formType={formType}
         errors={errors}
         project={project} />
@@ -53,10 +54,11 @@ const mstp = (state, ownProps) =>{
     pictureUrl: null,
     uploadStatus: false,
     instructions: [],
-    newlyAddedSteps: 0,
+    newlyAddedSteps: [],
     instructionBodies: [],
     instructionIssues: [],
-    removedInstructions: []
+    removedInstructions: [],
+    key:0
     };
 
   const currentProject = state.entities.projects[ownProps.match.params.projectId] || defaultProject;
@@ -83,10 +85,11 @@ const mstp = (state, ownProps) =>{
       stepNum: nextStep,
       lastPrefilledInstruction: nextStep,
       submitted: false,
-      newlyAddedSteps: 0,
+      newlyAddedSteps: [],
       instructionBodies: [],
       instructionIssues: [],
-      removedInstructions: []
+      removedInstructions: [],
+      key:0
     },
     errors: state.errors.project,
     formType: 'Update Project'
@@ -96,7 +99,16 @@ const mstp = (state, ownProps) =>{
 const mdtp = (dispatch) => {
   return({
     submitProject: (project, id) =>  dispatch(updateProject(project, id)),
-    fetchProject: (id) =>  dispatch(fetchProject(id))
+    fetchProject: (id) =>  dispatch(fetchProject(id)),
+    createProject: (instruction) =>  dispatch(createProject(instruction)),
+    deleteInstruction: (instructions,projectId) => {
+      debugger
+      instructions.forEach((instruction) => {
+        if(instruction.projectId === Number(projectId)){
+          dispatch(deleteInstruction(instruction.id));
+        }
+      });
+    }
   });
 };
 

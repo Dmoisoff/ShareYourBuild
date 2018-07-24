@@ -24,6 +24,7 @@ const mstp = (state, ownProps) => {
 };
 
 const mdtp = (dispatch) => {
+  debugger
   return({
     submitInstruction: (instruction) => dispatch(createInstruction(instruction))
   });

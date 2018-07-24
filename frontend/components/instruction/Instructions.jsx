@@ -31,6 +31,13 @@ class Instructions extends React.Component{
     }
   }
 
+  componentWillReceiveProps(nextProps){
+    debugger
+    if(this.props.step !== nextProps.step){
+      this.setState({step: nextProps.step});
+    }
+  }
+
   uploadFile(e){
     const file = e.currentTarget.files[0];
     const fileReader = new FileReader();
@@ -83,7 +90,7 @@ class Instructions extends React.Component{
             <form className='project-input-format'>
               <div>
                 <p>Step {this.state.step}:</p>
-                <input className='project-title-styling' type='text' onChange={this.updateTitle} placeholder='Step title' value={`${this.state.title}`} />
+                <input className='project-title-styling' type='text' onChange={this.updateTitle} placeholder='Step title (optional)' value={`${this.state.title}`} />
               </div>
               <div className='project-images-display-create-format'>
                 <div className='project-image-input-format'>
@@ -95,7 +102,12 @@ class Instructions extends React.Component{
                 </div>
               </div>
               <textarea onChange={this.updateDescription.bind(this)} placeholder='Please enter a brief description of your process' className='project-body-text' rows="8" cols="80" value={`${this.state.body}`}></textarea>
-
+              <div>
+                <button form='submit-project'
+                  onClick={() => this.props.removeInstruction(this.state.step)}
+                  className='project-submit'
+                  type='submit'>Remove Instruction</button>
+              </div>
             </form>
           </div>
           <div className='project-message-position'>

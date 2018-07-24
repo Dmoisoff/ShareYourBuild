@@ -20,9 +20,11 @@ const mstp = (state) => {
       stepNum: 1,
       instructions: [],
       submitted: false,
+      newlyAddedSteps: [],
       instructionBodies: [],
       instructionIssues: [],
-      removedInstructions: []
+      removedInstructions: [],
+      key:0
      },
     formType: 'New Project',
     errors: state.errors.project,
