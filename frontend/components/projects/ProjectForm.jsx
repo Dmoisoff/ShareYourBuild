@@ -77,13 +77,6 @@ class ProjectForm extends React.Component{
     }
   }
 
-  // instructions = instructions.map((instruction) => {
-  //   instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
-  //   return instruction;
-  // });
-
-
-
   handleSubmit(e){
     debugger
     e.preventDefault();
@@ -114,9 +107,9 @@ class ProjectForm extends React.Component{
         });
       let updatedInstructions = this.state.instructions.slice(0,-(this.state.newlyAddedSteps.length)).concat(newInstructions);
       this.props.submitProject(formData, projectId).then((payload) => {
-        this.setState({instructions: updatedInstructions});
         debugger
         this.props.deleteInstruction(this.state.removedInstructions, projectId);
+        this.setState({instructions: updatedInstructions});
         this.redirect(payload.project.project.id);
         // setTimeout(() =>{this.redirect(payload.project.project.id);},1000);
       });
@@ -235,11 +228,13 @@ class ProjectForm extends React.Component{
             return [];
           }
           keyValue += 1;
+          debugger
           return <EditInstructionContainer
                   step={instruction.instructionStep}
+                  id={instruction.id}
                   body={instruction.body}
                   title={instruction.title}
-                  projectId={this.props.pro}
+                  projectId={instruction.projectId}
                   key={keyValue}
                   media={instruction.media}
                   instructionBodiesState={this.instructionBodiesState.bind(this)}

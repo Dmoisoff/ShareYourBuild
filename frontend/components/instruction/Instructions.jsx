@@ -26,6 +26,7 @@ class Instructions extends React.Component{
   }
 
   componentDidUpdate(prevProps){
+    debugger
     if(this.props.projectId !== prevProps.projectId){
      this.handleSubmit();
     }

@@ -13,6 +13,7 @@ end
 json.instructions do
   @project.instructions.each do |instruction|
     json.set! instruction.id do
+      json.id instruction.id
       json.projectId instruction.project_id
       json.instructionStep instruction.instruction_step
       json.body instruction.body

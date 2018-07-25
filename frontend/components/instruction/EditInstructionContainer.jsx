@@ -4,8 +4,10 @@ import Instructions from './Instructions';
 import { createInstruction } from './../../actions/instructions_actions';
 
 const mstp = (state, ownProps) => {
+  debugger
     return({
       instruction: {
+        id: ownProps.id,
         body: ownProps.body,
         title: ownProps.title,
         media: ownProps.media,

@@ -104,9 +104,7 @@ const mdtp = (dispatch) => {
     deleteInstruction: (instructions,projectId) => {
       debugger
       instructions.forEach((instruction) => {
-        if(instruction.projectId === Number(projectId)){
-          dispatch(deleteInstruction(instruction.id));
-        }
+        dispatch(deleteInstruction(instruction.props.id));
       });
     }
   });

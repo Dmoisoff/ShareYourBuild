@@ -716,8 +716,10 @@ var _instructions_actions = __webpack_require__(/*! ./../../actions/instructions
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state, ownProps) {
+  debugger;
   return {
     instruction: {
+      id: ownProps.id,
       body: ownProps.body,
       title: ownProps.title,
       media: ownProps.media,
@@ -888,6 +890,7 @@ var Instructions = function (_React$Component) {
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps) {
+      debugger;
       if (this.props.projectId !== prevProps.projectId) {
         this.handleSubmit();
       }
@@ -1307,9 +1310,7 @@ var mdtp = function mdtp(dispatch) {
     deleteInstruction: function deleteInstruction(instructions, projectId) {
       debugger;
       instructions.forEach(function (instruction) {
-        if (instruction.projectId === Number(projectId)) {
-          dispatch((0, _instructions_actions.deleteInstruction)(instruction.id));
-        }
+        dispatch((0, _instructions_actions.deleteInstruction)(instruction.props.id));
       });
     }
   };
@@ -1772,13 +1773,6 @@ var ProjectForm = function (_React$Component) {
         });
       }
     }
-
-    // instructions = instructions.map((instruction) => {
-    //   instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
-    //   return instruction;
-    // });
-
-
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
@@ -1813,9 +1807,9 @@ var ProjectForm = function (_React$Component) {
         });
         var updatedInstructions = this.state.instructions.slice(0, -this.state.newlyAddedSteps.length).concat(newInstructions);
         this.props.submitProject(formData, projectId).then(function (payload) {
-          _this3.setState({ instructions: updatedInstructions });
           debugger;
           _this3.props.deleteInstruction(_this3.state.removedInstructions, projectId);
+          _this3.setState({ instructions: updatedInstructions });
           _this3.redirect(payload.project.project.id);
           // setTimeout(() =>{this.redirect(payload.project.project.id);},1000);
         });
@@ -1966,11 +1960,13 @@ var ProjectForm = function (_React$Component) {
             return [];
           }
           keyValue += 1;
+          debugger;
           return _react2.default.createElement(_EditInstructionContainer2.default, {
             step: instruction.instructionStep,
+            id: instruction.id,
             body: instruction.body,
             title: instruction.title,
-            projectId: _this5.props.pro,
+            projectId: instruction.projectId,
             key: keyValue,
             media: instruction.media,
             instructionBodiesState: _this5.instructionBodiesState.bind(_this5),
