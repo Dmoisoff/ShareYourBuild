@@ -962,7 +962,14 @@ var Instructions = function (_React$Component) {
           null,
           'Picture Preview'
         ),
-        _react2.default.createElement('img', { className: 'project-image-resize', src: this.state.mediaUrl })
+        _react2.default.createElement('img', { className: 'project-image-resize', src: this.state.mediaUrl }),
+        _react2.default.createElement(
+          'button',
+          { className: 'project-submit', onClick: function onClick() {
+              _this3.setState({ mediaUrl: null, media: null });
+            } },
+          'Remove Image'
+        )
       ) : null;
 
       return _react2.default.createElement(
@@ -1308,9 +1315,8 @@ var mdtp = function mdtp(dispatch) {
       return dispatch((0, _projects_actions.createProject)(instruction));
     },
     deleteInstruction: function deleteInstruction(instructions, projectId) {
-      debugger;
-      instructions.forEach(function (instruction) {
-        dispatch((0, _instructions_actions.deleteInstruction)(instruction.props.id));
+      return instructions.forEach(function (instruction) {
+        return dispatch((0, _instructions_actions.deleteInstruction)(instruction.props.id));
       });
     }
   };
@@ -1800,15 +1806,15 @@ var ProjectForm = function (_React$Component) {
         });
       } else if (this.props.formType === 'Update Project') {
         debugger;
-        var newInstructions = this.state.instructions.slice(-this.state.newlyAddedSteps.length);
-        newInstructions = newInstructions.map(function (instruction) {
-          instruction = _react2.default.cloneElement(instruction, { projectId: _this3.state.projectId });
-          return instruction;
-        });
-        var updatedInstructions = this.state.instructions.slice(0, -this.state.newlyAddedSteps.length).concat(newInstructions);
         this.props.submitProject(formData, projectId).then(function (payload) {
           debugger;
           _this3.props.deleteInstruction(_this3.state.removedInstructions, projectId);
+          var newInstructions = _this3.state.instructions.slice(-_this3.state.newlyAddedSteps.length);
+          newInstructions = newInstructions.map(function (instruction) {
+            instruction = _react2.default.cloneElement(instruction, { projectId: _this3.state.projectId });
+            return instruction;
+          });
+          var updatedInstructions = _this3.state.instructions.slice(0, -_this3.state.newlyAddedSteps.length).concat(newInstructions);
           _this3.setState({ instructions: updatedInstructions });
           _this3.redirect(payload.project.project.id);
           // setTimeout(() =>{this.redirect(payload.project.project.id);},1000);

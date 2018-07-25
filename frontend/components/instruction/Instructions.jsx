@@ -81,6 +81,7 @@ class Instructions extends React.Component{
     <div className='project-picture-preview-format'>
       <p>Picture Preview</p>
       <img className='project-image-resize' src={this.state.mediaUrl} />
+      <button className='project-submit' onClick={() => {this.setState({mediaUrl: null, media: null});}}>Remove Image</button>
     </div>
      : null;
 

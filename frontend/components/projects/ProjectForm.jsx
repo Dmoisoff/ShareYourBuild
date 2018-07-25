@@ -100,15 +100,15 @@ class ProjectForm extends React.Component{
       });
     }else if (this.props.formType === 'Update Project') {
       debugger
-      let newInstructions = this.state.instructions.slice(-(this.state.newlyAddedSteps.length));
+      this.props.submitProject(formData, projectId).then((payload) => {
+        debugger
+        this.props.deleteInstruction(this.state.removedInstructions, projectId);
+        let newInstructions = this.state.instructions.slice(-(this.state.newlyAddedSteps.length));
         newInstructions = newInstructions.map((instruction) => {
           instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
           return instruction;
         });
-      let updatedInstructions = this.state.instructions.slice(0,-(this.state.newlyAddedSteps.length)).concat(newInstructions);
-      this.props.submitProject(formData, projectId).then((payload) => {
-        debugger
-        this.props.deleteInstruction(this.state.removedInstructions, projectId);
+        let updatedInstructions = this.state.instructions.slice(0,-(this.state.newlyAddedSteps.length)).concat(newInstructions);
         this.setState({instructions: updatedInstructions});
         this.redirect(payload.project.project.id);
         // setTimeout(() =>{this.redirect(payload.project.project.id);},1000);

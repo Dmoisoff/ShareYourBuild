@@ -101,12 +101,9 @@ const mdtp = (dispatch) => {
     submitProject: (project, id) =>  dispatch(updateProject(project, id)),
     fetchProject: (id) =>  dispatch(fetchProject(id)),
     createProject: (instruction) =>  dispatch(createProject(instruction)),
-    deleteInstruction: (instructions,projectId) => {
-      debugger
-      instructions.forEach((instruction) => {
-        dispatch(deleteInstruction(instruction.props.id));
-      });
-    }
+    deleteInstruction: (instructions,projectId) => instructions.forEach((instruction) =>
+          dispatch(deleteInstruction(instruction.props.id))
+      )
   });
 };
 
