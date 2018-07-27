@@ -64,7 +64,6 @@ const mstp = (state, ownProps) =>{
   const currentProject = state.entities.projects[ownProps.match.params.projectId] || defaultProject;
   const projectId = ownProps.match.params.projectId;
   const instructionsArray = Object.values(state.entities.instructions).filter((instruction) =>{
-    // debugger
     return instruction.projectId === Number(projectId);
 
   });

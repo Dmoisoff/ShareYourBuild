@@ -37,7 +37,6 @@ class ProjectForm extends React.Component{
   }
 
   removeInstruction(instructionStep){
-    debugger
     const instructions = this.state.instructions;
     const removedInstruction = instructions[instructionStep-1];
     const newOrderInstructions = instructions.slice(0, instructionStep-1).concat(instructions.slice(instructionStep));
@@ -45,7 +44,6 @@ class ProjectForm extends React.Component{
       return instruction = React.cloneElement(instruction, {step: (i + 1)} );
     });
     if(this.state.newlyAddedSteps.includes(instructionStep)){
-      debugger
       this.setState({
         newlyAddedSteps: this.state.newlyAddedSteps.filter((num) =>{
           if(num !== instructionStep){
@@ -53,7 +51,6 @@ class ProjectForm extends React.Component{
           }
         }),
         instructionBodies: this.state.instructionBodies.filter((instructionBody) =>{
-          debugger
           const key = Number(Object.keys(instructionBody)[0]);
           if(key !== instructionStep){
             return instructionBody;
@@ -78,30 +75,23 @@ class ProjectForm extends React.Component{
   }
 
   handleSubmit(e){
-    debugger
     e.preventDefault();
-    debugger
     const projectId = this.props.match.params.projectId;
     const formData = new FormData();
     formData.append('project[title]', this.state.title);
     formData.append('project[keywords]', this.state.keyWords);
-    // formData.append('project[picture_url]', this.state.pictureUrl);
     formData.append('project[description]', this.state.description);
     if(this.state.pictureFile){
       formData.append('project[picture]', this.state.pictureFile);
     }
     if(this.props.formType === 'New Project'){
       this.props.submitProject(formData, projectId).then((payload) => {
-        debugger
         const projectId = payload.project.project.id;
         this.setState({projectId: projectId});
         this.redirect(payload.project.project.id);
-        // setTimeout(() =>{this.redirect(payload.project.project.id);},1000);
       });
     }else if (this.props.formType === 'Update Project') {
-      debugger
       this.props.submitProject(formData, projectId).then((payload) => {
-        debugger
         this.props.deleteInstruction(this.state.removedInstructions, projectId);
         let newInstructions = this.state.instructions.slice(-(this.state.newlyAddedSteps.length));
         newInstructions = newInstructions.map((instruction) => {
@@ -111,20 +101,17 @@ class ProjectForm extends React.Component{
         let updatedInstructions = this.state.instructions.slice(0,-(this.state.newlyAddedSteps.length)).concat(newInstructions);
         this.setState({instructions: updatedInstructions});
         this.redirect(payload.project.project.id);
-        // setTimeout(() =>{this.redirect(payload.project.project.id);},1000);
       });
     }
 
     }
 
   redirect(id){
-    debugger
     this.setState({uploadStatus: true});
     setTimeout(() => {this.props.history.push(`/project/${id}`);}, 1500);
   }
 
   uploadResult(){
-    debugger
     if(this.state.uploadStatus === true){
       if(this.props.formType === 'New Project'){
         return <div className='project-success-container'><p className='project-success'>Build Successfully Saved</p></div>;
@@ -137,7 +124,6 @@ class ProjectForm extends React.Component{
   }
 
   instructionBodiesState(instructionBodyFilled,instructionStep){
-    debugger
     let newInstructions = {};
     newInstructions[instructionStep] = instructionBodyFilled;
     if (!this.state.instructionBodies.length) {
@@ -145,9 +131,7 @@ class ProjectForm extends React.Component{
     }else {
       let present = false;
       const updatedInstructions = this.state.instructionBodies.map((instruction) =>{
-        debugger
         if(Object.keys(instruction)[0] === Object.keys(newInstructions)[0]){
-          debugger
           present = true;
           return newInstructions;
         }else{
@@ -159,7 +143,6 @@ class ProjectForm extends React.Component{
       }
     this.setState({instructionBodies: updatedInstructions});
     }
-    debugger
   }
 
   errors(){
@@ -183,7 +166,6 @@ class ProjectForm extends React.Component{
     }
 
     instructions(){
-      debugger
       const instructionBodyErrors = [];
       this.state.instructionBodies.forEach((instructionBody) => {
         if(!Object.values(instructionBody)[0]){
@@ -215,11 +197,9 @@ class ProjectForm extends React.Component{
         });
       }
       this.state.instructions;
-      debugger
     }
 
     componentWillMount(){
-      debugger
       if(this.props.project.lastPrefilledInstruction === this.state.stepNum &&
         this.props.formType === 'Update Project'){
           let keyValue = this.state.key;
@@ -228,7 +208,6 @@ class ProjectForm extends React.Component{
             return [];
           }
           keyValue += 1;
-          debugger
           return <EditInstructionContainer
                   step={instruction.instructionStep}
                   id={instruction.id}

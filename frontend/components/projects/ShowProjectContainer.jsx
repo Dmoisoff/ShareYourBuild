@@ -32,7 +32,6 @@ const mdtp = (dispatch) => {
     fetchProject: (id) => dispatch(fetchProject(id)),
     deleteProject: (id) => dispatch(deleteProject(id)),
     deleteInstruction: (instructions,projectId) => {
-      debugger
       instructions.forEach((instruction) => {
         if(instruction.projectId === Number(projectId)){
           dispatch(deleteInstruction(instruction.id));

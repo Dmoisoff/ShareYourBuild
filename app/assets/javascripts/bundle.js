@@ -716,7 +716,6 @@ var _instructions_actions = __webpack_require__(/*! ./../../actions/instructions
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state, ownProps) {
-  debugger;
   return {
     instruction: {
       id: ownProps.id,
@@ -879,7 +878,6 @@ var Instructions = function (_React$Component) {
   }, {
     key: 'updateDescription',
     value: function updateDescription(e) {
-      debugger;
       if (e.target.value === '') {
         this.props.instructionBodiesState(false, this.state.step);
       } else {
@@ -890,7 +888,6 @@ var Instructions = function (_React$Component) {
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps) {
-      debugger;
       if (this.props.projectId !== prevProps.projectId) {
         this.handleSubmit();
       }
@@ -898,7 +895,6 @@ var Instructions = function (_React$Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      debugger;
       if (this.props.step !== nextProps.step) {
         this.setState({ step: nextProps.step });
       }
@@ -1079,7 +1075,6 @@ var _instructions_actions = __webpack_require__(/*! ./../../actions/instructions
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state, ownProps) {
-  debugger;
   return {
     instruction: {
       body: "",
@@ -1099,7 +1094,6 @@ var mstp = function mstp(state, ownProps) {
 };
 
 var mdtp = function mdtp(dispatch) {
-  debugger;
   return {
     submitInstruction: function submitInstruction(instruction) {
       return dispatch((0, _instructions_actions.createInstruction)(instruction));
@@ -1272,7 +1266,6 @@ var mstp = function mstp(state, ownProps) {
   var currentProject = state.entities.projects[ownProps.match.params.projectId] || defaultProject;
   var projectId = ownProps.match.params.projectId;
   var instructionsArray = Object.values(state.entities.instructions).filter(function (instruction) {
-    // debugger
     return instruction.projectId === Number(projectId);
   });
   var sortedInstructions = instructionsArray.sort(function (x, y) {
@@ -1740,7 +1733,6 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'removeInstruction',
     value: function removeInstruction(instructionStep) {
-      debugger;
       var instructions = this.state.instructions;
       var removedInstruction = instructions[instructionStep - 1];
       var newOrderInstructions = instructions.slice(0, instructionStep - 1).concat(instructions.slice(instructionStep));
@@ -1748,7 +1740,6 @@ var ProjectForm = function (_React$Component) {
         return instruction = _react2.default.cloneElement(instruction, { step: i + 1 });
       });
       if (this.state.newlyAddedSteps.includes(instructionStep)) {
-        debugger;
         this.setState({
           newlyAddedSteps: this.state.newlyAddedSteps.filter(function (num) {
             if (num !== instructionStep) {
@@ -1756,7 +1747,6 @@ var ProjectForm = function (_React$Component) {
             }
           }),
           instructionBodies: this.state.instructionBodies.filter(function (instructionBody) {
-            debugger;
             var key = Number(Object.keys(instructionBody)[0]);
             if (key !== instructionStep) {
               return instructionBody;
@@ -1784,30 +1774,23 @@ var ProjectForm = function (_React$Component) {
     value: function handleSubmit(e) {
       var _this3 = this;
 
-      debugger;
       e.preventDefault();
-      debugger;
       var projectId = this.props.match.params.projectId;
       var formData = new FormData();
       formData.append('project[title]', this.state.title);
       formData.append('project[keywords]', this.state.keyWords);
-      // formData.append('project[picture_url]', this.state.pictureUrl);
       formData.append('project[description]', this.state.description);
       if (this.state.pictureFile) {
         formData.append('project[picture]', this.state.pictureFile);
       }
       if (this.props.formType === 'New Project') {
         this.props.submitProject(formData, projectId).then(function (payload) {
-          debugger;
           var projectId = payload.project.project.id;
           _this3.setState({ projectId: projectId });
           _this3.redirect(payload.project.project.id);
-          // setTimeout(() =>{this.redirect(payload.project.project.id);},1000);
         });
       } else if (this.props.formType === 'Update Project') {
-        debugger;
         this.props.submitProject(formData, projectId).then(function (payload) {
-          debugger;
           _this3.props.deleteInstruction(_this3.state.removedInstructions, projectId);
           var newInstructions = _this3.state.instructions.slice(-_this3.state.newlyAddedSteps.length);
           newInstructions = newInstructions.map(function (instruction) {
@@ -1817,7 +1800,6 @@ var ProjectForm = function (_React$Component) {
           var updatedInstructions = _this3.state.instructions.slice(0, -_this3.state.newlyAddedSteps.length).concat(newInstructions);
           _this3.setState({ instructions: updatedInstructions });
           _this3.redirect(payload.project.project.id);
-          // setTimeout(() =>{this.redirect(payload.project.project.id);},1000);
         });
       }
     }
@@ -1826,7 +1808,6 @@ var ProjectForm = function (_React$Component) {
     value: function redirect(id) {
       var _this4 = this;
 
-      debugger;
       this.setState({ uploadStatus: true });
       setTimeout(function () {
         _this4.props.history.push('/project/' + id);
@@ -1835,7 +1816,6 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'uploadResult',
     value: function uploadResult() {
-      debugger;
       if (this.state.uploadStatus === true) {
         if (this.props.formType === 'New Project') {
           return _react2.default.createElement(
@@ -1865,7 +1845,6 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'instructionBodiesState',
     value: function instructionBodiesState(instructionBodyFilled, instructionStep) {
-      debugger;
       var newInstructions = {};
       newInstructions[instructionStep] = instructionBodyFilled;
       if (!this.state.instructionBodies.length) {
@@ -1873,9 +1852,7 @@ var ProjectForm = function (_React$Component) {
       } else {
         var present = false;
         var updatedInstructions = this.state.instructionBodies.map(function (instruction) {
-          debugger;
           if (Object.keys(instruction)[0] === Object.keys(newInstructions)[0]) {
-            debugger;
             present = true;
             return newInstructions;
           } else {
@@ -1887,7 +1864,6 @@ var ProjectForm = function (_React$Component) {
         }
         this.setState({ instructionBodies: updatedInstructions });
       }
-      debugger;
     }
   }, {
     key: 'errors',
@@ -1922,7 +1898,6 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'instructions',
     value: function instructions() {
-      debugger;
       var instructionBodyErrors = [];
       this.state.instructionBodies.forEach(function (instructionBody) {
         if (!Object.values(instructionBody)[0]) {
@@ -1951,14 +1926,12 @@ var ProjectForm = function (_React$Component) {
         });
       }
       this.state.instructions;
-      debugger;
     }
   }, {
     key: 'componentWillMount',
     value: function componentWillMount() {
       var _this5 = this;
 
-      debugger;
       if (this.props.project.lastPrefilledInstruction === this.state.stepNum && this.props.formType === 'Update Project') {
         var keyValue = this.state.key;
         var instructions = this.state.instructions.map(function (instruction, i) {
@@ -1966,7 +1939,6 @@ var ProjectForm = function (_React$Component) {
             return [];
           }
           keyValue += 1;
-          debugger;
           return _react2.default.createElement(_EditInstructionContainer2.default, {
             step: instruction.instructionStep,
             id: instruction.id,
@@ -2461,7 +2433,6 @@ var mdtp = function mdtp(dispatch) {
       return dispatch((0, _projects_actions.deleteProject)(id));
     },
     deleteInstruction: function deleteInstruction(instructions, projectId) {
-      debugger;
       instructions.forEach(function (instruction) {
         if (instruction.projectId === Number(projectId)) {
           dispatch((0, _instructions_actions.deleteInstruction)(instruction.id));
@@ -3701,7 +3672,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var configureStore = function configureStore() {
   var preloadedState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  return (0, _redux.createStore)(_root_reducer2.default, preloadedState, (0, _redux.applyMiddleware)(_reduxThunk2.default, _reduxLogger2.default));
+  return (0, _redux.createStore)(_root_reducer2.default, preloadedState, (0, _redux.applyMiddleware)(_reduxThunk2.default));
 };
 
 exports.default = configureStore;

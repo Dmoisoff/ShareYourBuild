@@ -16,7 +16,6 @@ class Instructions extends React.Component{
   }
 
   updateDescription(e){
-    debugger
     if (e.target.value === '') {
       this.props.instructionBodiesState(false,this.state.step);
     }else{
@@ -26,14 +25,12 @@ class Instructions extends React.Component{
   }
 
   componentDidUpdate(prevProps){
-    debugger
     if(this.props.projectId !== prevProps.projectId){
      this.handleSubmit();
     }
   }
 
   componentWillReceiveProps(nextProps){
-    debugger
     if(this.props.step !== nextProps.step){
       this.setState({step: nextProps.step});
     }
