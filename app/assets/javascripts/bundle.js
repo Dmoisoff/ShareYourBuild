@@ -788,6 +788,7 @@ var InstructionStep = function (_React$Component) {
   _createClass(InstructionStep, [{
     key: 'render',
     value: function render() {
+      var body = this.props.body;
       var media = this.props.media ? _react2.default.createElement('img', { className: 'instruction-show-image-scale', src: '' + this.props.media }) : null;
       return _react2.default.createElement(
         'div',
@@ -808,11 +809,7 @@ var InstructionStep = function (_React$Component) {
         _react2.default.createElement(
           'div',
           null,
-          _react2.default.createElement(
-            'p',
-            { className: 'project-font-format' },
-            this.props.body
-          )
+          _react2.default.createElement('p', { className: 'project-font-format', dangerouslySetInnerHTML: { __html: body } })
         ),
         _react2.default.createElement('div', { className: 'instruction-divider' })
       );
@@ -2295,7 +2292,7 @@ var ProjectShow = function (_React$Component) {
           media: instruction.media
         });
       }) : null;
-
+      var description = this.props.project.description;
       return _react2.default.createElement(
         'div',
         null,
@@ -2330,11 +2327,7 @@ var ProjectShow = function (_React$Component) {
           _react2.default.createElement(
             'div',
             null,
-            _react2.default.createElement(
-              'p',
-              { className: 'project-font-format' },
-              this.props.project.description
-            )
+            _react2.default.createElement('p', { className: 'project-font-format', dangerouslySetInnerHTML: { __html: description } })
           ),
           _react2.default.createElement(
             'div',
@@ -3672,7 +3665,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var configureStore = function configureStore() {
   var preloadedState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  return (0, _redux.createStore)(_root_reducer2.default, preloadedState, (0, _redux.applyMiddleware)(_reduxThunk2.default));
+  return (0, _redux.createStore)(_root_reducer2.default, preloadedState, (0, _redux.applyMiddleware)(_reduxThunk2.default, _reduxLogger2.default));
 };
 
 exports.default = configureStore;

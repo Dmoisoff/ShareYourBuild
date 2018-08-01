@@ -67,7 +67,7 @@ class ProjectShow extends React.Component {
               media={instruction.media}
               />;
           }) : null;
-
+          const description = this.props.project.description;
     return (
       <div>
         <div>
@@ -81,7 +81,7 @@ class ProjectShow extends React.Component {
             <img className="project-show-image-scale" src={`${this.props.project.picture}`} />
           </div>
           <div>
-            <p className='project-font-format'>{this.props.project.description}</p>
+            <p className='project-font-format' dangerouslySetInnerHTML={{ __html: description }}></p>
           </div>
           <div>
             <ul className='instructions-show-format'>

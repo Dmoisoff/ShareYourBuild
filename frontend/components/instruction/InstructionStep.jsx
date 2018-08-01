@@ -9,6 +9,7 @@ class InstructionStep extends React.Component{
   }
 
   render(){
+    const body = this.props.body;
     const media = this.props.media ? <img className="instruction-show-image-scale" src={`${this.props.media}`} /> : null;
     return(
       <div className='instruction-step-format'>
@@ -17,7 +18,7 @@ class InstructionStep extends React.Component{
         </div>
         {media}
         <div>
-          <p className='project-font-format' >{this.props.body}</p>
+          <p className='project-font-format' dangerouslySetInnerHTML={{ __html: body }}></p>
         </div>
         <div className='instruction-divider'></div>
       </div>
