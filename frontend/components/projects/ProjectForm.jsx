@@ -37,7 +37,6 @@ class ProjectForm extends React.Component{
   }
 
   removeInstruction(instructionStep){
-    debugger
     const instructions = this.state.instructions;
     const removedInstruction = instructions[instructionStep-1].props.id;
     const newOrderInstructions = instructions.slice(0, instructionStep-1).concat(instructions.slice(instructionStep));

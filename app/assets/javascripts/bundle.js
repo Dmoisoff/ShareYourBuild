@@ -538,20 +538,36 @@ var Greeting = function (_React$Component) {
 
     _this.state = { active: false };
     _this.greeting = _this.greeting.bind(_this);
-    _this.toggleClass = _this.toggleClass.bind(_this);
+    _this.dropDownList = null;
+    _this.dropDown = null;
+    document.addEventListener('click', function (e) {
+      _this.toggleDropdown(e);
+    });
     return _this;
   }
 
   _createClass(Greeting, [{
-    key: 'toggleClass',
-    value: function toggleClass() {
-      var currentState = this.state.active;
-      this.setState({ active: !currentState });
-    }
-  }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps() {
       this.setState({ active: false });
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.dropDownList = document.getElementById('drop-down-list');
+      this.dropDown = document.getElementById('dropDown');
+    }
+  }, {
+    key: 'toggleDropdown',
+    value: function toggleDropdown(e) {
+      if (this.dropDown) {
+        var target = e.target;
+        if (target.id != this.dropDown.id) {
+          this.setState({ active: false });
+        } else {
+          this.setState({ active: true });
+        }
+      }
     }
   }, {
     key: 'greeting',
@@ -579,12 +595,10 @@ var Greeting = function (_React$Component) {
               _react2.default.createElement(
                 'li',
                 null,
-                _react2.default.createElement('img', { className: 'user-profile-pic clickable', src: this.props.currentUser.profilePic, onClick: function onClick() {
-                    _this2.toggleClass();
-                  } }),
+                _react2.default.createElement('img', { className: 'user-profile-pic clickable', id: 'dropDown', src: this.props.currentUser.profilePic }),
                 _react2.default.createElement(
                   'ul',
-                  { className: active + ' ' },
+                  { className: active + ' ', id: 'drop-down-list' },
                   _react2.default.createElement(
                     'li',
                     { className: 'user-dropDown-content' },
@@ -1750,7 +1764,6 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'removeInstruction',
     value: function removeInstruction(instructionStep) {
-      debugger;
       var instructions = this.state.instructions;
       var removedInstruction = instructions[instructionStep - 1].props.id;
       var newOrderInstructions = instructions.slice(0, instructionStep - 1).concat(instructions.slice(instructionStep));

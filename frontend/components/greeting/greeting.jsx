@@ -6,17 +6,30 @@ class Greeting extends React.Component{
     super(props);
     this.state = {active: false};
     this.greeting = this.greeting.bind(this);
-    this.toggleClass = this.toggleClass.bind(this);
+    this.dropDownList = null;
+    this.dropDown = null;
+    document.addEventListener('click', (e) =>{this.toggleDropdown(e);});
   }
-
-  toggleClass() {
-    const currentState = this.state.active;
-     this.setState({active: !currentState});
-    }
 
     componentWillReceiveProps(){
       this.setState({active: false});
     }
+
+    componentDidMount(){
+      this.dropDownList = document.getElementById('drop-down-list');
+      this.dropDown = document.getElementById('dropDown');
+    }
+
+  toggleDropdown(e){
+    if(this.dropDown){
+    const target = e.target;
+      if(target.id != this.dropDown.id){
+        this.setState({active: false});
+      }else{
+        this.setState({active: true});
+      }
+    }
+  }
 
   greeting(){
     if (this.props.currentUser){
@@ -34,8 +47,8 @@ class Greeting extends React.Component{
           <div className='user-dropdown-position'>
             <ul>
               <li>
-                <img className='user-profile-pic clickable' src={this.props.currentUser.profilePic} onClick={() => {this.toggleClass();}} />
-                <ul className={`${active} `}>
+                <img className='user-profile-pic clickable' id='dropDown' src={this.props.currentUser.profilePic} />
+                <ul className={`${active} `} id='drop-down-list'>
                   <li className='user-dropDown-content'>
                     <Link className='clickable user-drop-items' onClick={() =>{this.props.logOut();}} to='/'>Sign Out</Link>
                   </li>
