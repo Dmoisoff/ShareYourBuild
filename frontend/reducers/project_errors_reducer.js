@@ -12,6 +12,7 @@ const projectErrorsReducer = (state = [], action) => {
     case FETCH_INSTRUCTION:
     case FETCH_PROJECT:
     case RECEIVE_CURRENT_USER:
+    case CLEAR_ERRORS:
       return [];
     default:
       return oldState;

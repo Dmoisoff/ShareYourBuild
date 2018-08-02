@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { connect } from 'react-redux';
-import { createProject } from './../../actions/projects_actions';
+import { createProject, CLEAR_ERRORS } from './../../actions/projects_actions';
 import { projectErrorsReducer } from './../../reducers/project_errors_reducer';
 import ProjectForm from './ProjectForm';
 
@@ -33,7 +33,8 @@ const mstp = (state) => {
 
 const mdtp = (dispatch) => {
   return({
-    submitProject: (project) => dispatch(createProject(project))
+    submitProject: (project) => dispatch(createProject(project)),
+    clearProjectErrors: () => dispatch({type: CLEAR_ERRORS})
   });
 };
 

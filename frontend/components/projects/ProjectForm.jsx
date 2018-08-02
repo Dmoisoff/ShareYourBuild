@@ -170,10 +170,14 @@ class ProjectForm extends React.Component{
   }
 
   errors(){
-    if(!this.props.errors){
+    debugger
+    if(this.props.errors.length === 0){
       return [];
     }else{
-
+      // if (this.state.instructionBodies.length) {
+      //   this.instructions();
+      // }
+      setTimeout(() => {this.props.clearProjectErrors();} ,3000);
       return this.props.errors.map((error,i) => {
         return <li className='project-errors' key={i} >{error}</li>;
         });
@@ -184,7 +188,7 @@ class ProjectForm extends React.Component{
     if(!this.state.instructionIssues.length){
       return [];
     }else{
-      setTimeout(() =>{this.setState({instructionIssues: []});},3000);
+      setTimeout(() => {this.setState({instructionIssues: []});} ,3000);
       return this.state.instructionIssues.map((error,i) => {
         return <li className='project-errors' key={i} >{error}</li>;
         });
@@ -247,6 +251,21 @@ class ProjectForm extends React.Component{
                   />;
         });
        this.setState({instructions: instructions, key: keyValue});
+      }
+    }
+
+    componentDidUpdate(prevProps){
+      debugger
+      if(this.props.errors.length !== 0 && prevProps.errors.length === 0){
+        const instructionBodyErrors = [];
+        this.state.instructionBodies.forEach((instructionBody) => {
+          if(!Object.values(instructionBody)[0]){
+            instructionBodyErrors.push([`Please finish filling out the body for step ${Object.keys(instructionBody)}`]);
+          }
+        });
+        if(instructionBodyErrors.length){
+          this.setState({instructionIssues: instructionBodyErrors});
+        }
       }
     }
 
@@ -364,7 +383,7 @@ class ProjectForm extends React.Component{
               <button className='add-instruction'
                 onClick={() =>{this.instructions();}}>Add Instruction</button>
             </div>
-            <div className='project-message-position'>
+            <div className='project-error-message-position'>
               <ul className='project-errors-container'>
                 {this.errors()}
                 {instructionErrors}

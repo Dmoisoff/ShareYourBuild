@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchProject, updateProject, createProject } from './../../actions/projects_actions';
+import { fetchProject, updateProject, createProject, CLEAR_ERRORS } from './../../actions/projects_actions';
 import ProjectForm from './ProjectForm';
 import { deleteInstruction, deleteInstructions } from './../../actions/instructions_actions';
 
@@ -24,11 +24,12 @@ class EditProjectForm extends React.Component{
       return <div>Loading...</div>;
     }
 
-    const { submitProject, formType, project, errors, deleteInstruction } = this.props;
+    const { submitProject, formType, project, errors, deleteInstruction, clearProjectErrors } = this.props;
     return (
       <ProjectForm
         submitProject={submitProject}
         deleteInstruction={deleteInstruction}
+        clearProjectErrors={clearProjectErrors}
         formType={formType}
         errors={errors}
         project={project} />
@@ -101,7 +102,8 @@ const mdtp = (dispatch) => {
     submitProject: (project, id) =>  dispatch(updateProject(project, id)),
     fetchProject: (id) =>  dispatch(fetchProject(id)),
     createProject: (instruction) =>  dispatch(createProject(instruction)),
-    deleteInstruction: (ids) => dispatch(deleteInstructions(ids))
+    deleteInstruction: (ids) => dispatch(deleteInstructions(ids)),
+    clearProjectErrors: () => dispatch({type: CLEAR_ERRORS})
   });
 };
 

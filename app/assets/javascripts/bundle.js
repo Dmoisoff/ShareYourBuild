@@ -190,7 +190,7 @@ var deleteInstructions = exports.deleteInstructions = function deleteInstruction
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.deleteProject = exports.updateProject = exports.createProject = exports.fetchProject = exports.fetchProjectsByUser = exports.fetchProjects = exports.FETCH_PROJECTS_BY_USER = exports.RECEIVE_PROJECT_ERRORS = exports.REMOVE_PROJECT = exports.FETCH_PROJECT = exports.FETCH_ALL_PROJECTS = undefined;
+exports.deleteProject = exports.updateProject = exports.createProject = exports.fetchProject = exports.fetchProjectsByUser = exports.fetchProjects = exports.CLEAR_ERRORS = exports.FETCH_PROJECTS_BY_USER = exports.RECEIVE_PROJECT_ERRORS = exports.REMOVE_PROJECT = exports.FETCH_PROJECT = exports.FETCH_ALL_PROJECTS = undefined;
 
 var _project_api_util = __webpack_require__(/*! ./../util/project_api_util */ "./frontend/util/project_api_util.js");
 
@@ -203,6 +203,7 @@ var FETCH_PROJECT = exports.FETCH_PROJECT = 'FETCH_PROJECT';
 var REMOVE_PROJECT = exports.REMOVE_PROJECT = 'REMOVE_PROJECT';
 var RECEIVE_PROJECT_ERRORS = exports.RECEIVE_PROJECT_ERRORS = 'RECEIVE_PROJECT_ERRORS';
 var FETCH_PROJECTS_BY_USER = exports.FETCH_PROJECTS_BY_USER = 'FETCH_PROJECTS_BY_USER';
+var CLEAR_ERRORS = exports.CLEAR_ERRORS = 'CLEAR_ERRORS';
 
 var fetchProjects = exports.fetchProjects = function fetchProjects() {
   return function (dispatch) {
@@ -1236,11 +1237,13 @@ var EditProjectForm = function (_React$Component) {
           formType = _props.formType,
           project = _props.project,
           errors = _props.errors,
-          deleteInstruction = _props.deleteInstruction;
+          deleteInstruction = _props.deleteInstruction,
+          clearProjectErrors = _props.clearProjectErrors;
 
       return _react2.default.createElement(_ProjectForm2.default, {
         submitProject: submitProject,
         deleteInstruction: deleteInstruction,
+        clearProjectErrors: clearProjectErrors,
         formType: formType,
         errors: errors,
         project: project });
@@ -1319,6 +1322,9 @@ var mdtp = function mdtp(dispatch) {
     },
     deleteInstruction: function deleteInstruction(ids) {
       return dispatch((0, _instructions_actions.deleteInstructions)(ids));
+    },
+    clearProjectErrors: function clearProjectErrors() {
+      return dispatch({ type: _projects_actions.CLEAR_ERRORS });
     }
   };
 };
@@ -1644,6 +1650,9 @@ var mdtp = function mdtp(dispatch) {
   return {
     submitProject: function submitProject(project) {
       return dispatch((0, _projects_actions.createProject)(project));
+    },
+    clearProjectErrors: function clearProjectErrors() {
+      return dispatch({ type: _projects_actions.CLEAR_ERRORS });
     }
   };
 };
@@ -1900,10 +1909,18 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'errors',
     value: function errors() {
-      if (!this.props.errors) {
+      var _this5 = this;
+
+      debugger;
+      if (this.props.errors.length === 0) {
         return [];
       } else {
-
+        // if (this.state.instructionBodies.length) {
+        //   this.instructions();
+        // }
+        setTimeout(function () {
+          _this5.props.clearProjectErrors();
+        }, 3000);
         return this.props.errors.map(function (error, i) {
           return _react2.default.createElement(
             'li',
@@ -1916,13 +1933,13 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'instructionErrors',
     value: function instructionErrors() {
-      var _this5 = this;
+      var _this6 = this;
 
       if (!this.state.instructionIssues.length) {
         return [];
       } else {
         setTimeout(function () {
-          _this5.setState({ instructionIssues: [] });
+          _this6.setState({ instructionIssues: [] });
         }, 3000);
         return this.state.instructionIssues.map(function (error, i) {
           return _react2.default.createElement(
@@ -1968,7 +1985,7 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'componentWillMount',
     value: function componentWillMount() {
-      var _this6 = this;
+      var _this7 = this;
 
       if (this.props.project.lastPrefilledInstruction === this.state.stepNum && this.props.formType === 'Update Project') {
         var keyValue = this.state.key;
@@ -1985,17 +2002,33 @@ var ProjectForm = function (_React$Component) {
             projectId: instruction.projectId,
             key: keyValue,
             media: instruction.media,
-            instructionBodiesState: _this6.instructionBodiesState.bind(_this6),
-            removeInstruction: _this6.removeInstruction.bind(_this6)
+            instructionBodiesState: _this7.instructionBodiesState.bind(_this7),
+            removeInstruction: _this7.removeInstruction.bind(_this7)
           });
         });
         this.setState({ instructions: instructions, key: keyValue });
       }
     }
   }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps) {
+      debugger;
+      if (this.props.errors.length !== 0 && prevProps.errors.length === 0) {
+        var instructionBodyErrors = [];
+        this.state.instructionBodies.forEach(function (instructionBody) {
+          if (!Object.values(instructionBody)[0]) {
+            instructionBodyErrors.push(['Please finish filling out the body for step ' + Object.keys(instructionBody)]);
+          }
+        });
+        if (instructionBodyErrors.length) {
+          this.setState({ instructionIssues: instructionBodyErrors });
+        }
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var _this7 = this;
+      var _this8 = this;
 
       var previousPicture = this.state.picture && this.props.formType === 'Update Project' ? _react2.default.createElement(
         'div',
@@ -2124,7 +2157,7 @@ var ProjectForm = function (_React$Component) {
       var instructions = this.state.instructions;
       if (this.state.projectId && this.props.formType === 'New Project') {
         instructions = instructions.map(function (instruction) {
-          instruction = _react2.default.cloneElement(instruction, { projectId: _this7.state.projectId });
+          instruction = _react2.default.cloneElement(instruction, { projectId: _this8.state.projectId });
           return instruction;
         });
       }
@@ -2171,14 +2204,14 @@ var ProjectForm = function (_React$Component) {
                 'button',
                 { className: 'add-instruction',
                   onClick: function onClick() {
-                    _this7.instructions();
+                    _this8.instructions();
                   } },
                 'Add Instruction'
               )
             ),
             _react2.default.createElement(
               'div',
-              { className: 'project-message-position' },
+              { className: 'project-error-message-position' },
               _react2.default.createElement(
                 'ul',
                 { className: 'project-errors-container' },
@@ -3366,6 +3399,7 @@ var projectErrorsReducer = function projectErrorsReducer() {
     case _instructions_actions.FETCH_INSTRUCTION:
     case _projects_actions.FETCH_PROJECT:
     case _session_actions.RECEIVE_CURRENT_USER:
+    case CLEAR_ERRORS:
       return [];
     default:
       return oldState;

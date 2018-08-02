@@ -65,7 +65,7 @@
   flex-direction: row-reverse;
   margin-left: 20px;
   margin-right: 20px;
-  margin-bottom: 20px;
+  padding-bottom: 20px;
 }
 
 .project-body-text{
@@ -114,13 +114,21 @@
   justify-content: center;
 }
 
+.project-error-message-position{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
 .project-errors-container{
   background-color: #bd2121;
   border-radius: 5px;
   text-align: center;
   padding-left: 20px;
   padding-right: 20px;
-  margin-top: 15px;
+  margin-top: -53px;
+  margin-bottom: 53px;
 }
 
 .project-errors{
