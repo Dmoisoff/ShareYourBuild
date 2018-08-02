@@ -1757,6 +1757,24 @@ var ProjectForm = function (_React$Component) {
       var modifiedStepNumberInstructions = newOrderInstructions.map(function (instruction, i) {
         return instruction = _react2.default.cloneElement(instruction, { step: i + 1 });
       });
+      var newInstructionBodyStatus = [];
+      this.state.instructionBodies.forEach(function (instructionBody) {
+        if (Number(Object.keys(instructionBody)[0]) !== instructionStep) {
+          newInstructionBodyStatus.push(instructionBody);
+        }
+      });
+      var reorderedNewInstructionBodyStatus = [];
+      newInstructionBodyStatus.forEach(function (InstructionBody) {
+        var updatedStatus = {};
+        var currentStepNumber = Number(Object.keys(InstructionBody)[0]);
+        if (currentStepNumber < instructionStep) {
+          updatedStatus[currentStepNumber] = Object.values(InstructionBody)[0];
+          reorderedNewInstructionBodyStatus.push(updatedStatus);
+        } else {
+          updatedStatus[currentStepNumber - 1] = Object.values(InstructionBody)[0];
+          reorderedNewInstructionBodyStatus.push(updatedStatus);
+        }
+      });
       if (this.state.newlyAddedSteps.includes(instructionStep)) {
         this.setState({
           newlyAddedSteps: this.state.newlyAddedSteps.filter(function (num) {
@@ -1764,34 +1782,21 @@ var ProjectForm = function (_React$Component) {
               return num;
             }
           }),
-          instructionBodies: this.state.instructionBodies.filter(function (instructionBody) {
-            var key = Number(Object.keys(instructionBody)[0]);
-            if (key !== instructionStep) {
-              return instructionBody;
-            }
-          }),
+          instructionBodies: reorderedNewInstructionBodyStatus,
           removedInstructions: [].concat(_toConsumableArray(this.state.removedInstructions), [removedInstruction]),
           instructions: modifiedStepNumberInstructions,
           stepNum: this.state.stepNum - 1
         });
       } else if (removedInstruction) {
         this.setState({
-          instructionBodies: this.state.instructionBodies.filter(function (instructionBody) {
-            if (Object.keys(instructionBody)[0] !== instructionStep) {
-              return instructionBody;
-            }
-          }),
+          instructionBodies: reorderedNewInstructionBodyStatus,
           removedInstructions: [].concat(_toConsumableArray(this.state.removedInstructions), [removedInstruction]),
           instructions: modifiedStepNumberInstructions,
           stepNum: this.state.stepNum - 1
         });
       } else {
         this.setState({
-          instructionBodies: this.state.instructionBodies.filter(function (instructionBody) {
-            if (Object.keys(instructionBody)[0] !== instructionStep) {
-              return instructionBody;
-            }
-          }),
+          instructionBodies: reorderedNewInstructionBodyStatus,
           instructions: modifiedStepNumberInstructions,
           stepNum: this.state.stepNum - 1
         });
@@ -1886,6 +1891,7 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'instructionBodiesState',
     value: function instructionBodiesState(instructionBodyFilled, instructionStep) {
+      debugger;
       var newInstructions = {};
       newInstructions[instructionStep] = instructionBodyFilled;
       if (!this.state.instructionBodies.length) {
@@ -1935,6 +1941,7 @@ var ProjectForm = function (_React$Component) {
     value: function instructionErrors() {
       var _this6 = this;
 
+      debugger;
       if (!this.state.instructionIssues.length) {
         return [];
       } else {
@@ -1953,6 +1960,7 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'instructions',
     value: function instructions() {
+      debugger;
       var instructionBodyErrors = [];
       this.state.instructionBodies.forEach(function (instructionBody) {
         if (!Object.values(instructionBody)[0]) {

@@ -44,6 +44,24 @@ class ProjectForm extends React.Component{
     const modifiedStepNumberInstructions = newOrderInstructions.map((instruction,i) => {
       return instruction = React.cloneElement(instruction, {step: (i + 1)} );
     });
+    let newInstructionBodyStatus = [];
+    this.state.instructionBodies.forEach((instructionBody) => {
+      if(Number(Object.keys(instructionBody)[0]) !== instructionStep){
+        newInstructionBodyStatus.push(instructionBody);
+      }
+    });
+    let reorderedNewInstructionBodyStatus = [];
+    newInstructionBodyStatus.forEach((InstructionBody) => {
+      let updatedStatus = {};
+      let currentStepNumber = Number(Object.keys(InstructionBody)[0]);
+      if(currentStepNumber < instructionStep){
+        updatedStatus[currentStepNumber] = Object.values(InstructionBody)[0];
+        reorderedNewInstructionBodyStatus.push(updatedStatus);
+      }else{
+        updatedStatus[currentStepNumber - 1] = Object.values(InstructionBody)[0];
+        reorderedNewInstructionBodyStatus.push(updatedStatus);
+      }
+    });
     if(this.state.newlyAddedSteps.includes(instructionStep)){
       this.setState({
         newlyAddedSteps: this.state.newlyAddedSteps.filter((num) =>{
@@ -51,34 +69,21 @@ class ProjectForm extends React.Component{
             return num;
           }
         }),
-        instructionBodies: this.state.instructionBodies.filter((instructionBody) =>{
-          const key = Number(Object.keys(instructionBody)[0]);
-          if(key !== instructionStep){
-            return instructionBody;
-          }
-        }),
+        instructionBodies: reorderedNewInstructionBodyStatus,
         removedInstructions: [...this.state.removedInstructions,removedInstruction],
         instructions: modifiedStepNumberInstructions,
         stepNum: (this.state.stepNum-1)
       });
     }else if(removedInstruction){
       this.setState({
-        instructionBodies: this.state.instructionBodies.filter((instructionBody) =>{
-          if(Object.keys(instructionBody)[0] !== instructionStep){
-            return instructionBody;
-          }
-        }),
+        instructionBodies: reorderedNewInstructionBodyStatus,
         removedInstructions: [...this.state.removedInstructions,removedInstruction],
         instructions: modifiedStepNumberInstructions,
         stepNum: (this.state.stepNum-1)
       });
     }else{
       this.setState({
-        instructionBodies: this.state.instructionBodies.filter((instructionBody) =>{
-          if(Object.keys(instructionBody)[0] !== instructionStep){
-            return instructionBody;
-          }
-        }),
+        instructionBodies: reorderedNewInstructionBodyStatus,
         instructions: modifiedStepNumberInstructions,
         stepNum: (this.state.stepNum-1)
       });
@@ -148,6 +153,7 @@ class ProjectForm extends React.Component{
   }
 
   instructionBodiesState(instructionBodyFilled,instructionStep){
+    debugger
     let newInstructions = {};
     newInstructions[instructionStep] = instructionBodyFilled;
     if (!this.state.instructionBodies.length) {
@@ -185,6 +191,7 @@ class ProjectForm extends React.Component{
     }
 
   instructionErrors(){
+    debugger
     if(!this.state.instructionIssues.length){
       return [];
     }else{
@@ -196,6 +203,7 @@ class ProjectForm extends React.Component{
     }
 
     instructions(){
+      debugger
       const instructionBodyErrors = [];
       this.state.instructionBodies.forEach((instructionBody) => {
         if(!Object.values(instructionBody)[0]){
