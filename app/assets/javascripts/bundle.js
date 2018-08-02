@@ -1916,9 +1916,14 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'instructionErrors',
     value: function instructionErrors() {
+      var _this5 = this;
+
       if (!this.state.instructionIssues.length) {
         return [];
       } else {
+        setTimeout(function () {
+          _this5.setState({ instructionIssues: [] });
+        }, 3000);
         return this.state.instructionIssues.map(function (error, i) {
           return _react2.default.createElement(
             'li',
@@ -1963,7 +1968,7 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'componentWillMount',
     value: function componentWillMount() {
-      var _this5 = this;
+      var _this6 = this;
 
       if (this.props.project.lastPrefilledInstruction === this.state.stepNum && this.props.formType === 'Update Project') {
         var keyValue = this.state.key;
@@ -1980,8 +1985,8 @@ var ProjectForm = function (_React$Component) {
             projectId: instruction.projectId,
             key: keyValue,
             media: instruction.media,
-            instructionBodiesState: _this5.instructionBodiesState.bind(_this5),
-            removeInstruction: _this5.removeInstruction.bind(_this5)
+            instructionBodiesState: _this6.instructionBodiesState.bind(_this6),
+            removeInstruction: _this6.removeInstruction.bind(_this6)
           });
         });
         this.setState({ instructions: instructions, key: keyValue });
@@ -1990,7 +1995,7 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this6 = this;
+      var _this7 = this;
 
       var previousPicture = this.state.picture && this.props.formType === 'Update Project' ? _react2.default.createElement(
         'div',
@@ -2119,7 +2124,7 @@ var ProjectForm = function (_React$Component) {
       var instructions = this.state.instructions;
       if (this.state.projectId && this.props.formType === 'New Project') {
         instructions = instructions.map(function (instruction) {
-          instruction = _react2.default.cloneElement(instruction, { projectId: _this6.state.projectId });
+          instruction = _react2.default.cloneElement(instruction, { projectId: _this7.state.projectId });
           return instruction;
         });
       }
@@ -2166,7 +2171,7 @@ var ProjectForm = function (_React$Component) {
                 'button',
                 { className: 'add-instruction',
                   onClick: function onClick() {
-                    _this6.instructions();
+                    _this7.instructions();
                   } },
                 'Add Instruction'
               )

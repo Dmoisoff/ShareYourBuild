@@ -173,7 +173,7 @@ class ProjectForm extends React.Component{
     if(!this.props.errors){
       return [];
     }else{
-      
+
       return this.props.errors.map((error,i) => {
         return <li className='project-errors' key={i} >{error}</li>;
         });
@@ -184,6 +184,7 @@ class ProjectForm extends React.Component{
     if(!this.state.instructionIssues.length){
       return [];
     }else{
+      setTimeout(() =>{this.setState({instructionIssues: []});},3000);
       return this.state.instructionIssues.map((error,i) => {
         return <li className='project-errors' key={i} >{error}</li>;
         });
