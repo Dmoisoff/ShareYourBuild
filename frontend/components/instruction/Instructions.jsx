@@ -58,6 +58,7 @@ class Instructions extends React.Component{
     }
 
     handleSubmit(){
+      debugger
       const projectId = this.props.projectId;
       const formData = new FormData();
       formData.append('instruction[title]', this.state.title);

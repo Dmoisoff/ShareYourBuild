@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchProject, updateProject, createProject } from './../../actions/projects_actions';
 import ProjectForm from './ProjectForm';
-import { deleteInstruction } from './../../actions/instructions_actions';
+import { deleteInstruction, deleteInstructions } from './../../actions/instructions_actions';
 
 
 
@@ -96,13 +96,12 @@ const mstp = (state, ownProps) =>{
 };
 
 const mdtp = (dispatch) => {
+  debugger
   return({
     submitProject: (project, id) =>  dispatch(updateProject(project, id)),
     fetchProject: (id) =>  dispatch(fetchProject(id)),
     createProject: (instruction) =>  dispatch(createProject(instruction)),
-    deleteInstruction: (instructions,projectId) => instructions.forEach((instruction) =>
-          dispatch(deleteInstruction(instruction.props.id))
-      )
+    deleteInstruction: (ids) => dispatch(deleteInstructions(ids))
   });
 };
 

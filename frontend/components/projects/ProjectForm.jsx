@@ -37,8 +37,9 @@ class ProjectForm extends React.Component{
   }
 
   removeInstruction(instructionStep){
+    debugger
     const instructions = this.state.instructions;
-    const removedInstruction = instructions[instructionStep-1];
+    const removedInstruction = instructions[instructionStep-1].props.id;
     const newOrderInstructions = instructions.slice(0, instructionStep-1).concat(instructions.slice(instructionStep));
     const modifiedStepNumberInstructions = newOrderInstructions.map((instruction,i) => {
       return instruction = React.cloneElement(instruction, {step: (i + 1)} );
@@ -60,7 +61,7 @@ class ProjectForm extends React.Component{
         instructions: modifiedStepNumberInstructions,
         stepNum: (this.state.stepNum-1)
       });
-    }else{
+    }else if(removedInstruction){
       this.setState({
         instructionBodies: this.state.instructionBodies.filter((instructionBody) =>{
           if(Object.keys(instructionBody)[0] !== instructionStep){
@@ -68,6 +69,16 @@ class ProjectForm extends React.Component{
           }
         }),
         removedInstructions: [...this.state.removedInstructions,removedInstruction],
+        instructions: modifiedStepNumberInstructions,
+        stepNum: (this.state.stepNum-1)
+      });
+    }else{
+      this.setState({
+        instructionBodies: this.state.instructionBodies.filter((instructionBody) =>{
+          if(Object.keys(instructionBody)[0] !== instructionStep){
+            return instructionBody;
+          }
+        }),
         instructions: modifiedStepNumberInstructions,
         stepNum: (this.state.stepNum-1)
       });
@@ -92,15 +103,28 @@ class ProjectForm extends React.Component{
       });
     }else if (this.props.formType === 'Update Project') {
       this.props.submitProject(formData, projectId).then((payload) => {
-        this.props.deleteInstruction(this.state.removedInstructions, projectId);
-        let newInstructions = this.state.instructions.slice(-(this.state.newlyAddedSteps.length));
-        newInstructions = newInstructions.map((instruction) => {
-          instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
-          return instruction;
-        });
-        let updatedInstructions = this.state.instructions.slice(0,-(this.state.newlyAddedSteps.length)).concat(newInstructions);
-        this.setState({instructions: updatedInstructions});
-        this.redirect(payload.project.project.id);
+        if(this.state.removedInstructions.length){
+          this.props.deleteInstruction(this.state.removedInstructions.toString(), projectId).then(() =>{
+            debugger
+            let newInstructions = this.state.instructions.slice(-(this.state.newlyAddedSteps.length));
+            newInstructions = newInstructions.map((instruction) => {
+              instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
+              return instruction;
+            });
+            let updatedInstructions = this.state.instructions.slice(0,-(this.state.newlyAddedSteps.length)).concat(newInstructions);
+            this.setState({instructions: updatedInstructions});
+            this.redirect(payload.project.project.id);
+          });
+        }else{
+          let newInstructions = this.state.instructions.slice(-(this.state.newlyAddedSteps.length));
+          newInstructions = newInstructions.map((instruction) => {
+            instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
+            return instruction;
+          });
+          let updatedInstructions = this.state.instructions.slice(0,-(this.state.newlyAddedSteps.length)).concat(newInstructions);
+          this.setState({instructions: updatedInstructions});
+          this.redirect(payload.project.project.id);
+        }
       });
     }
 
@@ -149,6 +173,7 @@ class ProjectForm extends React.Component{
     if(!this.props.errors){
       return [];
     }else{
+      
       return this.props.errors.map((error,i) => {
         return <li className='project-errors' key={i} >{error}</li>;
         });
@@ -274,11 +299,6 @@ class ProjectForm extends React.Component{
                      placeholder='Please enter a brief description of your build'
                      className='project-body-text' rows="8" cols="80"
                      value={`${this.state.description}`}></textarea>
-                     <div className='project-message-position'>
-                       <ul className='project-errors-container'>
-                         {this.errors()}
-                       </ul>
-                     </div>
                  </div>;
      }else{
        // this is the view for creating a new project
@@ -303,11 +323,7 @@ class ProjectForm extends React.Component{
                    placeholder='Please enter a brief description of your build'
                    className='project-body-text' rows="8" cols="80"
                    value={`${this.state.description}`}></textarea>
-                   <div className='project-message-position'>
-                     <ul className='project-errors-container'>
-                       {this.errors()}
-                     </ul>
-                   </div>
+
                </div>;
      }
      // this will pass the project
@@ -320,11 +336,8 @@ class ProjectForm extends React.Component{
     }
 
     const instructionErrors = this.state.instructionIssues.length ?
-                              <div className='project-instruction-error-message'>
-                                <ul className='project-errors-container'>
-                                  {this.instructionErrors()}
-                                </ul>
-                              </div> : null;
+                                  this.instructionErrors()
+                                  : null;
 
 
     return(
@@ -350,7 +363,13 @@ class ProjectForm extends React.Component{
               <button className='add-instruction'
                 onClick={() =>{this.instructions();}}>Add Instruction</button>
             </div>
-            {instructionErrors}
+            <div className='project-message-position'>
+              <ul className='project-errors-container'>
+                {this.errors()}
+                {instructionErrors}
+              </ul>
+            </div>
+
           </div>
         </div>
       </div>

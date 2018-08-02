@@ -28,8 +28,11 @@ class Api::InstructionsController < ApplicationController
   end
 
   def destroy
-    @instruction = Instruction.find(params[:id])
-    @instruction.destroy
+    ids = params[:id].split(',')
+      ids.each do |id|
+        @instruction = Instruction.find(id)
+        @instruction.destroy
+    end
   end
 
 

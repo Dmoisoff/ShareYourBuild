@@ -34,6 +34,7 @@ export const updateInstruction = (instruction, id) => {
 
 
 export const deleteInstruction = (id) => {
+  // debugger
   return $.ajax({
     method: 'DELETE',
     url: `api/instructions/${id}`

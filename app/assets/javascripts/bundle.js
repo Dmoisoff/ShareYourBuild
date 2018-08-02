@@ -99,7 +99,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.deleteInstruction = exports.updateInstruction = exports.createInstruction = exports.fetchInstruction = exports.RECEIVE_INSTRUCTION_ERRORS = exports.REMOVE_INSTRUCTION = exports.FETCH_INSTRUCTION = undefined;
+exports.deleteInstructions = exports.deleteInstruction = exports.updateInstruction = exports.createInstruction = exports.fetchInstruction = exports.RECEIVE_INSTRUCTION_ERRORS = exports.REMOVE_INSTRUCTIONS = exports.REMOVE_INSTRUCTION = exports.FETCH_INSTRUCTION = undefined;
 
 var _instruction_api_util = __webpack_require__(/*! ./../util/instruction_api_util */ "./frontend/util/instruction_api_util.js");
 
@@ -109,6 +109,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 var FETCH_INSTRUCTION = exports.FETCH_INSTRUCTION = 'FETCH_INSTRUCTION';
 var REMOVE_INSTRUCTION = exports.REMOVE_INSTRUCTION = 'REMOVE_INSTRUCTION';
+var REMOVE_INSTRUCTIONS = exports.REMOVE_INSTRUCTIONS = 'REMOVE_INSTRUCTIONS';
 var RECEIVE_INSTRUCTION_ERRORS = exports.RECEIVE_INSTRUCTION_ERRORS = 'RECEIVE_INSTRUCTION_ERRORS';
 
 var fetchInstruction = exports.fetchInstruction = function fetchInstruction(id) {
@@ -123,6 +124,7 @@ var fetchInstruction = exports.fetchInstruction = function fetchInstruction(id) 
 };
 
 var createInstruction = exports.createInstruction = function createInstruction(instruction, id) {
+  debugger;
   return function (dispatch) {
     return Instruction_Util.createInstruction(instruction, id).then(function (instruction) {
       return dispatch({
@@ -158,6 +160,15 @@ var deleteInstruction = exports.deleteInstruction = function deleteInstruction(i
   return function (dispatch) {
     return Instruction_Util.deleteInstruction(id).then(function () {
       return dispatch({ type: REMOVE_INSTRUCTION, instructionId: id });
+    });
+  };
+};
+
+var deleteInstructions = exports.deleteInstructions = function deleteInstructions(ids) {
+  return function (dispatch) {
+    debugger;
+    return Instruction_Util.deleteInstruction(ids).then(function () {
+      return dispatch({ type: REMOVE_INSTRUCTIONS, instructionId: ids.split(',') });
     });
   };
 };
@@ -928,6 +939,7 @@ var Instructions = function (_React$Component) {
   }, {
     key: 'handleSubmit',
     value: function handleSubmit() {
+      debugger;
       var projectId = this.props.projectId;
       var formData = new FormData();
       formData.append('instruction[title]', this.state.title);
@@ -1294,6 +1306,7 @@ var mstp = function mstp(state, ownProps) {
 };
 
 var mdtp = function mdtp(dispatch) {
+  debugger;
   return {
     submitProject: function submitProject(project, id) {
       return dispatch((0, _projects_actions.updateProject)(project, id));
@@ -1304,10 +1317,8 @@ var mdtp = function mdtp(dispatch) {
     createProject: function createProject(instruction) {
       return dispatch((0, _projects_actions.createProject)(instruction));
     },
-    deleteInstruction: function deleteInstruction(instructions, projectId) {
-      return instructions.forEach(function (instruction) {
-        return dispatch((0, _instructions_actions.deleteInstruction)(instruction.props.id));
-      });
+    deleteInstruction: function deleteInstruction(ids) {
+      return dispatch((0, _instructions_actions.deleteInstructions)(ids));
     }
   };
 };
@@ -1730,8 +1741,9 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'removeInstruction',
     value: function removeInstruction(instructionStep) {
+      debugger;
       var instructions = this.state.instructions;
-      var removedInstruction = instructions[instructionStep - 1];
+      var removedInstruction = instructions[instructionStep - 1].props.id;
       var newOrderInstructions = instructions.slice(0, instructionStep - 1).concat(instructions.slice(instructionStep));
       var modifiedStepNumberInstructions = newOrderInstructions.map(function (instruction, i) {
         return instruction = _react2.default.cloneElement(instruction, { step: i + 1 });
@@ -1753,7 +1765,7 @@ var ProjectForm = function (_React$Component) {
           instructions: modifiedStepNumberInstructions,
           stepNum: this.state.stepNum - 1
         });
-      } else {
+      } else if (removedInstruction) {
         this.setState({
           instructionBodies: this.state.instructionBodies.filter(function (instructionBody) {
             if (Object.keys(instructionBody)[0] !== instructionStep) {
@@ -1761,6 +1773,16 @@ var ProjectForm = function (_React$Component) {
             }
           }),
           removedInstructions: [].concat(_toConsumableArray(this.state.removedInstructions), [removedInstruction]),
+          instructions: modifiedStepNumberInstructions,
+          stepNum: this.state.stepNum - 1
+        });
+      } else {
+        this.setState({
+          instructionBodies: this.state.instructionBodies.filter(function (instructionBody) {
+            if (Object.keys(instructionBody)[0] !== instructionStep) {
+              return instructionBody;
+            }
+          }),
           instructions: modifiedStepNumberInstructions,
           stepNum: this.state.stepNum - 1
         });
@@ -1788,15 +1810,28 @@ var ProjectForm = function (_React$Component) {
         });
       } else if (this.props.formType === 'Update Project') {
         this.props.submitProject(formData, projectId).then(function (payload) {
-          _this3.props.deleteInstruction(_this3.state.removedInstructions, projectId);
-          var newInstructions = _this3.state.instructions.slice(-_this3.state.newlyAddedSteps.length);
-          newInstructions = newInstructions.map(function (instruction) {
-            instruction = _react2.default.cloneElement(instruction, { projectId: _this3.state.projectId });
-            return instruction;
-          });
-          var updatedInstructions = _this3.state.instructions.slice(0, -_this3.state.newlyAddedSteps.length).concat(newInstructions);
-          _this3.setState({ instructions: updatedInstructions });
-          _this3.redirect(payload.project.project.id);
+          if (_this3.state.removedInstructions.length) {
+            _this3.props.deleteInstruction(_this3.state.removedInstructions.toString(), projectId).then(function () {
+              debugger;
+              var newInstructions = _this3.state.instructions.slice(-_this3.state.newlyAddedSteps.length);
+              newInstructions = newInstructions.map(function (instruction) {
+                instruction = _react2.default.cloneElement(instruction, { projectId: _this3.state.projectId });
+                return instruction;
+              });
+              var updatedInstructions = _this3.state.instructions.slice(0, -_this3.state.newlyAddedSteps.length).concat(newInstructions);
+              _this3.setState({ instructions: updatedInstructions });
+              _this3.redirect(payload.project.project.id);
+            });
+          } else {
+            var newInstructions = _this3.state.instructions.slice(-_this3.state.newlyAddedSteps.length);
+            newInstructions = newInstructions.map(function (instruction) {
+              instruction = _react2.default.cloneElement(instruction, { projectId: _this3.state.projectId });
+              return instruction;
+            });
+            var updatedInstructions = _this3.state.instructions.slice(0, -_this3.state.newlyAddedSteps.length).concat(newInstructions);
+            _this3.setState({ instructions: updatedInstructions });
+            _this3.redirect(payload.project.project.id);
+          }
         });
       }
     }
@@ -1868,6 +1903,7 @@ var ProjectForm = function (_React$Component) {
       if (!this.props.errors) {
         return [];
       } else {
+
         return this.props.errors.map(function (error, i) {
           return _react2.default.createElement(
             'li',
@@ -2038,16 +2074,7 @@ var ProjectForm = function (_React$Component) {
           _react2.default.createElement('textarea', { onChange: this.updateDescription.bind(this),
             placeholder: 'Please enter a brief description of your build',
             className: 'project-body-text', rows: '8', cols: '80',
-            value: '' + this.state.description }),
-          _react2.default.createElement(
-            'div',
-            { className: 'project-message-position' },
-            _react2.default.createElement(
-              'ul',
-              { className: 'project-errors-container' },
-              this.errors()
-            )
-          )
+            value: '' + this.state.description })
         );
       } else {
         // this is the view for creating a new project
@@ -2085,16 +2112,7 @@ var ProjectForm = function (_React$Component) {
           _react2.default.createElement('textarea', { onChange: this.updateDescription.bind(this),
             placeholder: 'Please enter a brief description of your build',
             className: 'project-body-text', rows: '8', cols: '80',
-            value: '' + this.state.description }),
-          _react2.default.createElement(
-            'div',
-            { className: 'project-message-position' },
-            _react2.default.createElement(
-              'ul',
-              { className: 'project-errors-container' },
-              this.errors()
-            )
-          )
+            value: '' + this.state.description })
         );
       }
       // this will pass the project
@@ -2106,15 +2124,7 @@ var ProjectForm = function (_React$Component) {
         });
       }
 
-      var instructionErrors = this.state.instructionIssues.length ? _react2.default.createElement(
-        'div',
-        { className: 'project-instruction-error-message' },
-        _react2.default.createElement(
-          'ul',
-          { className: 'project-errors-container' },
-          this.instructionErrors()
-        )
-      ) : null;
+      var instructionErrors = this.state.instructionIssues.length ? this.instructionErrors() : null;
 
       return _react2.default.createElement(
         'div',
@@ -2161,7 +2171,16 @@ var ProjectForm = function (_React$Component) {
                 'Add Instruction'
               )
             ),
-            instructionErrors
+            _react2.default.createElement(
+              'div',
+              { className: 'project-message-position' },
+              _react2.default.createElement(
+                'ul',
+                { className: 'project-errors-container' },
+                this.errors(),
+                instructionErrors
+              )
+            )
           )
         )
       );
@@ -3272,6 +3291,8 @@ var instructionReducer = function instructionReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments[1];
 
+  debugger;
+  var ids = void 0;
   var newState = void 0;
   var oldState = Object.freeze(state);
   switch (action.type) {
@@ -3284,6 +3305,14 @@ var instructionReducer = function instructionReducer() {
     case Instruction_Actions.REMOVE_INSTRUCTION:
       newState = (0, _merge3.default)({}, state);
       delete newState[action.instructionId];
+      return newState;
+    case Instruction_Actions.REMOVE_INSTRUCTIONS:
+      ids = Object.values(action.instructionId);
+      newState = (0, _merge3.default)({}, state);
+      for (var i = 0; i < ids.length; i++) {
+        var id = ids[i];
+        delete newState[id];
+      }
       return newState;
     default:
       return oldState;
@@ -3649,10 +3678,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _redux = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 
-var _reduxLogger = __webpack_require__(/*! redux-logger */ "./node_modules/redux-logger/dist/redux-logger.js");
-
-var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
-
 var _reduxThunk = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
@@ -3663,9 +3688,17 @@ var _root_reducer2 = _interopRequireDefault(_root_reducer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var midWare = [_reduxThunk2.default];
+if (true) {
+  var _require = __webpack_require__(/*! redux-logger */ "./node_modules/redux-logger/dist/redux-logger.js"),
+      logger = _require.logger;
+
+  midWare.push(logger);
+}
+
 var configureStore = function configureStore() {
   var preloadedState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  return (0, _redux.createStore)(_root_reducer2.default, preloadedState, (0, _redux.applyMiddleware)(_reduxThunk2.default, _reduxLogger2.default));
+  return (0, _redux.createStore)(_root_reducer2.default, preloadedState, _redux.applyMiddleware.apply(undefined, midWare));
 };
 
 exports.default = configureStore;
@@ -3720,6 +3753,7 @@ var updateInstruction = exports.updateInstruction = function updateInstruction(i
 };
 
 var deleteInstruction = exports.deleteInstruction = function deleteInstruction(id) {
+  // debugger
   return $.ajax({
     method: 'DELETE',
     url: 'api/instructions/' + id

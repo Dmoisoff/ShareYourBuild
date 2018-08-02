@@ -5,6 +5,8 @@ import merge from 'lodash/merge';
 
 
 const instructionReducer = (state = {}, action) => {
+  debugger
+  let ids;
   let newState;
   const oldState = Object.freeze(state);
   switch (action.type) {
@@ -17,6 +19,14 @@ const instructionReducer = (state = {}, action) => {
     case Instruction_Actions.REMOVE_INSTRUCTION:
       newState = merge({}, state);
       delete(newState[action.instructionId]);
+      return newState;
+    case Instruction_Actions.REMOVE_INSTRUCTIONS:
+      ids = Object.values(action.instructionId);
+      newState = merge({}, state);
+      for (let i = 0; i < ids.length; i++) {
+        const id = ids[i];
+        delete(newState[id]);
+      }
       return newState;
     default:
       return oldState;

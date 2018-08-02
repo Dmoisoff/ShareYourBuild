@@ -3,6 +3,7 @@ import * as Instruction_Util from './../util/instruction_api_util';
 
 export const FETCH_INSTRUCTION = 'FETCH_INSTRUCTION';
 export const REMOVE_INSTRUCTION = 'REMOVE_INSTRUCTION';
+export const REMOVE_INSTRUCTIONS = 'REMOVE_INSTRUCTIONS';
 export const RECEIVE_INSTRUCTION_ERRORS = 'RECEIVE_INSTRUCTION_ERRORS';
 
 
@@ -20,6 +21,7 @@ export const fetchInstruction = (id) => {
 };
 
 export const createInstruction = (instruction,id) => {
+  debugger
   return dispatch => {
     return Instruction_Util.createInstruction(instruction,id).then((instruction) =>{
       return dispatch({
@@ -54,6 +56,13 @@ export const updateInstruction = (instruction, id) => {
 export const deleteInstruction = (id) => dispatch => {
     return Instruction_Util.deleteInstruction(id).then(
       () => dispatch({ type: REMOVE_INSTRUCTION, instructionId: id})
+    );
+  };
+
+export const deleteInstructions = (ids) => dispatch => {
+  debugger
+    return Instruction_Util.deleteInstruction(ids).then(
+      () => dispatch({ type: REMOVE_INSTRUCTIONS, instructionId: (ids.split(','))})
     );
   };
 
