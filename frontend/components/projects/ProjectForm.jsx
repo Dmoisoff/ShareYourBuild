@@ -382,35 +382,37 @@ class ProjectForm extends React.Component{
 
 
     return(
-      <div className='project-background'>
-        <div className='project-form-positioning'>
-          <form className='project-form-styling' id='submit-project'>
+      <div className='page-background'>
+        <div className='project-background'>
+          <div className='project-form-positioning'>
+            <form className='project-form-styling' id='submit-project'>
               {create}
               {update}
-          </form>
-          <div className='project-message-position '>
+            </form>
+            <div className='project-message-position '>
 
-            <ul>
-              {instructions}
-            </ul>
-          </div>
-          <div>
-            <div className='project-button-placement'>
-              <button form='submit-project'
-                onClick={this.handleSubmit.bind(this)}
-                className='project-submit'
-                type='submit'>{submitButton}</button>
-              {this.uploadResult()}
-              <button className='add-instruction'
-                onClick={() =>{this.instructions();}}>Add Instruction</button>
-            </div>
-            <div className='project-error-message-position'>
-              <ul className='project-errors-container'>
-                {this.errors()}
-                {instructionErrors}
+              <ul>
+                {instructions}
               </ul>
             </div>
+            <div>
+              <div className='project-button-placement'>
+                <button form='submit-project'
+                  onClick={this.handleSubmit.bind(this)}
+                  className='project-submit'
+                  type='submit'>{submitButton}</button>
+                {this.uploadResult()}
+                <button className='add-instruction'
+                  onClick={() =>{this.instructions();}}>Add Instruction</button>
+              </div>
+              <div className='project-error-message-position'>
+                <ul className='project-errors-container'>
+                  {this.errors()}
+                  {instructionErrors}
+                </ul>
+              </div>
 
+            </div>
           </div>
         </div>
       </div>

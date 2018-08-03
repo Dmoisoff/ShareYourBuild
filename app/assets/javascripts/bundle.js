@@ -2216,57 +2216,61 @@ var ProjectForm = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: 'project-background' },
+        { className: 'page-background' },
         _react2.default.createElement(
           'div',
-          { className: 'project-form-positioning' },
-          _react2.default.createElement(
-            'form',
-            { className: 'project-form-styling', id: 'submit-project' },
-            create,
-            update
-          ),
+          { className: 'project-background' },
           _react2.default.createElement(
             'div',
-            { className: 'project-message-position ' },
+            { className: 'project-form-positioning' },
             _react2.default.createElement(
-              'ul',
-              null,
-              instructions
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            null,
+              'form',
+              { className: 'project-form-styling', id: 'submit-project' },
+              create,
+              update
+            ),
             _react2.default.createElement(
               'div',
-              { className: 'project-button-placement' },
+              { className: 'project-message-position ' },
               _react2.default.createElement(
-                'button',
-                { form: 'submit-project',
-                  onClick: this.handleSubmit.bind(this),
-                  className: 'project-submit',
-                  type: 'submit' },
-                submitButton
-              ),
-              this.uploadResult(),
-              _react2.default.createElement(
-                'button',
-                { className: 'add-instruction',
-                  onClick: function onClick() {
-                    _this8.instructions();
-                  } },
-                'Add Instruction'
+                'ul',
+                null,
+                instructions
               )
             ),
             _react2.default.createElement(
               'div',
-              { className: 'project-error-message-position' },
+              null,
               _react2.default.createElement(
-                'ul',
-                { className: 'project-errors-container' },
-                this.errors(),
-                instructionErrors
+                'div',
+                { className: 'project-button-placement' },
+                _react2.default.createElement(
+                  'button',
+                  { form: 'submit-project',
+                    onClick: this.handleSubmit.bind(this),
+                    className: 'project-submit',
+                    type: 'submit' },
+                  submitButton
+                ),
+                this.uploadResult(),
+                _react2.default.createElement(
+                  'button',
+                  { className: 'add-instruction',
+                    onClick: function onClick() {
+                      _this8.instructions();
+                    } },
+                  'Add Instruction'
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'project-error-message-position' },
+                _react2.default.createElement(
+                  'ul',
+                  { className: 'project-errors-container' },
+                  this.errors(),
+                  instructionErrors
+                )
               )
             )
           )
