@@ -122,17 +122,19 @@ class ProjectForm extends React.Component{
         this.props.submitProject(formData, projectId).then((payload) => {
           if(this.state.removedInstructions.length){
             this.props.deleteInstruction(this.state.removedInstructions.toString(), projectId).then(() =>{
+              debugger
               let newInstructions = this.state.instructions.slice(-(this.state.newlyAddedSteps.length));
               newInstructions = newInstructions.map((instruction) => {
                 instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
                 return instruction;
               });
+              debugger
               let updatedInstructions = this.state.instructions.slice(0,-(this.state.newlyAddedSteps.length));
               updatedInstructions = updatedInstructions.map((instruction) => {
                 instruction = React.cloneElement(instruction, {uploadStatus: true});
                 return instruction;
               });
-              updatedInstructions.concat(newInstructions);
+              updatedInstructions = updatedInstructions.concat(newInstructions);
               this.setState({instructions: updatedInstructions});
               this.redirect(payload.project.project.id);
             });
@@ -148,8 +150,8 @@ class ProjectForm extends React.Component{
               return instruction;
             });
             debugger
-            updatedInstructions.concat(newInstructions);
-            this.setState({instructions: updatedInstructions});
+            updatedInstructions = updatedInstructions.concat(newInstructions);
+            this.setState({instructions: updatedInstructions, projectId: projectId});
             this.redirect(payload.project.project.id);
           }
         });

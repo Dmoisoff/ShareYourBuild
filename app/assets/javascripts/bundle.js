@@ -1106,6 +1106,7 @@ var _instructions_actions = __webpack_require__(/*! ./../../actions/instructions
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state, ownProps) {
+  debugger;
   return {
     instruction: {
       body: "",
@@ -1862,17 +1863,19 @@ var ProjectForm = function (_React$Component) {
           this.props.submitProject(formData, projectId).then(function (payload) {
             if (_this3.state.removedInstructions.length) {
               _this3.props.deleteInstruction(_this3.state.removedInstructions.toString(), projectId).then(function () {
+                debugger;
                 var newInstructions = _this3.state.instructions.slice(-_this3.state.newlyAddedSteps.length);
                 newInstructions = newInstructions.map(function (instruction) {
                   instruction = _react2.default.cloneElement(instruction, { projectId: _this3.state.projectId });
                   return instruction;
                 });
+                debugger;
                 var updatedInstructions = _this3.state.instructions.slice(0, -_this3.state.newlyAddedSteps.length);
                 updatedInstructions = updatedInstructions.map(function (instruction) {
                   instruction = _react2.default.cloneElement(instruction, { uploadStatus: true });
                   return instruction;
                 });
-                updatedInstructions.concat(newInstructions);
+                updatedInstructions = updatedInstructions.concat(newInstructions);
                 _this3.setState({ instructions: updatedInstructions });
                 _this3.redirect(payload.project.project.id);
               });
@@ -1888,8 +1891,8 @@ var ProjectForm = function (_React$Component) {
                 return instruction;
               });
               debugger;
-              updatedInstructions.concat(newInstructions);
-              _this3.setState({ instructions: updatedInstructions });
+              updatedInstructions = updatedInstructions.concat(newInstructions);
+              _this3.setState({ instructions: updatedInstructions, projectId: projectId });
               _this3.redirect(payload.project.project.id);
             }
           });
