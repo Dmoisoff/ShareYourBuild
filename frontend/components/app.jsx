@@ -16,36 +16,38 @@ import { AuthRoute, ProtectedRoute } from '../util/route_util';
 
 const App = () => (
   <div>
-    <header className='navbar'>
-      <div>
-        <Link className='clickable icon-space' to='/'>
-        <div id='syb-logo'></div>
-         <p>Share Your Build</p>
-       </Link>
-      </div>
-      <div className='nav_spacing'>
-        <div className='search-bar-formating'>
-          <form className='search-bar-form' >
-            <input type="text" placeholder="Let's Build ..." name="search2" className='search-bar-input' />
-            <button className='search-bar-button' type='submit'><i className="fas fa-search"></i></button>
-          </form>
-          <Link to="/project/new" className="create-build-button" >Create a Build</Link>
-        </div>
-      </div>
-      <GreetingContainer />
-    </header>
     <div>
-      <Switch>
-        <Route exact path="/" component={MainPage} />
-        <ProtectedRoute path="/project/new" component={NewProjectContainer} />
-        <ProtectedRoute exact path="/project/:projectId/edit" component={EditProjectContainer} />
-        <Route path="/project/:projectId" component={ShowProjectContainer} />
-        <Route path="/projects" component={IndexProjectsContainer} />
-        <Route path="/test" component={NewInstructionContainer} />
-        <Route path="/:username/:id/projects" component={UserProjectsIndexContainer} />
-        <AuthRoute exact path="/login" component={LoginFormContainer} />
-        <AuthRoute exact path="/signup" component={SignupFormContainer} />
-      </Switch>
+      <header className='navbar'>
+        <div>
+          <Link className='clickable icon-space' to='/'>
+            <div id='syb-logo'></div>
+            <p>Share Your Build</p>
+          </Link>
+        </div>
+        <div className='nav_spacing'>
+          <div className='search-bar-formating'>
+            <form className='search-bar-form' >
+              <input type="text" placeholder="Let's Build ..." name="search2" className='search-bar-input' />
+              <button className='search-bar-button' type='submit'><i className="fas fa-search"></i></button>
+            </form>
+            <Link to="/project/new" className="create-build-button" >Create a Build</Link>
+          </div>
+        </div>
+        <GreetingContainer />
+      </header>
+      <div class='window-size'>
+        <Switch>
+          <Route exact path="/" component={MainPage} />
+          <ProtectedRoute path="/project/new" component={NewProjectContainer} />
+          <ProtectedRoute exact path="/project/:projectId/edit" component={EditProjectContainer} />
+          <Route path="/project/:projectId" component={ShowProjectContainer} />
+          <Route path="/projects" component={IndexProjectsContainer} />
+          <Route path="/test" component={NewInstructionContainer} />
+          <Route path="/:username/:id/projects" component={UserProjectsIndexContainer} />
+          <AuthRoute exact path="/login" component={LoginFormContainer} />
+          <AuthRoute exact path="/signup" component={SignupFormContainer} />
+        </Switch>
+      </div>
     </div>
     <footer className='footer'>
       <div className='icon-space'>

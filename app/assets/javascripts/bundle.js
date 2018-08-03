@@ -408,62 +408,66 @@ var App = function App() {
     'div',
     null,
     _react2.default.createElement(
-      'header',
-      { className: 'navbar' },
-      _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          _reactRouterDom.Link,
-          { className: 'clickable icon-space', to: '/' },
-          _react2.default.createElement('div', { id: 'syb-logo' }),
-          _react2.default.createElement(
-            'p',
-            null,
-            'Share Your Build'
-          )
-        )
-      ),
-      _react2.default.createElement(
-        'div',
-        { className: 'nav_spacing' },
-        _react2.default.createElement(
-          'div',
-          { className: 'search-bar-formating' },
-          _react2.default.createElement(
-            'form',
-            { className: 'search-bar-form' },
-            _react2.default.createElement('input', { type: 'text', placeholder: 'Let\'s Build ...', name: 'search2', className: 'search-bar-input' }),
-            _react2.default.createElement(
-              'button',
-              { className: 'search-bar-button', type: 'submit' },
-              _react2.default.createElement('i', { className: 'fas fa-search' })
-            )
-          ),
-          _react2.default.createElement(
-            _reactRouterDom.Link,
-            { to: '/project/new', className: 'create-build-button' },
-            'Create a Build'
-          )
-        )
-      ),
-      _react2.default.createElement(_greeting_container2.default, null)
-    ),
-    _react2.default.createElement(
       'div',
       null,
       _react2.default.createElement(
-        _reactRouterDom.Switch,
-        null,
-        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _main_page2.default }),
-        _react2.default.createElement(_route_util.ProtectedRoute, { path: '/project/new', component: _NewProjectContainer2.default }),
-        _react2.default.createElement(_route_util.ProtectedRoute, { exact: true, path: '/project/:projectId/edit', component: _EditProjectContainer2.default }),
-        _react2.default.createElement(_reactRouterDom.Route, { path: '/project/:projectId', component: _ShowProjectContainer2.default }),
-        _react2.default.createElement(_reactRouterDom.Route, { path: '/projects', component: _IndexProjectsContainer2.default }),
-        _react2.default.createElement(_reactRouterDom.Route, { path: '/test', component: _NewInstructionContainer2.default }),
-        _react2.default.createElement(_reactRouterDom.Route, { path: '/:username/:id/projects', component: _UserProjectsIndexContainer2.default }),
-        _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/login', component: _LoginFormContainer2.default }),
-        _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/signup', component: _SignupFormContainer2.default })
+        'header',
+        { className: 'navbar' },
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            _reactRouterDom.Link,
+            { className: 'clickable icon-space', to: '/' },
+            _react2.default.createElement('div', { id: 'syb-logo' }),
+            _react2.default.createElement(
+              'p',
+              null,
+              'Share Your Build'
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'nav_spacing' },
+          _react2.default.createElement(
+            'div',
+            { className: 'search-bar-formating' },
+            _react2.default.createElement(
+              'form',
+              { className: 'search-bar-form' },
+              _react2.default.createElement('input', { type: 'text', placeholder: 'Let\'s Build ...', name: 'search2', className: 'search-bar-input' }),
+              _react2.default.createElement(
+                'button',
+                { className: 'search-bar-button', type: 'submit' },
+                _react2.default.createElement('i', { className: 'fas fa-search' })
+              )
+            ),
+            _react2.default.createElement(
+              _reactRouterDom.Link,
+              { to: '/project/new', className: 'create-build-button' },
+              'Create a Build'
+            )
+          )
+        ),
+        _react2.default.createElement(_greeting_container2.default, null)
+      ),
+      _react2.default.createElement(
+        'div',
+        { 'class': 'window-size' },
+        _react2.default.createElement(
+          _reactRouterDom.Switch,
+          null,
+          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _main_page2.default }),
+          _react2.default.createElement(_route_util.ProtectedRoute, { path: '/project/new', component: _NewProjectContainer2.default }),
+          _react2.default.createElement(_route_util.ProtectedRoute, { exact: true, path: '/project/:projectId/edit', component: _EditProjectContainer2.default }),
+          _react2.default.createElement(_reactRouterDom.Route, { path: '/project/:projectId', component: _ShowProjectContainer2.default }),
+          _react2.default.createElement(_reactRouterDom.Route, { path: '/projects', component: _IndexProjectsContainer2.default }),
+          _react2.default.createElement(_reactRouterDom.Route, { path: '/test', component: _NewInstructionContainer2.default }),
+          _react2.default.createElement(_reactRouterDom.Route, { path: '/:username/:id/projects', component: _UserProjectsIndexContainer2.default }),
+          _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/login', component: _LoginFormContainer2.default }),
+          _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/signup', component: _SignupFormContainer2.default })
+        )
       )
     ),
     _react2.default.createElement(
