@@ -21,7 +21,6 @@ export const fetchInstruction = (id) => {
 };
 
 export const createInstruction = (instruction,id) => {
-  debugger
   return dispatch => {
     return Instruction_Util.createInstruction(instruction,id).then((instruction) =>{
       return dispatch({
@@ -37,9 +36,9 @@ export const createInstruction = (instruction,id) => {
   };
 };
 
-export const updateInstruction = (instruction, id) => {
+export const updateInstruction = (instruction,id) => {
   return dispatch => {
-    return Instruction_Util.updateInstruction(instruction, id).then((instruction) =>{
+    return Instruction_Util.updateInstruction(instruction,id).then((instruction) =>{
       return dispatch({
         type: FETCH_INSTRUCTION,
         instruction: instruction
@@ -60,7 +59,6 @@ export const deleteInstruction = (id) => dispatch => {
   };
 
 export const deleteInstructions = (ids) => dispatch => {
-  debugger
     return Instruction_Util.deleteInstruction(ids).then(
       () => dispatch({ type: REMOVE_INSTRUCTIONS, instructionId: (ids.split(','))})
     );

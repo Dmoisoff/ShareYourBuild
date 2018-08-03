@@ -5,7 +5,6 @@ import merge from 'lodash/merge';
 
 
 const instructionReducer = (state = {}, action) => {
-  debugger
   let ids;
   let newState;
   const oldState = Object.freeze(state);

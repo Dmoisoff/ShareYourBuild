@@ -24,7 +24,7 @@ const mstp = (state, ownProps) => {
 
 const mdtp = (dispatch) => {
   return({
-    submitInstruction: (instruction) => dispatch(createInstruction(instruction))
+    submitInstruction: (instruction, id) => dispatch(createInstruction(instruction, id))
   });
 };
 

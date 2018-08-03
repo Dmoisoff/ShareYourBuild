@@ -46,7 +46,8 @@ const mstp = (state, ownProps) =>{
     ownProps.history.push('/');
   }
 
-  const defaultProject = {title: '',
+  const defaultProject = {
+    title: '',
     author_id: state.session.id,
     author_username: state.entities.users[state.session.id],
     description: '',
@@ -54,6 +55,7 @@ const mstp = (state, ownProps) =>{
     pictureFile: null,
     pictureUrl: null,
     uploadStatus: false,
+    sumbit: false,
     instructions: [],
     newlyAddedSteps: [],
     instructionBodies: [],
@@ -81,6 +83,7 @@ const mstp = (state, ownProps) =>{
       pictureUrl: currentProject.picture,
       description: currentProject.description,
       uploadStatus: false,
+      sumbit: false,
       instructions: sortedInstructions,
       stepNum: nextStep,
       lastPrefilledInstruction: nextStep,
@@ -97,7 +100,6 @@ const mstp = (state, ownProps) =>{
 };
 
 const mdtp = (dispatch) => {
-  debugger
   return({
     submitProject: (project, id) =>  dispatch(updateProject(project, id)),
     fetchProject: (id) =>  dispatch(fetchProject(id)),

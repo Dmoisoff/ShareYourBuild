@@ -22,19 +22,18 @@ export const createInstruction = (instruction,id) => {
   });
 };
 
-export const updateInstruction = (instruction, id) => {
+export const updateInstruction = (instruction,id) => {
   return $.ajax({
     method: 'PATCH',
     url: `api/instructions/${id}`,
     data: instruction,
-    // contentType: false,
-    // processData: false
+    contentType: false,
+    processData: false
   });
 };
 
 
 export const deleteInstruction = (id) => {
-  // debugger
   return $.ajax({
     method: 'DELETE',
     url: `api/instructions/${id}`

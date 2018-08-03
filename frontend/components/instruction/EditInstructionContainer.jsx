@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Instructions from './Instructions';
-import { createInstruction } from './../../actions/instructions_actions';
+import { updateInstruction } from './../../actions/instructions_actions';
 
 const mstp = (state, ownProps) => {
     return({
@@ -11,7 +11,7 @@ const mstp = (state, ownProps) => {
         title: ownProps.title,
         media: ownProps.media,
         mediaUrl: ownProps.media,
-        uploadStatus: false,
+        uploadStatus: ownProps.uploadStatus,
         step: ownProps.step,
         projectId: ownProps.projectId,
         rendered: false,
@@ -24,7 +24,7 @@ const mstp = (state, ownProps) => {
 
 const mdtp = (dispatch) => {
   return({
-    submitInstruction: (instruction) => dispatch(createInstruction(instruction))
+    submitInstruction: (instruction,id) => dispatch(updateInstruction(instruction,id))
   });
 };
 

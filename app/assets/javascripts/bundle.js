@@ -124,7 +124,6 @@ var fetchInstruction = exports.fetchInstruction = function fetchInstruction(id) 
 };
 
 var createInstruction = exports.createInstruction = function createInstruction(instruction, id) {
-  debugger;
   return function (dispatch) {
     return Instruction_Util.createInstruction(instruction, id).then(function (instruction) {
       return dispatch({
@@ -166,7 +165,6 @@ var deleteInstruction = exports.deleteInstruction = function deleteInstruction(i
 
 var deleteInstructions = exports.deleteInstructions = function deleteInstructions(ids) {
   return function (dispatch) {
-    debugger;
     return Instruction_Util.deleteInstruction(ids).then(function () {
       return dispatch({ type: REMOVE_INSTRUCTIONS, instructionId: ids.split(',') });
     });
@@ -749,7 +747,7 @@ var mstp = function mstp(state, ownProps) {
       title: ownProps.title,
       media: ownProps.media,
       mediaUrl: ownProps.media,
-      uploadStatus: false,
+      uploadStatus: ownProps.uploadStatus,
       step: ownProps.step,
       projectId: ownProps.projectId,
       rendered: false,
@@ -762,8 +760,8 @@ var mstp = function mstp(state, ownProps) {
 
 var mdtp = function mdtp(dispatch) {
   return {
-    submitInstruction: function submitInstruction(instruction) {
-      return dispatch((0, _instructions_actions.createInstruction)(instruction));
+    submitInstruction: function submitInstruction(instruction, id) {
+      return dispatch((0, _instructions_actions.updateInstruction)(instruction, id));
     }
   };
 };
@@ -911,7 +909,11 @@ var Instructions = function (_React$Component) {
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps) {
-      if (this.props.projectId !== prevProps.projectId) {
+      if (this.props.formType === 'Update Instruction' && !this.state.rendered) {
+        if (this.props.uploadStatus) {
+          this.handleSubmit();
+        }
+      } else if (this.props.projectId !== prevProps.projectId) {
         this.handleSubmit();
       }
     }
@@ -954,7 +956,6 @@ var Instructions = function (_React$Component) {
   }, {
     key: 'handleSubmit',
     value: function handleSubmit() {
-      debugger;
       var projectId = this.props.projectId;
       var formData = new FormData();
       formData.append('instruction[title]', this.state.title);
@@ -964,7 +965,10 @@ var Instructions = function (_React$Component) {
       if (this.state.media) {
         formData.append('instruction[media]', this.state.media);
       }
-      if (!this.state.rendered) {
+      if (!this.state.rendered && this.props.formType === 'Update Instruction') {
+        this.setState({ rendered: true });
+        this.props.submitInstruction(formData, this.state.id);
+      } else if (!this.state.rendered) {
         this.setState({ rendered: true });
         this.props.submitInstruction(formData, projectId);
       }
@@ -1119,8 +1123,8 @@ var mstp = function mstp(state, ownProps) {
 
 var mdtp = function mdtp(dispatch) {
   return {
-    submitInstruction: function submitInstruction(instruction) {
-      return dispatch((0, _instructions_actions.createInstruction)(instruction));
+    submitInstruction: function submitInstruction(instruction, id) {
+      return dispatch((0, _instructions_actions.createInstruction)(instruction, id));
     }
   };
 };
@@ -1273,7 +1277,8 @@ var mstp = function mstp(state, ownProps) {
     ownProps.history.push('/');
   }
 
-  var defaultProject = { title: '',
+  var defaultProject = {
+    title: '',
     author_id: state.session.id,
     author_username: state.entities.users[state.session.id],
     description: '',
@@ -1281,6 +1286,7 @@ var mstp = function mstp(state, ownProps) {
     pictureFile: null,
     pictureUrl: null,
     uploadStatus: false,
+    sumbit: false,
     instructions: [],
     newlyAddedSteps: [],
     instructionBodies: [],
@@ -1307,6 +1313,7 @@ var mstp = function mstp(state, ownProps) {
       pictureUrl: currentProject.picture,
       description: currentProject.description,
       uploadStatus: false,
+      sumbit: false,
       instructions: sortedInstructions,
       stepNum: nextStep,
       lastPrefilledInstruction: nextStep,
@@ -1323,7 +1330,6 @@ var mstp = function mstp(state, ownProps) {
 };
 
 var mdtp = function mdtp(dispatch) {
-  debugger;
   return {
     submitProject: function submitProject(project, id) {
       return dispatch((0, _projects_actions.updateProject)(project, id));
@@ -1839,13 +1845,16 @@ var ProjectForm = function (_React$Component) {
         this.props.submitProject(formData, projectId).then(function (payload) {
           if (_this3.state.removedInstructions.length) {
             _this3.props.deleteInstruction(_this3.state.removedInstructions.toString(), projectId).then(function () {
-              debugger;
               var newInstructions = _this3.state.instructions.slice(-_this3.state.newlyAddedSteps.length);
               newInstructions = newInstructions.map(function (instruction) {
                 instruction = _react2.default.cloneElement(instruction, { projectId: _this3.state.projectId });
                 return instruction;
               });
               var updatedInstructions = _this3.state.instructions.slice(0, -_this3.state.newlyAddedSteps.length).concat(newInstructions);
+              updatedInstructions = updatedInstructions.map(function (instruction) {
+                instruction = _react2.default.cloneElement(instruction, { uploadStatus: true });
+                return instruction;
+              });
               _this3.setState({ instructions: updatedInstructions });
               _this3.redirect(payload.project.project.id);
             });
@@ -1856,6 +1865,10 @@ var ProjectForm = function (_React$Component) {
               return instruction;
             });
             var updatedInstructions = _this3.state.instructions.slice(0, -_this3.state.newlyAddedSteps.length).concat(newInstructions);
+            updatedInstructions = updatedInstructions.map(function (instruction) {
+              instruction = _react2.default.cloneElement(instruction, { uploadStatus: true });
+              return instruction;
+            });
             _this3.setState({ instructions: updatedInstructions });
             _this3.redirect(payload.project.project.id);
           }
@@ -1904,7 +1917,6 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'instructionBodiesState',
     value: function instructionBodiesState(instructionBodyFilled, instructionStep) {
-      debugger;
       var newInstructions = {};
       newInstructions[instructionStep] = instructionBodyFilled;
       if (!this.state.instructionBodies.length) {
@@ -1930,7 +1942,6 @@ var ProjectForm = function (_React$Component) {
     value: function errors() {
       var _this5 = this;
 
-      debugger;
       if (this.props.errors.length === 0) {
         return [];
       } else {
@@ -1954,7 +1965,6 @@ var ProjectForm = function (_React$Component) {
     value: function instructionErrors() {
       var _this6 = this;
 
-      debugger;
       if (!this.state.instructionIssues.length) {
         return [];
       } else {
@@ -1973,7 +1983,6 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'instructions',
     value: function instructions() {
-      debugger;
       var instructionBodyErrors = [];
       this.state.instructionBodies.forEach(function (instructionBody) {
         if (!Object.values(instructionBody)[0]) {
@@ -2033,7 +2042,6 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps) {
-      debugger;
       if (this.props.errors.length !== 0 && prevProps.errors.length === 0) {
         var instructionBodyErrors = [];
         this.state.instructionBodies.forEach(function (instructionBody) {
@@ -3350,7 +3358,6 @@ var instructionReducer = function instructionReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments[1];
 
-  debugger;
   var ids = void 0;
   var newState = void 0;
   var oldState = Object.freeze(state);
@@ -3806,14 +3813,13 @@ var updateInstruction = exports.updateInstruction = function updateInstruction(i
   return $.ajax({
     method: 'PATCH',
     url: 'api/instructions/' + id,
-    data: instruction
-    // contentType: false,
-    // processData: false
+    data: instruction,
+    contentType: false,
+    processData: false
   });
 };
 
 var deleteInstruction = exports.deleteInstruction = function deleteInstruction(id) {
-  // debugger
   return $.ajax({
     method: 'DELETE',
     url: 'api/instructions/' + id

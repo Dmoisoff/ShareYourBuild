@@ -109,13 +109,16 @@ class ProjectForm extends React.Component{
       this.props.submitProject(formData, projectId).then((payload) => {
         if(this.state.removedInstructions.length){
           this.props.deleteInstruction(this.state.removedInstructions.toString(), projectId).then(() =>{
-            debugger
             let newInstructions = this.state.instructions.slice(-(this.state.newlyAddedSteps.length));
             newInstructions = newInstructions.map((instruction) => {
               instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
               return instruction;
             });
             let updatedInstructions = this.state.instructions.slice(0,-(this.state.newlyAddedSteps.length)).concat(newInstructions);
+            updatedInstructions = updatedInstructions.map((instruction) => {
+              instruction = React.cloneElement(instruction, {uploadStatus: true});
+              return instruction;
+            });
             this.setState({instructions: updatedInstructions});
             this.redirect(payload.project.project.id);
           });
@@ -126,6 +129,10 @@ class ProjectForm extends React.Component{
             return instruction;
           });
           let updatedInstructions = this.state.instructions.slice(0,-(this.state.newlyAddedSteps.length)).concat(newInstructions);
+          updatedInstructions = updatedInstructions.map((instruction) => {
+            instruction = React.cloneElement(instruction, {uploadStatus: true});
+            return instruction;
+          });
           this.setState({instructions: updatedInstructions});
           this.redirect(payload.project.project.id);
         }
@@ -152,7 +159,6 @@ class ProjectForm extends React.Component{
   }
 
   instructionBodiesState(instructionBodyFilled,instructionStep){
-    debugger
     let newInstructions = {};
     newInstructions[instructionStep] = instructionBodyFilled;
     if (!this.state.instructionBodies.length) {
@@ -175,7 +181,6 @@ class ProjectForm extends React.Component{
   }
 
   errors(){
-    debugger
     if(this.props.errors.length === 0){
       return [];
     }else{
@@ -190,7 +195,6 @@ class ProjectForm extends React.Component{
     }
 
   instructionErrors(){
-    debugger
     if(!this.state.instructionIssues.length){
       return [];
     }else{
@@ -202,7 +206,6 @@ class ProjectForm extends React.Component{
     }
 
     instructions(){
-      debugger
       const instructionBodyErrors = [];
       this.state.instructionBodies.forEach((instructionBody) => {
         if(!Object.values(instructionBody)[0]){
@@ -262,7 +265,6 @@ class ProjectForm extends React.Component{
     }
 
     componentDidUpdate(prevProps){
-      debugger
       if(this.props.errors.length !== 0 && prevProps.errors.length === 0){
         const instructionBodyErrors = [];
         this.state.instructionBodies.forEach((instructionBody) => {
@@ -361,6 +363,8 @@ class ProjectForm extends React.Component{
           return instruction;
         });
     }
+
+
 
     const instructionErrors = this.state.instructionIssues.length ?
                                   this.instructionErrors()

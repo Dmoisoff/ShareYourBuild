@@ -25,7 +25,11 @@ class Instructions extends React.Component{
   }
 
   componentDidUpdate(prevProps){
-    if(this.props.projectId !== prevProps.projectId){
+    if (this.props.formType === 'Update Instruction' && !this.state.rendered) {
+      if(this.props.uploadStatus){
+        this.handleSubmit();
+      }
+    }else if(this.props.projectId !== prevProps.projectId){
      this.handleSubmit();
     }
   }
@@ -58,7 +62,6 @@ class Instructions extends React.Component{
     }
 
     handleSubmit(){
-      debugger
       const projectId = this.props.projectId;
       const formData = new FormData();
       formData.append('instruction[title]', this.state.title);
@@ -68,7 +71,10 @@ class Instructions extends React.Component{
       if(this.state.media){
         formData.append('instruction[media]', this.state.media);
       }
-      if(!this.state.rendered){
+      if(!this.state.rendered && this.props.formType === 'Update Instruction'){
+        this.setState({rendered: true});
+        this.props.submitInstruction(formData, this.state.id);
+      }else if(!this.state.rendered){
         this.setState({rendered: true});
         this.props.submitInstruction(formData, projectId);
       }
