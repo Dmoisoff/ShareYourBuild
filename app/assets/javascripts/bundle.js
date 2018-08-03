@@ -131,6 +131,7 @@ var createInstruction = exports.createInstruction = function createInstruction(i
         instruction: instruction
       });
     }, function (errors) {
+      debugger;
       return dispatch({
         type: RECEIVE_INSTRUCTION_ERRORS,
         errors: errors.responseJSON
@@ -147,6 +148,7 @@ var updateInstruction = exports.updateInstruction = function updateInstruction(i
         instruction: instruction
       });
     }, function (errors) {
+      debugger;
       return dispatch({
         type: RECEIVE_INSTRUCTION_ERRORS,
         errors: errors.responseJSON
@@ -759,6 +761,7 @@ var mstp = function mstp(state, ownProps) {
 };
 
 var mdtp = function mdtp(dispatch) {
+  debugger;
   return {
     submitInstruction: function submitInstruction(instruction, id) {
       return dispatch((0, _instructions_actions.updateInstruction)(instruction, id));
@@ -1122,6 +1125,7 @@ var mstp = function mstp(state, ownProps) {
 };
 
 var mdtp = function mdtp(dispatch) {
+  debugger;
   return {
     submitInstruction: function submitInstruction(instruction, id) {
       return dispatch((0, _instructions_actions.createInstruction)(instruction, id));
@@ -1827,52 +1831,69 @@ var ProjectForm = function (_React$Component) {
       var _this3 = this;
 
       e.preventDefault();
-      var projectId = this.props.match.params.projectId;
-      var formData = new FormData();
-      formData.append('project[title]', this.state.title);
-      formData.append('project[keywords]', this.state.keyWords);
-      formData.append('project[description]', this.state.description);
-      if (this.state.pictureFile) {
-        formData.append('project[picture]', this.state.pictureFile);
+      debugger;
+      var completeStatus = true;
+      for (var i = 0; i < this.state.instructionBodies.length; i++) {
+        var status = Object.values(this.state.instructionBodies[i])[0];
+        if (!status) {
+          completeStatus = false;
+        }
       }
-      if (this.props.formType === 'New Project') {
-        this.props.submitProject(formData, projectId).then(function (payload) {
-          var projectId = payload.project.project.id;
-          _this3.setState({ projectId: projectId });
-          _this3.redirect(payload.project.project.id);
-        });
-      } else if (this.props.formType === 'Update Project') {
-        this.props.submitProject(formData, projectId).then(function (payload) {
-          if (_this3.state.removedInstructions.length) {
-            _this3.props.deleteInstruction(_this3.state.removedInstructions.toString(), projectId).then(function () {
+      if (!completeStatus) {
+        this.instructions();
+        return;
+      } else {
+        var projectId = this.props.match.params.projectId;
+        var formData = new FormData();
+        formData.append('project[title]', this.state.title);
+        formData.append('project[keywords]', this.state.keyWords);
+        formData.append('project[description]', this.state.description);
+        if (this.state.pictureFile) {
+          formData.append('project[picture]', this.state.pictureFile);
+        }
+        if (this.props.formType === 'New Project') {
+          this.props.submitProject(formData, projectId).then(function (payload) {
+            var projectId = payload.project.project.id;
+            _this3.setState({ projectId: projectId });
+            _this3.redirect(payload.project.project.id);
+          });
+        } else if (this.props.formType === 'Update Project') {
+          debugger;
+          this.props.submitProject(formData, projectId).then(function (payload) {
+            if (_this3.state.removedInstructions.length) {
+              _this3.props.deleteInstruction(_this3.state.removedInstructions.toString(), projectId).then(function () {
+                var newInstructions = _this3.state.instructions.slice(-_this3.state.newlyAddedSteps.length);
+                newInstructions = newInstructions.map(function (instruction) {
+                  instruction = _react2.default.cloneElement(instruction, { projectId: _this3.state.projectId });
+                  return instruction;
+                });
+                var updatedInstructions = _this3.state.instructions.slice(0, -_this3.state.newlyAddedSteps.length);
+                updatedInstructions = updatedInstructions.map(function (instruction) {
+                  instruction = _react2.default.cloneElement(instruction, { uploadStatus: true });
+                  return instruction;
+                });
+                updatedInstructions.concat(newInstructions);
+                _this3.setState({ instructions: updatedInstructions });
+                _this3.redirect(payload.project.project.id);
+              });
+            } else {
               var newInstructions = _this3.state.instructions.slice(-_this3.state.newlyAddedSteps.length);
               newInstructions = newInstructions.map(function (instruction) {
                 instruction = _react2.default.cloneElement(instruction, { projectId: _this3.state.projectId });
                 return instruction;
               });
-              var updatedInstructions = _this3.state.instructions.slice(0, -_this3.state.newlyAddedSteps.length).concat(newInstructions);
+              var updatedInstructions = _this3.state.instructions.slice(0, -_this3.state.newlyAddedSteps.length);
               updatedInstructions = updatedInstructions.map(function (instruction) {
                 instruction = _react2.default.cloneElement(instruction, { uploadStatus: true });
                 return instruction;
               });
+              debugger;
+              updatedInstructions.concat(newInstructions);
               _this3.setState({ instructions: updatedInstructions });
               _this3.redirect(payload.project.project.id);
-            });
-          } else {
-            var newInstructions = _this3.state.instructions.slice(-_this3.state.newlyAddedSteps.length);
-            newInstructions = newInstructions.map(function (instruction) {
-              instruction = _react2.default.cloneElement(instruction, { projectId: _this3.state.projectId });
-              return instruction;
-            });
-            var updatedInstructions = _this3.state.instructions.slice(0, -_this3.state.newlyAddedSteps.length).concat(newInstructions);
-            updatedInstructions = updatedInstructions.map(function (instruction) {
-              instruction = _react2.default.cloneElement(instruction, { uploadStatus: true });
-              return instruction;
-            });
-            _this3.setState({ instructions: updatedInstructions });
-            _this3.redirect(payload.project.project.id);
-          }
-        });
+            }
+          });
+        }
       }
     }
   }, {
@@ -1945,9 +1966,6 @@ var ProjectForm = function (_React$Component) {
       if (this.props.errors.length === 0) {
         return [];
       } else {
-        // if (this.state.instructionBodies.length) {
-        //   this.instructions();
-        // }
         setTimeout(function () {
           _this5.props.clearProjectErrors();
         }, 3000);
