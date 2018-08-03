@@ -131,7 +131,6 @@ var createInstruction = exports.createInstruction = function createInstruction(i
         instruction: instruction
       });
     }, function (errors) {
-      debugger;
       return dispatch({
         type: RECEIVE_INSTRUCTION_ERRORS,
         errors: errors.responseJSON
@@ -148,7 +147,6 @@ var updateInstruction = exports.updateInstruction = function updateInstruction(i
         instruction: instruction
       });
     }, function (errors) {
-      debugger;
       return dispatch({
         type: RECEIVE_INSTRUCTION_ERRORS,
         errors: errors.responseJSON
@@ -761,7 +759,6 @@ var mstp = function mstp(state, ownProps) {
 };
 
 var mdtp = function mdtp(dispatch) {
-  debugger;
   return {
     submitInstruction: function submitInstruction(instruction, id) {
       return dispatch((0, _instructions_actions.updateInstruction)(instruction, id));
@@ -1106,7 +1103,6 @@ var _instructions_actions = __webpack_require__(/*! ./../../actions/instructions
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state, ownProps) {
-  debugger;
   return {
     instruction: {
       body: "",
@@ -1126,7 +1122,6 @@ var mstp = function mstp(state, ownProps) {
 };
 
 var mdtp = function mdtp(dispatch) {
-  debugger;
   return {
     submitInstruction: function submitInstruction(instruction, id) {
       return dispatch((0, _instructions_actions.createInstruction)(instruction, id));
@@ -1832,7 +1827,6 @@ var ProjectForm = function (_React$Component) {
       var _this3 = this;
 
       e.preventDefault();
-      debugger;
       var completeStatus = true;
       for (var i = 0; i < this.state.instructionBodies.length; i++) {
         var status = Object.values(this.state.instructionBodies[i])[0];
@@ -1859,17 +1853,14 @@ var ProjectForm = function (_React$Component) {
             _this3.redirect(payload.project.project.id);
           });
         } else if (this.props.formType === 'Update Project') {
-          debugger;
           this.props.submitProject(formData, projectId).then(function (payload) {
             if (_this3.state.removedInstructions.length) {
               _this3.props.deleteInstruction(_this3.state.removedInstructions.toString(), projectId).then(function () {
-                debugger;
                 var newInstructions = _this3.state.instructions.slice(-_this3.state.newlyAddedSteps.length);
                 newInstructions = newInstructions.map(function (instruction) {
                   instruction = _react2.default.cloneElement(instruction, { projectId: _this3.state.projectId });
                   return instruction;
                 });
-                debugger;
                 var updatedInstructions = _this3.state.instructions.slice(0, -_this3.state.newlyAddedSteps.length);
                 updatedInstructions = updatedInstructions.map(function (instruction) {
                   instruction = _react2.default.cloneElement(instruction, { uploadStatus: true });
@@ -1890,7 +1881,6 @@ var ProjectForm = function (_React$Component) {
                 instruction = _react2.default.cloneElement(instruction, { uploadStatus: true });
                 return instruction;
               });
-              debugger;
               updatedInstructions = updatedInstructions.concat(newInstructions);
               _this3.setState({ instructions: updatedInstructions, projectId: projectId });
               _this3.redirect(payload.project.project.id);

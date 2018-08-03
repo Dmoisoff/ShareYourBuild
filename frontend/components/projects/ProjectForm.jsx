@@ -91,7 +91,6 @@ class ProjectForm extends React.Component{
 
   handleSubmit(e){
     e.preventDefault();
-    debugger
     let completeStatus = true;
     for (let i = 0; i < this.state.instructionBodies.length; i++) {
       const status = Object.values(this.state.instructionBodies[i])[0];
@@ -118,17 +117,14 @@ class ProjectForm extends React.Component{
           this.redirect(payload.project.project.id);
         });
       }else if (this.props.formType === 'Update Project') {
-        debugger
         this.props.submitProject(formData, projectId).then((payload) => {
           if(this.state.removedInstructions.length){
             this.props.deleteInstruction(this.state.removedInstructions.toString(), projectId).then(() =>{
-              debugger
               let newInstructions = this.state.instructions.slice(-(this.state.newlyAddedSteps.length));
               newInstructions = newInstructions.map((instruction) => {
                 instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
                 return instruction;
               });
-              debugger
               let updatedInstructions = this.state.instructions.slice(0,-(this.state.newlyAddedSteps.length));
               updatedInstructions = updatedInstructions.map((instruction) => {
                 instruction = React.cloneElement(instruction, {uploadStatus: true});
@@ -149,7 +145,6 @@ class ProjectForm extends React.Component{
               instruction = React.cloneElement(instruction, {uploadStatus: true});
               return instruction;
             });
-            debugger
             updatedInstructions = updatedInstructions.concat(newInstructions);
             this.setState({instructions: updatedInstructions, projectId: projectId});
             this.redirect(payload.project.project.id);

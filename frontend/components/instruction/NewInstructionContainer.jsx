@@ -4,7 +4,6 @@ import Instructions from './Instructions';
 import { createInstruction } from './../../actions/instructions_actions';
 
 const mstp = (state, ownProps) => {
-  debugger
     return({
       instruction: {
         body: "",
@@ -24,7 +23,6 @@ const mstp = (state, ownProps) => {
 };
 
 const mdtp = (dispatch) => {
-  debugger
   return({
     submitInstruction: (instruction, id) => dispatch(createInstruction(instruction, id))
   });

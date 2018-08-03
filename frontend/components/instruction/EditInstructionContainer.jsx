@@ -23,7 +23,6 @@ const mstp = (state, ownProps) => {
 };
 
 const mdtp = (dispatch) => {
-  debugger
   return({
     submitInstruction: (instruction,id) => dispatch(updateInstruction(instruction,id))
   });
