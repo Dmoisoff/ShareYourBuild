@@ -1,12 +1,16 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchProject, deleteProject } from './../../actions/projects_actions';
+import { fetchProject, deleteProject, CLEAR_ERRORS } from './../../actions/projects_actions';
 import { deleteInstruction } from './../../actions/instructions_actions';
 import ShowProject from './ShowProject';
 
 
 const mstp = (state, ownProps) => {
+  // debugger
+  // if(!state.errors.project){
+  //   ownProps.history.push('/');
+  // }
   const projectId = ownProps.match.params.projectId;
 
   const instructionsArray = Object.values(state.entities.instructions).filter((instruction) =>{
@@ -23,7 +27,8 @@ const mstp = (state, ownProps) => {
     formType: 'Show Project',
     currentUserId: userId,
     ownsProject: userId === project.authorId,
-    instructions: sortedInstructions
+    instructions: sortedInstructions,
+    errors: state.errors.project
   });
 };
 
@@ -31,6 +36,7 @@ const mdtp = (dispatch) => {
   return({
     fetchProject: (id) => dispatch(fetchProject(id)),
     deleteProject: (id) => dispatch(deleteProject(id)),
+    clearProjectErrors: () => dispatch({type: CLEAR_ERRORS}),
     deleteInstruction: (instructions,projectId) => {
       instructions.forEach((instruction) => {
         if(instruction.projectId === Number(projectId)){

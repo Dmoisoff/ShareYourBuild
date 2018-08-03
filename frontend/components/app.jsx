@@ -35,7 +35,7 @@ const App = () => (
         </div>
         <GreetingContainer />
       </header>
-      <div class='window-size'>
+      <div className='window-size'>
         <Switch>
           <Route exact path="/" component={MainPage} />
           <ProtectedRoute path="/project/new" component={NewProjectContainer} />

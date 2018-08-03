@@ -1,4 +1,4 @@
-import { FETCH_PROJECT, RECEIVE_PROJECT_ERRORS } from './../actions/projects_actions';
+import { FETCH_PROJECT, RECEIVE_PROJECT_ERRORS, PROJECT_NOT_FOUND_ERROR } from './../actions/projects_actions';
 import { FETCH_INSTRUCTION } from './../actions/instructions_actions';
 import { RECEIVE_CURRENT_USER } from './../actions/session_actions';
 import merge from 'lodash/merge';
@@ -14,6 +14,8 @@ const projectErrorsReducer = (state = [], action) => {
     case RECEIVE_CURRENT_USER:
     case CLEAR_ERRORS:
       return [];
+    case PROJECT_NOT_FOUND_ERROR:
+      return false;
     default:
       return oldState;
   }

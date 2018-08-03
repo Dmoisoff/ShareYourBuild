@@ -188,7 +188,7 @@ var deleteInstructions = exports.deleteInstructions = function deleteInstruction
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.deleteProject = exports.updateProject = exports.createProject = exports.fetchProject = exports.fetchProjectsByUser = exports.fetchProjects = exports.CLEAR_ERRORS = exports.FETCH_PROJECTS_BY_USER = exports.RECEIVE_PROJECT_ERRORS = exports.REMOVE_PROJECT = exports.FETCH_PROJECT = exports.FETCH_ALL_PROJECTS = undefined;
+exports.deleteProject = exports.updateProject = exports.createProject = exports.fetchProject = exports.fetchProjectsByUser = exports.fetchProjects = exports.CLEAR_ERRORS = exports.FETCH_PROJECTS_BY_USER = exports.PROJECT_NOT_FOUND_ERROR = exports.RECEIVE_PROJECT_ERRORS = exports.REMOVE_PROJECT = exports.FETCH_PROJECT = exports.FETCH_ALL_PROJECTS = undefined;
 
 var _project_api_util = __webpack_require__(/*! ./../util/project_api_util */ "./frontend/util/project_api_util.js");
 
@@ -200,6 +200,7 @@ var FETCH_ALL_PROJECTS = exports.FETCH_ALL_PROJECTS = 'FETCH_ALL_PROJECTS';
 var FETCH_PROJECT = exports.FETCH_PROJECT = 'FETCH_PROJECT';
 var REMOVE_PROJECT = exports.REMOVE_PROJECT = 'REMOVE_PROJECT';
 var RECEIVE_PROJECT_ERRORS = exports.RECEIVE_PROJECT_ERRORS = 'RECEIVE_PROJECT_ERRORS';
+var PROJECT_NOT_FOUND_ERROR = exports.PROJECT_NOT_FOUND_ERROR = 'PROJECT_NOT_FOUND_ERROR';
 var FETCH_PROJECTS_BY_USER = exports.FETCH_PROJECTS_BY_USER = 'FETCH_PROJECTS_BY_USER';
 var CLEAR_ERRORS = exports.CLEAR_ERRORS = 'CLEAR_ERRORS';
 
@@ -235,6 +236,11 @@ var fetchProject = exports.fetchProject = function fetchProject(id) {
         type: FETCH_PROJECT,
         project: project,
         instructions: instructions
+      });
+    }, function (errors) {
+      return dispatch({
+        type: PROJECT_NOT_FOUND_ERROR,
+        errors: errors.responseJSON
       });
     });
   };
@@ -454,7 +460,7 @@ var App = function App() {
       ),
       _react2.default.createElement(
         'div',
-        { 'class': 'window-size' },
+        { className: 'window-size' },
         _react2.default.createElement(
           _reactRouterDom.Switch,
           null,
@@ -2335,7 +2341,11 @@ var ProjectShow = function (_React$Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-
+      debugger;
+      if (!nextProps.errors) {
+        this.props.clearProjectErrors;
+        this.props.history.push('/');
+      }
       if (this.props.match.params.projectId === nextProps.match.params.projectId) {
         this.setState({ title: nextProps.project.title, authorUsername: nextProps.project.authorUsername });
       }
@@ -2498,6 +2508,10 @@ var _ShowProject2 = _interopRequireDefault(_ShowProject);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state, ownProps) {
+  // debugger
+  // if(!state.errors.project){
+  //   ownProps.history.push('/');
+  // }
   var projectId = ownProps.match.params.projectId;
 
   var instructionsArray = Object.values(state.entities.instructions).filter(function (instruction) {
@@ -2514,7 +2528,8 @@ var mstp = function mstp(state, ownProps) {
     formType: 'Show Project',
     currentUserId: userId,
     ownsProject: userId === project.authorId,
-    instructions: sortedInstructions
+    instructions: sortedInstructions,
+    errors: state.errors.project
   };
 };
 
@@ -2525,6 +2540,9 @@ var mdtp = function mdtp(dispatch) {
     },
     deleteProject: function deleteProject(id) {
       return dispatch((0, _projects_actions.deleteProject)(id));
+    },
+    clearProjectErrors: function clearProjectErrors() {
+      return dispatch({ type: _projects_actions.CLEAR_ERRORS });
     },
     deleteInstruction: function deleteInstruction(instructions, projectId) {
       instructions.forEach(function (instruction) {
@@ -3444,6 +3462,8 @@ var projectErrorsReducer = function projectErrorsReducer() {
     case _session_actions.RECEIVE_CURRENT_USER:
     case CLEAR_ERRORS:
       return [];
+    case _projects_actions.PROJECT_NOT_FOUND_ERROR:
+      return false;
     default:
       return oldState;
   }

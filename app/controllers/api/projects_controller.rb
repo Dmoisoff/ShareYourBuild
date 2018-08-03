@@ -16,6 +16,11 @@ class Api::ProjectsController < ApplicationController
 
   def show
     @project = Project.includes(:instructions).find_by(id: params[:id])
+    if(@project)
+      render "api/projects/show"
+    else
+      render json: "Project not found", status: 422
+    end
   end
 
   def update
@@ -42,7 +47,7 @@ class Api::ProjectsController < ApplicationController
 
   def project_params
     params.require(:project).permit(:title,
-      # :picture_url, 
+      # :picture_url,
       :featured, :view_count, :picture, :description)
   end
 

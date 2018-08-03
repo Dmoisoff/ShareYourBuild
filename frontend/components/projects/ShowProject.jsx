@@ -18,7 +18,11 @@ class ProjectShow extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-
+    debugger
+    if(!nextProps.errors){
+      this.props.clearProjectErrors;
+      this.props.history.push('/');
+    }
     if (this.props.match.params.projectId === nextProps.match.params.projectId) {
      this.setState({title: nextProps.project.title, authorUsername: nextProps.project.authorUsername});
    }
