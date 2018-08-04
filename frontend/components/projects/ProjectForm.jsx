@@ -216,12 +216,18 @@ class ProjectForm extends React.Component{
     }
 
     instructions(){
+      const incompleteInstructions = [];
       const instructionBodyErrors = [];
       this.state.instructionBodies.forEach((instructionBody) => {
         if(!Object.values(instructionBody)[0]){
-          instructionBodyErrors.push([`Please finish filling out the body for step ${Object.keys(instructionBody)}`]);
+          incompleteInstructions.push(Object.keys(instructionBody)[0]);
         }
       });
+      if(incompleteInstructions.length){
+        incompleteInstructions.forEach((instructionNumber) =>{
+          instructionBodyErrors.push([`Please finish filling out the body for step ${instructionNumber}`]);
+        });
+      }
       if(instructionBodyErrors.length){
         this.setState({instructionIssues: instructionBodyErrors});
       }else{

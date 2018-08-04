@@ -2004,12 +2004,18 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'instructions',
     value: function instructions() {
+      var incompleteInstructions = [];
       var instructionBodyErrors = [];
       this.state.instructionBodies.forEach(function (instructionBody) {
         if (!Object.values(instructionBody)[0]) {
-          instructionBodyErrors.push(['Please finish filling out the body for step ' + Object.keys(instructionBody)]);
+          incompleteInstructions.push(Object.keys(instructionBody)[0]);
         }
       });
+      if (incompleteInstructions.length) {
+        incompleteInstructions.forEach(function (instructionNumber) {
+          instructionBodyErrors.push(['Please finish filling out the body for step ' + instructionNumber]);
+        });
+      }
       if (instructionBodyErrors.length) {
         this.setState({ instructionIssues: instructionBodyErrors });
       } else {
