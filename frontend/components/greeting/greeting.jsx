@@ -23,7 +23,7 @@ class Greeting extends React.Component{
   toggleDropdown(e){
     if(this.dropDown){
     const target = e.target;
-      if(target.id != this.dropDown.id){
+      if(target.id !== "dropDown"){
         this.setState({active: false});
       }else{
         this.setState({active: true});

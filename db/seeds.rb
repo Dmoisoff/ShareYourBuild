@@ -11,12 +11,16 @@ Instruction.destroy_all
 
 defaultProfilePicture = File.open('app/assets/images/user_profile_pic.png')
 shibeProfilePicture = File.open('app/assets/images/FullSizeRendercopy.png')
-demo = User.new(username: 'Demo-Bot', email: 'Demo@demo.com', age: DateTime.strptime('09/15/1991 0:00', "%m/%d/%Y %H:%M"), password: 123456, about: 'Demo' )
+cuddsProfilePicture = File.open('app/assets/images/FullSizeRendercopy.png')
+demo = User.new(username: 'Demo-Bot', email: 'Demo@demo.com', age: DateTime.strptime('09/15/1992 0:00', "%m/%d/%Y %H:%M"), password: 123456, about: 'Demo' )
 demo.picture.attach(io: defaultProfilePicture, filename: 'user_profile_pic.png')
 demo.save!
-shibe = User.new(username: 'Shibe', email: 'shibe@demo.com', age: DateTime.strptime('12/10/1993 0:00', "%m/%d/%Y %H:%M"), password: 987654, about: 'Demo' )
+shibe = User.new(username: 'Shibe', email: 'shibe@demo.com', age: DateTime.strptime('12/10/1994 0:00', "%m/%d/%Y %H:%M"), password: 987654, about: 'Demo' )
 shibe.picture.attach(io: shibeProfilePicture, filename: 'FullSizeRendercopy.png')
 shibe.save!
+cudds = User.new(username: 'Cudds', email: 'Cudds@demo.com', age: DateTime.strptime('09/15/1992 0:00', "%m/%d/%Y %H:%M"), password: 987654, about: 'Demo' )
+cudds.picture.attach(io: cuddsProfilePicture, filename: 'FullSizeRendercopy.png')
+cudds.save!
 
 recipe1 = File.open("app/assets/images/recipe_seeds/bacon_dates/FFGKPMNJJLTRIFY.LARGE.jpg")
 
@@ -142,7 +146,7 @@ recipe3_project3_step_2 = File.open("app/assets/images/recipe_seeds/STEAK, CHEES
 recipe3_project3_step_3 = File.open("app/assets/images/recipe_seeds/STEAK, CHEESE AND BABY SPINACH NAAN/step_three.jpg")
 recipe3_project3_step_4 = File.open("app/assets/images/recipe_seeds/STEAK, CHEESE AND BABY SPINACH NAAN/step_four.jpg")
 
-recipe_project3 = Project.new({title: 'STEAK, CHEESE AND BABY SPINACH NAAN', author_id: demo.id, view_count: 0, featured: false, description:"<p>This quick protocol is the recipe for the best sandwiches I've ever made. You can be eating them within 15 minutes of your grill being hot, and they are superb. All ingredients available at your local supermarket.<p>".html_safe})
+recipe_project3 = Project.new({title: 'STEAK, CHEESE AND BABY SPINACH NAAN', author_id: cudds.id, view_count: 0, featured: false, description:"<p>This quick protocol is the recipe for the best sandwiches I've ever made. You can be eating them within 15 minutes of your grill being hot, and they are superb. All ingredients available at your local supermarket.<p>".html_safe})
 
 recipe_project3.picture.attach(io: recipe3, filename: 'main_pic.jpg')
 recipe_project3.save!
@@ -179,7 +183,7 @@ recipe4_step_3 = File.open("app/assets/images/recipe_seeds/VINEGRET A RUSSIAN MI
 recipe4_step_4 = File.open("app/assets/images/recipe_seeds/VINEGRET A RUSSIAN MIXED SALAD/step_four.jpg")
 
 
-recipe_project4 = Project.new({title: 'VINEGRET A RUSSIAN MIXED SALAD', author_id: demo.id, view_count: 0, featured: false, description: "<p>Vinegret (also called Russian vinaigrette) is a very popular salad in Russia and the nearest countries. It is vegetarian, easy-to-cook and healthy; it is one of the best choices of everyday food.<br><br>
+recipe_project4 = Project.new({title: 'VINEGRET A RUSSIAN MIXED SALAD', author_id: cudds.id, view_count: 0, featured: false, description: "<p>Vinegret (also called Russian vinaigrette) is a very popular salad in Russia and the nearest countries. It is vegetarian, easy-to-cook and healthy; it is one of the best choices of everyday food.<br><br>
 The word 'vinegret' in an extended sense means 'a strange mix'. So we say 'it is vinegret in his/her head' to express a huddle of ideas. This meaning occurs because you may add a variety of components to vinegret and get a different taste each time. This salad will never cloy to you; such an excellent feature for everyday food )))<br><br>
 I invite everyone to make (and enjoy!) vinegret salad with me. If you make it, don't forget to share your photo.</p>".html_safe})
 
@@ -233,11 +237,11 @@ recipe_project4_step_4.save!
 costume1 = File.open("app/assets/images/costumes_seeds/master_roshi/main_pic.jpg")
 costume2 = File.open("app/assets/images/costumes_seeds/LUIGI'S GREEN FIREBALL PROP - SUPER MARIO BROTHERS/main_picture.jpg")
 
-costume_project1 = Project.new({title: 'MAKING A COSPLAY MASTER ROSHI SHELL', author_id: demo.id, view_count: 0, featured: false, description: "<p>I needed a quick costume for a Con that was quickly approaching, Being a bald white guy I had a few costumes in mind that I might be able to pull off in a few days. The costumes had to be both comfortable as well as functional (Didn't want to have to completely undress to sit down or use the restroom at the Con, One reason I haven't done a Bender from Futurama cosplay). <br><br>
+costume_project1 = Project.new({title: 'MAKING A COSPLAY MASTER ROSHI SHELL', author_id: cudds.id, view_count: 0, featured: false, description: "<p>I needed a quick costume for a Con that was quickly approaching, Being a bald white guy I had a few costumes in mind that I might be able to pull off in a few days. The costumes had to be both comfortable as well as functional (Didn't want to have to completely undress to sit down or use the restroom at the Con, One reason I haven't done a Bender from Futurama cosplay). <br><br>
 
  My first idea was Gru from Despicable Me, But I wasn't crazy about wearing a prosthetic nose around for 2 days. Next was Dr. Evil from the Austin Powers movies, But I can't sew very well and that Grey suit just wasn't gonna happen. Finally I decided on Master Roshi from the Dragon Ball Anime. This Character is pretty simple, Just a bald guy with a goatee and sunglasses, wearing shorts and a Hawaiian shirt. But, he does wear a turtle shell on his back and I would have to build that. This instructable will cover the process of building my Cosplay Master Roshi Shell.</p>".html_safe})
 
-costume_project2 = Project.new({title: "LUIGI'S GREEN FIREBALL PROP - SUPER MARIO BROTHERS", author_id: demo.id, view_count: 0, featured: false, description: '<p>Bring Luigi’s fire flower powers from the Super Mario Universe to life with this fireball cosplay prop.<br><br>
+costume_project2 = Project.new({title: "LUIGI'S GREEN FIREBALL PROP - SUPER MARIO BROTHERS", author_id: cudds.id, view_count: 0, featured: false, description: '<p>Bring Luigi’s fire flower powers from the Super Mario Universe to life with this fireball cosplay prop.<br><br>
 Built from felt and a foam ball, this prop is safe, cheap, and pretty sturdy. Since I made it for a Luigi costume, I opted for green flames, but you could just as easily make the classic yellow & red fireball for Mario using the same techniques.</p>'.html_safe})
 
 costume_project1.picture.attach(io: costume1, filename: "main_pic.jpg")
@@ -483,7 +487,7 @@ carft_project2_step_3.save!
 
 carft3 = File.open("app/assets/images/non_instrucable_seeds/DIY- Geometric Paper Wall Art/main-picture.jpg")
 
-carft_project3 = Project.new({title: 'Diy: Geometric Paper Wall Art', author_id: demo.id, view_count: 0, featured: false, description: "<p>You walk into Pottery Barn looking for something to hang on your wall. You browse through the store falling in love with pillows, desks, dining room sets, and then you turn the corner. You see the art piece you’ve always wanted, one you immediately fall for. You run to the sculpture/painting/photograph and admire, jaw dropped.<br><br>
+carft_project3 = Project.new({title: 'Diy: Geometric Paper Wall Art', author_id: cudds.id, view_count: 0, featured: false, description: "<p>You walk into Pottery Barn looking for something to hang on your wall. You browse through the store falling in love with pillows, desks, dining room sets, and then you turn the corner. You see the art piece you’ve always wanted, one you immediately fall for. You run to the sculpture/painting/photograph and admire, jaw dropped.<br><br>
 When of all of a sudden, you see $399.00.<br><br>
 You walk out of the store with slumped shoulders, your head is down … basically you look like Charlie Brown after a ‘good grief’ moment.<br>
 And then after you get some ice cream to cheer your up, you come home, and start searching the internet. You magically find this blog.<br>
@@ -555,13 +559,13 @@ carft_project3_step_9.save!
 # cooking6 = File.open("app/assets/images/cooking_images/pexels-photo-1040685.jpeg")
 # cooking7 = File.open("app/assets/images/cooking_images/salmon-dish-food-meal-46239.jpeg")
 #
-# cooking_project1 = Project.new({title: 'cooking_project1', author_id: demo.id, view_count: 0, featured: false})
-# cooking_project2 = Project.new({title: 'cooking_project2', author_id: demo.id, view_count: 0, featured: false})
-# cooking_project3 = Project.new({title: 'cooking_project3', author_id: demo.id, view_count: 0, featured: false})
-# cooking_project4 = Project.new({title: 'cooking_project4', author_id: demo.id, view_count: 0, featured: false})
-# cooking_project5 = Project.new({title: 'cooking_project5', author_id: demo.id, view_count: 0, featured: false})
-# cooking_project6 = Project.new({title: 'cooking_project6', author_id: demo.id, view_count: 0, featured: false})
-# cooking_project7 = Project.new({title: 'cooking_project7', author_id: demo.id, view_count: 0, featured: false})
+# cooking_project1 = Project.new({title: 'cooking_project1', author_id: cudds.id, view_count: 0, featured: false})
+# cooking_project2 = Project.new({title: 'cooking_project2', author_id: cudds.id, view_count: 0, featured: false})
+# cooking_project3 = Project.new({title: 'cooking_project3', author_id: cudds.id, view_count: 0, featured: false})
+# cooking_project4 = Project.new({title: 'cooking_project4', author_id: cudds.id, view_count: 0, featured: false})
+# cooking_project5 = Project.new({title: 'cooking_project5', author_id: cudds.id, view_count: 0, featured: false})
+# cooking_project6 = Project.new({title: 'cooking_project6', author_id: cudds.id, view_count: 0, featured: false})
+# cooking_project7 = Project.new({title: 'cooking_project7', author_id: cudds.id, view_count: 0, featured: false})
 #
 # cooking_project1.picture.attach(io: cooking1, filename: 'meat-vegetables-gemuesepiess-mushrooms-111131.jpeg')
 # cooking_project2.picture.attach(io: cooking2, filename: 'pexels-photo-76093.jpeg')
@@ -586,11 +590,11 @@ carft_project3_step_9.save!
 # costume4 = File.open("app/assets/images/costume_images/pexels-photo-922909.jpeg")
 # costume5 = File.open("app/assets/images/costume_images/pexels-photo-1097456.jpeg")
 #
-# costume_project1 = Project.new({title: 'costume_project1', author_id: demo.id, view_count: 0, featured: false})
-# costume_project2 = Project.new({title: 'costume_project2', author_id: demo.id, view_count: 0, featured: false})
-# costume_project3 = Project.new({title: 'costume_project3', author_id: demo.id, view_count: 0, featured: false})
-# costume_project4 = Project.new({title: 'costume_project4', author_id: demo.id, view_count: 0, featured: false})
-# costume_project5 = Project.new({title: 'costume_project5', author_id: demo.id, view_count: 0, featured: false})
+# costume_project1 = Project.new({title: 'costume_project1', author_id: cudds.id, view_count: 0, featured: false})
+# costume_project2 = Project.new({title: 'costume_project2', author_id: cudds.id, view_count: 0, featured: false})
+# costume_project3 = Project.new({title: 'costume_project3', author_id: cudds.id, view_count: 0, featured: false})
+# costume_project4 = Project.new({title: 'costume_project4', author_id: cudds.id, view_count: 0, featured: false})
+# costume_project5 = Project.new({title: 'costume_project5', author_id: cudds.id, view_count: 0, featured: false})
 #
 # costume_project1.picture.attach(io: costume1, filename: "knight-armor-helmet-weapons-161936.jpeg")
 # costume_project2.picture.attach(io: costume2, filename: "pexels-photo-65767.jpeg")
@@ -613,13 +617,13 @@ carft_project3_step_9.save!
 # craft6 = File.open("app/assets/images/crafts_images/pexels-photo-753500.jpeg")
 # craft7 = File.open("app/assets/images/crafts_images/pexels-photo-1093910.jpeg")
 #
-# craft_project1 = Project.new({title: 'craft_project1', author_id: demo.id, view_count: 0, featured: false})
-# craft_project2 = Project.new({title: 'craft_project2', author_id: demo.id, view_count: 0, featured: false})
-# craft_project3 = Project.new({title: 'craft_project3', author_id: demo.id, view_count: 0, featured: false})
-# craft_project4 = Project.new({title: 'craft_project4', author_id: demo.id, view_count: 0, featured: false})
-# craft_project5 = Project.new({title: 'craft_project5', author_id: demo.id, view_count: 0, featured: false})
-# craft_project6 = Project.new({title: 'craft_project6', author_id: demo.id, view_count: 0, featured: false})
-# craft_project7 = Project.new({title: 'craft_project7', author_id: demo.id, view_count: 0, featured: false})
+# craft_project1 = Project.new({title: 'craft_project1', author_id: cudds.id, view_count: 0, featured: false})
+# craft_project2 = Project.new({title: 'craft_project2', author_id: cudds.id, view_count: 0, featured: false})
+# craft_project3 = Project.new({title: 'craft_project3', author_id: cudds.id, view_count: 0, featured: false})
+# craft_project4 = Project.new({title: 'craft_project4', author_id: cudds.id, view_count: 0, featured: false})
+# craft_project5 = Project.new({title: 'craft_project5', author_id: cudds.id, view_count: 0, featured: false})
+# craft_project6 = Project.new({title: 'craft_project6', author_id: cudds.id, view_count: 0, featured: false})
+# craft_project7 = Project.new({title: 'craft_project7', author_id: cudds.id, view_count: 0, featured: false})
 #
 # craft_project1.picture.attach(io: craft1, filename: "blue-decoration-folded-800199.jpg")
 # craft_project2.picture.attach(io: craft2, filename: "pexels-photo-194094.jpeg")
@@ -643,10 +647,10 @@ carft_project3_step_9.save!
 # technology3 = File.open("app/assets/images/technology_images/pexels-photo-209255.jpeg")
 # technology4 = File.open("app/assets/images/technology_images/pexels-photo-595804.jpeg")
 #
-# technology_project1 = Project.new({title: 'technology_project1', author_id: demo.id, view_count: 0, featured: false})
-# technology_project2 = Project.new({title: 'technology_project2', author_id: demo.id, view_count: 0, featured: false})
-# technology_project3 = Project.new({title: 'technology_project3', author_id: demo.id, view_count: 0, featured: false})
-# technology_project4 = Project.new({title: 'technology_project4', author_id: demo.id, view_count: 0, featured: false})
+# technology_project1 = Project.new({title: 'technology_project1', author_id: cudds.id, view_count: 0, featured: false})
+# technology_project2 = Project.new({title: 'technology_project2', author_id: cudds.id, view_count: 0, featured: false})
+# technology_project3 = Project.new({title: 'technology_project3', author_id: cudds.id, view_count: 0, featured: false})
+# technology_project4 = Project.new({title: 'technology_project4', author_id: cudds.id, view_count: 0, featured: false})
 #
 # technology_project1.picture.attach(io: technology1, filename: "Anybots_robot_monty.jpg")
 # technology_project2.picture.attach(io: technology2, filename: "download.jpeg")
@@ -659,8 +663,8 @@ carft_project3_step_9.save!
 # technology_project4.save!
 
 #
-# project = {title: 'Seed Project', author_id: demo.id, view_count: 0, featured: false}
+# project = {title: 'Seed Project', author_id: cudds.id, view_count: 0, featured: false}
 #
-# Project.new(title: 'Seed Project', author_id: demo.id, view_count: 0, featured: false)
-# Project.new(title: 'Seed2 Project', author_id: demo.id, view_count: 0, featured: false)
-# Project.new(title: 'Seed3 Project', author_id: demo.id, view_count: 0, featured: false)
+# Project.new(title: 'Seed Project', author_id: cudds.id, view_count: 0, featured: false)
+# Project.new(title: 'Seed2 Project', author_id: cudds.id, view_count: 0, featured: false)
+# Project.new(title: 'Seed3 Project', author_id: cudds.id, view_count: 0, featured: false)

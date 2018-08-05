@@ -570,7 +570,7 @@ var Greeting = function (_React$Component) {
     value: function toggleDropdown(e) {
       if (this.dropDown) {
         var target = e.target;
-        if (target.id != this.dropDown.id) {
+        if (target.id !== "dropDown") {
           this.setState({ active: false });
         } else {
           this.setState({ active: true });
