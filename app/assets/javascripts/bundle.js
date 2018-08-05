@@ -2012,6 +2012,9 @@ var ProjectForm = function (_React$Component) {
         }
       });
       if (incompleteInstructions.length) {
+        incompleteInstructions = incompleteInstructions.sort(function (a, b) {
+          return a - b;
+        });
         incompleteInstructions.forEach(function (instructionNumber) {
           instructionBodyErrors.push(['Please finish filling out the body for step ' + instructionNumber]);
         });

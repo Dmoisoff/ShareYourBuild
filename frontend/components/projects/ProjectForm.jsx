@@ -216,7 +216,7 @@ class ProjectForm extends React.Component{
     }
 
     instructions(){
-      const incompleteInstructions = [];
+      let incompleteInstructions = [];
       const instructionBodyErrors = [];
       this.state.instructionBodies.forEach((instructionBody) => {
         if(!Object.values(instructionBody)[0]){
@@ -224,6 +224,7 @@ class ProjectForm extends React.Component{
         }
       });
       if(incompleteInstructions.length){
+        incompleteInstructions = incompleteInstructions.sort((a,b) => a-b);
         incompleteInstructions.forEach((instructionNumber) =>{
           instructionBodyErrors.push([`Please finish filling out the body for step ${instructionNumber}`]);
         });
