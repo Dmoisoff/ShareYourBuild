@@ -55,9 +55,19 @@ const App = () => (
         <Link className='clickable' to='/'>Share Your Build</Link>
       </div>
       <div className='icon-space'>
+        <a href="https://dmoisoff.com/">Coded by Daniel Moisoff</a>
+      </div>
+      <div className='icon-space'>
+        <a href="https://www.linkedin.com/in/dmoisoff/">
+          <div id='linkedin-logo'></div>
+        </a>
         <a href="https://github.com/Dmoisoff">
           <div id='github-logo'></div>
         </a>
+        <a href="https://angel.co/daniel-moisoff">
+          <div id='angellist-logo'></div>
+        </a>
+
       </div>
     </footer>
   </div>

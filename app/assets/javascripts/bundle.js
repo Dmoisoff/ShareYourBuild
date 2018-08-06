@@ -494,8 +494,27 @@ var App = function App() {
         { className: 'icon-space' },
         _react2.default.createElement(
           'a',
+          { href: 'https://dmoisoff.com/' },
+          'Coded by Daniel Moisoff'
+        )
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'icon-space' },
+        _react2.default.createElement(
+          'a',
+          { href: 'https://www.linkedin.com/in/dmoisoff/' },
+          _react2.default.createElement('div', { id: 'linkedin-logo' })
+        ),
+        _react2.default.createElement(
+          'a',
           { href: 'https://github.com/Dmoisoff' },
           _react2.default.createElement('div', { id: 'github-logo' })
+        ),
+        _react2.default.createElement(
+          'a',
+          { href: 'https://angel.co/daniel-moisoff' },
+          _react2.default.createElement('div', { id: 'angellist-logo' })
         )
       )
     )

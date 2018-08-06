@@ -27,6 +27,24 @@ form > input{
   margin-right: 20px;
 }
 
+#angellist-logo{
+  background-image: image_url("angellist-brands.svg");
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  background-size: cover;
+  margin-right: 20px;
+}
+
+#linkedin-logo{
+  background-image: image_url("linkedin-brands.svg");
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  background-size: cover;
+  margin-right: 20px;
+}
+
 .icon-space {
   width: 192px;
   display: flex;
