@@ -4,7 +4,7 @@ import { fetchProjects } from './../../actions/projects_actions';
 import IndexProjects from './IndexProjects';
 
 
-const mstp = (state) => {
+const mstp = (state, ownProps) => {
   return({
     projects: Object.values(state.entities.projects),
     formType: 'Index Projects'

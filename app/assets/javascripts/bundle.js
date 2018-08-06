@@ -1510,8 +1510,9 @@ var IndexProjects = function (_React$Component) {
     value: function renderProjects() {
       var _this3 = this;
 
-      return this.props.projects.map(function (project) {
-        var display = _react2.default.createElement(
+      var display = [];
+      this.props.projects.map(function (project) {
+        var component = _react2.default.createElement(
           _reactRouterDom.Link,
           { key: project.id, to: '/project/' + project.id },
           _react2.default.createElement(_IndexProjectItem2.default, {
@@ -1522,14 +1523,20 @@ var IndexProjects = function (_React$Component) {
             featured: project.featured,
             viewCount: project.view_count })
         );
-        if (!project.picture) {
-          return [];
-        } else if (project.author_id == _this3.props.displayedUser && _this3.props.formType === 'User Index Projects') {
-          return display;
+        if (project.author_id == _this3.props.displayedUser && _this3.props.formType === 'User Index Projects') {
+          display.push(component);
         } else if (_this3.props.formType === 'Index Projects') {
-          return display;
+          display.push(component);
         }
       });
+      if (!display.length) {
+        display = _react2.default.createElement(
+          'h3',
+          null,
+          'You have no builds, share an idea and create a build!'
+        );
+      }
+      return display;
     }
   }, {
     key: 'render',
@@ -1600,7 +1607,7 @@ var _IndexProjects2 = _interopRequireDefault(_IndexProjects);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var mstp = function mstp(state) {
+var mstp = function mstp(state, ownProps) {
   return {
     projects: Object.values(state.entities.projects),
     formType: 'Index Projects'
