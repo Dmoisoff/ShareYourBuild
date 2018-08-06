@@ -508,7 +508,7 @@ var App = function App() {
         ),
         _react2.default.createElement(
           'a',
-          { href: 'https://github.com/Dmoisoff' },
+          { href: 'https://github.com/Dmoisoff/ShareYourBuild' },
           _react2.default.createElement('div', { id: 'github-logo' })
         ),
         _react2.default.createElement(

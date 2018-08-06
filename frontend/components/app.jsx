@@ -61,7 +61,7 @@ const App = () => (
         <a href="https://www.linkedin.com/in/dmoisoff/">
           <div id='linkedin-logo'></div>
         </a>
-        <a href="https://github.com/Dmoisoff">
+        <a href="https://github.com/Dmoisoff/ShareYourBuild">
           <div id='github-logo'></div>
         </a>
         <a href="https://angel.co/daniel-moisoff">
