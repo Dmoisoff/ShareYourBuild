@@ -15,6 +15,7 @@ class ProjectForm extends React.Component{
     this.uploadResult = this.uploadResult.bind(this);
     this.redirect = this.redirect.bind(this);
     this.instructions = this.instructions.bind(this);
+    this.extensionCheck = this.extensionCheck.bind(this);
   }
 
   updateTitle(e){
@@ -25,8 +26,29 @@ class ProjectForm extends React.Component{
     this.setState({description: e.target.value});
   }
 
+  extensionCheck(file){
+    debugger
+    const fileName = file.name;
+    const extension = fileName.slice((fileName.lastIndexOf('.'))+1);
+    const validExtensions = ['jpeg','jpeg2000','tiff','png','svg'];
+    for (let i = 0; i < validExtensions.length; i++) {
+      if(extension.toLowerCase() === validExtensions[i]){
+        return true;
+      }
+    }
+    return false;
+  }
+
+
   uploadFile(e){
+    debugger
     const file = e.currentTarget.files[0];
+    if(!this.extensionCheck(file)){
+      this.setState({instructionIssues: [`That is an improper file format, please choose a different file`]});
+      this.instructionErrors();
+      return;
+    }
+
     const fileReader = new FileReader();
     fileReader.onloadend = () => {
       this.setState({pictureFile: file, pictureUrl: fileReader.result });
@@ -204,6 +226,13 @@ class ProjectForm extends React.Component{
       }
     }
 
+    instructionPhotoUploadCheck(boolean){
+      if(!boolean){
+        this.setState({instructionIssues: [`That is an improper file format, please choose a different file`]});
+        this.instructionErrors();
+      }
+    }
+
   instructionErrors(){
     if(!this.state.instructionIssues.length){
       return [];
@@ -248,6 +277,7 @@ class ProjectForm extends React.Component{
               step={this.state.stepNum}
               instructionBodiesState={this.instructionBodiesState.bind(this)}
               removeInstruction={this.removeInstruction.bind(this)}
+              instructionPhotoUploadCheck={this.instructionPhotoUploadCheck.bind(this)}
               />
           ],
           key: keyValue
@@ -275,6 +305,7 @@ class ProjectForm extends React.Component{
                   media={instruction.media}
                   instructionBodiesState={this.instructionBodiesState.bind(this)}
                   removeInstruction={this.removeInstruction.bind(this)}
+                  instructionPhotoUploadCheck={this.instructionPhotoUploadCheck.bind(this)}
                   />;
         });
        this.setState({instructions: instructions, key: keyValue});

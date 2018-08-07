@@ -18,7 +18,8 @@ const mstp = (state, ownProps) => {
        },
       formType: 'New Instruction',
       errors: state.errors.instruction,
-      instructionBodiesState: ownProps.instructionBodiesState
+      instructionBodiesState: ownProps.instructionBodiesState,
+      instructionPhotoUploadCheck: ownProps.instructionPhotoUploadCheck
     });
 };
 

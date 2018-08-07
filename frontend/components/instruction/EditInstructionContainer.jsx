@@ -15,7 +15,8 @@ const mstp = (state, ownProps) => {
         step: ownProps.step,
         projectId: ownProps.projectId,
         rendered: false,
-        instructionBody: true
+        instructionBody: true,
+        instructionPhotoUploadCheck: ownProps.instructionPhotoUploadCheck
        },
       formType: 'Update Instruction',
       errors: state.errors.instruction,

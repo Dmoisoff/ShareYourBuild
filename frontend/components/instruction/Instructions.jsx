@@ -40,8 +40,25 @@ class Instructions extends React.Component{
     }
   }
 
+  extensionCheck(file){
+    debugger
+    const fileName = file.name;
+    const extension = fileName.slice((fileName.lastIndexOf('.'))+1);
+    const validExtensions = ['jpeg','jpeg2000','tiff','png','svg'];
+    for (let i = 0; i < validExtensions.length; i++) {
+      if(extension.toLowerCase() === validExtensions[i]){
+        return true;
+      }
+    }
+    return false;
+  }
+
   uploadFile(e){
     const file = e.currentTarget.files[0];
+    if(!this.extensionCheck(file)){
+      this.props.instructionPhotoUploadCheck(false);
+      return;
+    }
     const fileReader = new FileReader();
     fileReader.onloadend = () => {
       this.setState({media: file, mediaUrl: fileReader.result });

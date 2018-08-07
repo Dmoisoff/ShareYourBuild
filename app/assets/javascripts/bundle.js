@@ -785,7 +785,8 @@ var mstp = function mstp(state, ownProps) {
       step: ownProps.step,
       projectId: ownProps.projectId,
       rendered: false,
-      instructionBody: true
+      instructionBody: true,
+      instructionPhotoUploadCheck: ownProps.instructionPhotoUploadCheck
     },
     formType: 'Update Instruction',
     errors: state.errors.instruction
@@ -959,11 +960,29 @@ var Instructions = function (_React$Component) {
       }
     }
   }, {
+    key: 'extensionCheck',
+    value: function extensionCheck(file) {
+      debugger;
+      var fileName = file.name;
+      var extension = fileName.slice(fileName.lastIndexOf('.') + 1);
+      var validExtensions = ['jpeg', 'jpeg2000', 'tiff', 'png', 'svg'];
+      for (var i = 0; i < validExtensions.length; i++) {
+        if (extension.toLowerCase() === validExtensions[i]) {
+          return true;
+        }
+      }
+      return false;
+    }
+  }, {
     key: 'uploadFile',
     value: function uploadFile(e) {
       var _this2 = this;
 
       var file = e.currentTarget.files[0];
+      if (!this.extensionCheck(file)) {
+        this.props.instructionPhotoUploadCheck(false);
+        return;
+      }
       var fileReader = new FileReader();
       fileReader.onloadend = function () {
         _this2.setState({ media: file, mediaUrl: fileReader.result });
@@ -1151,7 +1170,8 @@ var mstp = function mstp(state, ownProps) {
     },
     formType: 'New Instruction',
     errors: state.errors.instruction,
-    instructionBodiesState: ownProps.instructionBodiesState
+    instructionBodiesState: ownProps.instructionBodiesState,
+    instructionPhotoUploadCheck: ownProps.instructionPhotoUploadCheck
   };
 };
 
@@ -1786,6 +1806,7 @@ var ProjectForm = function (_React$Component) {
     _this.uploadResult = _this.uploadResult.bind(_this);
     _this.redirect = _this.redirect.bind(_this);
     _this.instructions = _this.instructions.bind(_this);
+    _this.extensionCheck = _this.extensionCheck.bind(_this);
     return _this;
   }
 
@@ -1800,11 +1821,32 @@ var ProjectForm = function (_React$Component) {
       this.setState({ description: e.target.value });
     }
   }, {
+    key: 'extensionCheck',
+    value: function extensionCheck(file) {
+      debugger;
+      var fileName = file.name;
+      var extension = fileName.slice(fileName.lastIndexOf('.') + 1);
+      var validExtensions = ['jpeg', 'jpeg2000', 'tiff', 'png', 'svg'];
+      for (var i = 0; i < validExtensions.length; i++) {
+        if (extension.toLowerCase() === validExtensions[i]) {
+          return true;
+        }
+      }
+      return false;
+    }
+  }, {
     key: 'uploadFile',
     value: function uploadFile(e) {
       var _this2 = this;
 
+      debugger;
       var file = e.currentTarget.files[0];
+      if (!this.extensionCheck(file)) {
+        this.setState({ instructionIssues: ['That is an improper file format, please choose a different file'] });
+        this.instructionErrors();
+        return;
+      }
+
       var fileReader = new FileReader();
       fileReader.onloadend = function () {
         _this2.setState({ pictureFile: file, pictureUrl: fileReader.result });
@@ -2018,6 +2060,14 @@ var ProjectForm = function (_React$Component) {
       }
     }
   }, {
+    key: 'instructionPhotoUploadCheck',
+    value: function instructionPhotoUploadCheck(boolean) {
+      if (!boolean) {
+        this.setState({ instructionIssues: ['That is an improper file format, please choose a different file'] });
+        this.instructionErrors();
+      }
+    }
+  }, {
     key: 'instructionErrors',
     value: function instructionErrors() {
       var _this6 = this;
@@ -2071,7 +2121,8 @@ var ProjectForm = function (_React$Component) {
             key: keyValue,
             step: this.state.stepNum,
             instructionBodiesState: this.instructionBodiesState.bind(this),
-            removeInstruction: this.removeInstruction.bind(this)
+            removeInstruction: this.removeInstruction.bind(this),
+            instructionPhotoUploadCheck: this.instructionPhotoUploadCheck.bind(this)
           })]),
           key: keyValue
         });
@@ -2099,7 +2150,8 @@ var ProjectForm = function (_React$Component) {
             key: keyValue,
             media: instruction.media,
             instructionBodiesState: _this7.instructionBodiesState.bind(_this7),
-            removeInstruction: _this7.removeInstruction.bind(_this7)
+            removeInstruction: _this7.removeInstruction.bind(_this7),
+            instructionPhotoUploadCheck: _this7.instructionPhotoUploadCheck.bind(_this7)
           });
         });
         this.setState({ instructions: instructions, key: keyValue });
