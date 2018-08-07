@@ -22,6 +22,76 @@ cudds = User.new(username: 'Cudds', email: 'Cudds@demo.com', age: DateTime.strpt
 cudds.picture.attach(io: cuddsProfilePicture, filename: 'FullSizeRendercopy.png')
 cudds.save!
 
+technology1 = File.open("app/assets/images/non_instrucable_seeds/technology/saw_off_usb/main_pic.jpg")
+technology_project1 = Project.new({title: 'How to make a Sawed-off USB Key', author_id: demo.id, view_count: 0, featured: false, description: "the picture above is a little surprising– because yes, it’s a working USB flash drive. Here, we give the step by step walk through of how to make your own."})
+technology_project1.picture.attach(io: technology1, filename: 'main_pic.jpg')
+technology_project1.save!
+
+technology_1_step_1 = File.open("app/assets/images/non_instrucable_seeds/technology/saw_off_usb/step_one.png")
+technology_1_step_2 = File.open("app/assets/images/non_instrucable_seeds/technology/saw_off_usb/step_two.png")
+technology_1_step_3 = File.open("app/assets/images/non_instrucable_seeds/technology/saw_off_usb/step_three.png")
+technology_1_step_4 = File.open("app/assets/images/non_instrucable_seeds/technology/saw_off_usb/step_four.png")
+technology_1_step_5 = File.open("app/assets/images/non_instrucable_seeds/technology/saw_off_usb/step_five.png")
+technology_1_step_6 = File.open("app/assets/images/non_instrucable_seeds/technology/saw_off_usb/step_six.png")
+technology_1_step_7 = File.open("app/assets/images/non_instrucable_seeds/technology/saw_off_usb/step_seven.png")
+technology_1_step_8 = File.open("app/assets/images/non_instrucable_seeds/technology/saw_off_usb/step_eight.png")
+technology_1_step_9 = File.open("app/assets/images/non_instrucable_seeds/technology/saw_off_usb/step_nine.png")
+
+technology_project1_step_1 = Instruction.new({project_id: technology_project1.id, instruction_step: 1, title: '', body: 'This is a KingMax 1 GB USB flash drive, one of the smaller varieties out there. I got it on eBay for about $10 and there seem to be plenty more available. Above, you can see it in between my fingers and in my computer for scale. The gold pads are just printed pads on a tiny circuit board.' })
+technology_project1_step_2 = Instruction.new({project_id: technology_project1.id, instruction_step: 2, title: '', body: 'The plastic cover is attached only weakly, by a bit of silicone adhesive, and peels off fairly easily to expose the bare printed circuit board of the flash drive. Not too much to it, really.' })
+technology_project1_step_3 = Instruction.new({project_id: technology_project1.id, instruction_step: 3, title: '', body: 'Next we need a victim USB cable. I started with this new $1.50 USB “A-B” cable. Looking at the end that we’ll be cutting up, you might notice a neat injection molding seam that runs around the edge. Using a sharp hobby knife, cut neatly along that seam. Cutting there actually provides some camouflage for you: Since we expect there to be a seam there, it’s very hard to notice an additional cut as well. If you really want your seams to be invisible, you might want to use a blackUSB cable. Cut deeply enough that you actually cut through to the metal shell underneath the rubber, at which point you can start to peel back the rubber parts.' })
+technology_project1_step_4 = Instruction.new({project_id: technology_project1.id, instruction_step: 4, title: '', body: 'The metal shell underneath the rubber over-molding consists of two of pieces of thin steel that are stamped and folded into place. They are held together by some tabs and slots– use a small screwdriver to defeat the tabs and you can pull the flap the “lid” piece, so that you can now get at the inside of the metal shell.' })
+technology_project1_step_5 = Instruction.new({project_id: technology_project1.id, instruction_step: 5, title: '', body: 'With the one piece of the metal shell removed, you have access to the middle parts of the shell where the original USB wires and plastic and metal connections are located. Cut them away with your choice of tools. I found that the hobby knife worked well enough to sever the wires, at which point the remaining plastic parts could be removed pretty easily. What’s left is just the metal shell– ready for us to put our own circuit board in.' })
+technology_project1_step_6 = Instruction.new({project_id: technology_project1.id, instruction_step: 6, title: '', body: 'Now we can start to test-fit the bare-board USB drive into the metal shell. Seems to fit okay. Still need to fix it in place, though.' })
+technology_project1_step_7 = Instruction.new({project_id: technology_project1.id, instruction_step: 7, title: '', body: 'One other final detail to take care of: The back side, where the circuit board will be resting, has some metal parts that the back side of the circuit board will be touching– so we need an insulator there. I had an old piece of clear blue heat-shrink tubing that happened to fit well, but a piece of electrical tape would have done the job too. Once that was added, it all looked safe and still fit together.' })
+technology_project1_step_8 = Instruction.new({project_id: technology_project1.id, instruction_step: 8, title: '', body: 'To bond everything together and fill all the extra space inside the USB cable end, I use gel-style 5 minute epoxy. Fortunately, five minutes gives you enough time to apply the glue, place the flash drive in place, and put the rubber molded housing back on. Hold the connector firmly– paying attention to the seams for alignment– until the epoxy cures, about five more minutes.' })
+technology_project1_step_9 = Instruction.new({project_id: technology_project1.id, instruction_step: 9, title: '', body: 'Last step: Cut the cable as desired. A jagged cut looks different than a clean cut– take your pick. So that’s it– how to make your own cut-off usb cable flash drive.' })
+
+technology_project1_step_1.media.attach(io: technology_1_step_1, filename: 'step_one.png')
+technology_project1_step_2.media.attach(io: technology_1_step_2, filename: 'step_two.png')
+technology_project1_step_3.media.attach(io: technology_1_step_3, filename: 'step_three.png')
+technology_project1_step_4.media.attach(io: technology_1_step_4, filename: 'step_four.png')
+technology_project1_step_5.media.attach(io: technology_1_step_5, filename: 'step_five.png')
+technology_project1_step_6.media.attach(io: technology_1_step_6, filename: 'step_six.png')
+technology_project1_step_7.media.attach(io: technology_1_step_7, filename: 'step_seven.png')
+technology_project1_step_8.media.attach(io: technology_1_step_8, filename: 'step_eight.png')
+technology_project1_step_9.media.attach(io: technology_1_step_9, filename: 'step_nine.png')
+
+technology_project1_step_1.save!
+technology_project1_step_2.save!
+technology_project1_step_3.save!
+technology_project1_step_4.save!
+technology_project1_step_5.save!
+technology_project1_step_6.save!
+technology_project1_step_7.save!
+technology_project1_step_8.save!
+technology_project1_step_9.save!
+
+
+technology2 = File.open("app/assets/images/non_instrucable_seeds/technology/Diy Tech Gloves With Conductive Thread/main_picture.png")
+technology_project2 = Project.new({title: 'DIY Tech Gloves With Conductive Thread', author_id: demo.id, view_count: 0, featured: false, description: "I do not have fancy tech savy gloves. I am just far too cheap to purchase them as I am the type to set things down and walk away. So, even though I don't have fancy tech gloves, I do have these:Gloves With Conductive Thread."})
+technology_project2.picture.attach(io: technology2, filename: 'main_picture.png')
+technology_project2.save!
+
+
+technology_project2_step_1 = Instruction.new({project_id: technology_project2.id, instruction_step: 1, title: '', body: "Conductive thread! It's about the thickness of quilting thread, and has the feel of a thin wire. Here's the cool part, any old gloves will do. I have a pair of neoprene gloves that I added conductive thread too that now work fabulously with my phone." })
+technology_project2_step_2 = Instruction.new({project_id: technology_project2.id, instruction_step: 2, title: '', body: "Go back and forth with the thread creating parallel lines close together.
+Knit gloves are hard to make straight lines. It's all good. Just do your best. Try them out and if they aren't working just add a few more stitches. As longs as the thread is touching your finger inside the glove, and touching the screen on your phone, it should work great." })
+technology_project2_step_3 = Instruction.new({project_id: technology_project2.id, instruction_step: 3, title: '', body: "I would suggest stitching at least your pointer finger and thumb. You can stitch all the fingers in your glove if you want to. Conductive thread only comes in one color. Think about that when purchasing gloves. It also comes in 2 Ply or 4 Ply. I bought 2. 4 is thicker and would work as well." })
+
+technology_2_step_1 = File.open("app/assets/images/non_instrucable_seeds/technology/Diy Tech Gloves With Conductive Thread/step_one.png")
+technology_2_step_2 = File.open("app/assets/images/non_instrucable_seeds/technology/Diy Tech Gloves With Conductive Thread/step_two.png")
+technology_2_step_3 = File.open("app/assets/images/non_instrucable_seeds/technology/Diy Tech Gloves With Conductive Thread/step_three.png")
+
+technology_project2_step_1.media.attach(io: technology_2_step_1, filename: 'step_one.png')
+technology_project2_step_2.media.attach(io: technology_2_step_2, filename: 'step_two.png')
+technology_project2_step_3.media.attach(io: technology_2_step_3, filename: 'step_three.png')
+
+technology_project2_step_1.save!
+technology_project2_step_2.save!
+technology_project2_step_3.save!
+
+
 recipe1 = File.open("app/assets/images/recipe_seeds/bacon_dates/FFGKPMNJJLTRIFY.LARGE.jpg")
 
 recipe_project1 = Project.new({title: 'Bacon Dates', author_id: shibe.id, view_count: 0, featured: false, description: "<p>Having a BBQ is a really nice thing. Very easy in preparation if you keep it simple and really delicious. Just meat (or vegetables), some bread and a nice dessert. Yes, an easy dessert directly from the fire.Welcome to the two ingredients campfire dessert.It can be better prepared before hand in your kitchen, but since it was a very spontaneous idea I did the preparation directly at the beach.</p>".html_safe})
