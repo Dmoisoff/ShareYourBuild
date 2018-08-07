@@ -11,6 +11,7 @@ class IndexProjects extends React.Component{
   }
 
   componentDidMount(){
+    debugger
     if(this.props.formType === 'User Index Projects'){
       this.props.fetchProjectsByUser(this.props.displayedUser);
     }else{
@@ -19,6 +20,7 @@ class IndexProjects extends React.Component{
   }
 
   componentWillReceiveProps(nextProps){
+    debugger
     if(this.props.displayedUser !== nextProps.displayedUser && this.props.formType === 'User Index Projects'){
       this.props.fetchProjectsByUser(nextProps.displayedUser).then(() => {
         this.setState({key: Math.random()});
@@ -27,6 +29,7 @@ class IndexProjects extends React.Component{
   }
 
   renderProjects(){
+    debugger
     let display = [];
     this.props.projects.map((project) => {
       const component = <Link key={project.id} to={`/project/${project.id}`}>
@@ -45,6 +48,7 @@ class IndexProjects extends React.Component{
       }
     });
     if(!display.length){
+      debugger
       display = <h3>You have no builds, share an idea and create a build!</h3>;
     }
     return(

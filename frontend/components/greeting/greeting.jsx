@@ -8,8 +8,9 @@ class Greeting extends React.Component{
     this.greeting = this.greeting.bind(this);
     this.dropDownList = null;
     this.dropDown = null;
+    this.eventListent = false;
     this.toggleDropdown = this.toggleDropdown.bind(this);
-    document.addEventListener('click', (e) =>{this.toggleDropdown(e);});
+    // document.addEventListener('click', (e) =>{this.toggleDropdown(e);});
   }
 
     componentWillReceiveProps(){
@@ -22,18 +23,19 @@ class Greeting extends React.Component{
     }
 
   toggleDropdown(e){
-    if(this.dropDown){
-    const target = e.target;
-      if(target.id !== "dropDown"){
+    let target = e.target.id;
+    target;
+      if(target !== "dropDown"){
         this.setState({active: false});
       }else{
         this.setState({active: true});
       }
-    }
   }
 
   greeting(){
+    debugger
     if (this.props.currentUser){
+      document.addEventListener('click', (e) =>{this.toggleDropdown(e);});
       let active;
       if(this.state.active){
         active = 'user-profile-dropdown';
@@ -67,6 +69,7 @@ class Greeting extends React.Component{
         </div>
       );
     }else {
+      document.removeEventListener('click', (e) =>{this.toggleDropdown(e);});
       return(
         <div className='user-nav'>
           <Link className='clickable' to='/login'>Log In</Link>

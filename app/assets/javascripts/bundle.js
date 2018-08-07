@@ -469,7 +469,7 @@ var App = function App() {
           _react2.default.createElement(_route_util.ProtectedRoute, { exact: true, path: '/project/:projectId/edit', component: _EditProjectContainer2.default }),
           _react2.default.createElement(_reactRouterDom.Route, { path: '/project/:projectId', component: _ShowProjectContainer2.default }),
           _react2.default.createElement(_reactRouterDom.Route, { path: '/projects', component: _IndexProjectsContainer2.default }),
-          _react2.default.createElement(_reactRouterDom.Route, { path: '/:username/:id/projects', component: _UserProjectsIndexContainer2.default }),
+          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/:username/:id/projects', component: _UserProjectsIndexContainer2.default }),
           _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/login', component: _LoginFormContainer2.default }),
           _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/signup', component: _SignupFormContainer2.default })
         )
@@ -566,10 +566,9 @@ var Greeting = function (_React$Component) {
     _this.greeting = _this.greeting.bind(_this);
     _this.dropDownList = null;
     _this.dropDown = null;
+    _this.eventListent = false;
     _this.toggleDropdown = _this.toggleDropdown.bind(_this);
-    document.addEventListener('click', function (e) {
-      _this.toggleDropdown(e);
-    });
+    // document.addEventListener('click', (e) =>{this.toggleDropdown(e);});
     return _this;
   }
 
@@ -587,13 +586,12 @@ var Greeting = function (_React$Component) {
   }, {
     key: 'toggleDropdown',
     value: function toggleDropdown(e) {
-      if (this.dropDown) {
-        var target = e.target;
-        if (target.id !== "dropDown") {
-          this.setState({ active: false });
-        } else {
-          this.setState({ active: true });
-        }
+      var target = e.target.id;
+      target;
+      if (target !== "dropDown") {
+        this.setState({ active: false });
+      } else {
+        this.setState({ active: true });
       }
     }
   }, {
@@ -601,7 +599,11 @@ var Greeting = function (_React$Component) {
     value: function greeting() {
       var _this2 = this;
 
+      debugger;
       if (this.props.currentUser) {
+        document.addEventListener('click', function (e) {
+          _this2.toggleDropdown(e);
+        });
         var active = void 0;
         if (this.state.active) {
           active = 'user-profile-dropdown';
@@ -662,6 +664,9 @@ var Greeting = function (_React$Component) {
           )
         );
       } else {
+        document.removeEventListener('click', function (e) {
+          _this2.toggleDropdown(e);
+        });
         return _react2.default.createElement(
           'div',
           { className: 'user-nav' },
@@ -1507,6 +1512,7 @@ var IndexProjects = function (_React$Component) {
   _createClass(IndexProjects, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      debugger;
       if (this.props.formType === 'User Index Projects') {
         this.props.fetchProjectsByUser(this.props.displayedUser);
       } else {
@@ -1518,6 +1524,7 @@ var IndexProjects = function (_React$Component) {
     value: function componentWillReceiveProps(nextProps) {
       var _this2 = this;
 
+      debugger;
       if (this.props.displayedUser !== nextProps.displayedUser && this.props.formType === 'User Index Projects') {
         this.props.fetchProjectsByUser(nextProps.displayedUser).then(function () {
           _this2.setState({ key: Math.random() });
@@ -1529,6 +1536,7 @@ var IndexProjects = function (_React$Component) {
     value: function renderProjects() {
       var _this3 = this;
 
+      debugger;
       var display = [];
       this.props.projects.map(function (project) {
         var component = _react2.default.createElement(
@@ -1549,6 +1557,7 @@ var IndexProjects = function (_React$Component) {
         }
       });
       if (!display.length) {
+        debugger;
         display = _react2.default.createElement(
           'h3',
           null,
@@ -1627,6 +1636,7 @@ var _IndexProjects2 = _interopRequireDefault(_IndexProjects);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state, ownProps) {
+  debugger;
   return {
     projects: Object.values(state.entities.projects),
     formType: 'Index Projects'
@@ -2622,6 +2632,7 @@ var _IndexProjects2 = _interopRequireDefault(_IndexProjects);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state, ownProps) {
+  debugger;
   var displayedUser = ownProps.match.url.split('/')[2];
   var username = ownProps.match.url.split('/')[1];
   return {
