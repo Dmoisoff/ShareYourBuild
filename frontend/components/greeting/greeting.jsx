@@ -9,7 +9,6 @@ class Greeting extends React.Component{
     this.dropDownList = null;
     this.dropDown = null;
     this.toggleDropdown = this.toggleDropdown.bind(this);
-    // debugger
     document.addEventListener('click', (e) =>{this.toggleDropdown(e);});
   }
 

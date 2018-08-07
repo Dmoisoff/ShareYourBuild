@@ -18,7 +18,6 @@ class ProjectShow extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    debugger
     if(!nextProps.errors){
       this.props.clearProjectErrors;
       this.props.history.push('/');

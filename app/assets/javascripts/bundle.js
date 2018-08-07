@@ -568,7 +568,6 @@ var Greeting = function (_React$Component) {
     _this.dropDownList = null;
     _this.dropDown = null;
     _this.toggleDropdown = _this.toggleDropdown.bind(_this);
-    // debugger
     document.addEventListener('click', function (e) {
       _this.toggleDropdown(e);
     });
@@ -2382,7 +2381,6 @@ var ProjectShow = function (_React$Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      debugger;
       if (!nextProps.errors) {
         this.props.clearProjectErrors;
         this.props.history.push('/');
@@ -2549,10 +2547,7 @@ var _ShowProject2 = _interopRequireDefault(_ShowProject);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state, ownProps) {
-  // debugger
-  // if(!state.errors.project){
-  //   ownProps.history.push('/');
-  // }
+
   var projectId = ownProps.match.params.projectId;
 
   var instructionsArray = Object.values(state.entities.instructions).filter(function (instruction) {

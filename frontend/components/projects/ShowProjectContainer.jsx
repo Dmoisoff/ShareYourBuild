@@ -7,10 +7,7 @@ import ShowProject from './ShowProject';
 
 
 const mstp = (state, ownProps) => {
-  // debugger
-  // if(!state.errors.project){
-  //   ownProps.history.push('/');
-  // }
+
   const projectId = ownProps.match.params.projectId;
 
   const instructionsArray = Object.values(state.entities.instructions).filter((instruction) =>{
