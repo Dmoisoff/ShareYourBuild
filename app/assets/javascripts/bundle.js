@@ -567,6 +567,8 @@ var Greeting = function (_React$Component) {
     _this.greeting = _this.greeting.bind(_this);
     _this.dropDownList = null;
     _this.dropDown = null;
+    _this.toggleDropdown = _this.toggleDropdown.bind(_this);
+    // debugger
     document.addEventListener('click', function (e) {
       _this.toggleDropdown(e);
     });
