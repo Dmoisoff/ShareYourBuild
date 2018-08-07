@@ -469,7 +469,6 @@ var App = function App() {
           _react2.default.createElement(_route_util.ProtectedRoute, { exact: true, path: '/project/:projectId/edit', component: _EditProjectContainer2.default }),
           _react2.default.createElement(_reactRouterDom.Route, { path: '/project/:projectId', component: _ShowProjectContainer2.default }),
           _react2.default.createElement(_reactRouterDom.Route, { path: '/projects', component: _IndexProjectsContainer2.default }),
-          _react2.default.createElement(_reactRouterDom.Route, { path: '/test', component: _NewInstructionContainer2.default }),
           _react2.default.createElement(_reactRouterDom.Route, { path: '/:username/:id/projects', component: _UserProjectsIndexContainer2.default }),
           _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/login', component: _LoginFormContainer2.default }),
           _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/signup', component: _SignupFormContainer2.default })

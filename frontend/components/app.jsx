@@ -42,7 +42,6 @@ const App = () => (
           <ProtectedRoute exact path="/project/:projectId/edit" component={EditProjectContainer} />
           <Route path="/project/:projectId" component={ShowProjectContainer} />
           <Route path="/projects" component={IndexProjectsContainer} />
-          <Route path="/test" component={NewInstructionContainer} />
           <Route path="/:username/:id/projects" component={UserProjectsIndexContainer} />
           <AuthRoute exact path="/login" component={LoginFormContainer} />
           <AuthRoute exact path="/signup" component={SignupFormContainer} />
