@@ -70,8 +70,9 @@ const mstp = (state, ownProps) =>{
     return instruction.projectId === Number(projectId);
 
   });
+  debugger
   const sortedInstructions = instructionsArray.sort((x,y) => {
-    return  x.instructionStep > y.instructionStep;
+    return  x.instructionStep - y.instructionStep;
   });
   const nextStep = sortedInstructions[0] ? (sortedInstructions[sortedInstructions.length-1].instructionStep)+1 : 1;
 

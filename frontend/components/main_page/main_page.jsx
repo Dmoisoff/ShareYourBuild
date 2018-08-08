@@ -7,7 +7,7 @@ import IndexProjectsContainer from './../projects/IndexProjectsContainer';
 
 const HomePage = () => {
   return(
-  <div>
+  <div className='main-page'>
     <Slides />
     <IndexProjectsContainer />
   </div>

@@ -15,7 +15,7 @@ const mstp = (state, ownProps) => {
   });
 
   const sortedInstructions = instructionsArray.sort((x,y) => {
-    return  x.instructionStep > y.instructionStep;
+    return  x.instructionStep - y.instructionStep;
   });
   const userId = state.session.id;
   const project = state.entities.projects[ownProps.match.params.projectId] || {};

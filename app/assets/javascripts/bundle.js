@@ -589,9 +589,13 @@ var Greeting = function (_React$Component) {
       var target = e.target.id;
       target;
       if (target !== "dropDown") {
-        this.setState({ active: false });
+        if (this.state.active) {
+          this.setState({ active: false });
+        }
       } else {
-        this.setState({ active: true });
+        if (!this.state.active) {
+          this.setState({ active: true });
+        }
       }
     }
   }, {
@@ -1220,7 +1224,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var HomePage = function HomePage() {
   return _react2.default.createElement(
     'div',
-    null,
+    { className: 'main-page' },
     _react2.default.createElement(_Slides2.default, null),
     _react2.default.createElement(_IndexProjectsContainer2.default, null)
   );
@@ -1352,8 +1356,9 @@ var mstp = function mstp(state, ownProps) {
   var instructionsArray = Object.values(state.entities.instructions).filter(function (instruction) {
     return instruction.projectId === Number(projectId);
   });
+  debugger;
   var sortedInstructions = instructionsArray.sort(function (x, y) {
-    return x.instructionStep > y.instructionStep;
+    return x.instructionStep - y.instructionStep;
   });
   var nextStep = sortedInstructions[0] ? sortedInstructions[sortedInstructions.length - 1].instructionStep + 1 : 1;
 
@@ -2621,7 +2626,7 @@ var mstp = function mstp(state, ownProps) {
   });
 
   var sortedInstructions = instructionsArray.sort(function (x, y) {
-    return x.instructionStep > y.instructionStep;
+    return x.instructionStep - y.instructionStep;
   });
   var userId = state.session.id;
   var project = state.entities.projects[ownProps.match.params.projectId] || {};

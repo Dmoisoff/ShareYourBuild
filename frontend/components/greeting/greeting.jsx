@@ -26,9 +26,13 @@ class Greeting extends React.Component{
     let target = e.target.id;
     target;
       if(target !== "dropDown"){
-        this.setState({active: false});
+        if(this.state.active){
+          this.setState({active: false});
+        }
       }else{
-        this.setState({active: true});
+        if(!this.state.active){
+          this.setState({active: true});
+        }
       }
   }
 
