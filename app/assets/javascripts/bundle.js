@@ -308,12 +308,15 @@ var fetchProject = exports.fetchProject = function fetchProject(id) {
   return function (dispatch) {
     return Projects_Util.fetchProject(id).then(function (_ref) {
       var project = _ref.project,
-          instructions = _ref.instructions;
+          instructions = _ref.instructions,
+          comments = _ref.comments;
 
+      debugger;
       return dispatch({
         type: FETCH_PROJECT,
         project: project,
-        instructions: instructions
+        instructions: instructions,
+        comments: comments
       });
     }, function (errors) {
       return dispatch({
@@ -3414,6 +3417,118 @@ var LetsShareTechnology = exports.LetsShareTechnology = function LetsShareTechno
 
 /***/ }),
 
+/***/ "./frontend/reducers/comment_error_reducer.js":
+/*!****************************************************!*\
+  !*** ./frontend/reducers/comment_error_reducer.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _projects_actions = __webpack_require__(/*! ./../actions/projects_actions */ "./frontend/actions/projects_actions.js");
+
+var _comments_actions = __webpack_require__(/*! ./../actions/comments_actions */ "./frontend/actions/comments_actions.js");
+
+var _merge = __webpack_require__(/*! lodash/merge */ "./node_modules/lodash/merge.js");
+
+var _merge2 = _interopRequireDefault(_merge);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var commentErrorsReducer = function commentErrorsReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments[1];
+
+  var oldState = Object.freeze(state);
+  switch (action.type) {
+    case _comments_actions.RECEIVE_COMMENT_ERRORS:
+      return action.errors;
+    case _projects_actions.FETCH_PROJECT:
+      return [];
+    case _comments_actions.FETCH_COMMENT:
+      return [];
+    default:
+      return oldState;
+  }
+};
+
+exports.default = commentErrorsReducer;
+
+/***/ }),
+
+/***/ "./frontend/reducers/comment_reducer.js":
+/*!**********************************************!*\
+  !*** ./frontend/reducers/comment_reducer.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _comments_actions = __webpack_require__(/*! ./../actions/comments_actions */ "./frontend/actions/comments_actions.js");
+
+var Comment_Actions = _interopRequireWildcard(_comments_actions);
+
+var _projects_actions = __webpack_require__(/*! ./../actions/projects_actions */ "./frontend/actions/projects_actions.js");
+
+var Projects_Actions = _interopRequireWildcard(_projects_actions);
+
+var _merge2 = __webpack_require__(/*! lodash/merge */ "./node_modules/lodash/merge.js");
+
+var _merge3 = _interopRequireDefault(_merge2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var commentReducer = function commentReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments[1];
+
+  var ids = void 0;
+  var newState = void 0;
+  var oldState = Object.freeze(state);
+  switch (action.type) {
+    case Projects_Actions.FETCH_PROJECT:
+      newState = (0, _merge3.default)({}, state, action.comments);
+      return newState;
+    case Comment_Actions.FETCH_COMMENT:
+      newState = (0, _merge3.default)({}, state, _defineProperty({}, action.comment.id, action.comment));
+      return newState;
+    case Comment_Actions.REMOVE_COMMENT:
+      newState = (0, _merge3.default)({}, state);
+      delete newState[action.commentId];
+      return newState;
+    case Comment_Actions.REMOVE_COMMENTS:
+      ids = Object.values(action.commentId);
+      newState = (0, _merge3.default)({}, state);
+      for (var i = 0; i < ids.length; i++) {
+        var id = ids[i];
+        delete newState[id];
+      }
+      return newState;
+    default:
+      return oldState;
+  }
+};
+
+exports.default = commentReducer;
+
+/***/ }),
+
 /***/ "./frontend/reducers/entities_reducer.js":
 /*!***********************************************!*\
   !*** ./frontend/reducers/entities_reducer.js ***!
@@ -3442,12 +3557,17 @@ var _instruction_reducer = __webpack_require__(/*! ./instruction_reducer */ "./f
 
 var _instruction_reducer2 = _interopRequireDefault(_instruction_reducer);
 
+var _comment_reducer = __webpack_require__(/*! ./comment_reducer */ "./frontend/reducers/comment_reducer.js");
+
+var _comment_reducer2 = _interopRequireDefault(_comment_reducer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var entitiesReducer = (0, _redux.combineReducers)({
   users: _user_reducer2.default,
   projects: _project_reducer2.default,
-  instructions: _instruction_reducer2.default
+  instructions: _instruction_reducer2.default,
+  comments: _comment_reducer2.default
 });
 
 exports.default = entitiesReducer;
@@ -3482,12 +3602,17 @@ var _instruction_error_reducer = __webpack_require__(/*! ./instruction_error_red
 
 var _instruction_error_reducer2 = _interopRequireDefault(_instruction_error_reducer);
 
+var _comment_error_reducer = __webpack_require__(/*! ./comment_error_reducer */ "./frontend/reducers/comment_error_reducer.js");
+
+var _comment_error_reducer2 = _interopRequireDefault(_comment_error_reducer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var errorsReducer = (0, _redux.combineReducers)({
   session: _session_errors_reducer2.default,
   project: _project_errors_reducer2.default,
-  instruction: _instruction_error_reducer2.default
+  instruction: _instruction_error_reducer2.default,
+  comment: _comment_error_reducer2.default
 });
 
 exports.default = errorsReducer;
@@ -3937,18 +4062,17 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // testing
-  // window.getState = store.getState;
-  // window.dispatch = store.dispatch;
+  window.getState = store.getState;
+  window.dispatch = store.dispatch;
   // window.fetchProject = fetchProject;
   // window.fetchInstruction = fetchInstruction;
   // window.createInstruction = createInstruction;
   // window.updateInstruction = updateInstruction;
   // window.deleteInstruction = deleteInstruction;
   // window.fetchProjectsByUser = fetchProjectsByUser;
-  // window.fetchComments = fetchComments;
-  // window.createComment = createComment;
-  // window.updateComment = updateComment;
-  // window.deleteComment = deleteComment;
+  window.createComment = _comments_actions.createComment;
+  window.updateComment = _comments_actions.updateComment;
+  window.deleteComment = _comments_actions.deleteComment;
 
   var root = document.getElementById('root');
   _reactDom2.default.render(_react2.default.createElement(_root2.default, { store: store }), root);

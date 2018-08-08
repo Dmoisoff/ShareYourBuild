@@ -34,11 +34,13 @@ export const fetchProjectsByUser = (id) => {
 
 export const fetchProject = (id) => {
   return dispatch => {
-    return Projects_Util.fetchProject(id).then(({project, instructions}) =>{
+    return Projects_Util.fetchProject(id).then(({project, instructions, comments}) =>{
+      debugger
       return dispatch({
         type: FETCH_PROJECT,
         project: project,
-        instructions: instructions
+        instructions: instructions,
+        comments: comments
       });
     }, (errors) => {
       return dispatch({
