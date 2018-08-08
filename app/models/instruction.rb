@@ -7,6 +7,7 @@
 #  instruction_step :integer          not null
 #  body             :text             not null
 #  media_url        :string
+#  title            :string
 #
 
 class Instruction < ApplicationRecord
