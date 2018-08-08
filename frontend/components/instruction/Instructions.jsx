@@ -41,7 +41,6 @@ class Instructions extends React.Component{
   }
 
   extensionCheck(file){
-    debugger
     const fileName = file.name;
     const extension = fileName.slice((fileName.lastIndexOf('.'))+1);
     const validExtensions = ['jpeg','jpeg2000','tiff','png','svg'];

@@ -43,6 +43,8 @@ class Api::ProjectsController < ApplicationController
     render "api/projects/project_by_user"
   end
 
+
+
   private
 
   def project_params

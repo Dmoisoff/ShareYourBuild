@@ -33,7 +33,6 @@ class Greeting extends React.Component{
   }
 
   greeting(){
-    debugger
     if (this.props.currentUser){
       document.addEventListener('click', (e) =>{this.toggleDropdown(e);});
       let active;

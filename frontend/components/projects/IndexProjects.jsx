@@ -11,7 +11,6 @@ class IndexProjects extends React.Component{
   }
 
   componentDidMount(){
-    debugger
     if(this.props.formType === 'User Index Projects'){
       this.props.fetchProjectsByUser(this.props.displayedUser);
     }else{
@@ -20,7 +19,6 @@ class IndexProjects extends React.Component{
   }
 
   componentWillReceiveProps(nextProps){
-    debugger
     if(this.props.displayedUser !== nextProps.displayedUser && this.props.formType === 'User Index Projects'){
       this.props.fetchProjectsByUser(nextProps.displayedUser).then(() => {
         this.setState({key: Math.random()});
@@ -29,9 +27,12 @@ class IndexProjects extends React.Component{
   }
 
   renderProjects(){
-    debugger
     let display = [];
-    this.props.projects.map((project) => {
+    let projects = this.props.projects;
+    if(this.props.projects.length && this.props.formType === 'User Index Projects'){
+      projects = this.props.projects.filter((project) => (project.authorUsername === this.props.username) && (project.author_id == this.props.displayedUser) );
+    }
+    projects.map((project) => {
       const component = <Link key={project.id} to={`/project/${project.id}`}>
         <IndexProjectItem
           key={project.id}
@@ -48,8 +49,11 @@ class IndexProjects extends React.Component{
       }
     });
     if(!display.length){
-      debugger
-      display = <h3>You have no builds, share an idea and create a build!</h3>;
+      if(this.props.currentUserPage){
+        display = <h3>You have no builds, share an idea and create a build!</h3>;
+      }else{
+        display = <h3>This user doesn't have any projects</h3>;
+      }
     }
     return(
       display

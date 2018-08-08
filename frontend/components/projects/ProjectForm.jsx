@@ -27,7 +27,6 @@ class ProjectForm extends React.Component{
   }
 
   extensionCheck(file){
-    debugger
     const fileName = file.name;
     const extension = fileName.slice((fileName.lastIndexOf('.'))+1);
     const validExtensions = ['jpeg','jpeg2000','tiff','png','svg'];
@@ -41,7 +40,6 @@ class ProjectForm extends React.Component{
 
 
   uploadFile(e){
-    debugger
     const file = e.currentTarget.files[0];
     if(!this.extensionCheck(file)){
       this.setState({instructionIssues: [`That is an improper file format, please choose a different file`]});

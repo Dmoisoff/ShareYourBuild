@@ -5,7 +5,6 @@ import IndexProjects from './IndexProjects';
 
 
 const mstp = (state, ownProps) => {
-  debugger
   const displayedUser = ownProps.match.url.split('/')[2];
   const username = ownProps.match.url.split('/')[1];
   return({

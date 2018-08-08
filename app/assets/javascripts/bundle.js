@@ -599,7 +599,6 @@ var Greeting = function (_React$Component) {
     value: function greeting() {
       var _this2 = this;
 
-      debugger;
       if (this.props.currentUser) {
         document.addEventListener('click', function (e) {
           _this2.toggleDropdown(e);
@@ -962,7 +961,6 @@ var Instructions = function (_React$Component) {
   }, {
     key: 'extensionCheck',
     value: function extensionCheck(file) {
-      debugger;
       var fileName = file.name;
       var extension = fileName.slice(fileName.lastIndexOf('.') + 1);
       var validExtensions = ['jpeg', 'jpeg2000', 'tiff', 'png', 'svg'];
@@ -1532,7 +1530,6 @@ var IndexProjects = function (_React$Component) {
   _createClass(IndexProjects, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      debugger;
       if (this.props.formType === 'User Index Projects') {
         this.props.fetchProjectsByUser(this.props.displayedUser);
       } else {
@@ -1544,7 +1541,6 @@ var IndexProjects = function (_React$Component) {
     value: function componentWillReceiveProps(nextProps) {
       var _this2 = this;
 
-      debugger;
       if (this.props.displayedUser !== nextProps.displayedUser && this.props.formType === 'User Index Projects') {
         this.props.fetchProjectsByUser(nextProps.displayedUser).then(function () {
           _this2.setState({ key: Math.random() });
@@ -1556,9 +1552,14 @@ var IndexProjects = function (_React$Component) {
     value: function renderProjects() {
       var _this3 = this;
 
-      debugger;
       var display = [];
-      this.props.projects.map(function (project) {
+      var projects = this.props.projects;
+      if (this.props.projects.length && this.props.formType === 'User Index Projects') {
+        projects = this.props.projects.filter(function (project) {
+          return project.authorUsername === _this3.props.username && project.author_id == _this3.props.displayedUser;
+        });
+      }
+      projects.map(function (project) {
         var component = _react2.default.createElement(
           _reactRouterDom.Link,
           { key: project.id, to: '/project/' + project.id },
@@ -1577,12 +1578,19 @@ var IndexProjects = function (_React$Component) {
         }
       });
       if (!display.length) {
-        debugger;
-        display = _react2.default.createElement(
-          'h3',
-          null,
-          'You have no builds, share an idea and create a build!'
-        );
+        if (this.props.currentUserPage) {
+          display = _react2.default.createElement(
+            'h3',
+            null,
+            'You have no builds, share an idea and create a build!'
+          );
+        } else {
+          display = _react2.default.createElement(
+            'h3',
+            null,
+            'This user doesn\'t have any projects'
+          );
+        }
       }
       return display;
     }
@@ -1656,7 +1664,6 @@ var _IndexProjects2 = _interopRequireDefault(_IndexProjects);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state, ownProps) {
-  debugger;
   return {
     projects: Object.values(state.entities.projects),
     formType: 'Index Projects'
@@ -1823,7 +1830,6 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'extensionCheck',
     value: function extensionCheck(file) {
-      debugger;
       var fileName = file.name;
       var extension = fileName.slice(fileName.lastIndexOf('.') + 1);
       var validExtensions = ['jpeg', 'jpeg2000', 'tiff', 'png', 'svg'];
@@ -1839,7 +1845,6 @@ var ProjectForm = function (_React$Component) {
     value: function uploadFile(e) {
       var _this2 = this;
 
-      debugger;
       var file = e.currentTarget.files[0];
       if (!this.extensionCheck(file)) {
         this.setState({ instructionIssues: ['That is an improper file format, please choose a different file'] });
@@ -2684,7 +2689,6 @@ var _IndexProjects2 = _interopRequireDefault(_IndexProjects);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state, ownProps) {
-  debugger;
   var displayedUser = ownProps.match.url.split('/')[2];
   var username = ownProps.match.url.split('/')[1];
   return {
