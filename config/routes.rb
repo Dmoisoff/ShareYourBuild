@@ -8,8 +8,10 @@ Rails.application.routes.draw do
    get 'user/:id/projects', to: 'projects#projects_by_user'
    resources :projects do
      resources :instructions, only: [:create, :index]
+     resources :comments, only: [:create, :index]
    end
    resources :instructions, except: [:create, :index]
+   resources :comments, except: [:create, :index]
    resource :session
   end
 

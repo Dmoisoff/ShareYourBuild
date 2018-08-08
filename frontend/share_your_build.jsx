@@ -4,6 +4,7 @@ import configureStore from './store/store';
 import Root from './components/root';
 import { fetchProjects, fetchProject, createProject, updateProject, deleteProject, fetchProjectsByUser} from './actions/projects_actions';
 import { fetchInstruction, createInstruction, updateInstruction, deleteInstruction } from './actions/instructions_actions';
+import { fetchComments, createComment, updateComment, deleteComment } from './util/comment_util';
 
 
 
@@ -32,7 +33,10 @@ document.addEventListener('DOMContentLoaded', () => {
   window.updateInstruction = updateInstruction;
   window.deleteInstruction = deleteInstruction;
   window.fetchProjectsByUser = fetchProjectsByUser;
-
+  window.fetchComments = fetchComments;
+  window.createComment = createComment;
+  window.updateComment = updateComment;
+  window.deleteComment = deleteComment;
 
   const root = document.getElementById('root');
   ReactDOM.render(<Root store={ store }/>, root);

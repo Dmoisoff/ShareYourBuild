@@ -3835,6 +3835,8 @@ var _projects_actions = __webpack_require__(/*! ./actions/projects_actions */ ".
 
 var _instructions_actions = __webpack_require__(/*! ./actions/instructions_actions */ "./frontend/actions/instructions_actions.js");
 
+var _comment_util = __webpack_require__(/*! ./util/comment_util */ "./frontend/util/comment_util.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -3863,6 +3865,10 @@ document.addEventListener('DOMContentLoaded', function () {
   window.updateInstruction = _instructions_actions.updateInstruction;
   window.deleteInstruction = _instructions_actions.deleteInstruction;
   window.fetchProjectsByUser = _projects_actions.fetchProjectsByUser;
+  window.fetchComments = _comment_util.fetchComments;
+  window.createComment = _comment_util.createComment;
+  window.updateComment = _comment_util.updateComment;
+  window.deleteComment = _comment_util.deleteComment;
 
   var root = document.getElementById('root');
   _reactDom2.default.render(_react2.default.createElement(_root2.default, { store: store }), root);
@@ -3910,6 +3916,58 @@ var configureStore = function configureStore() {
 };
 
 exports.default = configureStore;
+
+/***/ }),
+
+/***/ "./frontend/util/comment_util.js":
+/*!***************************************!*\
+  !*** ./frontend/util/comment_util.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var fetchComments = exports.fetchComments = function fetchComments(id) {
+  return $.ajax({
+    method: 'GET',
+    url: '/api/projects/' + id + '/comments'
+  });
+};
+
+// export const fetchComment = (id) => {
+//   return $.ajax({
+//     method: 'GET',
+//     url: `/api/comments/${id}`
+//   });
+// };
+
+var createComment = exports.createComment = function createComment(comment, id) {
+  return $.ajax({
+    method: 'POST',
+    url: '/api/projects/' + id + '/comments',
+    data: comment
+  });
+};
+
+var updateComment = exports.updateComment = function updateComment(comment, id) {
+  return $.ajax({
+    method: 'PATCH',
+    url: 'api/comments/' + id,
+    data: comment
+  });
+};
+
+var deleteComment = exports.deleteComment = function deleteComment(id) {
+  return $.ajax({
+    method: 'DELETE',
+    url: 'api/comments/' + id
+  });
+};
 
 /***/ }),
 
