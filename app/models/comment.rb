@@ -18,4 +18,8 @@ class Comment < ApplicationRecord
   foreign_key: :project_id,
   class_name: 'Project'
 
+  belongs_to :user,
+  foreign_key: :author_id,
+  class_name: 'User'
+
 end

@@ -86,6 +86,84 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./frontend/actions/comments_actions.js":
+/*!**********************************************!*\
+  !*** ./frontend/actions/comments_actions.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.deleteComments = exports.deleteComment = exports.updateComment = exports.createComment = exports.RECEIVE_COMMENT_ERRORS = exports.REMOVE_COMMENTS = exports.REMOVE_COMMENT = exports.FETCH_COMMENT = undefined;
+
+var _comment_util = __webpack_require__(/*! ./../util/comment_util */ "./frontend/util/comment_util.js");
+
+var Comment_Util = _interopRequireWildcard(_comment_util);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var FETCH_COMMENT = exports.FETCH_COMMENT = 'FETCH_COMMENTS';
+var REMOVE_COMMENT = exports.REMOVE_COMMENT = 'REMOVE_COMMENT';
+var REMOVE_COMMENTS = exports.REMOVE_COMMENTS = 'REMOVE_COMMENTS';
+var RECEIVE_COMMENT_ERRORS = exports.RECEIVE_COMMENT_ERRORS = 'RECEIVE_COMMENT_ERRORS';
+
+var createComment = exports.createComment = function createComment(comment, id) {
+  return function (dispatch) {
+    return Comment_Util.createComment(comment, id).then(function (comment) {
+      return dispatch({
+        type: FETCH_COMMENT,
+        comment: comment
+      });
+    }, function (errors) {
+      return dispatch({
+        type: RECEIVE_COMMENT_ERRORS,
+        errors: errors.responseJSON
+      });
+    });
+  };
+};
+
+var updateComment = exports.updateComment = function updateComment(comment, id) {
+  return function (dispatch) {
+    return Comment_Util.updateComment(comment, id).then(function (comment) {
+      return dispatch({
+        type: FETCH_COMMENT,
+        comment: comment
+      });
+    }, function (errors) {
+      return dispatch({
+        type: RECEIVE_COMMENT_ERRORS,
+        errors: errors.responseJSON
+      });
+    });
+  };
+};
+
+var deleteComment = exports.deleteComment = function deleteComment(id) {
+  return function (dispatch) {
+    return Comment_Util.deleteComment(id).then(function () {
+      return dispatch({ type: REMOVE_COMMENT, commentId: id });
+    });
+  };
+};
+
+var deleteComments = exports.deleteComments = function deleteComments(ids) {
+  return function (dispatch) {
+    return Comment_Util.deleteComment(ids).then(function () {
+      return dispatch({ type: REMOVE_COMMENTS, commentId: ids.split(',') });
+    });
+  };
+};
+
+// {instruction: {project_id: 88, instruction_step: 10, body: "5", media_url: nil}}
+
+/***/ }),
+
 /***/ "./frontend/actions/instructions_actions.js":
 /*!**************************************************!*\
   !*** ./frontend/actions/instructions_actions.js ***!
@@ -3835,11 +3913,13 @@ var _projects_actions = __webpack_require__(/*! ./actions/projects_actions */ ".
 
 var _instructions_actions = __webpack_require__(/*! ./actions/instructions_actions */ "./frontend/actions/instructions_actions.js");
 
-var _comment_util = __webpack_require__(/*! ./util/comment_util */ "./frontend/util/comment_util.js");
+var _comments_actions = __webpack_require__(/*! ./actions/comments_actions */ "./frontend/actions/comments_actions.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+// import { fetchComments, createComment, updateComment, deleteComment } from './util/comment_util';
+
 
 document.addEventListener('DOMContentLoaded', function () {
   var store = void 0;
@@ -3865,10 +3945,10 @@ document.addEventListener('DOMContentLoaded', function () {
   window.updateInstruction = _instructions_actions.updateInstruction;
   window.deleteInstruction = _instructions_actions.deleteInstruction;
   window.fetchProjectsByUser = _projects_actions.fetchProjectsByUser;
-  window.fetchComments = _comment_util.fetchComments;
-  window.createComment = _comment_util.createComment;
-  window.updateComment = _comment_util.updateComment;
-  window.deleteComment = _comment_util.deleteComment;
+  // window.fetchComments = fetchComments;
+  window.createComment = _comments_actions.createComment;
+  window.updateComment = _comments_actions.updateComment;
+  window.deleteComment = _comments_actions.deleteComment;
 
   var root = document.getElementById('root');
   _reactDom2.default.render(_react2.default.createElement(_root2.default, { store: store }), root);

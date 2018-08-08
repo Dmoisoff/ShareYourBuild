@@ -5,8 +5,7 @@ class Api::CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
     if @comment.save
       debugger
-      @comments = Comment.where(project_id: params[:project_id])
-      render "api/comments/index"
+      render "api/comments/show"
     else
       debugger
       render json: @comment.errors.full_messages, status: 422
@@ -22,8 +21,7 @@ class Api::CommentsController < ApplicationController
   def update
     @comment = Comment.find(params[:id])
     if @comment.update_attributes(comment_params)
-      @comments = Comment.where(project_id: params[:project_id])
-      render "api/comments/index"
+      render "api/comments/show"
     else
       render json: @comment.errors.full_messages, status: 422
     end

@@ -4,7 +4,8 @@ import configureStore from './store/store';
 import Root from './components/root';
 import { fetchProjects, fetchProject, createProject, updateProject, deleteProject, fetchProjectsByUser} from './actions/projects_actions';
 import { fetchInstruction, createInstruction, updateInstruction, deleteInstruction } from './actions/instructions_actions';
-import { fetchComments, createComment, updateComment, deleteComment } from './util/comment_util';
+// import { fetchComments, createComment, updateComment, deleteComment } from './util/comment_util';
+import { createComment, updateComment, deleteComment } from './actions/comments_actions';
 
 
 
@@ -33,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.updateInstruction = updateInstruction;
   window.deleteInstruction = deleteInstruction;
   window.fetchProjectsByUser = fetchProjectsByUser;
-  window.fetchComments = fetchComments;
+  // window.fetchComments = fetchComments;
   window.createComment = createComment;
   window.updateComment = updateComment;
   window.deleteComment = deleteComment;

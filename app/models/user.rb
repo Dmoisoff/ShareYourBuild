@@ -30,6 +30,10 @@ class User < ApplicationRecord
   foreign_key: :author_id,
   class_name: "Project"
 
+  has_many :comments,
+  foreign_key: :author_id,
+  class_name: "Comments"
+
   has_one_attached :picture
 
 

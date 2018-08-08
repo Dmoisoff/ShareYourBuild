@@ -25,7 +25,7 @@ json.instructions do
   end
 end
 
-jsom.comments do
+json.comments do
   @projects.comments.each do |comment|
     @comments.each do |comment|
       json.set! comment.id do
@@ -33,7 +33,7 @@ jsom.comments do
         json.projectId comment.project_id
         json.authorId comment.author_id
         json.body comment.body
-        json.createdAt comment.created_at
+        json.username comment.user.username
       end
     end
   end
