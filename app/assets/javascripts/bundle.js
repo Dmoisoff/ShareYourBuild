@@ -1356,7 +1356,6 @@ var mstp = function mstp(state, ownProps) {
   var instructionsArray = Object.values(state.entities.instructions).filter(function (instruction) {
     return instruction.projectId === Number(projectId);
   });
-  debugger;
   var sortedInstructions = instructionsArray.sort(function (x, y) {
     return x.instructionStep - y.instructionStep;
   });
