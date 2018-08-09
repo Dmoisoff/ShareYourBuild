@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Comments from './comments';
+import Comments from './Comments';
 import { updateComment } from './../../actions/comments_actions';
 
 const mstp = (state, ownProps) => {

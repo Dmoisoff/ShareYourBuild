@@ -604,163 +604,9 @@ exports.default = App;
 
 /***/ }),
 
-/***/ "./frontend/components/comment/EditCommentContainer.jsx":
-/*!**************************************************************!*\
-  !*** ./frontend/components/comment/EditCommentContainer.jsx ***!
-  \**************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-
-var _comments = __webpack_require__(/*! ./comments */ "./frontend/components/comment/comments.jsx");
-
-var _comments2 = _interopRequireDefault(_comments);
-
-var _comments_actions = __webpack_require__(/*! ./../../actions/comments_actions */ "./frontend/actions/comments_actions.js");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var mstp = function mstp(state, ownProps) {
-  return {
-    comment: {
-      body: ownProps.body,
-      errors: null
-    },
-    commentId: ownProps.commentId,
-    currentUserId: state.session.id,
-    currentUsername: state.session.username,
-    projectId: ownProps.projectId,
-    formType: 'Edit Comment',
-    errors: state.errors.comments,
-    updatedComment: ownProps.updatedComment
-  };
-};
-
-var mdtp = function mdtp(dispatch) {
-  return {
-    updateComment: function updateComment(instruction, id) {
-      return dispatch((0, _comments_actions.updateComment)(instruction, id));
-    }
-  };
-};
-
-exports.default = (0, _reactRedux.connect)(mstp, mdtp)(_comments2.default);
-
-/***/ }),
-
-/***/ "./frontend/components/comment/ShowComment.jsx":
-/*!*****************************************************!*\
-  !*** ./frontend/components/comment/ShowComment.jsx ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var ShowComment = function (_React$Component) {
-  _inherits(ShowComment, _React$Component);
-
-  function ShowComment(props) {
-    _classCallCheck(this, ShowComment);
-
-    return _possibleConstructorReturn(this, (ShowComment.__proto__ || Object.getPrototypeOf(ShowComment)).call(this, props));
-  }
-
-  _createClass(ShowComment, [{
-    key: 'errors',
-    value: function errors() {
-      if (this.props.errors) {
-        return this.props.errors.map(function (error, i) {
-          _react2.default.createElement(
-            'li',
-            { key: i },
-            'error'
-          );
-        });
-      } else {
-        [];
-      }
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        { className: 'instruction-step-format' },
-        _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement(
-              _reactRouterDom.Link,
-              { className: 'clickable', to: '/' + this.props.username + '/' + this.props.authorId + '/projects' },
-              _react2.default.createElement(
-                'p',
-                null,
-                this.props.username
-              )
-            ),
-            _react2.default.createElement(
-              'p',
-              { className: 'project-font-format' },
-              this.props.body
-            )
-          )
-        ),
-        _react2.default.createElement(
-          'ul',
-          null,
-          this.errors()
-        )
-      );
-    }
-  }]);
-
-  return ShowComment;
-}(_react2.default.Component);
-
-exports.default = ShowComment;
-
-/***/ }),
-
-/***/ "./frontend/components/comment/comments.jsx":
+/***/ "./frontend/components/comment/Comments.jsx":
 /*!**************************************************!*\
-  !*** ./frontend/components/comment/comments.jsx ***!
+  !*** ./frontend/components/comment/Comments.jsx ***!
   \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -882,6 +728,160 @@ var Comments = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = Comments;
+
+/***/ }),
+
+/***/ "./frontend/components/comment/EditCommentContainer.jsx":
+/*!**************************************************************!*\
+  !*** ./frontend/components/comment/EditCommentContainer.jsx ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _Comments = __webpack_require__(/*! ./Comments */ "./frontend/components/comment/Comments.jsx");
+
+var _Comments2 = _interopRequireDefault(_Comments);
+
+var _comments_actions = __webpack_require__(/*! ./../../actions/comments_actions */ "./frontend/actions/comments_actions.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mstp = function mstp(state, ownProps) {
+  return {
+    comment: {
+      body: ownProps.body,
+      errors: null
+    },
+    commentId: ownProps.commentId,
+    currentUserId: state.session.id,
+    currentUsername: state.session.username,
+    projectId: ownProps.projectId,
+    formType: 'Edit Comment',
+    errors: state.errors.comments,
+    updatedComment: ownProps.updatedComment
+  };
+};
+
+var mdtp = function mdtp(dispatch) {
+  return {
+    updateComment: function updateComment(instruction, id) {
+      return dispatch((0, _comments_actions.updateComment)(instruction, id));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mstp, mdtp)(_Comments2.default);
+
+/***/ }),
+
+/***/ "./frontend/components/comment/ShowComment.jsx":
+/*!*****************************************************!*\
+  !*** ./frontend/components/comment/ShowComment.jsx ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ShowComment = function (_React$Component) {
+  _inherits(ShowComment, _React$Component);
+
+  function ShowComment(props) {
+    _classCallCheck(this, ShowComment);
+
+    return _possibleConstructorReturn(this, (ShowComment.__proto__ || Object.getPrototypeOf(ShowComment)).call(this, props));
+  }
+
+  _createClass(ShowComment, [{
+    key: 'errors',
+    value: function errors() {
+      if (this.props.errors) {
+        return this.props.errors.map(function (error, i) {
+          _react2.default.createElement(
+            'li',
+            { key: i },
+            'error'
+          );
+        });
+      } else {
+        [];
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'instruction-step-format' },
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              _reactRouterDom.Link,
+              { className: 'clickable', to: '/' + this.props.username + '/' + this.props.authorId + '/projects' },
+              _react2.default.createElement(
+                'p',
+                null,
+                this.props.username
+              )
+            ),
+            _react2.default.createElement(
+              'p',
+              { className: 'project-font-format' },
+              this.props.body
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'ul',
+          null,
+          this.errors()
+        )
+      );
+    }
+  }]);
+
+  return ShowComment;
+}(_react2.default.Component);
+
+exports.default = ShowComment;
 
 /***/ }),
 
