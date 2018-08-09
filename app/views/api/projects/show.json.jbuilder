@@ -27,7 +27,6 @@ end
 
 json.comments do
   @project.comments.each do |comment|
-    debugger
     json.set! comment.id do
       json.id comment.id
       json.projectId comment.project_id

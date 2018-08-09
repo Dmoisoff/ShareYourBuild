@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchProject, deleteProject, CLEAR_ERRORS } from './../../actions/projects_actions';
 import { deleteInstruction } from './../../actions/instructions_actions';
+import { createComment, deleteComment } from './../../actions/comments_actions';
 import ShowProject from './ShowProject';
 
 
@@ -13,18 +14,27 @@ const mstp = (state, ownProps) => {
   const instructionsArray = Object.values(state.entities.instructions).filter((instruction) =>{
     return instruction.projectId === Number(projectId);
   });
-
   const sortedInstructions = instructionsArray.sort((x,y) => {
     return  x.instructionStep - y.instructionStep;
   });
+
+  const commentsArray = Object.values(state.entities.comments).filter((comment) =>{
+    return comment.projectId === Number(projectId);
+  });
+  const sortedComments = commentsArray.sort((x,y) => {
+    return  x.id - y.id;
+  });
   const userId = state.session.id;
   const project = state.entities.projects[ownProps.match.params.projectId] || {};
+  project['newComment'] = false;
+  project['commentBody'] = '';
   return({
     project: project,
     formType: 'Show Project',
     currentUserId: userId,
     ownsProject: userId === project.authorId,
     instructions: sortedInstructions,
+    comments: sortedComments,
     errors: state.errors.project
   });
 };
@@ -32,6 +42,8 @@ const mstp = (state, ownProps) => {
 const mdtp = (dispatch) => {
   return({
     fetchProject: (id) => dispatch(fetchProject(id)),
+    createComment: (comment, id) => dispatch(createComment(comment, id)),
+    deleteComment: (id) => dispatch(deleteComment(id)),
     deleteProject: (id) => dispatch(deleteProject(id)),
     clearProjectErrors: () => dispatch({type: CLEAR_ERRORS}),
     deleteInstruction: (instructions,projectId) => {

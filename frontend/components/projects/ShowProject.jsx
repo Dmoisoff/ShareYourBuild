@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {withRouter} from 'react-router';
 import InstructionStep from './../instruction/InstructionStep';
+import ShowComment from './../comment/ShowComment';
 
 class ProjectShow extends React.Component {
   constructor(props){
@@ -50,17 +51,12 @@ class ProjectShow extends React.Component {
     this.props.history.push(`/project/${this.props.project.id}/edit`);
   }
 
-
-  render() {
-    // const { project } = this.props;
-    if (!this.props.project.authorUsername) {
-      return <div>Loading...</div>;
-    }
-    const instructions = this.props.instructions ? this.props.instructions.map((instruction,i) => {
+  displayInstructions(){
+    if(this.props.instructions){
+      return this.props.instructions.map((instruction,i) => {
       if(!instruction){
         return [];
       }
-
       return <InstructionStep
               step={instruction.instructionStep}
               body={instruction.body}
@@ -69,8 +65,81 @@ class ProjectShow extends React.Component {
               key={instruction.instructionStep}
               media={instruction.media}
               />;
-          }) : null;
-          const description = this.props.project.description;
+          });
+    }else{
+      return null;
+    }
+  }
+
+  modifyComment(commentUserId,i, id){
+    if(commentUserId === this.props.currentUserId){
+      return <div key={i} className='project-show-delete-position'>
+                <button className='project-show-delete-button' onClick={this.edit}>Edit Comment</button>
+                <button className='project-show-delete-button' onClick={() =>{this.props.deleteComment(id);}}>Remove Comment</button>
+              </div>;
+    }else{
+      return null;
+    }
+  }
+
+
+  displayComments(){
+    if(this.props.comments){
+      return this.props.comments.map((comment,i) => {
+        const modify = this.modifyComment(comment.authorId, i, comment.id);
+      if(!comment){
+        return [];
+      }
+      return <div>
+              <ShowComment
+                body={comment.body}
+                username={comment.username}
+                key={comment.id}
+                />;
+              {modify}
+            </div>;
+          });
+    }else{
+      return null;
+    }
+  }
+
+  updatedNewComment(e){
+    this.setState({commentBody: e.target.value});
+  }
+
+  newComment(){
+    debugger
+    if(this.state.newComment){
+      return <div>
+              <div>
+                <textarea onChange={this.updatedNewComment.bind(this)}
+                  placeholder='Please enter a nice comment'
+                  className='project-body-text' rows="8" cols="80"
+                  value={`${this.state.commentBody}`}></textarea>
+              </div>
+              <button onClick={() =>{this.setState({newComment: false, commentBody: ''});}}>Cancel</button>
+              <button onClick={() =>{this.handleSubmit();}}>Submit</button>
+            </div>;
+    }else{
+      return null;
+    }
+  }
+
+  handleSubmit(e){
+    debugger
+    // e.preventDefault();
+    this.props.createComment({comment: {body: this.state.commentBody, project_id: this.props.project.id, author_id: this.props.currentUserId}}, this.props.project.id).then(this.setState({newComment: false, commentBody: ''}));
+  }
+
+
+  render() {
+
+    if (!this.props.project.authorUsername) {
+      return <div>Loading...</div>;
+    }
+
+    const description = this.props.project.description;
     return (
       <div>
         <div>
@@ -88,13 +157,20 @@ class ProjectShow extends React.Component {
           </div>
           <div>
             <ul className='instructions-show-format'>
-              {instructions}
+              {this.displayInstructions()}
             </ul>
           </div>
           {this.props.ownsProject ? <div className='project-show-delete-position'>
-            <button className='project-show-delete-button' onClick={this.edit}>Edit Build</button>
-            <button className='project-show-delete-button' onClick={this.remove}>Remove Build</button>
-          </div> : null}
+                                    <button className='project-show-delete-button' onClick={this.edit}>Edit Build</button>
+                                    <button className='project-show-delete-button' onClick={this.remove}>Remove Build</button>
+                                  </div> : null}
+          <div>
+            {this.newComment()}
+            <button className='project-show-delete-button' onClick={() =>{this.setState({newComment: true});}}>Create a comment</button>
+          </div>
+          <div>
+            {this.displayComments()}
+          </div>
         </div>
       </div>
     );

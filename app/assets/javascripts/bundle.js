@@ -605,6 +605,81 @@ exports.default = App;
 
 /***/ }),
 
+/***/ "./frontend/components/comment/ShowComment.jsx":
+/*!*****************************************************!*\
+  !*** ./frontend/components/comment/ShowComment.jsx ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ShowComment = function (_React$Component) {
+  _inherits(ShowComment, _React$Component);
+
+  function ShowComment(props) {
+    _classCallCheck(this, ShowComment);
+
+    return _possibleConstructorReturn(this, (ShowComment.__proto__ || Object.getPrototypeOf(ShowComment)).call(this, props));
+  }
+
+  _createClass(ShowComment, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'instruction-step-format' },
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              'p',
+              null,
+              this.props.username
+            ),
+            _react2.default.createElement(
+              'p',
+              { className: 'project-font-format' },
+              this.props.body
+            )
+          )
+        ),
+        _react2.default.createElement('div', { className: 'instruction-divider' })
+      );
+    }
+  }]);
+
+  return ShowComment;
+}(_react2.default.Component);
+
+exports.default = ShowComment;
+
+/***/ }),
+
 /***/ "./frontend/components/greeting/greeting.jsx":
 /*!***************************************************!*\
   !*** ./frontend/components/greeting/greeting.jsx ***!
@@ -2501,6 +2576,10 @@ var _InstructionStep = __webpack_require__(/*! ./../instruction/InstructionStep 
 
 var _InstructionStep2 = _interopRequireDefault(_InstructionStep);
 
+var _ShowComment = __webpack_require__(/*! ./../comment/ShowComment */ "./frontend/components/comment/ShowComment.jsx");
+
+var _ShowComment2 = _interopRequireDefault(_ShowComment);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2569,9 +2648,133 @@ var ProjectShow = function (_React$Component) {
       this.props.history.push('/project/' + this.props.project.id + '/edit');
     }
   }, {
+    key: 'displayInstructions',
+    value: function displayInstructions() {
+      if (this.props.instructions) {
+        return this.props.instructions.map(function (instruction, i) {
+          if (!instruction) {
+            return [];
+          }
+          return _react2.default.createElement(_InstructionStep2.default, {
+            step: instruction.instructionStep,
+            body: instruction.body,
+            title: instruction.title,
+            projectId: instruction.projectId,
+            key: instruction.instructionStep,
+            media: instruction.media
+          });
+        });
+      } else {
+        return null;
+      }
+    }
+  }, {
+    key: 'modifyComment',
+    value: function modifyComment(commentUserId, i, id) {
+      var _this3 = this;
+
+      if (commentUserId === this.props.currentUserId) {
+        return _react2.default.createElement(
+          'div',
+          { key: i, className: 'project-show-delete-position' },
+          _react2.default.createElement(
+            'button',
+            { className: 'project-show-delete-button', onClick: this.edit },
+            'Edit Comment'
+          ),
+          _react2.default.createElement(
+            'button',
+            { className: 'project-show-delete-button', onClick: function onClick() {
+                _this3.props.deleteComment(id);
+              } },
+            'Remove Comment'
+          )
+        );
+      } else {
+        return null;
+      }
+    }
+  }, {
+    key: 'displayComments',
+    value: function displayComments() {
+      var _this4 = this;
+
+      if (this.props.comments) {
+        return this.props.comments.map(function (comment, i) {
+          var modify = _this4.modifyComment(comment.authorId, i, comment.id);
+          if (!comment) {
+            return [];
+          }
+          return _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(_ShowComment2.default, {
+              body: comment.body,
+              username: comment.username,
+              key: comment.id
+            }),
+            ';',
+            modify
+          );
+        });
+      } else {
+        return null;
+      }
+    }
+  }, {
+    key: 'updatedNewComment',
+    value: function updatedNewComment(e) {
+      this.setState({ commentBody: e.target.value });
+    }
+  }, {
+    key: 'newComment',
+    value: function newComment() {
+      var _this5 = this;
+
+      debugger;
+      if (this.state.newComment) {
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('textarea', { onChange: this.updatedNewComment.bind(this),
+              placeholder: 'Please enter a nice comment',
+              className: 'project-body-text', rows: '8', cols: '80',
+              value: '' + this.state.commentBody })
+          ),
+          _react2.default.createElement(
+            'button',
+            { onClick: function onClick() {
+                _this5.setState({ newComment: false, commentBody: '' });
+              } },
+            'Cancel'
+          ),
+          _react2.default.createElement(
+            'button',
+            { onClick: function onClick() {
+                _this5.handleSubmit();
+              } },
+            'Submit'
+          )
+        );
+      } else {
+        return null;
+      }
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      debugger;
+      // e.preventDefault();
+      this.props.createComment({ comment: { body: this.state.commentBody, project_id: this.props.project.id, author_id: this.props.currentUserId } }, this.props.project.id).then(this.setState({ newComment: false, commentBody: '' }));
+    }
+  }, {
     key: 'render',
     value: function render() {
-      // const { project } = this.props;
+      var _this6 = this;
+
       if (!this.props.project.authorUsername) {
         return _react2.default.createElement(
           'div',
@@ -2579,20 +2782,7 @@ var ProjectShow = function (_React$Component) {
           'Loading...'
         );
       }
-      var instructions = this.props.instructions ? this.props.instructions.map(function (instruction, i) {
-        if (!instruction) {
-          return [];
-        }
 
-        return _react2.default.createElement(_InstructionStep2.default, {
-          step: instruction.instructionStep,
-          body: instruction.body,
-          title: instruction.title,
-          projectId: instruction.projectId,
-          key: instruction.instructionStep,
-          media: instruction.media
-        });
-      }) : null;
       var description = this.props.project.description;
       return _react2.default.createElement(
         'div',
@@ -2636,7 +2826,7 @@ var ProjectShow = function (_React$Component) {
             _react2.default.createElement(
               'ul',
               { className: 'instructions-show-format' },
-              instructions
+              this.displayInstructions()
             )
           ),
           this.props.ownsProject ? _react2.default.createElement(
@@ -2652,7 +2842,24 @@ var ProjectShow = function (_React$Component) {
               { className: 'project-show-delete-button', onClick: this.remove },
               'Remove Build'
             )
-          ) : null
+          ) : null,
+          _react2.default.createElement(
+            'div',
+            null,
+            this.newComment(),
+            _react2.default.createElement(
+              'button',
+              { className: 'project-show-delete-button', onClick: function onClick() {
+                  _this6.setState({ newComment: true });
+                } },
+              'Create a comment'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            this.displayComments()
+          )
         )
       );
     }
@@ -2691,6 +2898,8 @@ var _projects_actions = __webpack_require__(/*! ./../../actions/projects_actions
 
 var _instructions_actions = __webpack_require__(/*! ./../../actions/instructions_actions */ "./frontend/actions/instructions_actions.js");
 
+var _comments_actions = __webpack_require__(/*! ./../../actions/comments_actions */ "./frontend/actions/comments_actions.js");
+
 var _ShowProject = __webpack_require__(/*! ./ShowProject */ "./frontend/components/projects/ShowProject.jsx");
 
 var _ShowProject2 = _interopRequireDefault(_ShowProject);
@@ -2704,18 +2913,27 @@ var mstp = function mstp(state, ownProps) {
   var instructionsArray = Object.values(state.entities.instructions).filter(function (instruction) {
     return instruction.projectId === Number(projectId);
   });
-
   var sortedInstructions = instructionsArray.sort(function (x, y) {
     return x.instructionStep - y.instructionStep;
   });
+
+  var commentsArray = Object.values(state.entities.comments).filter(function (comment) {
+    return comment.projectId === Number(projectId);
+  });
+  var sortedComments = commentsArray.sort(function (x, y) {
+    return x.id - y.id;
+  });
   var userId = state.session.id;
   var project = state.entities.projects[ownProps.match.params.projectId] || {};
+  project['newComment'] = false;
+  project['commentBody'] = '';
   return {
     project: project,
     formType: 'Show Project',
     currentUserId: userId,
     ownsProject: userId === project.authorId,
     instructions: sortedInstructions,
+    comments: sortedComments,
     errors: state.errors.project
   };
 };
@@ -2724,6 +2942,12 @@ var mdtp = function mdtp(dispatch) {
   return {
     fetchProject: function fetchProject(id) {
       return dispatch((0, _projects_actions.fetchProject)(id));
+    },
+    createComment: function createComment(comment, id) {
+      return dispatch((0, _comments_actions.createComment)(comment, id));
+    },
+    deleteComment: function deleteComment(id) {
+      return dispatch((0, _comments_actions.deleteComment)(id));
     },
     deleteProject: function deleteProject(id) {
       return dispatch((0, _projects_actions.deleteProject)(id));
