@@ -26,17 +26,17 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // testing
-  window.getState = store.getState;
-  window.dispatch = store.dispatch;
+  // window.getState = store.getState;
+  // window.dispatch = store.dispatch;
   // window.fetchProject = fetchProject;
   // window.fetchInstruction = fetchInstruction;
   // window.createInstruction = createInstruction;
   // window.updateInstruction = updateInstruction;
   // window.deleteInstruction = deleteInstruction;
   // window.fetchProjectsByUser = fetchProjectsByUser;
-  window.createComment = createComment;
-  window.updateComment = updateComment;
-  window.deleteComment = deleteComment;
+  // window.createComment = createComment;
+  // window.updateComment = updateComment;
+  // window.deleteComment = deleteComment;
 
   const root = document.getElementById('root');
   ReactDOM.render(<Root store={ store }/>, root);

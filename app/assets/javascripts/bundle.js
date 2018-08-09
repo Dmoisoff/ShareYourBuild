@@ -4544,17 +4544,17 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // testing
-  window.getState = store.getState;
-  window.dispatch = store.dispatch;
+  // window.getState = store.getState;
+  // window.dispatch = store.dispatch;
   // window.fetchProject = fetchProject;
   // window.fetchInstruction = fetchInstruction;
   // window.createInstruction = createInstruction;
   // window.updateInstruction = updateInstruction;
   // window.deleteInstruction = deleteInstruction;
   // window.fetchProjectsByUser = fetchProjectsByUser;
-  window.createComment = _comments_actions.createComment;
-  window.updateComment = _comments_actions.updateComment;
-  window.deleteComment = _comments_actions.deleteComment;
+  // window.createComment = createComment;
+  // window.updateComment = updateComment;
+  // window.deleteComment = deleteComment;
 
   var root = document.getElementById('root');
   _reactDom2.default.render(_react2.default.createElement(_root2.default, { store: store }), root);
