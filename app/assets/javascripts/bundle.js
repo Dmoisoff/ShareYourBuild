@@ -3048,12 +3048,18 @@ var ProjectShow = function (_React$Component) {
           'Create A Comment'
         );
       }
-      var commentTitle = this.props.comments.length ? _react2.default.createElement(
+      var commentHeader = this.props.comments.length ? this.props.comments.length === 1 ? _react2.default.createElement(
+        'p',
+        { className: 'comments-header' },
+        this.props.comments.length,
+        ' Comment'
+      ) : _react2.default.createElement(
         'p',
         { className: 'comments-header' },
         this.props.comments.length,
         ' Comments'
       ) : null;
+      // const commentTitle = this.props.comments.length ? <p className='comments-header'>{this.props.comments.length} Comments</p> : null;
       var description = this.props.project.description;
       return _react2.default.createElement(
         'div',
@@ -3117,13 +3123,13 @@ var ProjectShow = function (_React$Component) {
           _react2.default.createElement(
             'div',
             { className: 'comment-errors-placement' },
-            commentTitle
+            this.newComment(),
+            createCommentButton
           ),
           _react2.default.createElement(
             'div',
             { className: 'comment-errors-placement' },
-            this.newComment(),
-            createCommentButton
+            commentHeader
           ),
           _react2.default.createElement(
             'div',

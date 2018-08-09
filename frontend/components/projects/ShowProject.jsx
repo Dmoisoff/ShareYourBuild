@@ -176,7 +176,8 @@ class ProjectShow extends React.Component {
     if(this.props.currentUserId){
       createCommentButton = this.state.newComment ? null : <button className='comment-create-button' onClick={() =>{this.setState({newComment: true, edit: null});}}>Create A Comment</button>;
     }
-    const commentTitle = this.props.comments.length ? <p className='comments-header'>{this.props.comments.length} Comments</p> : null;
+    const commentHeader = this.props.comments.length ? this.props.comments.length === 1 ? <p className='comments-header'>{this.props.comments.length} Comment</p>: <p className='comments-header'>{this.props.comments.length} Comments</p> : null;
+    // const commentTitle = this.props.comments.length ? <p className='comments-header'>{this.props.comments.length} Comments</p> : null;
     const description = this.props.project.description;
     return (
       <div>
@@ -202,12 +203,12 @@ class ProjectShow extends React.Component {
                                     <button className='project-show-delete-button' onClick={this.edit}>Edit Build</button>
                                     <button className='project-show-delete-button' onClick={this.remove}>Remove Build</button>
                                   </div> : null}
-            <div className='comment-errors-placement'>
-              {commentTitle}
-            </div>
           <div className='comment-errors-placement'>
             {this.newComment()}
             {createCommentButton}
+          </div>
+          <div className='comment-errors-placement'>
+            {commentHeader}
           </div>
           <div>
             {this.displayComments()}
