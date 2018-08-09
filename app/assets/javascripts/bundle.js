@@ -3038,13 +3038,16 @@ var ProjectShow = function (_React$Component) {
           'Loading...'
         );
       }
-      var createCommentButton = this.state.newComment ? null : _react2.default.createElement(
-        'button',
-        { className: 'comment-create-button', onClick: function onClick() {
-            _this6.setState({ newComment: true, edit: null });
-          } },
-        'Create A Comment'
-      );
+      var createCommentButton = void 0;
+      if (this.props.currentUserId) {
+        createCommentButton = this.state.newComment ? null : _react2.default.createElement(
+          'button',
+          { className: 'comment-create-button', onClick: function onClick() {
+              _this6.setState({ newComment: true, edit: null });
+            } },
+          'Create A Comment'
+        );
+      }
       var description = this.props.project.description;
       return _react2.default.createElement(
         'div',

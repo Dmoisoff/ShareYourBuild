@@ -172,7 +172,10 @@ class ProjectShow extends React.Component {
     if (!this.props.project.authorUsername) {
       return <div>Loading...</div>;
     }
-    const createCommentButton = this.state.newComment ? null : <button className='comment-create-button' onClick={() =>{this.setState({newComment: true, edit: null});}}>Create A Comment</button>;
+    let createCommentButton;
+    if(this.props.currentUserId){
+      createCommentButton = this.state.newComment ? null : <button className='comment-create-button' onClick={() =>{this.setState({newComment: true, edit: null});}}>Create A Comment</button>;
+    }
     const description = this.props.project.description;
     return (
       <div>
