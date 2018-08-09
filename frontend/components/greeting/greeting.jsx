@@ -23,7 +23,6 @@ class Greeting extends React.Component{
     }
 
   toggleDropdown(e){
-    debugger
     let target = e.target;
     target;
       if(target.id !== "dropDown" && target.className !== "user-dropDown-content"){

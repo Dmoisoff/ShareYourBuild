@@ -727,9 +727,13 @@ var ShowComment = function (_React$Component) {
             'div',
             null,
             _react2.default.createElement(
-              'p',
-              null,
-              this.props.username
+              _reactRouterDom.Link,
+              { className: 'clickable', to: '/' + this.props.username + '/' + this.props.authorId + '/projects' },
+              _react2.default.createElement(
+                'p',
+                null,
+                this.props.username
+              )
             ),
             _react2.default.createElement(
               'p',
@@ -943,7 +947,6 @@ var Greeting = function (_React$Component) {
   }, {
     key: 'toggleDropdown',
     value: function toggleDropdown(e) {
-      debugger;
       var target = e.target;
       target;
       if (target.id !== "dropDown" && target.className !== "user-dropDown-content") {
@@ -2924,7 +2927,8 @@ var ProjectShow = function (_React$Component) {
               { key: comment.id },
               _react2.default.createElement(_ShowComment2.default, {
                 body: comment.body,
-                username: comment.username
+                username: comment.username,
+                authorId: comment.authorId
               }),
               modify,
               _react2.default.createElement('div', { className: 'comment-divider' })

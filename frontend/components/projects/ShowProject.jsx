@@ -102,6 +102,7 @@ class ProjectShow extends React.Component {
           <ShowComment
             body={comment.body}
             username={comment.username}
+            authorId={comment.authorId}
             />
           {modify}
           <div className='comment-divider'></div>
