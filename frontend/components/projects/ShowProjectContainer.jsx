@@ -28,6 +28,12 @@ const mstp = (state, ownProps) => {
   const project = state.entities.projects[ownProps.match.params.projectId] || {};
   project['newComment'] = false;
   project['commentBody'] = '';
+  project['edit'] = null;
+  // for(let x = 0; x < sortedComments.length; x++){
+  //   project['comments'][x] = true;
+  // }
+  // project['change'] = Math.random();
+  debugger
   return({
     project: project,
     formType: 'Show Project',

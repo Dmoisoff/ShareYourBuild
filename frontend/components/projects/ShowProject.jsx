@@ -4,10 +4,13 @@ import { Link } from 'react-router-dom';
 import {withRouter} from 'react-router';
 import InstructionStep from './../instruction/InstructionStep';
 import ShowComment from './../comment/ShowComment';
+import EditCommentContainer from './../comment/EditCommentContainer';
+
 
 class ProjectShow extends React.Component {
   constructor(props){
     super(props);
+    debugger
     this.state = this.props.project;
     this.remove = this.remove.bind(this);
     this.edit = this.edit.bind(this);
@@ -19,17 +22,24 @@ class ProjectShow extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    debugger
     if(!nextProps.errors){
       this.props.clearProjectErrors;
       this.props.history.push('/');
     }
     if (this.props.match.params.projectId === nextProps.match.params.projectId) {
      this.setState({title: nextProps.project.title, authorUsername: nextProps.project.authorUsername});
-   }
+    }
   }
 
+
+
   componentDidUpdate(prevProps){
+    debugger
     if (!!prevProps.project && prevProps.project.id != this.props.match.params.projectId) {
+      this.props.fetchProject(this.props.match.params.projectId);
+    }
+    if(Object.keys(this.props.project).length !== Object.keys(prevProps.project).length){
       this.props.fetchProject(this.props.match.params.projectId);
     }
   }
@@ -74,7 +84,9 @@ class ProjectShow extends React.Component {
   modifyComment(commentUserId,i, id){
     if(commentUserId === this.props.currentUserId){
       return <div key={i} className='project-show-delete-position'>
-                <button className='project-show-delete-button' onClick={this.edit}>Edit Comment</button>
+                <button id={`${i}`} className='project-show-delete-button' onClick={(e) => {debugger
+                    const num = e.target.id;
+                    this.setState({edit: num});}}>Edit Comment</button>
                 <button className='project-show-delete-button' onClick={() =>{this.props.deleteComment(id);}}>Remove Comment</button>
               </div>;
     }else{
@@ -84,23 +96,43 @@ class ProjectShow extends React.Component {
 
 
   displayComments(){
+    debugger
+    const edit = this.state.edit
     if(this.props.comments){
       return this.props.comments.map((comment,i) => {
         const modify = this.modifyComment(comment.authorId, i, comment.id);
       if(!comment){
         return [];
       }
-      return <div>
-              <ShowComment
-                body={comment.body}
-                username={comment.username}
-                key={comment.id}
-                />;
-              {modify}
-            </div>;
+      debugger
+      if(edit != i){
+        return <div>
+          <ShowComment
+            body={comment.body}
+            username={comment.username}
+            key={comment.id}
+            />
+          {modify}
+        </div>;
+      }else {
+        return <div>
+                <EditCommentContainer
+                  body={comment.body}
+                  projectId={this.props.project.id}
+                  commentId={comment.id}
+                  updatedComment={this.updatedComment.bind(this)}
+                  />
+              </div>;
+      }
           });
     }else{
       return null;
+    }
+  }
+
+  updatedComment(boolean){
+    if(boolean){
+      this.setState({edit:null});
     }
   }
 

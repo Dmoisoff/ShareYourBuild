@@ -8,6 +8,16 @@ class ShowComment extends React.Component{
     super(props);
   }
 
+  errors(){
+    if(this.props.errors){
+      return this.props.errors.map((error, i) => {
+        <li key={i}>error</li>;
+      });
+    }else{
+      [];
+    }
+  }
+
   render(){
     return(
       <div className='instruction-step-format'>
@@ -18,6 +28,9 @@ class ShowComment extends React.Component{
           </div>
         </div>
         <div className='instruction-divider'></div>
+        <ul>
+          {this.errors()}
+        </ul>
       </div>
     );
   }

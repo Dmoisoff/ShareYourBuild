@@ -4,7 +4,6 @@ import Comments from './comment';
 import { createComment } from './../../actions/comments_actions';
 
 const mstp = (state, ownProps) => {
-  debugger
     return({
       comment: {
         body: "",

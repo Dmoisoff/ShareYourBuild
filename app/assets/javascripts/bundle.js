@@ -129,6 +129,7 @@ var createComment = exports.createComment = function createComment(comment, id) 
 };
 
 var updateComment = exports.updateComment = function updateComment(comment, id) {
+  debugger;
   return function (dispatch) {
     return Comment_Util.updateComment(comment, id).then(function (comment) {
       return dispatch({
@@ -605,6 +606,61 @@ exports.default = App;
 
 /***/ }),
 
+/***/ "./frontend/components/comment/EditCommentContainer.jsx":
+/*!**************************************************************!*\
+  !*** ./frontend/components/comment/EditCommentContainer.jsx ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _comments = __webpack_require__(/*! ./comments */ "./frontend/components/comment/comments.jsx");
+
+var _comments2 = _interopRequireDefault(_comments);
+
+var _comments_actions = __webpack_require__(/*! ./../../actions/comments_actions */ "./frontend/actions/comments_actions.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mstp = function mstp(state, ownProps) {
+  return {
+    comment: {
+      body: ownProps.body
+    },
+    commentId: ownProps.commentId,
+    currentUserId: state.session.id,
+    currentUsername: state.session.username,
+    projectId: ownProps.projectId,
+    formType: 'Edit Comment',
+    errors: state.errors.comments,
+    updatedComment: ownProps.updatedComment
+  };
+};
+
+var mdtp = function mdtp(dispatch) {
+  return {
+    updateComment: function updateComment(instruction, id) {
+      return dispatch((0, _comments_actions.updateComment)(instruction, id));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mstp, mdtp)(_comments2.default);
+
+/***/ }),
+
 /***/ "./frontend/components/comment/ShowComment.jsx":
 /*!*****************************************************!*\
   !*** ./frontend/components/comment/ShowComment.jsx ***!
@@ -645,6 +701,21 @@ var ShowComment = function (_React$Component) {
   }
 
   _createClass(ShowComment, [{
+    key: 'errors',
+    value: function errors() {
+      if (this.props.errors) {
+        return this.props.errors.map(function (error, i) {
+          _react2.default.createElement(
+            'li',
+            { key: i },
+            'error'
+          );
+        });
+      } else {
+        [];
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -668,7 +739,12 @@ var ShowComment = function (_React$Component) {
             )
           )
         ),
-        _react2.default.createElement('div', { className: 'instruction-divider' })
+        _react2.default.createElement('div', { className: 'instruction-divider' }),
+        _react2.default.createElement(
+          'ul',
+          null,
+          this.errors()
+        )
       );
     }
   }]);
@@ -677,6 +753,108 @@ var ShowComment = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = ShowComment;
+
+/***/ }),
+
+/***/ "./frontend/components/comment/comments.jsx":
+/*!**************************************************!*\
+  !*** ./frontend/components/comment/comments.jsx ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Comments = function (_React$Component) {
+  _inherits(Comments, _React$Component);
+
+  function Comments(props) {
+    _classCallCheck(this, Comments);
+
+    var _this = _possibleConstructorReturn(this, (Comments.__proto__ || Object.getPrototypeOf(Comments)).call(this, props));
+
+    _this.state = _this.props.comment;
+    return _this;
+  }
+
+  _createClass(Comments, [{
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      debugger;
+      // e.preventDefault();
+      this.props.updateComment({ comment: {
+          body: this.state.body,
+          project_id: this.props.projectId,
+          author_id: this.props.currentUserId } }, this.props.commentId).then(this.props.updatedComment(true));
+    }
+  }, {
+    key: 'updateComment',
+    value: function updateComment(e) {
+      this.setState({ body: e.target.value });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement('textarea', { onChange: this.updateComment.bind(this),
+            placeholder: 'Please enter a nice comment',
+            className: 'project-body-text', rows: '8', cols: '80',
+            value: '' + this.state.body })
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'button',
+            { onClick: function onClick() {
+                _this2.props.updatedComment(true);
+              } },
+            'Cancel'
+          ),
+          _react2.default.createElement(
+            'button',
+            { onClick: function onClick() {
+                _this2.handleSubmit();
+              } },
+            'Update'
+          )
+        )
+      );
+    }
+  }]);
+
+  return Comments;
+}(_react2.default.Component);
+
+exports.default = Comments;
 
 /***/ }),
 
@@ -2580,6 +2758,10 @@ var _ShowComment = __webpack_require__(/*! ./../comment/ShowComment */ "./fronte
 
 var _ShowComment2 = _interopRequireDefault(_ShowComment);
 
+var _EditCommentContainer = __webpack_require__(/*! ./../comment/EditCommentContainer */ "./frontend/components/comment/EditCommentContainer.jsx");
+
+var _EditCommentContainer2 = _interopRequireDefault(_EditCommentContainer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2596,6 +2778,7 @@ var ProjectShow = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (ProjectShow.__proto__ || Object.getPrototypeOf(ProjectShow)).call(this, props));
 
+    debugger;
     _this.state = _this.props.project;
     _this.remove = _this.remove.bind(_this);
     _this.edit = _this.edit.bind(_this);
@@ -2611,6 +2794,7 @@ var ProjectShow = function (_React$Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
+      debugger;
       if (!nextProps.errors) {
         this.props.clearProjectErrors;
         this.props.history.push('/');
@@ -2622,7 +2806,11 @@ var ProjectShow = function (_React$Component) {
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps) {
+      debugger;
       if (!!prevProps.project && prevProps.project.id != this.props.match.params.projectId) {
+        this.props.fetchProject(this.props.match.params.projectId);
+      }
+      if (Object.keys(this.props.project).length !== Object.keys(prevProps.project).length) {
         this.props.fetchProject(this.props.match.params.projectId);
       }
     }
@@ -2679,7 +2867,11 @@ var ProjectShow = function (_React$Component) {
           { key: i, className: 'project-show-delete-position' },
           _react2.default.createElement(
             'button',
-            { className: 'project-show-delete-button', onClick: this.edit },
+            { id: '' + i, className: 'project-show-delete-button', onClick: function onClick(e) {
+                debugger;
+                var num = e.target.id;
+                _this3.setState({ edit: num });
+              } },
             'Edit Comment'
           ),
           _react2.default.createElement(
@@ -2699,26 +2891,48 @@ var ProjectShow = function (_React$Component) {
     value: function displayComments() {
       var _this4 = this;
 
+      debugger;
+      var edit = this.state.edit;
       if (this.props.comments) {
         return this.props.comments.map(function (comment, i) {
           var modify = _this4.modifyComment(comment.authorId, i, comment.id);
           if (!comment) {
             return [];
           }
-          return _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement(_ShowComment2.default, {
-              body: comment.body,
-              username: comment.username,
-              key: comment.id
-            }),
-            ';',
-            modify
-          );
+          debugger;
+          if (edit != i) {
+            return _react2.default.createElement(
+              'div',
+              null,
+              _react2.default.createElement(_ShowComment2.default, {
+                body: comment.body,
+                username: comment.username,
+                key: comment.id
+              }),
+              modify
+            );
+          } else {
+            return _react2.default.createElement(
+              'div',
+              null,
+              _react2.default.createElement(_EditCommentContainer2.default, {
+                body: comment.body,
+                projectId: _this4.props.project.id,
+                commentId: comment.id,
+                updatedComment: _this4.updatedComment.bind(_this4)
+              })
+            );
+          }
         });
       } else {
         return null;
+      }
+    }
+  }, {
+    key: 'updatedComment',
+    value: function updatedComment(boolean) {
+      if (boolean) {
+        this.setState({ edit: null });
       }
     }
   }, {
@@ -2927,6 +3141,12 @@ var mstp = function mstp(state, ownProps) {
   var project = state.entities.projects[ownProps.match.params.projectId] || {};
   project['newComment'] = false;
   project['commentBody'] = '';
+  project['edit'] = null;
+  // for(let x = 0; x < sortedComments.length; x++){
+  //   project['comments'][x] = true;
+  // }
+  // project['change'] = Math.random();
+  debugger;
   return {
     project: project,
     formType: 'Show Project',
@@ -3722,6 +3942,7 @@ var commentReducer = function commentReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments[1];
 
+  debugger;
   var ids = void 0;
   var newState = void 0;
   var oldState = Object.freeze(state);

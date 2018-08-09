@@ -23,6 +23,7 @@ export const createComment = (comment,id) => {
 };
 
 export const updateComment = (comment,id) => {
+  debugger
   return dispatch => {
     return Comment_Util.updateComment(comment,id).then((comment) =>{
       return dispatch({
