@@ -129,7 +129,6 @@ var createComment = exports.createComment = function createComment(comment, id) 
 };
 
 var updateComment = exports.updateComment = function updateComment(comment, id) {
-  debugger;
   return function (dispatch) {
     return Comment_Util.updateComment(comment, id).then(function (comment) {
       return dispatch({
@@ -312,7 +311,6 @@ var fetchProject = exports.fetchProject = function fetchProject(id) {
           instructions = _ref.instructions,
           comments = _ref.comments;
 
-      debugger;
       return dispatch({
         type: FETCH_PROJECT,
         project: project,
@@ -3183,7 +3181,6 @@ var mstp = function mstp(state, ownProps) {
   project['commentBody'] = '';
   project['edit'] = null;
   project['commentError'] = null;
-  debugger;
   return {
     project: project,
     formType: 'Show Project',
@@ -3979,7 +3976,6 @@ var commentReducer = function commentReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments[1];
 
-  debugger;
   var ids = void 0;
   var newState = void 0;
   var oldState = Object.freeze(state);
