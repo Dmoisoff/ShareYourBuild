@@ -29,19 +29,24 @@ class Comments extends React.Component{
 
 
   render(){
-    let error = this.state.error ? <p>The comment can not be empty, please finish filling it out</p> : null;
+    let error = this.state.error ? <div className='comment-errors-placement'>
+                                      <div className='comment-errors-container'>
+                                        <p className='comment-errors'>The comment can not be empty, please finish filling it out</p>
+                                      </div>
+                                    </div>
+                                      : null;
     return(
-    <div>
-      <div>
+    <div className='comment-textbox-placement'>
+      <div className='comment-textbox-area'>
         <textarea onChange={this.updateComment.bind(this)}
           placeholder='Please enter a nice comment'
           className='project-body-text' rows="8" cols="80"
           value={`${this.state.body}`}></textarea>
       </div>
-      <div>
-        {error}
-        <button onClick={() =>{(this.props.updatedComment(true));}}>Cancel</button>
-        <button onClick={() =>{this.handleSubmit();}}>Update</button>
+      {error}
+      <div className='comment-edit-button-placement'>
+        <button className='comment-buttons' onClick={() =>{(this.props.updatedComment(true));}}>Cancel</button>
+        <button className='comment-buttons' onClick={() =>{this.handleSubmit();}}>Update</button>
       </div>
     </div>
     );

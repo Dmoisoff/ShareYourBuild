@@ -10,7 +10,6 @@ import EditCommentContainer from './../comment/EditCommentContainer';
 class ProjectShow extends React.Component {
   constructor(props){
     super(props);
-    debugger
     this.state = this.props.project;
     this.remove = this.remove.bind(this);
     this.edit = this.edit.bind(this);
@@ -22,7 +21,6 @@ class ProjectShow extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    debugger
     if(!nextProps.errors){
       this.props.clearProjectErrors;
       this.props.history.push('/');
@@ -35,7 +33,6 @@ class ProjectShow extends React.Component {
 
 
   componentDidUpdate(prevProps){
-    debugger
     if (!!prevProps.project && prevProps.project.id != this.props.match.params.projectId) {
       this.props.fetchProject(this.props.match.params.projectId);
     }
@@ -84,10 +81,9 @@ class ProjectShow extends React.Component {
   modifyComment(commentUserId,i, id){
     if(commentUserId === this.props.currentUserId){
       return <div key={i} className='project-show-delete-position'>
-                <button id={`${i}`} className='project-show-delete-button' onClick={(e) => {debugger
-                    const num = e.target.id;
-                    this.setState({edit: num});}}>Edit Comment</button>
-                <button className='project-show-delete-button' onClick={() =>{this.props.deleteComment(id);}}>Remove Comment</button>
+                <button id={`${i}`} className='comment-buttons' onClick={(e) => {const num = e.target.id;
+                    this.setState({edit: num, newComment: false });}}>Edit Comment</button>
+                <button className='comment-buttons' onClick={() =>{this.props.deleteComment(id);}}>Remove Comment</button>
               </div>;
     }else{
       return null;
@@ -96,15 +92,13 @@ class ProjectShow extends React.Component {
 
 
   displayComments(){
-    debugger
-    const edit = this.state.edit
+    const edit = this.state.edit;
     if(this.props.comments){
       return this.props.comments.map((comment,i) => {
         const modify = this.modifyComment(comment.authorId, i, comment.id);
       if(!comment){
         return [];
       }
-      debugger
       if(edit != i){
         return <div>
           <ShowComment
@@ -113,6 +107,7 @@ class ProjectShow extends React.Component {
             key={comment.id}
             />
           {modify}
+          <div className='comment-divider'></div>
         </div>;
       }else {
         return <div>
@@ -122,6 +117,7 @@ class ProjectShow extends React.Component {
                   commentId={comment.id}
                   updatedComment={this.updatedComment.bind(this)}
                   />
+                <div className='comment-divider'></div>
               </div>;
       }
           });
@@ -141,19 +137,25 @@ class ProjectShow extends React.Component {
   }
 
   newComment(){
-    debugger
     if(this.state.newComment){
-      let error = this.state.commentError ? <p>The comment can not be empty, please finish filling it out</p> : null;
-      return <div>
-              <div>
+      let error = this.state.commentError ? <div className='comment-errors-placement'>
+                                              <div className='comment-errors-container'>
+                                                <p className='comment-errors'>The comment can not be empty, please finish filling it out</p>
+                                              </div>
+                                            </div>
+                                            : null;
+      return <div className="comment-textbox-placement">
+              <div className='comment-textbox-area'>
                 <textarea onChange={this.updatedNewComment.bind(this)}
                   placeholder='Please enter a nice comment'
                   className='project-body-text' rows="8" cols="80"
                   value={`${this.state.commentBody}`}></textarea>
               </div>
               {error}
-              <button onClick={() =>{this.setState({newComment: false, commentBody: ''});}}>Cancel</button>
-              <button onClick={() =>{this.handleSubmit();}}>Submit</button>
+              <div className='project-show-delete-position'>
+                <button className='comment-buttons' onClick={() =>{this.setState({newComment: false, commentBody: ''});}}>Cancel</button>
+                <button className='comment-buttons' onClick={() =>{this.handleSubmit();}}>Submit</button>
+              </div>
             </div>;
     }else{
       return null;
@@ -162,20 +164,17 @@ class ProjectShow extends React.Component {
 
   handleSubmit(e){
     if(this.state.commentBody === ''){
-      debugger
       this.setState({commentError: true});
       return;
     }
-    // e.preventDefault();
     this.props.createComment({comment: {body: this.state.commentBody, project_id: this.props.project.id, author_id: this.props.currentUserId}}, this.props.project.id).then(this.setState({newComment: false, commentBody: ''}));
   }
 
-
   render() {
-
     if (!this.props.project.authorUsername) {
       return <div>Loading...</div>;
     }
+    const createCommentButton = this.state.newComment ? null : <button className='comment-create-button' onClick={() =>{this.setState({newComment: true, edit: null});}}>Create A Comment</button>;
     const description = this.props.project.description;
     return (
       <div>
@@ -201,9 +200,9 @@ class ProjectShow extends React.Component {
                                     <button className='project-show-delete-button' onClick={this.edit}>Edit Build</button>
                                     <button className='project-show-delete-button' onClick={this.remove}>Remove Build</button>
                                   </div> : null}
-          <div>
+          <div className='comment-errors-placement'>
             {this.newComment()}
-            <button className='project-show-delete-button' onClick={() =>{this.setState({newComment: true});}}>Create a comment</button>
+            {createCommentButton}
           </div>
           <div>
             {this.displayComments()}

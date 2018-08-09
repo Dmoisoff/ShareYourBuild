@@ -740,7 +740,6 @@ var ShowComment = function (_React$Component) {
             )
           )
         ),
-        _react2.default.createElement('div', { className: 'instruction-divider' }),
         _react2.default.createElement(
           'ul',
           null,
@@ -831,35 +830,43 @@ var Comments = function (_React$Component) {
       var _this3 = this;
 
       var error = this.state.error ? _react2.default.createElement(
-        'p',
-        null,
-        'The comment can not be empty, please finish filling it out'
+        'div',
+        { className: 'comment-errors-placement' },
+        _react2.default.createElement(
+          'div',
+          { className: 'comment-errors-container' },
+          _react2.default.createElement(
+            'p',
+            { className: 'comment-errors' },
+            'The comment can not be empty, please finish filling it out'
+          )
+        )
       ) : null;
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'comment-textbox-placement' },
         _react2.default.createElement(
           'div',
-          null,
+          { className: 'comment-textbox-area' },
           _react2.default.createElement('textarea', { onChange: this.updateComment.bind(this),
             placeholder: 'Please enter a nice comment',
             className: 'project-body-text', rows: '8', cols: '80',
             value: '' + this.state.body })
         ),
+        error,
         _react2.default.createElement(
           'div',
-          null,
-          error,
+          { className: 'comment-edit-button-placement' },
           _react2.default.createElement(
             'button',
-            { onClick: function onClick() {
+            { className: 'comment-buttons', onClick: function onClick() {
                 _this3.props.updatedComment(true);
               } },
             'Cancel'
           ),
           _react2.default.createElement(
             'button',
-            { onClick: function onClick() {
+            { className: 'comment-buttons', onClick: function onClick() {
                 _this3.handleSubmit();
               } },
             'Update'
@@ -2796,7 +2803,6 @@ var ProjectShow = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (ProjectShow.__proto__ || Object.getPrototypeOf(ProjectShow)).call(this, props));
 
-    debugger;
     _this.state = _this.props.project;
     _this.remove = _this.remove.bind(_this);
     _this.edit = _this.edit.bind(_this);
@@ -2812,7 +2818,6 @@ var ProjectShow = function (_React$Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      debugger;
       if (!nextProps.errors) {
         this.props.clearProjectErrors;
         this.props.history.push('/');
@@ -2824,7 +2829,6 @@ var ProjectShow = function (_React$Component) {
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps) {
-      debugger;
       if (!!prevProps.project && prevProps.project.id != this.props.match.params.projectId) {
         this.props.fetchProject(this.props.match.params.projectId);
       }
@@ -2885,16 +2889,15 @@ var ProjectShow = function (_React$Component) {
           { key: i, className: 'project-show-delete-position' },
           _react2.default.createElement(
             'button',
-            { id: '' + i, className: 'project-show-delete-button', onClick: function onClick(e) {
-                debugger;
+            { id: '' + i, className: 'comment-buttons', onClick: function onClick(e) {
                 var num = e.target.id;
-                _this3.setState({ edit: num });
+                _this3.setState({ edit: num, newComment: false });
               } },
             'Edit Comment'
           ),
           _react2.default.createElement(
             'button',
-            { className: 'project-show-delete-button', onClick: function onClick() {
+            { className: 'comment-buttons', onClick: function onClick() {
                 _this3.props.deleteComment(id);
               } },
             'Remove Comment'
@@ -2909,7 +2912,6 @@ var ProjectShow = function (_React$Component) {
     value: function displayComments() {
       var _this4 = this;
 
-      debugger;
       var edit = this.state.edit;
       if (this.props.comments) {
         return this.props.comments.map(function (comment, i) {
@@ -2917,7 +2919,6 @@ var ProjectShow = function (_React$Component) {
           if (!comment) {
             return [];
           }
-          debugger;
           if (edit != i) {
             return _react2.default.createElement(
               'div',
@@ -2927,7 +2928,8 @@ var ProjectShow = function (_React$Component) {
                 username: comment.username,
                 key: comment.id
               }),
-              modify
+              modify,
+              _react2.default.createElement('div', { className: 'comment-divider' })
             );
           } else {
             return _react2.default.createElement(
@@ -2938,7 +2940,8 @@ var ProjectShow = function (_React$Component) {
                 projectId: _this4.props.project.id,
                 commentId: comment.id,
                 updatedComment: _this4.updatedComment.bind(_this4)
-              })
+              }),
+              _react2.default.createElement('div', { className: 'comment-divider' })
             );
           }
         });
@@ -2963,19 +2966,26 @@ var ProjectShow = function (_React$Component) {
     value: function newComment() {
       var _this5 = this;
 
-      debugger;
       if (this.state.newComment) {
         var error = this.state.commentError ? _react2.default.createElement(
-          'p',
-          null,
-          'The comment can not be empty, please finish filling it out'
+          'div',
+          { className: 'comment-errors-placement' },
+          _react2.default.createElement(
+            'div',
+            { className: 'comment-errors-container' },
+            _react2.default.createElement(
+              'p',
+              { className: 'comment-errors' },
+              'The comment can not be empty, please finish filling it out'
+            )
+          )
         ) : null;
         return _react2.default.createElement(
           'div',
-          null,
+          { className: 'comment-textbox-placement' },
           _react2.default.createElement(
             'div',
-            null,
+            { className: 'comment-textbox-area' },
             _react2.default.createElement('textarea', { onChange: this.updatedNewComment.bind(this),
               placeholder: 'Please enter a nice comment',
               className: 'project-body-text', rows: '8', cols: '80',
@@ -2983,18 +2993,22 @@ var ProjectShow = function (_React$Component) {
           ),
           error,
           _react2.default.createElement(
-            'button',
-            { onClick: function onClick() {
-                _this5.setState({ newComment: false, commentBody: '' });
-              } },
-            'Cancel'
-          ),
-          _react2.default.createElement(
-            'button',
-            { onClick: function onClick() {
-                _this5.handleSubmit();
-              } },
-            'Submit'
+            'div',
+            { className: 'project-show-delete-position' },
+            _react2.default.createElement(
+              'button',
+              { className: 'comment-buttons', onClick: function onClick() {
+                  _this5.setState({ newComment: false, commentBody: '' });
+                } },
+              'Cancel'
+            ),
+            _react2.default.createElement(
+              'button',
+              { className: 'comment-buttons', onClick: function onClick() {
+                  _this5.handleSubmit();
+                } },
+              'Submit'
+            )
           )
         );
       } else {
@@ -3005,11 +3019,9 @@ var ProjectShow = function (_React$Component) {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
       if (this.state.commentBody === '') {
-        debugger;
         this.setState({ commentError: true });
         return;
       }
-      // e.preventDefault();
       this.props.createComment({ comment: { body: this.state.commentBody, project_id: this.props.project.id, author_id: this.props.currentUserId } }, this.props.project.id).then(this.setState({ newComment: false, commentBody: '' }));
     }
   }, {
@@ -3024,6 +3036,13 @@ var ProjectShow = function (_React$Component) {
           'Loading...'
         );
       }
+      var createCommentButton = this.state.newComment ? null : _react2.default.createElement(
+        'button',
+        { className: 'comment-create-button', onClick: function onClick() {
+            _this6.setState({ newComment: true, edit: null });
+          } },
+        'Create A Comment'
+      );
       var description = this.props.project.description;
       return _react2.default.createElement(
         'div',
@@ -3086,15 +3105,9 @@ var ProjectShow = function (_React$Component) {
           ) : null,
           _react2.default.createElement(
             'div',
-            null,
+            { className: 'comment-errors-placement' },
             this.newComment(),
-            _react2.default.createElement(
-              'button',
-              { className: 'project-show-delete-button', onClick: function onClick() {
-                  _this6.setState({ newComment: true });
-                } },
-              'Create a comment'
-            )
+            createCommentButton
           ),
           _react2.default.createElement(
             'div',

@@ -27,7 +27,6 @@ class ShowComment extends React.Component{
             <p className='project-font-format'>{this.props.body}</p>
           </div>
         </div>
-        <div className='instruction-divider'></div>
         <ul>
           {this.errors()}
         </ul>
