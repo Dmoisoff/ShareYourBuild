@@ -370,7 +370,7 @@ class ProjectForm extends React.Component{
                      </div>
                    </div>
                    <p className='project-edit-body-text'>Edit Main Description Below</p>
-                   <textarea onChange={this.updateDescription.bind(this)}
+                   <textarea id='textarea' onChange={this.updateDescription.bind(this)}
                      placeholder='Please enter a brief description of your build'
                      className='project-body-text' rows="8" cols="80"
                      value={`${this.state.description}`}></textarea>
@@ -394,7 +394,7 @@ class ProjectForm extends React.Component{
                    </div>
                  </div>
                  {bodyEdit}
-                 <textarea onChange={this.updateDescription.bind(this)}
+                 <textarea id='textarea' onChange={this.updateDescription.bind(this)}
                    placeholder='Please enter a brief description of your build'
                    className='project-body-text' rows="8" cols="80"
                    value={`${this.state.description}`}></textarea>

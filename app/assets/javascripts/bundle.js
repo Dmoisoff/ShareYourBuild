@@ -850,7 +850,7 @@ var Comments = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'comment-textbox-area' },
-          _react2.default.createElement('textarea', { onChange: this.updateComment.bind(this),
+          _react2.default.createElement('textarea', { id: 'textarea', onChange: this.updateComment.bind(this),
             placeholder: 'Please enter a nice comment',
             className: 'project-body-text', rows: '8', cols: '80',
             value: '' + this.state.body })
@@ -1452,7 +1452,7 @@ var Instructions = function (_React$Component) {
                 preview
               )
             ),
-            _react2.default.createElement('textarea', { onChange: this.updateDescription.bind(this), placeholder: 'Please enter a brief description of your process', className: 'project-body-text', rows: '8', cols: '80', value: '' + this.state.body }),
+            _react2.default.createElement('textarea', { id: 'textarea', onChange: this.updateDescription.bind(this), placeholder: 'Please enter a brief description of your process', className: 'project-body-text', rows: '8', cols: '80', value: '' + this.state.body }),
             _react2.default.createElement(
               'div',
               null,
@@ -2626,7 +2626,7 @@ var ProjectForm = function (_React$Component) {
             { className: 'project-edit-body-text' },
             'Edit Main Description Below'
           ),
-          _react2.default.createElement('textarea', { onChange: this.updateDescription.bind(this),
+          _react2.default.createElement('textarea', { id: 'textarea', onChange: this.updateDescription.bind(this),
             placeholder: 'Please enter a brief description of your build',
             className: 'project-body-text', rows: '8', cols: '80',
             value: '' + this.state.description })
@@ -2664,7 +2664,7 @@ var ProjectForm = function (_React$Component) {
             )
           ),
           bodyEdit,
-          _react2.default.createElement('textarea', { onChange: this.updateDescription.bind(this),
+          _react2.default.createElement('textarea', { id: 'textarea', onChange: this.updateDescription.bind(this),
             placeholder: 'Please enter a brief description of your build',
             className: 'project-body-text', rows: '8', cols: '80',
             value: '' + this.state.description })
@@ -2988,7 +2988,7 @@ var ProjectShow = function (_React$Component) {
           _react2.default.createElement(
             'div',
             { className: 'comment-textbox-area' },
-            _react2.default.createElement('textarea', { onChange: this.updatedNewComment.bind(this),
+            _react2.default.createElement('textarea', { id: 'textarea', onChange: this.updatedNewComment.bind(this),
               placeholder: 'Please enter a nice comment',
               className: 'project-body-text', rows: '8', cols: '80',
               value: '' + this.state.commentBody })

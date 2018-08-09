@@ -123,7 +123,7 @@ class Instructions extends React.Component{
                   {preview}
                 </div>
               </div>
-              <textarea onChange={this.updateDescription.bind(this)} placeholder='Please enter a brief description of your process' className='project-body-text' rows="8" cols="80" value={`${this.state.body}`}></textarea>
+              <textarea id='textarea' onChange={this.updateDescription.bind(this)} placeholder='Please enter a brief description of your process' className='project-body-text' rows="8" cols="80" value={`${this.state.body}`}></textarea>
               <div>
                 <button form='submit-project'
                   onClick={() => this.props.removeInstruction(this.state.step)}

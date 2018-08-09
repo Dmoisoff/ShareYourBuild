@@ -38,7 +38,7 @@ class Comments extends React.Component{
     return(
     <div className='comment-textbox-placement'>
       <div className='comment-textbox-area'>
-        <textarea onChange={this.updateComment.bind(this)}
+        <textarea id='textarea' onChange={this.updateComment.bind(this)}
           placeholder='Please enter a nice comment'
           className='project-body-text' rows="8" cols="80"
           value={`${this.state.body}`}></textarea>

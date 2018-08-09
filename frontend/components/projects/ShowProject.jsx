@@ -144,7 +144,7 @@ class ProjectShow extends React.Component {
                                             : null;
       return <div className="comment-textbox-placement">
               <div className='comment-textbox-area'>
-                <textarea onChange={this.updatedNewComment.bind(this)}
+                <textarea id='textarea' onChange={this.updatedNewComment.bind(this)}
                   placeholder='Please enter a nice comment'
                   className='project-body-text' rows="8" cols="80"
                   value={`${this.state.commentBody}`}></textarea>
