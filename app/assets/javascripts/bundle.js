@@ -854,11 +854,11 @@ var ShowComment = function (_React$Component) {
             'div',
             null,
             _react2.default.createElement(
-              _reactRouterDom.Link,
-              { className: 'clickable', to: '/' + this.props.username + '/' + this.props.authorId + '/projects' },
+              'p',
+              null,
               _react2.default.createElement(
-                'p',
-                null,
+                _reactRouterDom.Link,
+                { className: 'clickable', to: '/' + this.props.username + '/' + this.props.authorId + '/projects' },
                 this.props.username
               )
             ),

@@ -23,7 +23,7 @@ class ShowComment extends React.Component{
       <div className='instruction-step-format'>
         <div>
           <div>
-            <Link className='clickable' to={`/${this.props.username}/${this.props.authorId}/projects`}><p>{this.props.username}</p></Link>
+            <p><Link className='clickable' to={`/${this.props.username}/${this.props.authorId}/projects`}>{this.props.username}</Link></p>
             <p className='project-font-format'>{this.props.body}</p>
           </div>
         </div>
