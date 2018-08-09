@@ -943,9 +943,10 @@ var Greeting = function (_React$Component) {
   }, {
     key: 'toggleDropdown',
     value: function toggleDropdown(e) {
-      var target = e.target.id;
+      debugger;
+      var target = e.target;
       target;
-      if (target !== "dropDown") {
+      if (target.id !== "dropDown" && target.className !== "user-dropDown-content") {
         if (this.state.active) {
           this.setState({ active: false });
         }
