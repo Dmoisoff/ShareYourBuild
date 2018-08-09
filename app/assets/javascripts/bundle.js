@@ -2884,7 +2884,7 @@ var ProjectShow = function (_React$Component) {
       if (commentUserId === this.props.currentUserId) {
         return _react2.default.createElement(
           'div',
-          { key: i, className: 'project-show-delete-position' },
+          { className: 'project-show-delete-position' },
           _react2.default.createElement(
             'button',
             { id: '' + i, className: 'comment-buttons', onClick: function onClick(e) {
@@ -2920,11 +2920,10 @@ var ProjectShow = function (_React$Component) {
           if (edit != i) {
             return _react2.default.createElement(
               'div',
-              null,
+              { key: comment.id },
               _react2.default.createElement(_ShowComment2.default, {
                 body: comment.body,
-                username: comment.username,
-                key: comment.id
+                username: comment.username
               }),
               modify,
               _react2.default.createElement('div', { className: 'comment-divider' })
@@ -2932,7 +2931,7 @@ var ProjectShow = function (_React$Component) {
           } else {
             return _react2.default.createElement(
               'div',
-              null,
+              { key: comment.id },
               _react2.default.createElement(_EditCommentContainer2.default, {
                 body: comment.body,
                 projectId: _this4.props.project.id,

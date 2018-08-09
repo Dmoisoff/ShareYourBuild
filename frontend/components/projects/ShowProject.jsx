@@ -30,8 +30,6 @@ class ProjectShow extends React.Component {
     }
   }
 
-
-
   componentDidUpdate(prevProps){
     if (!!prevProps.project && prevProps.project.id != this.props.match.params.projectId) {
       this.props.fetchProject(this.props.match.params.projectId);
@@ -80,7 +78,7 @@ class ProjectShow extends React.Component {
 
   modifyComment(commentUserId,i, id){
     if(commentUserId === this.props.currentUserId){
-      return <div key={i} className='project-show-delete-position'>
+      return <div className='project-show-delete-position'>
                 <button id={`${i}`} className='comment-buttons' onClick={(e) => {const num = e.target.id;
                     this.setState({edit: num, newComment: false });}}>Edit Comment</button>
                 <button className='comment-buttons' onClick={() =>{this.props.deleteComment(id);}}>Remove Comment</button>
@@ -100,17 +98,16 @@ class ProjectShow extends React.Component {
         return [];
       }
       if(edit != i){
-        return <div>
+        return <div key={comment.id}>
           <ShowComment
             body={comment.body}
             username={comment.username}
-            key={comment.id}
             />
           {modify}
           <div className='comment-divider'></div>
         </div>;
       }else {
-        return <div>
+        return <div key={comment.id}>
                 <EditCommentContainer
                   body={comment.body}
                   projectId={this.props.project.id}
