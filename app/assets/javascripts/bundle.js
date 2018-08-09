@@ -637,7 +637,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var mstp = function mstp(state, ownProps) {
   return {
     comment: {
-      body: ownProps.body
+      body: ownProps.body,
+      errors: null
     },
     commentId: ownProps.commentId,
     currentUserId: state.session.id,
@@ -801,12 +802,18 @@ var Comments = function (_React$Component) {
   _createClass(Comments, [{
     key: 'handleSubmit',
     value: function handleSubmit(e) {
-      debugger;
-      // e.preventDefault();
+      var _this2 = this;
+
+      if (this.state.body === '') {
+        this.displayError();
+        return;
+      }
       this.props.updateComment({ comment: {
           body: this.state.body,
           project_id: this.props.projectId,
-          author_id: this.props.currentUserId } }, this.props.commentId).then(this.props.updatedComment(true));
+          author_id: this.props.currentUserId } }, this.props.commentId).then(function () {
+        _this2.props.updatedComment(true);
+      });
     }
   }, {
     key: 'updateComment',
@@ -814,10 +821,20 @@ var Comments = function (_React$Component) {
       this.setState({ body: e.target.value });
     }
   }, {
+    key: 'displayError',
+    value: function displayError(errorMessage) {
+      this.setState({ error: true });
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
+      var error = this.state.error ? _react2.default.createElement(
+        'p',
+        null,
+        'The comment can not be empty, please finish filling it out'
+      ) : null;
       return _react2.default.createElement(
         'div',
         null,
@@ -832,17 +849,18 @@ var Comments = function (_React$Component) {
         _react2.default.createElement(
           'div',
           null,
+          error,
           _react2.default.createElement(
             'button',
             { onClick: function onClick() {
-                _this2.props.updatedComment(true);
+                _this3.props.updatedComment(true);
               } },
             'Cancel'
           ),
           _react2.default.createElement(
             'button',
             { onClick: function onClick() {
-                _this2.handleSubmit();
+                _this3.handleSubmit();
               } },
             'Update'
           )
@@ -2947,6 +2965,11 @@ var ProjectShow = function (_React$Component) {
 
       debugger;
       if (this.state.newComment) {
+        var error = this.state.commentError ? _react2.default.createElement(
+          'p',
+          null,
+          'The comment can not be empty, please finish filling it out'
+        ) : null;
         return _react2.default.createElement(
           'div',
           null,
@@ -2958,6 +2981,7 @@ var ProjectShow = function (_React$Component) {
               className: 'project-body-text', rows: '8', cols: '80',
               value: '' + this.state.commentBody })
           ),
+          error,
           _react2.default.createElement(
             'button',
             { onClick: function onClick() {
@@ -2980,7 +3004,11 @@ var ProjectShow = function (_React$Component) {
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
-      debugger;
+      if (this.state.commentBody === '') {
+        debugger;
+        this.setState({ commentError: true });
+        return;
+      }
       // e.preventDefault();
       this.props.createComment({ comment: { body: this.state.commentBody, project_id: this.props.project.id, author_id: this.props.currentUserId } }, this.props.project.id).then(this.setState({ newComment: false, commentBody: '' }));
     }
@@ -2996,7 +3024,6 @@ var ProjectShow = function (_React$Component) {
           'Loading...'
         );
       }
-
       var description = this.props.project.description;
       return _react2.default.createElement(
         'div',
@@ -3142,10 +3169,7 @@ var mstp = function mstp(state, ownProps) {
   project['newComment'] = false;
   project['commentBody'] = '';
   project['edit'] = null;
-  // for(let x = 0; x < sortedComments.length; x++){
-  //   project['comments'][x] = true;
-  // }
-  // project['change'] = Math.random();
+  project['commentError'] = null;
   debugger;
   return {
     project: project,

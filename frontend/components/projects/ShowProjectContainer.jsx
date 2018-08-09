@@ -29,10 +29,7 @@ const mstp = (state, ownProps) => {
   project['newComment'] = false;
   project['commentBody'] = '';
   project['edit'] = null;
-  // for(let x = 0; x < sortedComments.length; x++){
-  //   project['comments'][x] = true;
-  // }
-  // project['change'] = Math.random();
+  project['commentError'] = null;
   debugger
   return({
     project: project,

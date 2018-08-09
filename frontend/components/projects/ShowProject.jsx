@@ -143,6 +143,7 @@ class ProjectShow extends React.Component {
   newComment(){
     debugger
     if(this.state.newComment){
+      let error = this.state.commentError ? <p>The comment can not be empty, please finish filling it out</p> : null;
       return <div>
               <div>
                 <textarea onChange={this.updatedNewComment.bind(this)}
@@ -150,6 +151,7 @@ class ProjectShow extends React.Component {
                   className='project-body-text' rows="8" cols="80"
                   value={`${this.state.commentBody}`}></textarea>
               </div>
+              {error}
               <button onClick={() =>{this.setState({newComment: false, commentBody: ''});}}>Cancel</button>
               <button onClick={() =>{this.handleSubmit();}}>Submit</button>
             </div>;
@@ -159,7 +161,11 @@ class ProjectShow extends React.Component {
   }
 
   handleSubmit(e){
-    debugger
+    if(this.state.commentBody === ''){
+      debugger
+      this.setState({commentError: true});
+      return;
+    }
     // e.preventDefault();
     this.props.createComment({comment: {body: this.state.commentBody, project_id: this.props.project.id, author_id: this.props.currentUserId}}, this.props.project.id).then(this.setState({newComment: false, commentBody: ''}));
   }
@@ -170,7 +176,6 @@ class ProjectShow extends React.Component {
     if (!this.props.project.authorUsername) {
       return <div>Loading...</div>;
     }
-
     const description = this.props.project.description;
     return (
       <div>

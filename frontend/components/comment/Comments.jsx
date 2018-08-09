@@ -8,21 +8,28 @@ class Comments extends React.Component{
   }
 
   handleSubmit(e){
-    debugger
-    // e.preventDefault();
+    if(this.state.body === ''){
+      this.displayError();
+      return;
+    }
     this.props.updateComment({comment: {
       body: this.state.body,
       project_id: this.props.projectId,
-      author_id: this.props.currentUserId}}, this.props.commentId).then(this.props.updatedComment(true));
+      author_id: this.props.currentUserId}}, this.props.commentId).then(() => {
+        this.props.updatedComment(true);});
   }
 
   updateComment(e){
     this.setState({body: e.target.value});
   }
 
+  displayError(errorMessage){
+    this.setState({error: true});
+  }
 
 
   render(){
+    let error = this.state.error ? <p>The comment can not be empty, please finish filling it out</p> : null;
     return(
     <div>
       <div>
@@ -32,6 +39,7 @@ class Comments extends React.Component{
           value={`${this.state.body}`}></textarea>
       </div>
       <div>
+        {error}
         <button onClick={() =>{(this.props.updatedComment(true));}}>Cancel</button>
         <button onClick={() =>{this.handleSubmit();}}>Update</button>
       </div>

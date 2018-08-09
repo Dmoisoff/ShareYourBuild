@@ -7,6 +7,7 @@ const mstp = (state, ownProps) => {
     return({
       comment: {
         body: ownProps.body,
+        errors: null
        },
       commentId: ownProps.commentId,
       currentUserId: state.session.id,
