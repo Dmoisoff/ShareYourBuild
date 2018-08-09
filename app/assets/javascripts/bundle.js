@@ -1887,7 +1887,8 @@ var IndexProjects = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (IndexProjects.__proto__ || Object.getPrototypeOf(IndexProjects)).call(this, props));
 
     _this.state = {
-      key: Math.random()
+      key: Math.random(),
+      rerender: false
     };
     return _this;
   }
@@ -4322,7 +4323,7 @@ var projectReducer = function projectReducer() {
     case Projects_Actions.FETCH_ALL_PROJECTS:
       return (0, _merge3.default)({}, state, action.projects);
     case Projects_Actions.FETCH_PROJECT:
-      newState = (0, _merge3.default)({}, state, _defineProperty({}, action.project.id, action.project));
+      newState = (0, _merge3.default)({}, _defineProperty({}, action.project.id, action.project));
       return newState;
     case Projects_Actions.REMOVE_PROJECT:
       newState = (0, _merge3.default)({}, state);

@@ -6,9 +6,12 @@ class IndexProjects extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      key: Math.random()
+      key: Math.random(),
+      rerender: false
     };
   }
+
+
 
   componentDidMount(){
     if(this.props.formType === 'User Index Projects'){
