@@ -3048,6 +3048,12 @@ var ProjectShow = function (_React$Component) {
           'Create A Comment'
         );
       }
+      var commentTitle = this.props.comments.length ? _react2.default.createElement(
+        'p',
+        { className: 'comments-header' },
+        this.props.comments.length,
+        ' Comments'
+      ) : null;
       var description = this.props.project.description;
       return _react2.default.createElement(
         'div',
@@ -3108,6 +3114,11 @@ var ProjectShow = function (_React$Component) {
               'Remove Build'
             )
           ) : null,
+          _react2.default.createElement(
+            'div',
+            { className: 'comment-errors-placement' },
+            commentTitle
+          ),
           _react2.default.createElement(
             'div',
             { className: 'comment-errors-placement' },
