@@ -1447,7 +1447,7 @@ var Instructions = function (_React$Component) {
                     { className: 'project-image-text' },
                     'Please select a picture for your step'
                   ),
-                  _react2.default.createElement('input', { className: 'project-body-input', type: 'file', onChange: this.uploadFile.bind(this) })
+                  _react2.default.createElement('input', { className: 'project-body-input', type: 'file', accept: 'image/*', onChange: this.uploadFile.bind(this) })
                 ),
                 preview
               )
@@ -2212,11 +2212,11 @@ var ProjectForm = function (_React$Component) {
       var _this2 = this;
 
       var file = e.currentTarget.files[0];
-      if (!this.extensionCheck(file)) {
-        this.setState({ instructionIssues: ['That is an improper file format, please choose a different file'] });
-        this.instructionErrors();
-        return;
-      }
+      // if(!this.extensionCheck(file)){
+      //   this.setState({instructionIssues: [`That is an improper file format, please choose a different file`]});
+      //   this.instructionErrors();
+      //   return;
+      // }
 
       var fileReader = new FileReader();
       fileReader.onloadend = function () {
@@ -2617,7 +2617,7 @@ var ProjectForm = function (_React$Component) {
                 'Please select a main picture for your build'
               ),
               _react2.default.createElement('input', { className: 'project-body-input',
-                type: 'file',
+                type: 'file', accept: 'image/*',
                 onChange: this.uploadFile.bind(this) }),
               preview
             )
@@ -2659,7 +2659,7 @@ var ProjectForm = function (_React$Component) {
                 'Please select a main picture for your build'
               ),
               _react2.default.createElement('input', { className: 'project-body-input',
-                type: 'file',
+                type: 'file', accept: 'image/*',
                 onChange: this.uploadFile.bind(this) }),
               preview
             )

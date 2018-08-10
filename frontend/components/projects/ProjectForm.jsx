@@ -41,11 +41,11 @@ class ProjectForm extends React.Component{
 
   uploadFile(e){
     const file = e.currentTarget.files[0];
-    if(!this.extensionCheck(file)){
-      this.setState({instructionIssues: [`That is an improper file format, please choose a different file`]});
-      this.instructionErrors();
-      return;
-    }
+    // if(!this.extensionCheck(file)){
+    //   this.setState({instructionIssues: [`That is an improper file format, please choose a different file`]});
+    //   this.instructionErrors();
+    //   return;
+    // }
 
     const fileReader = new FileReader();
     fileReader.onloadend = () => {
@@ -364,7 +364,7 @@ class ProjectForm extends React.Component{
                      <div className='project-image-input-format'>
                       <p className='project-image-text' >Please select a main picture for your build</p>
                       <input className='project-body-input'
-                        type='file'
+                        type='file' accept="image/*"
                         onChange={this.uploadFile.bind(this)} />
                        {preview}
                      </div>
@@ -388,7 +388,7 @@ class ProjectForm extends React.Component{
                    <div className='project-image-input-format'>
                      <p className='project-image-text' >Please select a main picture for your build</p>
                      <input className='project-body-input'
-                       type='file'
+                       type='file' accept="image/*"
                        onChange={this.uploadFile.bind(this)} />
                      {preview}
                    </div>

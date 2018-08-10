@@ -118,7 +118,7 @@ class Instructions extends React.Component{
                 <div className='project-image-input-format'>
                   <div>
                     <p className='project-image-text' >Please select a picture for your step</p>
-                    <input className='project-body-input' type='file' onChange={this.uploadFile.bind(this)} />
+                    <input className='project-body-input' type='file' accept="image/*" onChange={this.uploadFile.bind(this)} />
                   </div>
                   {preview}
                 </div>
