@@ -9,6 +9,7 @@ Share Your Build is a site for DIY enthusiasts to post their creations to share 
 * Created a robust project form that allows users to create and update projects.
   * The form uses a system that allows parent component and multiple child components to share information between them.
   * Using the information sharing I was able to create a system of frontend validations to make sure the form is filled out properly.
+* Users can leave comments on builds that they enjoy.
 
 **Tools used for Share Your Build** (Languages, Frameworks, Libraries, Etc.)
 * Ruby on Rails
@@ -21,6 +22,11 @@ Share Your Build is a site for DIY enthusiasts to post their creations to share 
   * aws-sdk-s3
   * Jbuilder
   * BCrypt
+
+
+**Future Features**
+* Add a Rich Text Area for formating instructions
+* Enable a search feature for keywords or users
 
 
 [Share Your Build](https://share-your-build.herokuapp.com/?#/)
