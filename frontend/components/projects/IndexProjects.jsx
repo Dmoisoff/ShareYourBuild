@@ -6,35 +6,50 @@ class IndexProjects extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      key: Math.random(),
-      rerender: false
+      projects: this.props.projects
     };
-  }
-
-
-
-  componentDidMount(){
-    if(this.props.formType === 'User Index Projects'){
-      this.props.fetchProjectsByUser(this.props.displayedUser);
-    }else{
-      this.props.fetchProjects();
+    debugger
+      if(this.props.formType === 'User Index Projects'){
+        this.props.fetchProjectsByUser(this.props.displayedUser).then((payload) => this.setState({
+          projects:Object.values(payload)})
+        );
+      }else{
+        this.props.fetchProjects().then((payload) => this.setState({
+          projects:Object.values(payload)})
+        );
+      }
     }
-  }
 
-  componentWillReceiveProps(nextProps){
-    if(this.props.displayedUser !== nextProps.displayedUser && this.props.formType === 'User Index Projects'){
-      this.props.fetchProjectsByUser(nextProps.displayedUser).then(() => {
-        this.setState({key: Math.random()});
-      });
-    }
-  }
+
+
+
+  // componentDidMount(){
+  //   if(this.props.formType === 'User Index Projects'){
+  //     this.props.fetchProjectsByUser(this.props.displayedUser);
+  //   }else{
+  //     this.props.fetchProjects().then((payload) => {this.setState({
+  //       projects: Object.values(payload)
+  //     });
+  //   });
+  //   }
+  // }
+
+  // componentWillReceiveProps(nextProps){
+  //     debugger
+  //   if(this.props.displayedUser !== nextProps.displayedUser && this.props.formType === 'User Index Projects'){
+  //     this.props.fetchProjectsByUser(nextProps.displayedUser).then(() => {
+  //       this.setState({key: Math.random()});
+  //     });
+  //   }
+  // }
 
   renderProjects(){
     let display = [];
-    let projects = this.props.projects;
-    if(this.props.projects.length && this.props.formType === 'User Index Projects'){
-      projects = this.props.projects.filter((project) => (project.authorUsername === this.props.username) && (project.author_id == this.props.displayedUser) );
+    let projects = this.state.projects;
+    if(this.state.projects.length && this.props.formType === 'User Index Projects'){
+      projects = this.state.projects.filter((project) => (project.authorUsername === this.props.username) && (project.author_id == this.props.displayedUser) );
     }
+    debugger
     projects.map((project) => {
       const component = <Link key={project.id} to={`/project/${project.id}`}>
         <IndexProjectItem
@@ -51,7 +66,7 @@ class IndexProjects extends React.Component{
         display.push(component);
       }
     });
-    if(!display.length){
+    if(!display.length && this.props.formType === 'User Index Projects'){
       if(this.props.currentUserPage){
         display = <h3>You have no builds, share an idea and create a build!</h3>;
       }else{
@@ -66,7 +81,8 @@ class IndexProjects extends React.Component{
 
 
   render(){
-    if (!this.props.projects) {
+    debugger
+    if (!this.state.projects.length) {
       return <div>Loading...</div>;
     }else{
       const header = this.props.formType === 'User Index Projects' ?

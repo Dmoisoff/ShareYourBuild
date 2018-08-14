@@ -99,7 +99,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.deleteComments = exports.deleteComment = exports.updateComment = exports.createComment = exports.RECEIVE_COMMENT_ERRORS = exports.REMOVE_COMMENTS = exports.REMOVE_COMMENT = exports.FETCH_COMMENT = undefined;
+exports.deleteComments = exports.deleteComment = exports.updateComment = exports.createComment = exports.RECEIVE_COMMENT_ERRORS = exports.REMOVE_COMMENTS = exports.REMOVE_COMMENT = exports.CREATE_COMMENT = exports.FETCH_COMMENT = undefined;
 
 var _comment_util = __webpack_require__(/*! ./../util/comment_util */ "./frontend/util/comment_util.js");
 
@@ -108,17 +108,19 @@ var Comment_Util = _interopRequireWildcard(_comment_util);
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var FETCH_COMMENT = exports.FETCH_COMMENT = 'FETCH_COMMENTS';
+var CREATE_COMMENT = exports.CREATE_COMMENT = 'CREATE_COMMENTS';
 var REMOVE_COMMENT = exports.REMOVE_COMMENT = 'REMOVE_COMMENT';
 var REMOVE_COMMENTS = exports.REMOVE_COMMENTS = 'REMOVE_COMMENTS';
 var RECEIVE_COMMENT_ERRORS = exports.RECEIVE_COMMENT_ERRORS = 'RECEIVE_COMMENT_ERRORS';
 
 var createComment = exports.createComment = function createComment(comment, id) {
   return function (dispatch) {
-    return Comment_Util.createComment(comment, id).then(function (comment) {
-      return dispatch({
-        type: FETCH_COMMENT,
-        comment: comment
+    return Comment_Util.createComment(comment, id).then(function (payload) {
+      dispatch({
+        type: CREATE_COMMENT,
+        comment: payload
       });
+      return payload;
     }, function (errors) {
       return dispatch({
         type: RECEIVE_COMMENT_ERRORS,
@@ -266,7 +268,7 @@ var deleteInstructions = exports.deleteInstructions = function deleteInstruction
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.deleteProject = exports.updateProject = exports.createProject = exports.fetchProject = exports.fetchProjectsByUser = exports.fetchProjects = exports.CLEAR_ERRORS = exports.FETCH_PROJECTS_BY_USER = exports.PROJECT_NOT_FOUND_ERROR = exports.RECEIVE_PROJECT_ERRORS = exports.REMOVE_PROJECT = exports.FETCH_PROJECT = exports.FETCH_ALL_PROJECTS = undefined;
+exports.deleteProject = exports.updateProject = exports.createProject = exports.fetchProject = exports.fetchProjectsByUser = exports.fetchProjects = exports.CLEAR_ERRORS = exports.FETCH_PROJECTS_BY_USER = exports.PROJECT_NOT_FOUND_ERROR = exports.RECEIVE_PROJECT_ERRORS = exports.REMOVE_PROJECT = exports.RECIEVE_PROJECT = exports.FETCH_PROJECT = exports.FETCH_ALL_PROJECTS = undefined;
 
 var _project_api_util = __webpack_require__(/*! ./../util/project_api_util */ "./frontend/util/project_api_util.js");
 
@@ -276,6 +278,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 var FETCH_ALL_PROJECTS = exports.FETCH_ALL_PROJECTS = 'FETCH_ALL_PROJECTS';
 var FETCH_PROJECT = exports.FETCH_PROJECT = 'FETCH_PROJECT';
+var RECIEVE_PROJECT = exports.RECIEVE_PROJECT = 'RECIEVE_PROJECT';
 var REMOVE_PROJECT = exports.REMOVE_PROJECT = 'REMOVE_PROJECT';
 var RECEIVE_PROJECT_ERRORS = exports.RECEIVE_PROJECT_ERRORS = 'RECEIVE_PROJECT_ERRORS';
 var PROJECT_NOT_FOUND_ERROR = exports.PROJECT_NOT_FOUND_ERROR = 'PROJECT_NOT_FOUND_ERROR';
@@ -284,11 +287,13 @@ var CLEAR_ERRORS = exports.CLEAR_ERRORS = 'CLEAR_ERRORS';
 
 var fetchProjects = exports.fetchProjects = function fetchProjects() {
   return function (dispatch) {
-    return Projects_Util.fetchProjects().then(function (projects) {
-      return dispatch({
+    return Projects_Util.fetchProjects().then(function (payload) {
+      debugger;
+      dispatch({
         type: FETCH_ALL_PROJECTS,
-        projects: projects
+        projects: payload
       });
+      return payload;
     });
   };
 };
@@ -296,27 +301,26 @@ var fetchProjects = exports.fetchProjects = function fetchProjects() {
 var fetchProjectsByUser = exports.fetchProjectsByUser = function fetchProjectsByUser(id) {
   return function (dispatch) {
     return Projects_Util.fetchProjectsByUser(id).then(function (projects) {
-      return dispatch({
+      dispatch({
         type: FETCH_ALL_PROJECTS,
         projects: projects
       });
+      return projects;
     });
   };
 };
 
 var fetchProject = exports.fetchProject = function fetchProject(id) {
   return function (dispatch) {
-    return Projects_Util.fetchProject(id).then(function (_ref) {
-      var project = _ref.project,
-          instructions = _ref.instructions,
-          comments = _ref.comments;
-
-      return dispatch({
+    return Projects_Util.fetchProject(id).then(function (payload) {
+      debugger;
+      dispatch({
         type: FETCH_PROJECT,
-        project: project,
-        instructions: instructions,
-        comments: comments
+        project: payload.project,
+        instructions: payload.instructions,
+        comments: payload.comments
       });
+      return payload;
     }, function (errors) {
       return dispatch({
         type: PROJECT_NOT_FOUND_ERROR,
@@ -329,10 +333,11 @@ var fetchProject = exports.fetchProject = function fetchProject(id) {
 var createProject = exports.createProject = function createProject(project) {
   return function (dispatch) {
     return Projects_Util.createProject(project).then(function (project) {
-      return dispatch({
-        type: FETCH_PROJECT,
+      dispatch({
+        type: RECIEVE_PROJECT,
         project: project
       });
+      return project;
     }, function (errors) {
       return dispatch({
         type: RECEIVE_PROJECT_ERRORS,
@@ -481,6 +486,10 @@ var _UserProjectsIndexContainer = __webpack_require__(/*! ./projects/UserProject
 
 var _UserProjectsIndexContainer2 = _interopRequireDefault(_UserProjectsIndexContainer);
 
+var _WysiwygContainer = __webpack_require__(/*! ./rich_text_editor/WysiwygContainer */ "./frontend/components/rich_text_editor/WysiwygContainer.jsx");
+
+var _WysiwygContainer2 = _interopRequireDefault(_WysiwygContainer);
+
 var _main_page = __webpack_require__(/*! ./main_page/main_page */ "./frontend/components/main_page/main_page.jsx");
 
 var _main_page2 = _interopRequireDefault(_main_page);
@@ -550,6 +559,7 @@ var App = function App() {
           _react2.default.createElement(_reactRouterDom.Route, { path: '/project/:projectId', component: _ShowProjectContainer2.default }),
           _react2.default.createElement(_reactRouterDom.Route, { path: '/projects', component: _IndexProjectsContainer2.default }),
           _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/:username/:id/projects', component: _UserProjectsIndexContainer2.default }),
+          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/test', component: _WysiwygContainer2.default }),
           _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/login', component: _LoginFormContainer2.default }),
           _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/signup', component: _SignupFormContainer2.default })
         )
@@ -659,6 +669,7 @@ var Comments = function (_React$Component) {
           body: this.state.body,
           project_id: this.props.projectId,
           author_id: this.props.currentUserId } }, this.props.commentId).then(function () {
+        debugger;
         _this2.props.updatedComment(true);
       });
     }
@@ -1887,44 +1898,56 @@ var IndexProjects = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (IndexProjects.__proto__ || Object.getPrototypeOf(IndexProjects)).call(this, props));
 
     _this.state = {
-      key: Math.random(),
-      rerender: false
+      projects: _this.props.projects
     };
+    debugger;
+    if (_this.props.formType === 'User Index Projects') {
+      _this.props.fetchProjectsByUser(_this.props.displayedUser).then(function (payload) {
+        return _this.setState({
+          projects: Object.values(payload) });
+      });
+    } else {
+      _this.props.fetchProjects().then(function (payload) {
+        return _this.setState({
+          projects: Object.values(payload) });
+      });
+    }
     return _this;
   }
 
-  _createClass(IndexProjects, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      if (this.props.formType === 'User Index Projects') {
-        this.props.fetchProjectsByUser(this.props.displayedUser);
-      } else {
-        this.props.fetchProjects();
-      }
-    }
-  }, {
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      var _this2 = this;
+  // componentDidMount(){
+  //   if(this.props.formType === 'User Index Projects'){
+  //     this.props.fetchProjectsByUser(this.props.displayedUser);
+  //   }else{
+  //     this.props.fetchProjects().then((payload) => {this.setState({
+  //       projects: Object.values(payload)
+  //     });
+  //   });
+  //   }
+  // }
 
-      if (this.props.displayedUser !== nextProps.displayedUser && this.props.formType === 'User Index Projects') {
-        this.props.fetchProjectsByUser(nextProps.displayedUser).then(function () {
-          _this2.setState({ key: Math.random() });
-        });
-      }
-    }
-  }, {
+  // componentWillReceiveProps(nextProps){
+  //     debugger
+  //   if(this.props.displayedUser !== nextProps.displayedUser && this.props.formType === 'User Index Projects'){
+  //     this.props.fetchProjectsByUser(nextProps.displayedUser).then(() => {
+  //       this.setState({key: Math.random()});
+  //     });
+  //   }
+  // }
+
+  _createClass(IndexProjects, [{
     key: 'renderProjects',
     value: function renderProjects() {
-      var _this3 = this;
+      var _this2 = this;
 
       var display = [];
-      var projects = this.props.projects;
-      if (this.props.projects.length && this.props.formType === 'User Index Projects') {
-        projects = this.props.projects.filter(function (project) {
-          return project.authorUsername === _this3.props.username && project.author_id == _this3.props.displayedUser;
+      var projects = this.state.projects;
+      if (this.state.projects.length && this.props.formType === 'User Index Projects') {
+        projects = this.state.projects.filter(function (project) {
+          return project.authorUsername === _this2.props.username && project.author_id == _this2.props.displayedUser;
         });
       }
+      debugger;
       projects.map(function (project) {
         var component = _react2.default.createElement(
           _reactRouterDom.Link,
@@ -1937,13 +1960,13 @@ var IndexProjects = function (_React$Component) {
             featured: project.featured,
             viewCount: project.view_count })
         );
-        if (project.author_id == _this3.props.displayedUser && _this3.props.formType === 'User Index Projects') {
+        if (project.author_id == _this2.props.displayedUser && _this2.props.formType === 'User Index Projects') {
           display.push(component);
-        } else if (_this3.props.formType === 'Index Projects') {
+        } else if (_this2.props.formType === 'Index Projects') {
           display.push(component);
         }
       });
-      if (!display.length) {
+      if (!display.length && this.props.formType === 'User Index Projects') {
         if (this.props.currentUserPage) {
           display = _react2.default.createElement(
             'h3',
@@ -1963,7 +1986,8 @@ var IndexProjects = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      if (!this.props.projects) {
+      debugger;
+      if (!this.state.projects.length) {
         return _react2.default.createElement(
           'div',
           null,
@@ -2030,6 +2054,7 @@ var _IndexProjects2 = _interopRequireDefault(_IndexProjects);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state, ownProps) {
+  debugger;
   return {
     projects: Object.values(state.entities.projects),
     formType: 'Index Projects'
@@ -2179,7 +2204,6 @@ var ProjectForm = function (_React$Component) {
     _this.uploadResult = _this.uploadResult.bind(_this);
     _this.redirect = _this.redirect.bind(_this);
     _this.instructions = _this.instructions.bind(_this);
-    _this.extensionCheck = _this.extensionCheck.bind(_this);
     return _this;
   }
 
@@ -2194,30 +2218,11 @@ var ProjectForm = function (_React$Component) {
       this.setState({ description: e.target.value });
     }
   }, {
-    key: 'extensionCheck',
-    value: function extensionCheck(file) {
-      var fileName = file.name;
-      var extension = fileName.slice(fileName.lastIndexOf('.') + 1);
-      var validExtensions = ['jpeg', 'jpeg2000', 'tiff', 'png', 'svg'];
-      for (var i = 0; i < validExtensions.length; i++) {
-        if (extension.toLowerCase() === validExtensions[i]) {
-          return true;
-        }
-      }
-      return false;
-    }
-  }, {
     key: 'uploadFile',
     value: function uploadFile(e) {
       var _this2 = this;
 
       var file = e.currentTarget.files[0];
-      // if(!this.extensionCheck(file)){
-      //   this.setState({instructionIssues: [`That is an improper file format, please choose a different file`]});
-      //   this.instructionErrors();
-      //   return;
-      // }
-
       var fileReader = new FileReader();
       fileReader.onloadend = function () {
         _this2.setState({ pictureFile: file, pictureUrl: fileReader.result });
@@ -2285,6 +2290,7 @@ var ProjectForm = function (_React$Component) {
     value: function handleSubmit(e) {
       var _this3 = this;
 
+      debugger;
       e.preventDefault();
       var completeStatus = true;
       for (var i = 0; i < this.state.instructionBodies.length; i++) {
@@ -2307,9 +2313,10 @@ var ProjectForm = function (_React$Component) {
         }
         if (this.props.formType === 'New Project') {
           this.props.submitProject(formData, projectId).then(function (payload) {
-            var projectId = payload.project.project.id;
+            debugger;
+            var projectId = Object.keys(payload)[0];
             _this3.setState({ projectId: projectId });
-            _this3.redirect(payload.project.project.id);
+            _this3.redirect(projectId);
           });
         } else if (this.props.formType === 'Update Project') {
           this.props.submitProject(formData, projectId).then(function (payload) {
@@ -2792,6 +2799,8 @@ var _EditCommentContainer2 = _interopRequireDefault(_EditCommentContainer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -2806,7 +2815,7 @@ var ProjectShow = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (ProjectShow.__proto__ || Object.getPrototypeOf(ProjectShow)).call(this, props));
 
-    _this.state = _this.props.project;
+    _this.state;
     _this.remove = _this.remove.bind(_this);
     _this.edit = _this.edit.bind(_this);
     return _this;
@@ -2815,56 +2824,82 @@ var ProjectShow = function (_React$Component) {
   _createClass(ProjectShow, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      this.props.fetchProject(this.props.match.params.projectId);
+      var _this2 = this;
+
+      this.props.fetchProject(this.props.match.params.projectId).then(function (payload) {
+        if (!_this2.props.errors) {
+          _this2.props.clearProjectErrors;
+          _this2.props.history.push('/');
+        }
+        if (!payload.comments) {
+          payload.comments = {};
+        }
+        if (!payload.instructions) {
+          payload.instructions = {};
+        }
+        _this2.setState({
+          title: payload.project.title,
+          authorUsername: payload.project.authorUsername,
+          picture: payload.project.picture,
+          description: payload.project.description,
+          project: payload.project,
+          instructions: Object.values(payload.instructions),
+          comments: Object.values(payload.comments),
+          commentBody: ''
+        });
+      });
       window.scrollTo(0, 0);
-    }
-  }, {
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      if (!nextProps.errors) {
-        this.props.clearProjectErrors;
-        this.props.history.push('/');
-      }
-      if (this.props.match.params.projectId === nextProps.match.params.projectId) {
-        this.setState({ title: nextProps.project.title, authorUsername: nextProps.project.authorUsername });
-      }
     }
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps) {
-      if (!!prevProps.project && prevProps.project.id != this.props.match.params.projectId) {
-        this.props.fetchProject(this.props.match.params.projectId);
+      var _this3 = this;
+
+      if (!this.props.errors) {
+        this.props.clearProjectErrors;
+        this.props.history.push('/');
       }
-      if (Object.keys(this.props.project).length !== Object.keys(prevProps.project).length) {
-        this.props.fetchProject(this.props.match.params.projectId);
+      if (prevProps.match.params.projectId != this.props.match.params.projectId) {
+        this.props.fetchProject(this.props.match.params.projectId).then(function (payload) {
+          _this3.setState({
+            title: payload.project.title,
+            authorUsername: payload.project.authorUsername,
+            picture: payload.project.picture,
+            description: payload.project.description,
+            project: payload.project,
+            instructions: Object.values(payload.instructions),
+            comments: Object.values(payload.comments),
+            commentBody: ''
+          });
+        });
       }
     }
   }, {
     key: 'remove',
     value: function remove() {
-      var _this2 = this;
+      var _this4 = this;
 
       var projectId = this.props.match.params.projectId;
-      var instructions = this.props.instructions;
-      var userId = this.props.project.authorId;
+      var instructions = this.state.instructions;
+      var userId = this.state.project.authorId;
       var username = this.state.authorUsername;
-      this.props.deleteProject(this.props.project.id).then(function () {
+      this.props.deleteProject(this.state.project.id).then(function () {
         setTimeout(function () {
-          _this2.props.deleteInstruction(instructions, projectId);
+          _this4.props.deleteInstruction(instructions, projectId);
         }, 500);
-        _this2.props.history.push('/' + username + '/' + userId + '/projects');
+        _this4.props.history.push('/' + username + '/' + userId + '/projects');
       });
     }
   }, {
     key: 'edit',
     value: function edit() {
-      this.props.history.push('/project/' + this.props.project.id + '/edit');
+      this.props.history.push('/project/' + this.state.project.id + '/edit');
     }
   }, {
     key: 'displayInstructions',
     value: function displayInstructions() {
-      if (this.props.instructions) {
-        return this.props.instructions.map(function (instruction, i) {
+      if (this.state.instructions) {
+        return this.state.instructions.map(function (instruction, i) {
           if (!instruction) {
             return [];
           }
@@ -2884,9 +2919,10 @@ var ProjectShow = function (_React$Component) {
   }, {
     key: 'modifyComment',
     value: function modifyComment(commentUserId, i, id) {
-      var _this3 = this;
+      var _this5 = this;
 
       if (commentUserId === this.props.currentUserId) {
+        var that = this;
         return _react2.default.createElement(
           'div',
           { className: 'project-show-delete-position' },
@@ -2894,14 +2930,18 @@ var ProjectShow = function (_React$Component) {
             'button',
             { id: '' + i, className: 'comment-buttons', onClick: function onClick(e) {
                 var num = e.target.id;
-                _this3.setState({ edit: num, newComment: false });
+                _this5.setState({ edit: num, newComment: false });
               } },
             'Edit Comment'
           ),
           _react2.default.createElement(
             'button',
-            { className: 'comment-buttons', onClick: function onClick() {
-                _this3.props.deleteComment(id);
+            { id: '' + i, className: 'comment-buttons', onClick: function onClick(e) {
+                _this5.props.deleteComment(id).then(function (e) {
+                  that.setState({
+                    comments: that.props.comments
+                  });
+                });
               } },
             'Remove Comment'
           )
@@ -2913,12 +2953,12 @@ var ProjectShow = function (_React$Component) {
   }, {
     key: 'displayComments',
     value: function displayComments() {
-      var _this4 = this;
+      var _this6 = this;
 
       var edit = this.state.edit;
-      if (this.props.comments) {
-        return this.props.comments.map(function (comment, i) {
-          var modify = _this4.modifyComment(comment.authorId, i, comment.id);
+      if (this.state.comments) {
+        return this.state.comments.map(function (comment, i) {
+          var modify = _this6.modifyComment(comment.authorId, i, comment.id);
           if (!comment) {
             return [];
           }
@@ -2940,9 +2980,9 @@ var ProjectShow = function (_React$Component) {
               { key: comment.id },
               _react2.default.createElement(_EditCommentContainer2.default, {
                 body: comment.body,
-                projectId: _this4.props.project.id,
+                projectId: _this6.state.project.id,
                 commentId: comment.id,
-                updatedComment: _this4.updatedComment.bind(_this4)
+                updatedComment: _this6.updatedComment.bind(_this6)
               }),
               _react2.default.createElement('div', { className: 'comment-divider' })
             );
@@ -2956,7 +2996,9 @@ var ProjectShow = function (_React$Component) {
     key: 'updatedComment',
     value: function updatedComment(boolean) {
       if (boolean) {
-        this.setState({ edit: null });
+        this.setState({ edit: null,
+          comments: this.props.comments
+        });
       }
     }
   }, {
@@ -2967,7 +3009,7 @@ var ProjectShow = function (_React$Component) {
   }, {
     key: 'newComment',
     value: function newComment() {
-      var _this5 = this;
+      var _this7 = this;
 
       if (this.state.newComment) {
         var error = this.state.commentError ? _react2.default.createElement(
@@ -3001,14 +3043,14 @@ var ProjectShow = function (_React$Component) {
             _react2.default.createElement(
               'button',
               { className: 'comment-buttons', onClick: function onClick() {
-                  _this5.setState({ newComment: false, commentBody: '' });
+                  _this7.setState({ newComment: false, commentBody: '' });
                 } },
               'Cancel'
             ),
             _react2.default.createElement(
               'button',
               { className: 'comment-buttons', onClick: function onClick() {
-                  _this5.handleSubmit();
+                  _this7.handleSubmit();
                 } },
               'Submit'
             )
@@ -3021,18 +3063,25 @@ var ProjectShow = function (_React$Component) {
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
+      var _this8 = this;
+
       if (this.state.commentBody === '') {
         this.setState({ commentError: true });
         return;
       }
-      this.props.createComment({ comment: { body: this.state.commentBody, project_id: this.props.project.id, author_id: this.props.currentUserId } }, this.props.project.id).then(this.setState({ newComment: false, commentBody: '' }));
+      this.props.createComment({ comment: { body: this.state.commentBody, project_id: this.state.project.id, author_id: this.props.currentUserId } }, this.state.project.id).then(function (payload) {
+        _this8.setState({
+          newComment: false,
+          commentBody: '',
+          comments: [].concat(_toConsumableArray(_this8.state.comments), [payload]) });
+      });
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this6 = this;
+      var _this9 = this;
 
-      if (!this.props.project.authorUsername) {
+      if (!this.state) {
         return _react2.default.createElement(
           'div',
           null,
@@ -3044,24 +3093,23 @@ var ProjectShow = function (_React$Component) {
         createCommentButton = this.state.newComment ? null : _react2.default.createElement(
           'button',
           { className: 'comment-create-button', onClick: function onClick() {
-              _this6.setState({ newComment: true, edit: null });
+              _this9.setState({ newComment: true, edit: null });
             } },
           'Create A Comment'
         );
       }
-      var commentHeader = this.props.comments.length ? this.props.comments.length === 1 ? _react2.default.createElement(
+      var commentHeader = this.state.comments.length ? this.state.comments.length === 1 ? _react2.default.createElement(
         'p',
         { className: 'comments-header' },
-        this.props.comments.length,
+        this.state.comments.length,
         ' Comment'
       ) : _react2.default.createElement(
         'p',
         { className: 'comments-header' },
-        this.props.comments.length,
+        this.state.comments.length,
         ' Comments'
       ) : null;
-      // const commentTitle = this.props.comments.length ? <p className='comments-header'>{this.props.comments.length} Comments</p> : null;
-      var description = this.props.project.description;
+      var description = this.state.description;
       return _react2.default.createElement(
         'div',
         null,
@@ -3082,7 +3130,7 @@ var ProjectShow = function (_React$Component) {
               ' by',
               _react2.default.createElement(
                 _reactRouterDom.Link,
-                { className: 'clickable', to: '/' + this.state.authorUsername + '/' + this.props.project.authorId + '/projects' },
+                { className: 'clickable', to: '/' + this.state.authorUsername + '/' + this.state.project.authorId + '/projects' },
                 ' ',
                 this.state.authorUsername
               )
@@ -3091,7 +3139,7 @@ var ProjectShow = function (_React$Component) {
           _react2.default.createElement(
             'div',
             { className: 'project-show-image-placement' },
-            _react2.default.createElement('img', { className: 'project-show-image-scale', src: '' + this.props.project.picture })
+            _react2.default.createElement('img', { className: 'project-show-image-scale', src: '' + this.state.picture })
           ),
           _react2.default.createElement(
             'div',
@@ -3187,32 +3235,32 @@ var mstp = function mstp(state, ownProps) {
 
   var projectId = ownProps.match.params.projectId;
 
-  var instructionsArray = Object.values(state.entities.instructions).filter(function (instruction) {
-    return instruction.projectId === Number(projectId);
-  });
-  var sortedInstructions = instructionsArray.sort(function (x, y) {
-    return x.instructionStep - y.instructionStep;
-  });
+  // const instructionsArray = Object.values(state.entities.instructions).filter((instruction) =>{
+  //   return instruction.projectId === Number(projectId);
+  // });
+  // const sortedInstructions = instructionsArray.sort((x,y) => {
+  //   return  x.instructionStep - y.instructionStep;
+  // });
 
   var commentsArray = Object.values(state.entities.comments).filter(function (comment) {
     return comment.projectId === Number(projectId);
   });
-  var sortedComments = commentsArray.sort(function (x, y) {
-    return x.id - y.id;
-  });
+  // const sortedComments = commentsArray.sort((x,y) => {
+  //   return  x.id - y.id;
+  // });
   var userId = state.session.id;
   var project = state.entities.projects[ownProps.match.params.projectId] || {};
-  project['newComment'] = false;
-  project['commentBody'] = '';
-  project['edit'] = null;
-  project['commentError'] = null;
+  // project['newComment'] = false;
+  // project['commentBody'] = '';
+  // project['edit'] = null;
+  // project['commentError'] = null;
+  debugger;
   return {
-    project: project,
     formType: 'Show Project',
     currentUserId: userId,
     ownsProject: userId === project.authorId,
-    instructions: sortedInstructions,
-    comments: sortedComments,
+    // instructions: state.entities.instructions,
+    comments: commentsArray,
     errors: state.errors.project
   };
 };
@@ -3279,6 +3327,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var mstp = function mstp(state, ownProps) {
   var displayedUser = ownProps.match.url.split('/')[2];
   var username = ownProps.match.url.split('/')[1];
+  debugger;
   return {
     projects: Object.values(state.entities.projects),
     formType: 'User Index Projects',
@@ -3296,6 +3345,263 @@ var mdtp = function mdtp(dispatch) {
 };
 
 exports.default = (0, _reactRedux.connect)(mstp, mdtp)(_IndexProjects2.default);
+
+/***/ }),
+
+/***/ "./frontend/components/rich_text_editor/WysiwygContainer.jsx":
+/*!*******************************************************************!*\
+  !*** ./frontend/components/rich_text_editor/WysiwygContainer.jsx ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _wysiwyg = __webpack_require__(/*! ./wysiwyg */ "./frontend/components/rich_text_editor/wysiwyg.jsx");
+
+var _wysiwyg2 = _interopRequireDefault(_wysiwyg);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mstp = function mstp(state, ownProps) {
+  var html = '';
+  var information = "<p>1.	Slice the dates and take of the cores<br>2.	Press the 2 dates cut face to cut face.<br>3.	Wrap the first slice of bacon around.<br>4.	Turn around 90° and wrap the second slice around it.<br>5.	Pick one of the toothpicks horizontal through the package and the other one vertically.<br>6.	You're finished with the first dates and bacon wonder. Repeat with your other ingredients…</p>";
+  if (ownProps.body !== '' && ownProps.body !== undefined) {
+    information = ownProps.body;
+  }
+  var htmlDoc = new DOMParser().parseFromString(html, 'text/html');
+  var body = htmlDoc.querySelectorAll('body');
+  debugger;
+  body[0].innerHTML = information;
+  debugger;
+  return {
+    instructionBody: body[0].innerHTML
+  };
+};
+
+var mdtp = function mdtp(dispatch) {
+  return {};
+};
+
+exports.default = (0, _reactRedux.connect)(mstp, mdtp)(_wysiwyg2.default);
+
+/***/ }),
+
+/***/ "./frontend/components/rich_text_editor/wysiwyg.jsx":
+/*!**********************************************************!*\
+  !*** ./frontend/components/rich_text_editor/wysiwyg.jsx ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var WYSIWYG = function (_React$Component) {
+  _inherits(WYSIWYG, _React$Component);
+
+  function WYSIWYG(props) {
+    _classCallCheck(this, WYSIWYG);
+
+    var _this = _possibleConstructorReturn(this, (WYSIWYG.__proto__ || Object.getPrototypeOf(WYSIWYG)).call(this, props));
+
+    _this.ifr;
+    _this.state = {
+      instructionBody: _this.props.instructionBody
+    };
+    return _this;
+  }
+  // instructionBody: this.ifr.contentDocument.body
+
+  _createClass(WYSIWYG, [{
+    key: 'shouldComponentUpdate',
+    value: function shouldComponentUpdate() {
+      debugger;
+      return false;
+    }
+
+    // componentWillReceiveProps(nextProps) {
+    //    if (this.props !== nextProps){
+    //    // send message...
+    //    }
+    //  }
+
+
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      this.ifr = document.querySelectorAll('iframe')[0].contentDocument;
+      this.ifr.designMode = 'on';
+
+      document.getElementById('boldButton').addEventListener('click', function () {
+        _this2.ifr.execCommand('Bold', false, null);
+      }, false);
+
+      document.getElementById('italicButton').addEventListener('click', function () {
+        _this2.ifr.execCommand('italic', false, null);
+      }, false);
+
+      document.getElementById('underlineButton').addEventListener('click', function () {
+        _this2.ifr.execCommand('underline', false, null);
+      }, false);
+
+      document.getElementById('orderedListButton').addEventListener('click', function () {
+        _this2.ifr.execCommand('InsertOrderedList', false, 'newOL ' + Math.round(Math.random() * 1000));
+      }, false);
+
+      document.getElementById('unorderedListButton').addEventListener('click', function () {
+        _this2.ifr.execCommand('InsertUnorderedList', false, 'newOL ' + Math.round(Math.random() * 1000));
+      }, false);
+
+      // document.getElementById('fontColorButton').addEventListener('change',(e, ifr = this.ifr) => {
+      //   this.ifr.execCommand('ForeColor', false, e.target.value);
+      //   this.setState({instructionBody: ifr.getElementsByTagName('body')[0].innerHTML});
+      // }, false);
+      //
+      // document.getElementById('highlightButton').addEventListener('change',(e, ifr = this.ifr) => {
+      //   this.ifr.execCommand('BackColor', false, e.target.value);
+      //   this.setState({instructionBody: ifr.getElementsByTagName('body')[0].innerHTML});
+      // }, false);
+
+      if (this.state.instructionBody) {
+        this.ifr.getElementsByTagName('body')[0].innerHTML = this.state.instructionBody;
+      }
+      this.setState({ instructionBody: this.ifr.getElementsByTagName('body')[0].innerHTML });
+
+      this.ifr.getElementsByTagName('body')[0].onblur = function () {
+        debugger;
+        _this2.setState({ instructionBody: _this2.ifr.getElementsByTagName('body')[0].innerHTML });
+      };
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      var _this3 = this;
+
+      document.getElementById('boldButton').removeEventListener('click', function () {
+        _this3.ifr.execCommand('Bold', false, null);
+      }, false);
+
+      document.getElementById('italicButton').removeEventListener('click', function () {
+        _this3.ifr.execCommand('italic', false, null);
+      }, false);
+
+      document.getElementById('underlineButton').removeEventListener('click', function () {
+        _this3.ifr.execCommand('underline', false, null);
+      }, false);
+
+      document.getElementById('orderedListButton').removeEventListener('click', function () {
+        _this3.ifr.execCommand('InsertOrderedList', false, 'newOL ' + Math.round(Math.random() * 1000));
+      }, false);
+
+      document.getElementById('unorderedListButton').removeEventListener('click', function () {
+        _this3.ifr.execCommand('InsertUnorderedList', false, 'newOL ' + Math.round(Math.random() * 1000));
+      }, false);
+
+      // document.getElementById('fontColorButton').removeEventListener('change',(e, ifr = this.ifr) => {
+      //   this.ifr.execCommand('ForeColor', false, e.target.value);
+      //   this.setState({instructionBody: ifr.getElementsByTagName('body')[0].innerHTML});
+      // }, false);
+      //
+      // document.getElementById('highlightButton').removeEventListener('change',(e, ifr = this.ifr) => {
+      //   this.ifr.execCommand('BackColor', false, e.target.value);
+      //   this.setState({instructionBody: ifr.getElementsByTagName('body')[0].innerHTML});
+      // }, false);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this4 = this;
+
+      debugger;
+      return _react2.default.createElement(
+        'div',
+        { id: 'textEditor' },
+        _react2.default.createElement(
+          'div',
+          { id: 'theRibbon' },
+          _react2.default.createElement(
+            'button',
+            { id: 'boldButton', title: 'bold' },
+            _react2.default.createElement(
+              'b',
+              null,
+              'B'
+            )
+          ),
+          _react2.default.createElement(
+            'button',
+            { id: 'italicButton', title: 'italic' },
+            _react2.default.createElement(
+              'em',
+              null,
+              'I'
+            )
+          ),
+          _react2.default.createElement(
+            'button',
+            { id: 'underlineButton', title: 'underline' },
+            _react2.default.createElement(
+              'u',
+              null,
+              'U'
+            )
+          ),
+          _react2.default.createElement(
+            'button',
+            { id: 'orderedListButton', title: 'Numbered list' },
+            '(i)'
+          ),
+          _react2.default.createElement(
+            'button',
+            { id: 'unorderedListButton', title: 'Bulleted list' },
+            '\u2022'
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { id: 'richTextArea' },
+          _react2.default.createElement('iframe', { id: 'theWYSIWYG', name: 'theWYSIWYG', frameBorder: '0', ref: function ref(f) {
+              return _this4.ifr = f;
+            } })
+        )
+      );
+    }
+  }]);
+
+  return WYSIWYG;
+}(_react2.default.Component);
+
+exports.default = WYSIWYG;
 
 /***/ }),
 
@@ -4008,6 +4314,7 @@ var commentReducer = function commentReducer() {
     case Projects_Actions.FETCH_PROJECT:
       newState = (0, _merge3.default)({}, state, action.comments);
       return newState;
+    case Comment_Actions.CREATE_COMMENT:
     case Comment_Actions.FETCH_COMMENT:
       newState = (0, _merge3.default)({}, state, _defineProperty({}, action.comment.id, action.comment));
       return newState;
@@ -4317,13 +4624,15 @@ var projectReducer = function projectReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments[1];
 
+  debugger;
   var newState = void 0;
   var oldState = Object.freeze(state);
   switch (action.type) {
     case Projects_Actions.FETCH_ALL_PROJECTS:
       return (0, _merge3.default)({}, state, action.projects);
     case Projects_Actions.FETCH_PROJECT:
-      newState = (0, _merge3.default)({}, _defineProperty({}, action.project.id, action.project));
+    case Projects_Actions.RECIEVE_PROJECT:
+      newState = (0, _merge3.default)({}, state, _defineProperty({}, action.project.id, action.project));
       return newState;
     case Projects_Actions.REMOVE_PROJECT:
       newState = (0, _merge3.default)({}, state);

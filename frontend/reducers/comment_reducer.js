@@ -12,6 +12,7 @@ const commentReducer = (state = {}, action) => {
     case Projects_Actions.FETCH_PROJECT:
       newState = merge({}, state, action.comments);
       return newState;
+    case Comment_Actions.CREATE_COMMENT:
     case Comment_Actions.FETCH_COMMENT:
       newState = merge({}, state, {[action.comment.id]: action.comment});
       return newState;

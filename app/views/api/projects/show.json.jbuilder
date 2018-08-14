@@ -11,7 +11,7 @@ json.project do
 end
 
 json.instructions do
-  @project.instructions.each do |instruction|
+  @project.instructions.order('instructions.instruction_step ASC').each do |instruction|
     json.set! instruction.id do
       json.id instruction.id
       json.projectId instruction.project_id
@@ -25,14 +25,18 @@ json.instructions do
   end
 end
 
-json.comments do
-  @project.comments.each do |comment|
-    json.set! comment.id do
-      json.id comment.id
-      json.projectId comment.project_id
-      json.authorId comment.author_id
-      json.body comment.body
-      json.username comment.user.username
+if !@project.comments
+  json.comment = {}
+else
+  json.comments do
+    @project.comments.order('comments.id ASC').each do |comment|
+      json.set! comment.id do
+        json.id comment.id
+        json.projectId comment.project_id
+        json.authorId comment.author_id
+        json.body comment.body
+        json.username comment.user.username
+      end
     end
   end
 end

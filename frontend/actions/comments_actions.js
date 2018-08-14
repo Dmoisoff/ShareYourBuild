@@ -1,6 +1,7 @@
 import * as Comment_Util from './../util/comment_util';
 
 export const FETCH_COMMENT = 'FETCH_COMMENTS';
+export const CREATE_COMMENT = 'CREATE_COMMENTS';
 export const REMOVE_COMMENT = 'REMOVE_COMMENT';
 export const REMOVE_COMMENTS = 'REMOVE_COMMENTS';
 export const RECEIVE_COMMENT_ERRORS = 'RECEIVE_COMMENT_ERRORS';
@@ -8,11 +9,12 @@ export const RECEIVE_COMMENT_ERRORS = 'RECEIVE_COMMENT_ERRORS';
 
 export const createComment = (comment,id) => {
   return dispatch => {
-    return Comment_Util.createComment(comment,id).then((comment) =>{
-      return dispatch({
-        type: FETCH_COMMENT,
-        comment: comment
+    return Comment_Util.createComment(comment,id).then((payload) =>{
+      dispatch({
+        type: CREATE_COMMENT,
+        comment: payload
       });
+      return payload;
     }, (errors) => {
       return dispatch({
         type: RECEIVE_COMMENT_ERRORS,

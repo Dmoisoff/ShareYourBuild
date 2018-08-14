@@ -10,6 +10,7 @@ import ShowProjectContainer from './projects/ShowProjectContainer';
 import IndexProjectsContainer from './projects/IndexProjectsContainer';
 import NewInstructionContainer from './instruction/NewInstructionContainer';
 import UserProjectsIndexContainer from './projects/UserProjectsIndexContainer';
+import WysiwygContainer from './rich_text_editor/WysiwygContainer';
 import MainPage from './main_page/main_page';
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
 
@@ -43,6 +44,7 @@ const App = () => (
           <Route path="/project/:projectId" component={ShowProjectContainer} />
           <Route path="/projects" component={IndexProjectsContainer} />
           <Route exact path="/:username/:id/projects" component={UserProjectsIndexContainer} />
+          <Route exact path="/test" component={WysiwygContainer} />
           <AuthRoute exact path="/login" component={LoginFormContainer} />
           <AuthRoute exact path="/signup" component={SignupFormContainer} />
         </Switch>

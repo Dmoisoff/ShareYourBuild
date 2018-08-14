@@ -15,8 +15,7 @@ class ProjectForm extends React.Component{
     this.uploadResult = this.uploadResult.bind(this);
     this.redirect = this.redirect.bind(this);
     this.instructions = this.instructions.bind(this);
-    this.extensionCheck = this.extensionCheck.bind(this);
-  }
+    }
 
   updateTitle(e){
     this.setState({title: e.target.value});
@@ -26,27 +25,9 @@ class ProjectForm extends React.Component{
     this.setState({description: e.target.value});
   }
 
-  extensionCheck(file){
-    const fileName = file.name;
-    const extension = fileName.slice((fileName.lastIndexOf('.'))+1);
-    const validExtensions = ['jpeg','jpeg2000','tiff','png','svg'];
-    for (let i = 0; i < validExtensions.length; i++) {
-      if(extension.toLowerCase() === validExtensions[i]){
-        return true;
-      }
-    }
-    return false;
-  }
-
 
   uploadFile(e){
     const file = e.currentTarget.files[0];
-    // if(!this.extensionCheck(file)){
-    //   this.setState({instructionIssues: [`That is an improper file format, please choose a different file`]});
-    //   this.instructionErrors();
-    //   return;
-    // }
-
     const fileReader = new FileReader();
     fileReader.onloadend = () => {
       this.setState({pictureFile: file, pictureUrl: fileReader.result });
@@ -110,6 +91,7 @@ class ProjectForm extends React.Component{
   }
 
   handleSubmit(e){
+    debugger
     e.preventDefault();
     let completeStatus = true;
     for (let i = 0; i < this.state.instructionBodies.length; i++) {
@@ -132,9 +114,10 @@ class ProjectForm extends React.Component{
       }
       if(this.props.formType === 'New Project'){
         this.props.submitProject(formData, projectId).then((payload) => {
-          const projectId = payload.project.project.id;
+          debugger
+          const projectId = Object.keys(payload)[0];
           this.setState({projectId: projectId});
-          this.redirect(payload.project.project.id);
+          this.redirect(projectId);
         });
       }else if (this.props.formType === 'Update Project') {
         this.props.submitProject(formData, projectId).then((payload) => {

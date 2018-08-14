@@ -2,6 +2,7 @@ import * as Projects_Util from './../util/project_api_util';
 
 export const FETCH_ALL_PROJECTS = 'FETCH_ALL_PROJECTS';
 export const FETCH_PROJECT = 'FETCH_PROJECT';
+export const RECIEVE_PROJECT = 'RECIEVE_PROJECT';
 export const REMOVE_PROJECT = 'REMOVE_PROJECT';
 export const RECEIVE_PROJECT_ERRORS = 'RECEIVE_PROJECT_ERRORS';
 export const PROJECT_NOT_FOUND_ERROR = 'PROJECT_NOT_FOUND_ERROR';
@@ -12,11 +13,13 @@ export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 
 export const fetchProjects = () => {
   return dispatch => {
-    return Projects_Util.fetchProjects().then((projects) =>{
-      return dispatch({
+    return Projects_Util.fetchProjects().then((payload) =>{
+      debugger
+      dispatch({
         type: FETCH_ALL_PROJECTS,
-        projects: projects
+        projects: payload
       });
+      return payload;
     });
   };
 };
@@ -24,23 +27,26 @@ export const fetchProjects = () => {
 export const fetchProjectsByUser = (id) => {
   return dispatch => {
     return Projects_Util.fetchProjectsByUser(id).then((projects) =>{
-      return dispatch({
+       dispatch({
         type: FETCH_ALL_PROJECTS,
         projects: projects
       });
+      return projects;
     });
   };
 };
 
 export const fetchProject = (id) => {
   return dispatch => {
-    return Projects_Util.fetchProject(id).then(({project, instructions, comments}) =>{
-      return dispatch({
+    return Projects_Util.fetchProject(id).then((payload) =>{
+      debugger
+      dispatch({
         type: FETCH_PROJECT,
-        project: project,
-        instructions: instructions,
-        comments: comments
+        project: payload.project,
+        instructions: payload.instructions,
+        comments: payload.comments
       });
+      return payload;
     }, (errors) => {
       return dispatch({
         type: PROJECT_NOT_FOUND_ERROR,
@@ -53,10 +59,11 @@ export const fetchProject = (id) => {
 export const createProject = (project) => {
   return dispatch => {
     return Projects_Util.createProject(project).then((project) =>{
-      return dispatch({
-        type: FETCH_PROJECT,
+       dispatch({
+        type: RECIEVE_PROJECT,
         project: project
       });
+      return project;
     }, (errors) => {
       return dispatch({
         type: RECEIVE_PROJECT_ERRORS,

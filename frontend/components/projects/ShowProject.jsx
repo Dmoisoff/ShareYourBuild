@@ -10,41 +10,64 @@ import EditCommentContainer from './../comment/EditCommentContainer';
 class ProjectShow extends React.Component {
   constructor(props){
     super(props);
-    this.state = this.props.project;
+    this.state;
     this.remove = this.remove.bind(this);
     this.edit = this.edit.bind(this);
   }
 
   componentDidMount() {
-    this.props.fetchProject(this.props.match.params.projectId);
+    this.props.fetchProject(this.props.match.params.projectId).then((payload) =>{
+      if(!this.props.errors){
+          this.props.clearProjectErrors;
+          this.props.history.push('/');
+        }
+      if(!payload.comments){
+        payload.comments = {};
+      }
+      if(!payload.instructions){
+        payload.instructions = {};
+      }
+      this.setState({
+        title: payload.project.title,
+        authorUsername: payload.project.authorUsername,
+        picture: payload.project.picture,
+        description: payload.project.description,
+        project: payload.project,
+        instructions: Object.values(payload.instructions),
+        comments: Object.values(payload.comments),
+        commentBody: ''
+      });
+    });
     window.scrollTo(0, 0);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if(!nextProps.errors){
-      this.props.clearProjectErrors;
-      this.props.history.push('/');
-    }
-    if (this.props.match.params.projectId === nextProps.match.params.projectId) {
-     this.setState({title: nextProps.project.title, authorUsername: nextProps.project.authorUsername});
-    }
-  }
 
   componentDidUpdate(prevProps){
-    if (!!prevProps.project && prevProps.project.id != this.props.match.params.projectId) {
-      this.props.fetchProject(this.props.match.params.projectId);
-    }
-    if(Object.keys(this.props.project).length !== Object.keys(prevProps.project).length){
-      this.props.fetchProject(this.props.match.params.projectId);
+    if(!this.props.errors){
+        this.props.clearProjectErrors;
+        this.props.history.push('/');
+      }
+    if (prevProps.match.params.projectId != this.props.match.params.projectId) {
+      this.props.fetchProject(this.props.match.params.projectId).then((payload) => {
+        this.setState({
+          title: payload.project.title,
+          authorUsername: payload.project.authorUsername,
+          picture: payload.project.picture,
+          description: payload.project.description,
+          project: payload.project,
+          instructions: Object.values(payload.instructions),
+          comments: Object.values(payload.comments),
+          commentBody: ''
+        });});
     }
   }
 
   remove(){
     const projectId = this.props.match.params.projectId;
-    const instructions = this.props.instructions;
-    const userId = this.props.project.authorId;
+    const instructions = this.state.instructions;
+    const userId = this.state.project.authorId;
     const username = this.state.authorUsername;
-    this.props.deleteProject(this.props.project.id).then(
+    this.props.deleteProject(this.state.project.id).then(
       () => {
         setTimeout(() => {this.props.deleteInstruction(instructions,projectId);},500);
         this.props.history.push(`/${username}/${userId}/projects`);
@@ -53,12 +76,12 @@ class ProjectShow extends React.Component {
   }
 
   edit(){
-    this.props.history.push(`/project/${this.props.project.id}/edit`);
+    this.props.history.push(`/project/${this.state.project.id}/edit`);
   }
 
   displayInstructions(){
-    if(this.props.instructions){
-      return this.props.instructions.map((instruction,i) => {
+    if(this.state.instructions){
+      return this.state.instructions.map((instruction,i) => {
       if(!instruction){
         return [];
       }
@@ -78,10 +101,18 @@ class ProjectShow extends React.Component {
 
   modifyComment(commentUserId,i, id){
     if(commentUserId === this.props.currentUserId){
+      const that = this;
       return <div className='project-show-delete-position'>
-                <button id={`${i}`} className='comment-buttons' onClick={(e) => {const num = e.target.id;
+                <button id={`${i}`} className='comment-buttons' onClick={(e) => {
+                      const num = e.target.id;
                     this.setState({edit: num, newComment: false });}}>Edit Comment</button>
-                <button className='comment-buttons' onClick={() =>{this.props.deleteComment(id);}}>Remove Comment</button>
+                  <button id={`${i}`} className='comment-buttons' onClick={(e) =>{
+                      this.props.deleteComment(id).then((e) => {
+                      that.setState({
+                    comments: that.props.comments
+                  });
+                });
+              }}>Remove Comment</button>
               </div>;
     }else{
       return null;
@@ -91,8 +122,8 @@ class ProjectShow extends React.Component {
 
   displayComments(){
     const edit = this.state.edit;
-    if(this.props.comments){
-      return this.props.comments.map((comment,i) => {
+    if(this.state.comments){
+      return this.state.comments.map((comment,i) => {
         const modify = this.modifyComment(comment.authorId, i, comment.id);
       if(!comment){
         return [];
@@ -111,7 +142,7 @@ class ProjectShow extends React.Component {
         return <div key={comment.id}>
                 <EditCommentContainer
                   body={comment.body}
-                  projectId={this.props.project.id}
+                  projectId={this.state.project.id}
                   commentId={comment.id}
                   updatedComment={this.updatedComment.bind(this)}
                   />
@@ -126,7 +157,9 @@ class ProjectShow extends React.Component {
 
   updatedComment(boolean){
     if(boolean){
-      this.setState({edit:null});
+      this.setState({edit:null,
+      comments: this.props.comments
+      });
     }
   }
 
@@ -165,31 +198,35 @@ class ProjectShow extends React.Component {
       this.setState({commentError: true});
       return;
     }
-    this.props.createComment({comment: {body: this.state.commentBody, project_id: this.props.project.id, author_id: this.props.currentUserId}}, this.props.project.id).then(this.setState({newComment: false, commentBody: ''}));
+    this.props.createComment({comment: {body: this.state.commentBody, project_id: this.state.project.id, author_id: this.props.currentUserId}}, this.state.project.id).then((payload) => {
+      this.setState({
+        newComment: false,
+        commentBody: '',
+        comments: [...this.state.comments,payload]});
+    });
   }
 
   render() {
-    if (!this.props.project.authorUsername) {
+    if (!this.state) {
       return <div>Loading...</div>;
     }
     let createCommentButton;
     if(this.props.currentUserId){
       createCommentButton = this.state.newComment ? null : <button className='comment-create-button' onClick={() =>{this.setState({newComment: true, edit: null});}}>Create A Comment</button>;
     }
-    const commentHeader = this.props.comments.length ? this.props.comments.length === 1 ? <p className='comments-header'>{this.props.comments.length} Comment</p>: <p className='comments-header'>{this.props.comments.length} Comments</p> : null;
-    // const commentTitle = this.props.comments.length ? <p className='comments-header'>{this.props.comments.length} Comments</p> : null;
-    const description = this.props.project.description;
+    const commentHeader = this.state.comments.length ? this.state.comments.length === 1 ? <p className='comments-header'>{this.state.comments.length} Comment</p>: <p className='comments-header'>{this.state.comments.length} Comments</p> : null;
+    const description = this.state.description;
     return (
       <div>
         <div>
           <div className="project-header">
             <p className="project-title" >{this.state.title}</p>
             <p className="project-by"> by
-              <Link className='clickable' to={`/${this.state.authorUsername}/${this.props.project.authorId}/projects`}> {this.state.authorUsername}</Link>
+              <Link className='clickable' to={`/${this.state.authorUsername}/${this.state.project.authorId}/projects`}> {this.state.authorUsername}</Link>
             </p>
           </div>
           <div className="project-show-image-placement">
-            <img className="project-show-image-scale" src={`${this.props.project.picture}`} />
+            <img className="project-show-image-scale" src={`${this.state.picture}`} />
           </div>
           <div>
             <p className='project-font-format' dangerouslySetInnerHTML={{ __html: description }}></p>
