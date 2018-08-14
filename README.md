@@ -1,6 +1,6 @@
-Welcome to the ShareYourBuild wiki!
+Welcome to the ShareYourBuild README!
 
-Share Your Build is a site for DIY enthusiasts to post their creations to share with the web. Users can create projects with detailed instructions with a picture or a video. Visitors can search Share Your Build for projects, favorite any builds you like, and leave comments.
+A single page web application built with React and Ruby on Rails. Where DIY enthusiasts share their ideas.
 
 **Features**
 * Authentication
@@ -9,6 +9,7 @@ Share Your Build is a site for DIY enthusiasts to post their creations to share 
 * Created a robust project form that allows users to create and update projects.
   * The form uses a system that allows parent component and multiple child components to share information between them.
   * Using the information sharing I was able to create a system of frontend validations to make sure the form is filled out properly.
+  * Users can upload pictures to their projects to help detail their steps.
 * Users can leave comments on builds that they enjoy.
 
 **Tools used for Share Your Build** (Languages, Frameworks, Libraries, Etc.)
@@ -25,7 +26,7 @@ Share Your Build is a site for DIY enthusiasts to post their creations to share 
 
 
 **Future Features**
-* Add a Rich Text Area for formating instructions
+* Add a Rich Text Area for formatting instructions
 * Enable a search feature for keywords or users
 
 
