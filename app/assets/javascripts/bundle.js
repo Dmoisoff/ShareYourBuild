@@ -1279,6 +1279,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 
+var _WysiwygContainer = __webpack_require__(/*! ./../rich_text_editor/WysiwygContainer */ "./frontend/components/rich_text_editor/WysiwygContainer.jsx");
+
+var _WysiwygContainer2 = _interopRequireDefault(_WysiwygContainer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1308,13 +1312,15 @@ var Instructions = function (_React$Component) {
     }
   }, {
     key: 'updateDescription',
-    value: function updateDescription(e) {
-      if (e.target.value === '') {
+    value: function updateDescription(input) {
+      debugger;
+      if (input === '') {
+        debugger;
         this.props.instructionBodiesState(false, this.state.step);
       } else {
         this.props.instructionBodiesState(true, this.state.step);
       }
-      this.setState({ body: e.target.value });
+      this.setState({ body: input });
     }
   }, {
     key: 'componentDidUpdate',
@@ -1324,6 +1330,7 @@ var Instructions = function (_React$Component) {
           this.handleSubmit();
         }
       } else if (this.props.projectId !== prevProps.projectId) {
+        debugger;
         this.handleSubmit();
       }
     }
@@ -1335,28 +1342,11 @@ var Instructions = function (_React$Component) {
       }
     }
   }, {
-    key: 'extensionCheck',
-    value: function extensionCheck(file) {
-      var fileName = file.name;
-      var extension = fileName.slice(fileName.lastIndexOf('.') + 1);
-      var validExtensions = ['jpeg', 'jpeg2000', 'tiff', 'png', 'svg'];
-      for (var i = 0; i < validExtensions.length; i++) {
-        if (extension.toLowerCase() === validExtensions[i]) {
-          return true;
-        }
-      }
-      return false;
-    }
-  }, {
     key: 'uploadFile',
     value: function uploadFile(e) {
       var _this2 = this;
 
       var file = e.currentTarget.files[0];
-      if (!this.extensionCheck(file)) {
-        this.props.instructionPhotoUploadCheck(false);
-        return;
-      }
       var fileReader = new FileReader();
       fileReader.onloadend = function () {
         _this2.setState({ media: file, mediaUrl: fileReader.result });
@@ -1463,7 +1453,13 @@ var Instructions = function (_React$Component) {
                 preview
               )
             ),
-            _react2.default.createElement('textarea', { id: 'textarea', onChange: this.updateDescription.bind(this), placeholder: 'Please enter a brief description of your process', className: 'project-body-text', rows: '8', cols: '80', value: '' + this.state.body }),
+            _react2.default.createElement(
+              'p',
+              null,
+              'Description'
+            ),
+            _react2.default.createElement(_WysiwygContainer2.default, { body: this.state.body,
+              step: this.state.step, updateDescription: this.updateDescription.bind(this) }),
             _react2.default.createElement(
               'div',
               null,
@@ -2314,7 +2310,7 @@ var ProjectForm = function (_React$Component) {
         if (this.props.formType === 'New Project') {
           this.props.submitProject(formData, projectId).then(function (payload) {
             debugger;
-            var projectId = Object.keys(payload)[0];
+            var projectId = payload.project.id;
             _this3.setState({ projectId: projectId });
             _this3.redirect(projectId);
           });
@@ -2397,6 +2393,7 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'instructionBodiesState',
     value: function instructionBodiesState(instructionBodyFilled, instructionStep) {
+      debugger;
       var newInstructions = {};
       newInstructions[instructionStep] = instructionBodyFilled;
       if (!this.state.instructionBodies.length) {
@@ -2678,9 +2675,10 @@ var ProjectForm = function (_React$Component) {
             value: '' + this.state.description })
         );
       }
-      // this will pass the project
+      // this will pass the project id
       var instructions = this.state.instructions;
       if (this.state.projectId && this.props.formType === 'New Project') {
+        debugger;
         instructions = instructions.map(function (instruction) {
           instruction = _react2.default.cloneElement(instruction, { projectId: _this8.state.projectId });
           return instruction;
@@ -2837,13 +2835,16 @@ var ProjectShow = function (_React$Component) {
         if (!payload.instructions) {
           payload.instructions = {};
         }
+        debugger;
         _this2.setState({
           title: payload.project.title,
           authorUsername: payload.project.authorUsername,
           picture: payload.project.picture,
           description: payload.project.description,
           project: payload.project,
-          instructions: Object.values(payload.instructions),
+          instructions: Object.values(payload.instructions).sort(function (a, b) {
+            return a.instructionStep - b.instructionStep;
+          }),
           comments: Object.values(payload.comments),
           commentBody: ''
         });
@@ -2867,7 +2868,9 @@ var ProjectShow = function (_React$Component) {
             picture: payload.project.picture,
             description: payload.project.description,
             project: payload.project,
-            instructions: Object.values(payload.instructions),
+            instructions: Object.values(payload.instructions).sort(function (a, b) {
+              return a.instructionStep - b.instructionStep;
+            }),
             comments: Object.values(payload.comments),
             commentBody: ''
           });
@@ -2899,6 +2902,8 @@ var ProjectShow = function (_React$Component) {
     key: 'displayInstructions',
     value: function displayInstructions() {
       if (this.state.instructions) {
+        // const sortedInstructions = this.state.instructions.sort((a,b) => (a.instructionStep - b.instructionStep));
+        debugger;
         return this.state.instructions.map(function (instruction, i) {
           if (!instruction) {
             return [];
@@ -3372,7 +3377,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var mstp = function mstp(state, ownProps) {
   var html = '';
-  var information = "<p>1.	Slice the dates and take of the cores<br>2.	Press the 2 dates cut face to cut face.<br>3.	Wrap the first slice of bacon around.<br>4.	Turn around 90° and wrap the second slice around it.<br>5.	Pick one of the toothpicks horizontal through the package and the other one vertically.<br>6.	You're finished with the first dates and bacon wonder. Repeat with your other ingredients…</p>";
+  var information = "";
   if (ownProps.body !== '' && ownProps.body !== undefined) {
     information = ownProps.body;
   }
@@ -3382,7 +3387,9 @@ var mstp = function mstp(state, ownProps) {
   body[0].innerHTML = information;
   debugger;
   return {
-    instructionBody: body[0].innerHTML
+    instructionBody: body[0].innerHTML,
+    updateDescription: ownProps.updateDescription,
+    step: ownProps.step
   };
 };
 
@@ -3433,6 +3440,7 @@ var WYSIWYG = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (WYSIWYG.__proto__ || Object.getPrototypeOf(WYSIWYG)).call(this, props));
 
     _this.ifr;
+    _this.refNumber = _this.props.step - 1;
     _this.state = {
       instructionBody: _this.props.instructionBody
     };
@@ -3459,26 +3467,27 @@ var WYSIWYG = function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      this.ifr = document.querySelectorAll('iframe')[0].contentDocument;
+      debugger;
+      this.ifr = document.getElementById('theWYSIWYG-' + this.refNumber).contentDocument;
       this.ifr.designMode = 'on';
 
-      document.getElementById('boldButton').addEventListener('click', function () {
+      document.getElementById('boldButton-' + this.refNumber).addEventListener('click', function () {
         _this2.ifr.execCommand('Bold', false, null);
       }, false);
 
-      document.getElementById('italicButton').addEventListener('click', function () {
+      document.getElementById('italicButton-' + this.refNumber).addEventListener('click', function () {
         _this2.ifr.execCommand('italic', false, null);
       }, false);
 
-      document.getElementById('underlineButton').addEventListener('click', function () {
+      document.getElementById('underlineButton-' + this.refNumber).addEventListener('click', function () {
         _this2.ifr.execCommand('underline', false, null);
       }, false);
 
-      document.getElementById('orderedListButton').addEventListener('click', function () {
+      document.getElementById('orderedListButton-' + this.refNumber).addEventListener('click', function () {
         _this2.ifr.execCommand('InsertOrderedList', false, 'newOL ' + Math.round(Math.random() * 1000));
       }, false);
 
-      document.getElementById('unorderedListButton').addEventListener('click', function () {
+      document.getElementById('unorderedListButton-' + this.refNumber).addEventListener('click', function () {
         _this2.ifr.execCommand('InsertUnorderedList', false, 'newOL ' + Math.round(Math.random() * 1000));
       }, false);
 
@@ -3498,8 +3507,9 @@ var WYSIWYG = function (_React$Component) {
       this.setState({ instructionBody: this.ifr.getElementsByTagName('body')[0].innerHTML });
 
       this.ifr.getElementsByTagName('body')[0].onblur = function () {
-        debugger;
-        _this2.setState({ instructionBody: _this2.ifr.getElementsByTagName('body')[0].innerHTML });
+        _this2.setState({ instructionBody: _this2.ifr.getElementsByTagName('body')[0].innerHTML }, function () {
+          return _this2.props.updateDescription(_this2.state.instructionBody);
+        });
       };
     }
   }, {
@@ -3507,35 +3517,25 @@ var WYSIWYG = function (_React$Component) {
     value: function componentWillUnmount() {
       var _this3 = this;
 
-      document.getElementById('boldButton').removeEventListener('click', function () {
+      document.getElementById('boldButton-' + this.refNumber).addEventListener('click', function () {
         _this3.ifr.execCommand('Bold', false, null);
       }, false);
 
-      document.getElementById('italicButton').removeEventListener('click', function () {
+      document.getElementById('italicButton-' + this.refNumber).addEventListener('click', function () {
         _this3.ifr.execCommand('italic', false, null);
       }, false);
 
-      document.getElementById('underlineButton').removeEventListener('click', function () {
+      document.getElementById('underlineButton-' + this.refNumber).addEventListener('click', function () {
         _this3.ifr.execCommand('underline', false, null);
       }, false);
 
-      document.getElementById('orderedListButton').removeEventListener('click', function () {
+      document.getElementById('orderedListButton-' + this.refNumber).addEventListener('click', function () {
         _this3.ifr.execCommand('InsertOrderedList', false, 'newOL ' + Math.round(Math.random() * 1000));
       }, false);
 
-      document.getElementById('unorderedListButton').removeEventListener('click', function () {
+      document.getElementById('unorderedListButton-' + this.refNumber).addEventListener('click', function () {
         _this3.ifr.execCommand('InsertUnorderedList', false, 'newOL ' + Math.round(Math.random() * 1000));
       }, false);
-
-      // document.getElementById('fontColorButton').removeEventListener('change',(e, ifr = this.ifr) => {
-      //   this.ifr.execCommand('ForeColor', false, e.target.value);
-      //   this.setState({instructionBody: ifr.getElementsByTagName('body')[0].innerHTML});
-      // }, false);
-      //
-      // document.getElementById('highlightButton').removeEventListener('change',(e, ifr = this.ifr) => {
-      //   this.ifr.execCommand('BackColor', false, e.target.value);
-      //   this.setState({instructionBody: ifr.getElementsByTagName('body')[0].innerHTML});
-      // }, false);
     }
   }, {
     key: 'render',
@@ -3551,7 +3551,7 @@ var WYSIWYG = function (_React$Component) {
           { id: 'theRibbon' },
           _react2.default.createElement(
             'button',
-            { id: 'boldButton', title: 'bold' },
+            { id: 'boldButton-' + this.refNumber, title: 'bold' },
             _react2.default.createElement(
               'b',
               null,
@@ -3560,7 +3560,7 @@ var WYSIWYG = function (_React$Component) {
           ),
           _react2.default.createElement(
             'button',
-            { id: 'italicButton', title: 'italic' },
+            { id: 'italicButton-' + this.refNumber, title: 'italic' },
             _react2.default.createElement(
               'em',
               null,
@@ -3569,7 +3569,7 @@ var WYSIWYG = function (_React$Component) {
           ),
           _react2.default.createElement(
             'button',
-            { id: 'underlineButton', title: 'underline' },
+            { id: 'underlineButton-' + this.refNumber, title: 'underline' },
             _react2.default.createElement(
               'u',
               null,
@@ -3578,19 +3578,19 @@ var WYSIWYG = function (_React$Component) {
           ),
           _react2.default.createElement(
             'button',
-            { id: 'orderedListButton', title: 'Numbered list' },
+            { id: 'orderedListButton-' + this.refNumber, title: 'Numbered list' },
             '(i)'
           ),
           _react2.default.createElement(
             'button',
-            { id: 'unorderedListButton', title: 'Bulleted list' },
+            { id: 'unorderedListButton-' + this.refNumber, title: 'Bulleted list' },
             '\u2022'
           )
         ),
         _react2.default.createElement(
           'div',
           { id: 'richTextArea' },
-          _react2.default.createElement('iframe', { id: 'theWYSIWYG', name: 'theWYSIWYG', frameBorder: '0', ref: function ref(f) {
+          _react2.default.createElement('iframe', { id: 'theWYSIWYG-' + this.refNumber, name: 'theWYSIWYG', frameBorder: '0', ref: function ref(f) {
               return _this4.ifr = f;
             } })
         )

@@ -6,6 +6,7 @@ class WYSIWYG extends React.Component{
   constructor(props){
     super(props);
     this.ifr;
+    this.refNumber = this.props.step - 1;
     this.state = {
       instructionBody: this.props.instructionBody
     };
@@ -26,26 +27,27 @@ class WYSIWYG extends React.Component{
 
 
    componentDidMount(){
-     this.ifr = document.querySelectorAll('iframe')[0].contentDocument;
+     debugger
+     this.ifr = document.getElementById(`theWYSIWYG-${this.refNumber}`).contentDocument;
      this.ifr.designMode = 'on';
 
-     document.getElementById('boldButton').addEventListener('click',() => {
+     document.getElementById(`boldButton-${this.refNumber}`).addEventListener('click',() => {
        this.ifr.execCommand('Bold', false, null);
        }, false);
 
-     document.getElementById('italicButton').addEventListener('click',() => {
+     document.getElementById(`italicButton-${this.refNumber}`).addEventListener('click',() => {
        this.ifr.execCommand('italic', false, null);
        }, false);
 
-     document.getElementById('underlineButton').addEventListener('click',() => {
+     document.getElementById(`underlineButton-${this.refNumber}`).addEventListener('click',() => {
        this.ifr.execCommand('underline', false, null);
        }, false);
 
-     document.getElementById('orderedListButton').addEventListener('click',() => {
+     document.getElementById(`orderedListButton-${this.refNumber}`).addEventListener('click',() => {
        this.ifr.execCommand('InsertOrderedList', false, 'newOL ' + Math.round(Math.random() * 1000));
      }, false);
 
-     document.getElementById('unorderedListButton').addEventListener('click',() => {
+     document.getElementById(`unorderedListButton-${this.refNumber}`).addEventListener('click',() => {
        this.ifr.execCommand('InsertUnorderedList', false, 'newOL ' + Math.round(Math.random() * 1000));
      }, false);
 
@@ -65,43 +67,33 @@ class WYSIWYG extends React.Component{
      this.setState({instructionBody: this.ifr.getElementsByTagName('body')[0].innerHTML});
 
      this.ifr.getElementsByTagName('body')[0].onblur = () => {
-       debugger
-       this.setState({instructionBody: this.ifr.getElementsByTagName('body')[0].innerHTML});
+       this.setState({instructionBody: this.ifr.getElementsByTagName('body')[0].innerHTML}, () => (
+         this.props.updateDescription(this.state.instructionBody))
+       );
      };
   }
 
 
    componentWillUnmount() {
-     document.getElementById('boldButton').removeEventListener('click',() => {
+     document.getElementById(`boldButton-${this.refNumber}`).addEventListener('click',() => {
        this.ifr.execCommand('Bold', false, null);
        }, false);
 
-     document.getElementById('italicButton').removeEventListener('click',() => {
+     document.getElementById(`italicButton-${this.refNumber}`).addEventListener('click',() => {
        this.ifr.execCommand('italic', false, null);
        }, false);
 
-     document.getElementById('underlineButton').removeEventListener('click',() => {
+     document.getElementById(`underlineButton-${this.refNumber}`).addEventListener('click',() => {
        this.ifr.execCommand('underline', false, null);
        }, false);
 
-     document.getElementById('orderedListButton').removeEventListener('click',() => {
+     document.getElementById(`orderedListButton-${this.refNumber}`).addEventListener('click',() => {
        this.ifr.execCommand('InsertOrderedList', false, 'newOL ' + Math.round(Math.random() * 1000));
      }, false);
 
-     document.getElementById('unorderedListButton').removeEventListener('click',() => {
+     document.getElementById(`unorderedListButton-${this.refNumber}`).addEventListener('click',() => {
        this.ifr.execCommand('InsertUnorderedList', false, 'newOL ' + Math.round(Math.random() * 1000));
      }, false);
-
-     // document.getElementById('fontColorButton').removeEventListener('change',(e, ifr = this.ifr) => {
-     //   this.ifr.execCommand('ForeColor', false, e.target.value);
-     //   this.setState({instructionBody: ifr.getElementsByTagName('body')[0].innerHTML});
-     // }, false);
-     //
-     // document.getElementById('highlightButton').removeEventListener('change',(e, ifr = this.ifr) => {
-     //   this.ifr.execCommand('BackColor', false, e.target.value);
-     //   this.setState({instructionBody: ifr.getElementsByTagName('body')[0].innerHTML});
-     // }, false);
-
    }
 
 
@@ -110,14 +102,14 @@ class WYSIWYG extends React.Component{
     return (
       <div id='textEditor'>
         <div id='theRibbon'>
-          <button id='boldButton' title='bold'><b>B</b></button>
-          <button id='italicButton' title='italic'><em>I</em></button>
-          <button id='underlineButton' title='underline'><u>U</u></button>
-          <button id='orderedListButton' title='Numbered list'>(i)</button>
-          <button id='unorderedListButton' title='Bulleted list'>&bull;</button>
+          <button id={`boldButton-${this.refNumber}`} title='bold'><b>B</b></button>
+          <button id={`italicButton-${this.refNumber}`} title='italic'><em>I</em></button>
+          <button id={`underlineButton-${this.refNumber}`} title='underline'><u>U</u></button>
+          <button id={`orderedListButton-${this.refNumber}`} title='Numbered list'>(i)</button>
+          <button id={`unorderedListButton-${this.refNumber}`} title='Bulleted list'>&bull;</button>
         </div>
         <div id='richTextArea'>
-          <iframe id='theWYSIWYG' name='theWYSIWYG' frameBorder='0' ref={(f) => this.ifr = f}></iframe>
+          <iframe id={`theWYSIWYG-${this.refNumber}`} name='theWYSIWYG' frameBorder='0' ref={(f) => this.ifr = f}></iframe>
         </div>
       </div>
     );

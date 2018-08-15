@@ -27,13 +27,14 @@ class ProjectShow extends React.Component {
       if(!payload.instructions){
         payload.instructions = {};
       }
+      debugger
       this.setState({
         title: payload.project.title,
         authorUsername: payload.project.authorUsername,
         picture: payload.project.picture,
         description: payload.project.description,
         project: payload.project,
-        instructions: Object.values(payload.instructions),
+        instructions: Object.values(payload.instructions).sort((a,b) => (a.instructionStep - b.instructionStep)),
         comments: Object.values(payload.comments),
         commentBody: ''
       });
@@ -55,7 +56,7 @@ class ProjectShow extends React.Component {
           picture: payload.project.picture,
           description: payload.project.description,
           project: payload.project,
-          instructions: Object.values(payload.instructions),
+          instructions: Object.values(payload.instructions).sort((a,b) => (a.instructionStep - b.instructionStep)),
           comments: Object.values(payload.comments),
           commentBody: ''
         });});
@@ -81,6 +82,8 @@ class ProjectShow extends React.Component {
 
   displayInstructions(){
     if(this.state.instructions){
+      // const sortedInstructions = this.state.instructions.sort((a,b) => (a.instructionStep - b.instructionStep));
+      debugger
       return this.state.instructions.map((instruction,i) => {
       if(!instruction){
         return [];

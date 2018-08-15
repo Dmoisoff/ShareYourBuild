@@ -115,7 +115,7 @@ class ProjectForm extends React.Component{
       if(this.props.formType === 'New Project'){
         this.props.submitProject(formData, projectId).then((payload) => {
           debugger
-          const projectId = Object.keys(payload)[0];
+          const projectId = payload.project.id;
           this.setState({projectId: projectId});
           this.redirect(projectId);
         });
@@ -175,6 +175,7 @@ class ProjectForm extends React.Component{
   }
 
   instructionBodiesState(instructionBodyFilled,instructionStep){
+    debugger
     let newInstructions = {};
     newInstructions[instructionStep] = instructionBodyFilled;
     if (!this.state.instructionBodies.length) {
@@ -384,9 +385,10 @@ class ProjectForm extends React.Component{
 
                </div>;
      }
-     // this will pass the project
+     // this will pass the project id
     let instructions = this.state.instructions;
       if (this.state.projectId && this.props.formType === 'New Project') {
+        debugger
         instructions = instructions.map((instruction) => {
           instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
           return instruction;

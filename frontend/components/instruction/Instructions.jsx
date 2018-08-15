@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-
+import WysiwygContainer from './../rich_text_editor/WysiwygContainer';
 
 
 class Instructions extends React.Component{
@@ -15,13 +15,15 @@ class Instructions extends React.Component{
     this.setState({title: e.target.value});
   }
 
-  updateDescription(e){
-    if (e.target.value === '') {
+  updateDescription(input){
+    debugger
+    if (input === '') {
+      debugger
       this.props.instructionBodiesState(false,this.state.step);
     }else{
       this.props.instructionBodiesState(true,this.state.step);
     }
-    this.setState({body: e.target.value});
+    this.setState({body: input});
   }
 
   componentDidUpdate(prevProps){
@@ -30,6 +32,7 @@ class Instructions extends React.Component{
         this.handleSubmit();
       }
     }else if(this.props.projectId !== prevProps.projectId){
+      debugger
      this.handleSubmit();
     }
   }
@@ -40,24 +43,9 @@ class Instructions extends React.Component{
     }
   }
 
-  extensionCheck(file){
-    const fileName = file.name;
-    const extension = fileName.slice((fileName.lastIndexOf('.'))+1);
-    const validExtensions = ['jpeg','jpeg2000','tiff','png','svg'];
-    for (let i = 0; i < validExtensions.length; i++) {
-      if(extension.toLowerCase() === validExtensions[i]){
-        return true;
-      }
-    }
-    return false;
-  }
 
   uploadFile(e){
     const file = e.currentTarget.files[0];
-    if(!this.extensionCheck(file)){
-      this.props.instructionPhotoUploadCheck(false);
-      return;
-    }
     const fileReader = new FileReader();
     fileReader.onloadend = () => {
       this.setState({media: file, mediaUrl: fileReader.result });
@@ -123,7 +111,9 @@ class Instructions extends React.Component{
                   {preview}
                 </div>
               </div>
-              <textarea id='textarea' onChange={this.updateDescription.bind(this)} placeholder='Please enter a brief description of your process' className='project-body-text' rows="8" cols="80" value={`${this.state.body}`}></textarea>
+              <p>Description</p>
+              <WysiwygContainer body={this.state.body}
+                step={this.state.step}  updateDescription={this.updateDescription.bind(this)} />
               <div>
                 <button form='submit-project'
                   onClick={() => this.props.removeInstruction(this.state.step)}

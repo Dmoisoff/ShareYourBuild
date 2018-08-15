@@ -25,6 +25,8 @@ json.instructions do
   end
 end
 
+# instructions.sort! {|x,y| x.instructionStep <=> y.instructionStep }
+
 if !@project.comments
   json.comment = {}
 else
