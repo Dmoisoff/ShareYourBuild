@@ -58,12 +58,12 @@ export const fetchProject = (id) => {
 
 export const createProject = (project) => {
   return dispatch => {
-    return Projects_Util.createProject(project).then((project) =>{
+    return Projects_Util.createProject(project).then((payload) =>{
        dispatch({
         type: RECIEVE_PROJECT,
-        project: project
+        project: payload.project
       });
-      return project;
+      return payload;
     }, (errors) => {
       return dispatch({
         type: RECEIVE_PROJECT_ERRORS,
@@ -75,11 +75,13 @@ export const createProject = (project) => {
 
 export const updateProject = (project, id) => {
   return dispatch => {
-    return Projects_Util.updateProject(project, id).then((project) =>{
-      return dispatch({
+    return Projects_Util.updateProject(project, id).then((payload) =>{
+      debugger
+      dispatch({
         type: FETCH_PROJECT,
-        project: project
+        project: payload.project
       });
+      return payload;
     }, (errors) => {
       return dispatch({
         type: RECEIVE_PROJECT_ERRORS,

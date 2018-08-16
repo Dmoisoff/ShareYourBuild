@@ -38,6 +38,7 @@ class ProjectForm extends React.Component{
   }
 
   removeInstruction(instructionStep){
+    debugger
     const instructions = this.state.instructions;
     const removedInstruction = instructions[instructionStep-1].props.id;
     const newOrderInstructions = instructions.slice(0, instructionStep-1).concat(instructions.slice(instructionStep));
@@ -70,7 +71,7 @@ class ProjectForm extends React.Component{
           }
         }),
         instructionBodies: reorderedNewInstructionBodyStatus,
-        removedInstructions: [...this.state.removedInstructions,removedInstruction],
+        // removedInstructions: [...this.state.removedInstructions,removedInstruction],
         instructions: modifiedStepNumberInstructions,
         stepNum: (this.state.stepNum-1)
       });
@@ -127,7 +128,7 @@ class ProjectForm extends React.Component{
         that.props.submitProject(formData, projectId).then((payload) => {
           debugger
           let newInstructions = [];
-          let updatedInstructions;
+          let updatedInstructions = [];
           if(that.state.newlyAddedSteps.length !== 0){
             debugger
             newInstructions = that.state.instructions.slice(-(that.state.newlyAddedSteps.length));
@@ -137,7 +138,8 @@ class ProjectForm extends React.Component{
             updatedInstructions = that.state.instructions;
           }
           if(that.state.removedInstructions.length){
-            that.props.deleteInstruction(that.state.removedInstructions.toString(), projectId).then(() =>{
+            debugger
+            that.props.deleteInstruction(that.state.removedInstructions.toString()).then(() =>{
               newInstructions = newInstructions.map((instruction) => {
                 instruction = React.cloneElement(instruction, {projectId: that.state.projectId});
                 return instruction;
@@ -151,7 +153,7 @@ class ProjectForm extends React.Component{
               });
               updatedInstructions = updatedInstructions.concat(newInstructions);
               that.setState({instructions: updatedInstructions});
-              that.redirect(payload.project.project.id);
+              that.redirect(payload.project.id);
             });
           }else{
             newInstructions = newInstructions.map((instruction) => {
@@ -165,7 +167,7 @@ class ProjectForm extends React.Component{
             });
             updatedInstructions = updatedInstructions.concat(newInstructions);
             debugger
-            that.setState({instructions: updatedInstructions, projectId: projectId}, () => {that.redirect(payload.project.project.id);
+            that.setState({instructions: updatedInstructions, projectId: projectId}, () => {that.redirect(payload.project.id);
             });
           }
         });

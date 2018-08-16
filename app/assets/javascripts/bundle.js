@@ -332,12 +332,12 @@ var fetchProject = exports.fetchProject = function fetchProject(id) {
 
 var createProject = exports.createProject = function createProject(project) {
   return function (dispatch) {
-    return Projects_Util.createProject(project).then(function (project) {
+    return Projects_Util.createProject(project).then(function (payload) {
       dispatch({
         type: RECIEVE_PROJECT,
-        project: project
+        project: payload.project
       });
-      return project;
+      return payload;
     }, function (errors) {
       return dispatch({
         type: RECEIVE_PROJECT_ERRORS,
@@ -349,11 +349,13 @@ var createProject = exports.createProject = function createProject(project) {
 
 var updateProject = exports.updateProject = function updateProject(project, id) {
   return function (dispatch) {
-    return Projects_Util.updateProject(project, id).then(function (project) {
-      return dispatch({
+    return Projects_Util.updateProject(project, id).then(function (payload) {
+      debugger;
+      dispatch({
         type: FETCH_PROJECT,
-        project: project
+        project: payload.project
       });
+      return payload;
     }, function (errors) {
       return dispatch({
         type: RECEIVE_PROJECT_ERRORS,
@@ -2234,6 +2236,7 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'removeInstruction',
     value: function removeInstruction(instructionStep) {
+      debugger;
       var instructions = this.state.instructions;
       var removedInstruction = instructions[instructionStep - 1].props.id;
       var newOrderInstructions = instructions.slice(0, instructionStep - 1).concat(instructions.slice(instructionStep));
@@ -2266,7 +2269,7 @@ var ProjectForm = function (_React$Component) {
             }
           }),
           instructionBodies: reorderedNewInstructionBodyStatus,
-          removedInstructions: [].concat(_toConsumableArray(this.state.removedInstructions), [removedInstruction]),
+          // removedInstructions: [...this.state.removedInstructions,removedInstruction],
           instructions: modifiedStepNumberInstructions,
           stepNum: this.state.stepNum - 1
         });
@@ -2326,7 +2329,7 @@ var ProjectForm = function (_React$Component) {
           that.props.submitProject(formData, projectId).then(function (payload) {
             debugger;
             var newInstructions = [];
-            var updatedInstructions = void 0;
+            var updatedInstructions = [];
             if (that.state.newlyAddedSteps.length !== 0) {
               debugger;
               newInstructions = that.state.instructions.slice(-that.state.newlyAddedSteps.length);
@@ -2336,7 +2339,8 @@ var ProjectForm = function (_React$Component) {
               updatedInstructions = that.state.instructions;
             }
             if (that.state.removedInstructions.length) {
-              that.props.deleteInstruction(that.state.removedInstructions.toString(), projectId).then(function () {
+              debugger;
+              that.props.deleteInstruction(that.state.removedInstructions.toString()).then(function () {
                 newInstructions = newInstructions.map(function (instruction) {
                   instruction = _react2.default.cloneElement(instruction, { projectId: that.state.projectId });
                   return instruction;
@@ -2350,7 +2354,7 @@ var ProjectForm = function (_React$Component) {
                 });
                 updatedInstructions = updatedInstructions.concat(newInstructions);
                 that.setState({ instructions: updatedInstructions });
-                that.redirect(payload.project.project.id);
+                that.redirect(payload.project.id);
               });
             } else {
               newInstructions = newInstructions.map(function (instruction) {
@@ -2365,7 +2369,7 @@ var ProjectForm = function (_React$Component) {
               updatedInstructions = updatedInstructions.concat(newInstructions);
               debugger;
               that.setState({ instructions: updatedInstructions, projectId: projectId }, function () {
-                that.redirect(payload.project.project.id);
+                that.redirect(payload.project.id);
               });
             }
           });
@@ -3461,18 +3465,43 @@ var WYSIWYG = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (WYSIWYG.__proto__ || Object.getPrototypeOf(WYSIWYG)).call(this, props));
 
     _this.ifr;
-    _this.refNumber = _this.props.step - 1;
     _this.state = {
+      refNumber: _this.props.step,
       instructionBody: _this.props.instructionBody
     };
+    _this.updatelisteners = _this.updatelisteners.bind(_this);
+    _this.rerender = false;
+    _this.nextRefNum;
     return _this;
   }
 
   _createClass(WYSIWYG, [{
     key: 'shouldComponentUpdate',
-    value: function shouldComponentUpdate() {
+    value: function shouldComponentUpdate(nextProps, nextState) {
       debugger;
+      if (nextProps.step !== this.props.step) {
+        this.setState({ refNumber: nextProps.step });
+        this.nextRefNum = nextProps.step;
+        this.rerender = true;
+        return true;
+      }
+      if (this.rerender) {
+        return true;
+      }
       return false;
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps, prevState, snapshot) {
+      debugger;
+      if (this.nextRefNum === this.state.refNumber && this.rerender) {
+        debugger;
+        this.updatelisteners(this.props.step);
+        this.rerender = false;
+        this.render();
+      } else if (this.rerender) {
+        this.render();
+      }
     }
   }, {
     key: 'componentDidMount',
@@ -3480,43 +3509,10 @@ var WYSIWYG = function (_React$Component) {
       var _this2 = this;
 
       debugger;
-      this.ifr = document.getElementById('theWYSIWYG-' + this.refNumber).contentDocument;
+      this.ifr = document.getElementById('theWYSIWYG-' + this.state.refNumber).contentDocument;
       this.ifr.designMode = 'on';
 
-      document.getElementById('boldButton-' + this.refNumber).addEventListener('click', function () {
-        _this2.ifr.execCommand('Bold', false, null);
-        _this2.setState({ instructionBody: _this2.ifr.getElementsByTagName('body')[0].innerHTML }, function () {
-          return _this2.props.updateDescription(_this2.state.instructionBody);
-        });
-      }, false);
-
-      document.getElementById('italicButton-' + this.refNumber).addEventListener('click', function () {
-        _this2.ifr.execCommand('italic', false, null);
-        _this2.setState({ instructionBody: _this2.ifr.getElementsByTagName('body')[0].innerHTML }, function () {
-          return _this2.props.updateDescription(_this2.state.instructionBody);
-        });
-      }, false);
-
-      document.getElementById('underlineButton-' + this.refNumber).addEventListener('click', function () {
-        _this2.ifr.execCommand('underline', false, null);
-        _this2.setState({ instructionBody: _this2.ifr.getElementsByTagName('body')[0].innerHTML }, function () {
-          return _this2.props.updateDescription(_this2.state.instructionBody);
-        });
-      }, false);
-
-      document.getElementById('orderedListButton-' + this.refNumber).addEventListener('click', function () {
-        _this2.ifr.execCommand('InsertOrderedList', false, 'newOL ' + Math.round(Math.random() * 1000));
-        _this2.setState({ instructionBody: _this2.ifr.getElementsByTagName('body')[0].innerHTML }, function () {
-          return _this2.props.updateDescription(_this2.state.instructionBody);
-        });
-      }, false);
-
-      document.getElementById('unorderedListButton-' + this.refNumber).addEventListener('click', function () {
-        _this2.ifr.execCommand('InsertUnorderedList', false, 'newOL ' + Math.round(Math.random() * 1000));
-        _this2.setState({ instructionBody: _this2.ifr.getElementsByTagName('body')[0].innerHTML }, function () {
-          return _this2.props.updateDescription(_this2.state.instructionBody);
-        });
-      }, false);
+      this.ifr.getElementsByTagName('body')[0].id = 'theWYSIWYG';
 
       if (this.state.instructionBody) {
         this.ifr.getElementsByTagName('body')[0].innerHTML = this.state.instructionBody;
@@ -3530,29 +3526,27 @@ var WYSIWYG = function (_React$Component) {
       };
     }
   }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
+    key: 'updatelisteners',
+    value: function updatelisteners(newStep) {
       var _this3 = this;
 
-      document.getElementById('boldButton-' + this.refNumber).addEventListener('click', function () {
-        _this3.ifr.execCommand('Bold', false, null);
-      }, false);
+      debugger;
 
-      document.getElementById('italicButton-' + this.refNumber).addEventListener('click', function () {
-        _this3.ifr.execCommand('italic', false, null);
-      }, false);
+      this.ifr = document.getElementById('theWYSIWYG-' + newStep).contentDocument;
+      this.ifr.designMode = 'on';
 
-      document.getElementById('underlineButton-' + this.refNumber).addEventListener('click', function () {
-        _this3.ifr.execCommand('underline', false, null);
-      }, false);
+      this.ifr.getElementsByTagName('body')[0].id = 'theWYSIWYG';
 
-      document.getElementById('orderedListButton-' + this.refNumber).addEventListener('click', function () {
-        _this3.ifr.execCommand('InsertOrderedList', false, 'newOL ' + Math.round(Math.random() * 1000));
-      }, false);
+      if (this.state.instructionBody) {
+        this.ifr.getElementsByTagName('body')[0].innerHTML = this.state.instructionBody;
+      }
+      this.setState({ instructionBody: this.ifr.getElementsByTagName('body')[0].innerHTML });
 
-      document.getElementById('unorderedListButton-' + this.refNumber).addEventListener('click', function () {
-        _this3.ifr.execCommand('InsertUnorderedList', false, 'newOL ' + Math.round(Math.random() * 1000));
-      }, false);
+      this.ifr.getElementsByTagName('body')[0].onblur = function () {
+        _this3.setState({ instructionBody: _this3.ifr.getElementsByTagName('body')[0].innerHTML }, function () {
+          return _this3.props.updateDescription(_this3.state.instructionBody);
+        });
+      };
     }
   }, {
     key: 'render',
@@ -3568,7 +3562,12 @@ var WYSIWYG = function (_React$Component) {
           { id: 'theRibbon' },
           _react2.default.createElement(
             'button',
-            { id: 'boldButton-' + this.refNumber, title: 'bold' },
+            { id: 'boldButton-' + this.state.refNumber, onClick: function onClick() {
+                _this4.ifr.execCommand('Bold', false, null);
+                _this4.setState({ instructionBody: _this4.ifr.getElementsByTagName('body')[0].innerHTML }, function () {
+                  return _this4.props.updateDescription(_this4.state.instructionBody);
+                });
+              }, title: 'bold' },
             _react2.default.createElement(
               'b',
               null,
@@ -3577,7 +3576,12 @@ var WYSIWYG = function (_React$Component) {
           ),
           _react2.default.createElement(
             'button',
-            { id: 'italicButton-' + this.refNumber, title: 'italic' },
+            { id: 'italicButton-' + this.state.refNumber, onClick: function onClick() {
+                _this4.ifr.execCommand('italic', false, null);
+                _this4.setState({ instructionBody: _this4.ifr.getElementsByTagName('body')[0].innerHTML }, function () {
+                  return _this4.props.updateDescription(_this4.state.instructionBody);
+                });
+              }, title: 'italic' },
             _react2.default.createElement(
               'em',
               null,
@@ -3586,7 +3590,12 @@ var WYSIWYG = function (_React$Component) {
           ),
           _react2.default.createElement(
             'button',
-            { id: 'underlineButton-' + this.refNumber, title: 'underline' },
+            { id: 'underlineButton-' + this.state.refNumber, onClick: function onClick() {
+                _this4.ifr.execCommand('underline', false, null);
+                _this4.setState({ instructionBody: _this4.ifr.getElementsByTagName('body')[0].innerHTML }, function () {
+                  return _this4.props.updateDescription(_this4.state.instructionBody);
+                });
+              }, title: 'underline' },
             _react2.default.createElement(
               'u',
               null,
@@ -3595,19 +3604,29 @@ var WYSIWYG = function (_React$Component) {
           ),
           _react2.default.createElement(
             'button',
-            { id: 'orderedListButton-' + this.refNumber, title: 'Numbered list' },
+            { id: 'orderedListButton-' + this.state.refNumber, onClick: function onClick() {
+                _this4.ifr.execCommand('InsertOrderedList', false, 'newOL ' + Math.round(Math.random() * 1000));
+                _this4.setState({ instructionBody: _this4.ifr.getElementsByTagName('body')[0].innerHTML }, function () {
+                  return _this4.props.updateDescription(_this4.state.instructionBody);
+                });
+              }, title: 'Numbered list' },
             '(i)'
           ),
           _react2.default.createElement(
             'button',
-            { id: 'unorderedListButton-' + this.refNumber, title: 'Bulleted list' },
+            { id: 'unorderedListButton-' + this.state.refNumber, onClick: function onClick() {
+                _this4.ifr.execCommand('InsertUnorderedList', false, 'newOL ' + Math.round(Math.random() * 1000));
+                _this4.setState({ instructionBody: _this4.ifr.getElementsByTagName('body')[0].innerHTML }, function () {
+                  return _this4.props.updateDescription(_this4.state.instructionBody);
+                });
+              }, title: 'Bulleted list' },
             '\u2022'
           )
         ),
         _react2.default.createElement(
           'div',
           { id: 'richTextArea' },
-          _react2.default.createElement('iframe', { id: 'theWYSIWYG-' + this.refNumber, className: 'theWYSIWYG', name: 'theWYSIWYG', frameBorder: '0', ref: function ref(f) {
+          _react2.default.createElement('iframe', { id: 'theWYSIWYG-' + this.state.refNumber, className: 'theWYSIWYG', name: 'theWYSIWYG', frameBorder: '0', ref: function ref(f) {
               return _this4.ifr = f;
             } })
         )

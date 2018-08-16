@@ -59,8 +59,9 @@
   font-style: inherit;
 }
 
-.project-font-format ul{
+.project-font-format ul, {
   box-sizing: border-box;
+  display: block;
   color: rgb(85, 85, 85);
   font-family: "Nunito", helvetica, arial, sans-serif;
   font-size: 20px;
@@ -74,7 +75,9 @@
   margin: auto;
   list-style-type: initial;
   font-style: inherit;
+  padding-left: 40px;
 }
+
 
 .project-show-delete-button{
   background-color: #df6902;
