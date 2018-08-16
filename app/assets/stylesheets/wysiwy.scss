@@ -43,12 +43,11 @@
 #richTextArea{
   border: 2px solid lightgray;
   height: 100%;
-  width: 100%;
   background-color: white;
 }
 
 iframe{
-  width: 100%;
+  width: 750px;
   height: 100%;
 }
 
@@ -56,4 +55,22 @@ input[type=color]{
   border: none;
   outline: none;
   background-color: transparent;
+}
+
+.theWYSIWYG body{
+  box-sizing: border-box;
+  color: rgb(85, 85, 85);
+  display: block;
+  font-family: "Nunito", helvetica, arial, sans-serif;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 32px;
+  max-width: 800px;
+  text-align: left;
+  text-size-adjust: 100%;
+  width: 800px;
+  word-wrap: break-word;
+  margin: auto;
+  list-style-type: initial;
+  font-style: inherit;
 }

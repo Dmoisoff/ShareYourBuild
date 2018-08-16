@@ -4,6 +4,7 @@ import Instructions from './Instructions';
 import { updateInstruction } from './../../actions/instructions_actions';
 
 const mstp = (state, ownProps) => {
+  debugger
     return({
       instruction: {
         id: ownProps.id,

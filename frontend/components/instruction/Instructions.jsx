@@ -17,7 +17,9 @@ class Instructions extends React.Component{
 
   updateDescription(input){
     debugger
-    if (input === '') {
+    const regex = /<[a-z]*>|<\/[a-z]*>/g;
+    const filteredInput = input.replace(regex,"");
+    if (filteredInput === "") {
       debugger
       this.props.instructionBodiesState(false,this.state.step);
     }else{
@@ -28,6 +30,7 @@ class Instructions extends React.Component{
 
   componentDidUpdate(prevProps){
     if (this.props.formType === 'Update Instruction' && !this.state.rendered) {
+      debugger
       if(this.props.uploadStatus){
         this.handleSubmit();
       }

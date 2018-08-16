@@ -104,6 +104,7 @@ class ProjectForm extends React.Component{
       this.instructions();
       return;
     }else{
+      debugger
       const projectId = this.props.match.params.projectId;
       const formData = new FormData();
       formData.append('project[title]', this.state.title);
@@ -113,6 +114,7 @@ class ProjectForm extends React.Component{
         formData.append('project[picture]', this.state.pictureFile);
       }
       if(this.props.formType === 'New Project'){
+        debugger
         this.props.submitProject(formData, projectId).then((payload) => {
           debugger
           const projectId = payload.project.id;
@@ -120,37 +122,51 @@ class ProjectForm extends React.Component{
           this.redirect(projectId);
         });
       }else if (this.props.formType === 'Update Project') {
-        this.props.submitProject(formData, projectId).then((payload) => {
-          if(this.state.removedInstructions.length){
-            this.props.deleteInstruction(this.state.removedInstructions.toString(), projectId).then(() =>{
-              let newInstructions = this.state.instructions.slice(-(this.state.newlyAddedSteps.length));
+        debugger
+        const that = this;
+        that.props.submitProject(formData, projectId).then((payload) => {
+          debugger
+          let newInstructions = [];
+          let updatedInstructions;
+          if(that.state.newlyAddedSteps.length !== 0){
+            debugger
+            newInstructions = that.state.instructions.slice(-(that.state.newlyAddedSteps.length));
+            updatedInstructions = that.state.instructions.slice(0,-(that.state.newlyAddedSteps.length));
+          }else{
+            debugger
+            updatedInstructions = that.state.instructions;
+          }
+          if(that.state.removedInstructions.length){
+            that.props.deleteInstruction(that.state.removedInstructions.toString(), projectId).then(() =>{
               newInstructions = newInstructions.map((instruction) => {
-                instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
+                instruction = React.cloneElement(instruction, {projectId: that.state.projectId});
                 return instruction;
               });
-              let updatedInstructions = this.state.instructions.slice(0,-(this.state.newlyAddedSteps.length));
+              debugger
               updatedInstructions = updatedInstructions.map((instruction) => {
+                debugger
                 instruction = React.cloneElement(instruction, {uploadStatus: true});
+                debugger
                 return instruction;
               });
               updatedInstructions = updatedInstructions.concat(newInstructions);
-              this.setState({instructions: updatedInstructions});
-              this.redirect(payload.project.project.id);
+              that.setState({instructions: updatedInstructions});
+              that.redirect(payload.project.project.id);
             });
           }else{
-            let newInstructions = this.state.instructions.slice(-(this.state.newlyAddedSteps.length));
             newInstructions = newInstructions.map((instruction) => {
-              instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
+              instruction = React.cloneElement(instruction, {projectId: that.state.projectId});
               return instruction;
             });
-            let updatedInstructions = this.state.instructions.slice(0,-(this.state.newlyAddedSteps.length));
             updatedInstructions = updatedInstructions.map((instruction) => {
               instruction = React.cloneElement(instruction, {uploadStatus: true});
+              debugger
               return instruction;
             });
             updatedInstructions = updatedInstructions.concat(newInstructions);
-            this.setState({instructions: updatedInstructions, projectId: projectId});
-            this.redirect(payload.project.project.id);
+            debugger
+            that.setState({instructions: updatedInstructions, projectId: projectId}, () => {that.redirect(payload.project.project.id);
+            });
           }
         });
       }

@@ -55,6 +55,25 @@
   width: 800px;
   word-wrap: break-word;
   margin: auto;
+  list-style-type: initial;
+  font-style: inherit;
+}
+
+.project-font-format ul{
+  box-sizing: border-box;
+  color: rgb(85, 85, 85);
+  font-family: "Nunito", helvetica, arial, sans-serif;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 32px;
+  max-width: 800px;
+  text-align: left;
+  text-size-adjust: 100%;
+  width: 800px;
+  word-wrap: break-word;
+  margin: auto;
+  list-style-type: initial;
+  font-style: inherit;
 }
 
 .project-show-delete-button{
@@ -78,4 +97,8 @@
   display: flex;
   justify-content: space-evenly;
   margin-bottom: 20px;
+}
+
+.project-font-format i{
+  font-style: italic;
 }

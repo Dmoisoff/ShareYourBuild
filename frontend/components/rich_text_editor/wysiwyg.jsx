@@ -11,20 +11,11 @@ class WYSIWYG extends React.Component{
       instructionBody: this.props.instructionBody
     };
   }
-// instructionBody: this.ifr.contentDocument.body
 
     shouldComponentUpdate() {
       debugger
    return false;
   }
-
-  // componentWillReceiveProps(nextProps) {
-  //    if (this.props !== nextProps){
-  //    // send message...
-  //    }
-  //  }
-
-
 
    componentDidMount(){
      debugger
@@ -33,33 +24,38 @@ class WYSIWYG extends React.Component{
 
      document.getElementById(`boldButton-${this.refNumber}`).addEventListener('click',() => {
        this.ifr.execCommand('Bold', false, null);
+       this.setState({instructionBody: this.ifr.getElementsByTagName('body')[0].innerHTML}, () => (
+         this.props.updateDescription(this.state.instructionBody))
+       );
        }, false);
 
      document.getElementById(`italicButton-${this.refNumber}`).addEventListener('click',() => {
        this.ifr.execCommand('italic', false, null);
+       this.setState({instructionBody: this.ifr.getElementsByTagName('body')[0].innerHTML}, () => (
+         this.props.updateDescription(this.state.instructionBody))
+       );
        }, false);
 
      document.getElementById(`underlineButton-${this.refNumber}`).addEventListener('click',() => {
        this.ifr.execCommand('underline', false, null);
+       this.setState({instructionBody: this.ifr.getElementsByTagName('body')[0].innerHTML}, () => (
+         this.props.updateDescription(this.state.instructionBody))
+       );
        }, false);
 
      document.getElementById(`orderedListButton-${this.refNumber}`).addEventListener('click',() => {
        this.ifr.execCommand('InsertOrderedList', false, 'newOL ' + Math.round(Math.random() * 1000));
+       this.setState({instructionBody: this.ifr.getElementsByTagName('body')[0].innerHTML}, () => (
+         this.props.updateDescription(this.state.instructionBody))
+       );
      }, false);
 
      document.getElementById(`unorderedListButton-${this.refNumber}`).addEventListener('click',() => {
        this.ifr.execCommand('InsertUnorderedList', false, 'newOL ' + Math.round(Math.random() * 1000));
+       this.setState({instructionBody: this.ifr.getElementsByTagName('body')[0].innerHTML}, () => (
+         this.props.updateDescription(this.state.instructionBody))
+       );
      }, false);
-
-     // document.getElementById('fontColorButton').addEventListener('change',(e, ifr = this.ifr) => {
-     //   this.ifr.execCommand('ForeColor', false, e.target.value);
-     //   this.setState({instructionBody: ifr.getElementsByTagName('body')[0].innerHTML});
-     // }, false);
-     //
-     // document.getElementById('highlightButton').addEventListener('change',(e, ifr = this.ifr) => {
-     //   this.ifr.execCommand('BackColor', false, e.target.value);
-     //   this.setState({instructionBody: ifr.getElementsByTagName('body')[0].innerHTML});
-     // }, false);
 
      if(this.state.instructionBody){
        this.ifr.getElementsByTagName('body')[0].innerHTML = this.state.instructionBody;
@@ -109,7 +105,7 @@ class WYSIWYG extends React.Component{
           <button id={`unorderedListButton-${this.refNumber}`} title='Bulleted list'>&bull;</button>
         </div>
         <div id='richTextArea'>
-          <iframe id={`theWYSIWYG-${this.refNumber}`} name='theWYSIWYG' frameBorder='0' ref={(f) => this.ifr = f}></iframe>
+          <iframe id={`theWYSIWYG-${this.refNumber}`} className='theWYSIWYG' name='theWYSIWYG' frameBorder='0' ref={(f) => this.ifr = f}></iframe>
         </div>
       </div>
     );
