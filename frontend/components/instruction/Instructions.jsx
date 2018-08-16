@@ -16,11 +16,9 @@ class Instructions extends React.Component{
   }
 
   updateDescription(input){
-    debugger
     const regex = /<[a-z]*>|<\/[a-z]*>/g;
     const filteredInput = input.replace(regex,"");
     if (filteredInput === "") {
-      debugger
       this.props.instructionBodiesState(false,this.state.step);
     }else{
       this.props.instructionBodiesState(true,this.state.step);
@@ -30,12 +28,10 @@ class Instructions extends React.Component{
 
   componentDidUpdate(prevProps){
     if (this.props.formType === 'Update Instruction' && !this.state.rendered) {
-      debugger
       if(this.props.uploadStatus){
         this.handleSubmit();
       }
     }else if(this.props.projectId !== prevProps.projectId){
-      debugger
      this.handleSubmit();
     }
   }

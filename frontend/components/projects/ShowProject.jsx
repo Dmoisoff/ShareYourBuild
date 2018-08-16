@@ -27,7 +27,6 @@ class ProjectShow extends React.Component {
       if(!payload.instructions){
         payload.instructions = {};
       }
-      debugger
       this.setState({
         title: payload.project.title,
         authorUsername: payload.project.authorUsername,
@@ -83,7 +82,6 @@ class ProjectShow extends React.Component {
   displayInstructions(){
     if(this.state.instructions){
       // const sortedInstructions = this.state.instructions.sort((a,b) => (a.instructionStep - b.instructionStep));
-      debugger
       return this.state.instructions.map((instruction,i) => {
       if(!instruction){
         return [];

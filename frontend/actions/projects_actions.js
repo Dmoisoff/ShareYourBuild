@@ -14,7 +14,6 @@ export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 export const fetchProjects = () => {
   return dispatch => {
     return Projects_Util.fetchProjects().then((payload) =>{
-      debugger
       dispatch({
         type: FETCH_ALL_PROJECTS,
         projects: payload
@@ -39,7 +38,6 @@ export const fetchProjectsByUser = (id) => {
 export const fetchProject = (id) => {
   return dispatch => {
     return Projects_Util.fetchProject(id).then((payload) =>{
-      debugger
       dispatch({
         type: FETCH_PROJECT,
         project: payload.project,
@@ -76,7 +74,6 @@ export const createProject = (project) => {
 export const updateProject = (project, id) => {
   return dispatch => {
     return Projects_Util.updateProject(project, id).then((payload) =>{
-      debugger
       dispatch({
         type: FETCH_PROJECT,
         project: payload.project

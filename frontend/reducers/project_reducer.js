@@ -3,7 +3,6 @@ import merge from 'lodash/merge';
 
 
 const projectReducer = (state = {}, action) => {
-  debugger
   let newState;
   const oldState = Object.freeze(state);
   switch (action.type) {

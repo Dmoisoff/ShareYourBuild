@@ -30,7 +30,6 @@ const mstp = (state, ownProps) => {
   // project['commentBody'] = '';
   // project['edit'] = null;
   // project['commentError'] = null;
-  debugger
   return({
     formType: 'Show Project',
     currentUserId: userId,

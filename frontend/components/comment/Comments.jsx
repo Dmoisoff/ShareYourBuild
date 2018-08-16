@@ -16,7 +16,6 @@ class Comments extends React.Component{
       body: this.state.body,
       project_id: this.props.projectId,
       author_id: this.props.currentUserId}}, this.props.commentId).then(() => {
-        debugger
         this.props.updatedComment(true);});
   }
 

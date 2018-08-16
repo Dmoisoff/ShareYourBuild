@@ -16,7 +16,6 @@ class WYSIWYG extends React.Component{
   }
 
     shouldComponentUpdate(nextProps, nextState) {
-      debugger
       if(nextProps.step !== this.props.step){
         this.setState({refNumber: nextProps.step});
         this.nextRefNum = nextProps.step;
@@ -30,9 +29,7 @@ class WYSIWYG extends React.Component{
   }
 
   componentDidUpdate(prevProps, prevState, snapshot){
-    debugger
     if(this.nextRefNum === this.state.refNumber && this.rerender){
-      debugger
       this.updatelisteners(this.props.step);
       this.rerender = false;
       this.render();
@@ -42,7 +39,6 @@ class WYSIWYG extends React.Component{
   }
 
    componentDidMount(){
-     debugger
      this.ifr = document.getElementById(`theWYSIWYG-${this.state.refNumber}`).contentDocument;
      this.ifr.designMode = 'on';
 
@@ -63,8 +59,6 @@ class WYSIWYG extends React.Component{
 
 
    updatelisteners(newStep){
-     debugger
-
      this.ifr = document.getElementById(`theWYSIWYG-${newStep}`).contentDocument;
      this.ifr.designMode = 'on';
 
@@ -85,7 +79,6 @@ class WYSIWYG extends React.Component{
 
 
   render(){
-    debugger
     return (
       <div id='textEditor'>
         <div id='theRibbon'>

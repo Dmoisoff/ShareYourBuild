@@ -10,9 +10,7 @@ const mstp = (state, ownProps) => {
   }
   let htmlDoc = new DOMParser().parseFromString(html, 'text/html');
   let body = htmlDoc.querySelectorAll('body');
-  debugger
   body[0].innerHTML = information;
-  debugger
   return {
     instructionBody: body[0].innerHTML,
     updateDescription: ownProps.updateDescription,

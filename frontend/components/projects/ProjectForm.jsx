@@ -38,7 +38,6 @@ class ProjectForm extends React.Component{
   }
 
   removeInstruction(instructionStep){
-    debugger
     const instructions = this.state.instructions;
     const removedInstruction = instructions[instructionStep-1].props.id;
     const newOrderInstructions = instructions.slice(0, instructionStep-1).concat(instructions.slice(instructionStep));
@@ -92,7 +91,6 @@ class ProjectForm extends React.Component{
   }
 
   handleSubmit(e){
-    debugger
     e.preventDefault();
     let completeStatus = true;
     for (let i = 0; i < this.state.instructionBodies.length; i++) {
@@ -105,7 +103,6 @@ class ProjectForm extends React.Component{
       this.instructions();
       return;
     }else{
-      debugger
       const projectId = this.props.match.params.projectId;
       const formData = new FormData();
       formData.append('project[title]', this.state.title);
@@ -115,40 +112,30 @@ class ProjectForm extends React.Component{
         formData.append('project[picture]', this.state.pictureFile);
       }
       if(this.props.formType === 'New Project'){
-        debugger
         this.props.submitProject(formData, projectId).then((payload) => {
-          debugger
           const projectId = payload.project.id;
           this.setState({projectId: projectId});
           this.redirect(projectId);
         });
       }else if (this.props.formType === 'Update Project') {
-        debugger
         const that = this;
         that.props.submitProject(formData, projectId).then((payload) => {
-          debugger
           let newInstructions = [];
           let updatedInstructions = [];
           if(that.state.newlyAddedSteps.length !== 0){
-            debugger
             newInstructions = that.state.instructions.slice(-(that.state.newlyAddedSteps.length));
             updatedInstructions = that.state.instructions.slice(0,-(that.state.newlyAddedSteps.length));
           }else{
-            debugger
             updatedInstructions = that.state.instructions;
           }
           if(that.state.removedInstructions.length){
-            debugger
             that.props.deleteInstruction(that.state.removedInstructions.toString()).then(() =>{
               newInstructions = newInstructions.map((instruction) => {
                 instruction = React.cloneElement(instruction, {projectId: that.state.projectId});
                 return instruction;
               });
-              debugger
               updatedInstructions = updatedInstructions.map((instruction) => {
-                debugger
                 instruction = React.cloneElement(instruction, {uploadStatus: true});
-                debugger
                 return instruction;
               });
               updatedInstructions = updatedInstructions.concat(newInstructions);
@@ -162,11 +149,9 @@ class ProjectForm extends React.Component{
             });
             updatedInstructions = updatedInstructions.map((instruction) => {
               instruction = React.cloneElement(instruction, {uploadStatus: true});
-              debugger
               return instruction;
             });
             updatedInstructions = updatedInstructions.concat(newInstructions);
-            debugger
             that.setState({instructions: updatedInstructions, projectId: projectId}, () => {that.redirect(payload.project.id);
             });
           }
@@ -193,7 +178,6 @@ class ProjectForm extends React.Component{
   }
 
   instructionBodiesState(instructionBodyFilled,instructionStep){
-    debugger
     let newInstructions = {};
     newInstructions[instructionStep] = instructionBodyFilled;
     if (!this.state.instructionBodies.length) {
@@ -406,7 +390,6 @@ class ProjectForm extends React.Component{
      // this will pass the project id
     let instructions = this.state.instructions;
       if (this.state.projectId && this.props.formType === 'New Project') {
-        debugger
         instructions = instructions.map((instruction) => {
           instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
           return instruction;
