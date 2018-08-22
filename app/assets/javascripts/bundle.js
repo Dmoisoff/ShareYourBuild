@@ -4639,9 +4639,13 @@ var _projects_actions = __webpack_require__(/*! ./../actions/projects_actions */
 
 var Projects_Actions = _interopRequireWildcard(_projects_actions);
 
-var _merge2 = __webpack_require__(/*! lodash/merge */ "./node_modules/lodash/merge.js");
+var _search_actions = __webpack_require__(/*! ./../actions/search_actions */ "./frontend/actions/search_actions.js");
 
-var _merge3 = _interopRequireDefault(_merge2);
+var Search_Actions = _interopRequireWildcard(_search_actions);
+
+var _merge3 = __webpack_require__(/*! lodash/merge */ "./node_modules/lodash/merge.js");
+
+var _merge4 = _interopRequireDefault(_merge3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4657,13 +4661,19 @@ var projectReducer = function projectReducer() {
   var oldState = Object.freeze(state);
   switch (action.type) {
     case Projects_Actions.FETCH_ALL_PROJECTS:
-      return (0, _merge3.default)({}, state, action.projects);
+      return (0, _merge4.default)({}, state, action.projects);
     case Projects_Actions.FETCH_PROJECT:
     case Projects_Actions.RECIEVE_PROJECT:
-      newState = (0, _merge3.default)({}, state, _defineProperty({}, action.project.id, action.project));
+      newState = (0, _merge4.default)({}, state, _defineProperty({}, action.project.id, action.project));
+      return newState;
+    case Search_Actions.SEARCH_PROJECTS:
+      newState = (0, _merge4.default)({}, state);
+      Object.values(action.projects).forEach(function (project) {
+        newState = (0, _merge4.default)({}, newState, _defineProperty({}, project.id, project));
+      });
       return newState;
     case Projects_Actions.REMOVE_PROJECT:
-      newState = (0, _merge3.default)({}, state);
+      newState = (0, _merge4.default)({}, state);
       delete newState[action.projectId];
       return newState;
     default:
