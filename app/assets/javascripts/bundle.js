@@ -372,6 +372,43 @@ var deleteProject = exports.deleteProject = function deleteProject(id) {
 
 /***/ }),
 
+/***/ "./frontend/actions/search_actions.js":
+/*!********************************************!*\
+  !*** ./frontend/actions/search_actions.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.searchProjects = exports.SEARCH_PROJECTS = undefined;
+
+var _search_api_util = __webpack_require__(/*! ./../util/search_api_util */ "./frontend/util/search_api_util.js");
+
+var Search_Util = _interopRequireWildcard(_search_api_util);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var SEARCH_PROJECTS = exports.SEARCH_PROJECTS = 'SEARCH_PROJECTS';
+
+var searchProjects = exports.searchProjects = function searchProjects(search) {
+  return function (dispatch) {
+    return Search_Util.searchProjects(search).then(function (payload) {
+      dispatch({
+        type: SEARCH_PROJECTS,
+        projects: payload
+      });
+      return payload;
+    });
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/actions/session_actions.js":
 /*!*********************************************!*\
   !*** ./frontend/actions/session_actions.js ***!
@@ -4841,6 +4878,8 @@ var _projects_actions = __webpack_require__(/*! ./actions/projects_actions */ ".
 
 var _instructions_actions = __webpack_require__(/*! ./actions/instructions_actions */ "./frontend/actions/instructions_actions.js");
 
+var _search_actions = __webpack_require__(/*! ./actions/search_actions */ "./frontend/actions/search_actions.js");
+
 var _comments_actions = __webpack_require__(/*! ./actions/comments_actions */ "./frontend/actions/comments_actions.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -4865,8 +4904,9 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // testing
-  // window.getState = store.getState;
-  // window.dispatch = store.dispatch;
+  window.getState = store.getState;
+  window.dispatch = store.dispatch;
+  window.searchProjects = _search_actions.searchProjects;
   // window.fetchProject = fetchProject;
   // window.fetchInstruction = fetchInstruction;
   // window.createInstruction = createInstruction;
@@ -5151,6 +5191,31 @@ var mapStateToProps = function mapStateToProps(state) {
 var AuthRoute = exports.AuthRoute = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps)(Auth));
 
 var ProtectedRoute = exports.ProtectedRoute = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps)(Protected));
+
+/***/ }),
+
+/***/ "./frontend/util/search_api_util.js":
+/*!******************************************!*\
+  !*** ./frontend/util/search_api_util.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var searchProjects = exports.searchProjects = function searchProjects(search) {
+  return $.ajax({
+    method: 'GET',
+    url: 'api/search',
+    data: {
+      search: search
+    }
+  });
+};
 
 /***/ }),
 

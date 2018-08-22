@@ -17,6 +17,9 @@ class Project < ApplicationRecord
 
   validates :title, :description, :author_id, presence: true
 
+  include PgSearch
+   multisearchable :against => [:title]
+
   validate :ensure_picture
 
   belongs_to :user,
@@ -32,6 +35,8 @@ class Project < ApplicationRecord
     class_name: 'Comment'
 
   has_one_attached :picture
+
+
 
   def ensure_picture
     unless self.picture.attached?

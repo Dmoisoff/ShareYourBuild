@@ -13,6 +13,7 @@ Rails.application.routes.draw do
    resources :instructions, except: [:create, :index]
    resources :comments, except: [:create, :index]
    resource :session
+   resources :search, only: [:index]
   end
 
 end
