@@ -1,6 +1,6 @@
 import React from 'react';
 import GreetingContainer from './greeting/greeting_container';
-import { Route, Switch, Link } from 'react-router-dom';
+import { Route, Switch, Link, Redirect, withRouter } from 'react-router-dom';
 
 import LoginFormContainer from './session/LoginFormContainer';
 import SignupFormContainer from './session/SignupFormContainer';
@@ -10,9 +10,13 @@ import ShowProjectContainer from './projects/ShowProjectContainer';
 import IndexProjectsContainer from './projects/IndexProjectsContainer';
 import NewInstructionContainer from './instruction/NewInstructionContainer';
 import UserProjectsIndexContainer from './projects/UserProjectsIndexContainer';
+import SearchIndexProjectsContainer from './projects/SearchIndexProjectsContainer';
+import SearchBar from './search/searchbar.jsx';
 import WysiwygContainer from './rich_text_editor/WysiwygContainer';
 import MainPage from './main_page/main_page';
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
+
+
 
 
 const App = () => (
@@ -27,10 +31,7 @@ const App = () => (
         </div>
         <div className='nav_spacing'>
           <div className='search-bar-formating'>
-            <form className='search-bar-form' >
-              <input type="text" placeholder="Let's Build ..." name="search2" className='search-bar-input' />
-              <button className='search-bar-button' type='submit'><i className="fas fa-search"></i></button>
-            </form>
+            <SearchBar />
             <Link to="/project/new" className="create-build-button" >Create a Build</Link>
           </div>
         </div>
@@ -42,9 +43,11 @@ const App = () => (
           <ProtectedRoute path="/project/new" component={NewProjectContainer} />
           <ProtectedRoute exact path="/project/:projectId/edit" component={EditProjectContainer} />
           <Route path="/project/:projectId" component={ShowProjectContainer} />
-          <Route path="/projects" component={IndexProjectsContainer} />
+          <Route exact path="/projects" component={IndexProjectsContainer} />
           <Route exact path="/:username/:id/projects" component={UserProjectsIndexContainer} />
-          <Route exact path="/test" component={WysiwygContainer} />
+          <Route path="/projects/search/:query" component={SearchIndexProjectsContainer} />
+          <Route exact path="/projects/search/" component={MainPage} />
+          // <Route exact path="/test" component={SearchIndexProjectsContainer} />
           <AuthRoute exact path="/login" component={LoginFormContainer} />
           <AuthRoute exact path="/signup" component={SignupFormContainer} />
         </Switch>

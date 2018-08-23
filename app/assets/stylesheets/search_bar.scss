@@ -1,6 +1,7 @@
 .search-bar-form{
   display: flex;
-  display: none;
+  margin-right: 25px;
+  // display: none;
 }
 
 .search-bar-input{
@@ -29,4 +30,6 @@
   border-left: none;
   background-color: #c8c8c8;
   color: white;
+  line-height: 1.25;
+  margin-left: 1px;
 }

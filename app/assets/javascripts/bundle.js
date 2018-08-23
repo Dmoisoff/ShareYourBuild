@@ -522,6 +522,14 @@ var _UserProjectsIndexContainer = __webpack_require__(/*! ./projects/UserProject
 
 var _UserProjectsIndexContainer2 = _interopRequireDefault(_UserProjectsIndexContainer);
 
+var _SearchIndexProjectsContainer = __webpack_require__(/*! ./projects/SearchIndexProjectsContainer */ "./frontend/components/projects/SearchIndexProjectsContainer.jsx");
+
+var _SearchIndexProjectsContainer2 = _interopRequireDefault(_SearchIndexProjectsContainer);
+
+var _searchbar = __webpack_require__(/*! ./search/searchbar.jsx */ "./frontend/components/search/searchbar.jsx");
+
+var _searchbar2 = _interopRequireDefault(_searchbar);
+
 var _WysiwygContainer = __webpack_require__(/*! ./rich_text_editor/WysiwygContainer */ "./frontend/components/rich_text_editor/WysiwygContainer.jsx");
 
 var _WysiwygContainer2 = _interopRequireDefault(_WysiwygContainer);
@@ -564,16 +572,7 @@ var App = function App() {
           _react2.default.createElement(
             'div',
             { className: 'search-bar-formating' },
-            _react2.default.createElement(
-              'form',
-              { className: 'search-bar-form' },
-              _react2.default.createElement('input', { type: 'text', placeholder: 'Let\'s Build ...', name: 'search2', className: 'search-bar-input' }),
-              _react2.default.createElement(
-                'button',
-                { className: 'search-bar-button', type: 'submit' },
-                _react2.default.createElement('i', { className: 'fas fa-search' })
-              )
-            ),
+            _react2.default.createElement(_searchbar2.default, null),
             _react2.default.createElement(
               _reactRouterDom.Link,
               { to: '/project/new', className: 'create-build-button' },
@@ -593,9 +592,12 @@ var App = function App() {
           _react2.default.createElement(_route_util.ProtectedRoute, { path: '/project/new', component: _NewProjectContainer2.default }),
           _react2.default.createElement(_route_util.ProtectedRoute, { exact: true, path: '/project/:projectId/edit', component: _EditProjectContainer2.default }),
           _react2.default.createElement(_reactRouterDom.Route, { path: '/project/:projectId', component: _ShowProjectContainer2.default }),
-          _react2.default.createElement(_reactRouterDom.Route, { path: '/projects', component: _IndexProjectsContainer2.default }),
+          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/projects', component: _IndexProjectsContainer2.default }),
           _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/:username/:id/projects', component: _UserProjectsIndexContainer2.default }),
-          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/test', component: _WysiwygContainer2.default }),
+          _react2.default.createElement(_reactRouterDom.Route, { path: '/projects/search/:query', component: _SearchIndexProjectsContainer2.default }),
+          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/projects/search/', component: _main_page2.default }),
+          '// ',
+          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/test', component: _SearchIndexProjectsContainer2.default }),
           _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/login', component: _LoginFormContainer2.default }),
           _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/signup', component: _SignupFormContainer2.default })
         )
@@ -1925,6 +1927,8 @@ var IndexProjects = function (_React$Component) {
   function IndexProjects(props) {
     _classCallCheck(this, IndexProjects);
 
+    debugger;
+
     var _this = _possibleConstructorReturn(this, (IndexProjects.__proto__ || Object.getPrototypeOf(IndexProjects)).call(this, props));
 
     _this.state = {
@@ -1933,6 +1937,15 @@ var IndexProjects = function (_React$Component) {
     if (_this.props.formType === 'User Index Projects') {
       _this.props.fetchProjectsByUser(_this.props.displayedUser).then(function (payload) {
         return _this.setState({
+          projects: Object.values(payload) });
+      });
+    } else if (_this.props.formType === 'Search Projects') {
+      debugger;
+      if (_this.props.search === '') {
+        _this.props.history.push('/');
+      }
+      _this.props.searchProjects(_this.props.search).then(function (payload) {
+        _this.setState({
           projects: Object.values(payload) });
       });
     } else {
@@ -1944,35 +1957,61 @@ var IndexProjects = function (_React$Component) {
     return _this;
   }
 
-  // componentDidMount(){
-  //   if(this.props.formType === 'User Index Projects'){
-  //     this.props.fetchProjectsByUser(this.props.displayedUser);
-  //   }else{
-  //     this.props.fetchProjects().then((payload) => {this.setState({
-  //       projects: Object.values(payload)
-  //     });
-  //   });
-  //   }
-  // }
-
-  // componentWillReceiveProps(nextProps){
-  //   if(this.props.displayedUser !== nextProps.displayedUser && this.props.formType === 'User Index Projects'){
-  //     this.props.fetchProjectsByUser(nextProps.displayedUser).then(() => {
-  //       this.setState({key: Math.random()});
-  //     });
-  //   }
-  // }
-
   _createClass(IndexProjects, [{
-    key: 'renderProjects',
-    value: function renderProjects() {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps) {
       var _this2 = this;
 
+      debugger;
+      if ((this.props.search === '' || this.props.search === undefined) && this.props.formType === 'Search Projects') {
+        this.props.history.push('/');
+      }
+      if (prevProps.search != this.props.search && this.props.formType === 'Search Projects') {
+        this.props.searchProjects(this.props.search).then(function (payload) {
+          _this2.setState({
+            projects: Object.values(payload) });
+        });
+        // }else if (this.props.formType === 'User Index Projects') {
+        //   this.props.fetchProjectsByUser(this.props.displayedUser).then((payload) => this.setState({
+        //     projects:Object.values(payload)})
+        //   );
+        // }else if(this.props.formType === 'Index Projects'){
+        //   this.props.fetchProjects().then((payload) => this.setState({
+        //     projects:Object.values(payload)})
+        //   );
+      }
+    }
+
+    // componentDidMount(){
+    //   if(this.props.formType === 'User Index Projects'){
+    //     this.props.fetchProjectsByUser(this.props.displayedUser);
+    //   }else{
+    //     this.props.fetchProjects().then((payload) => {this.setState({
+    //       projects: Object.values(payload)
+    //     });
+    //   });
+    //   }
+    // }
+
+    // componentWillReceiveProps(nextProps){
+    //   if(this.props.displayedUser !== nextProps.displayedUser && this.props.formType === 'User Index Projects'){
+    //     this.props.fetchProjectsByUser(nextProps.displayedUser).then(() => {
+    //       this.setState({key: Math.random()});
+    //     });
+    //   }
+    // }
+
+  }, {
+    key: 'renderProjects',
+    value: function renderProjects() {
+      var _this3 = this;
+
+      debugger;
       var display = [];
       var projects = this.state.projects;
       if (this.state.projects.length && this.props.formType === 'User Index Projects') {
         projects = this.state.projects.filter(function (project) {
-          return project.authorUsername === _this2.props.username && project.author_id == _this2.props.displayedUser;
+          return project.authorUsername === _this3.props.username && project.author_id == _this3.props.displayedUser;
         });
       }
       projects.map(function (project) {
@@ -1987,9 +2026,9 @@ var IndexProjects = function (_React$Component) {
             featured: project.featured,
             viewCount: project.view_count })
         );
-        if (project.author_id == _this2.props.displayedUser && _this2.props.formType === 'User Index Projects') {
+        if (project.author_id == _this3.props.displayedUser && _this3.props.formType === 'User Index Projects') {
           display.push(component);
-        } else if (_this2.props.formType === 'Index Projects') {
+        } else if (_this3.props.formType === 'Index Projects' || _this3.props.formType === 'Search Projects') {
           display.push(component);
         }
       });
@@ -2007,6 +2046,14 @@ var IndexProjects = function (_React$Component) {
             'This user doesn\'t have any projects'
           );
         }
+      }
+      if (!display.length && this.props.formType === 'Search Projects') {
+        debugger;
+        display = _react2.default.createElement(
+          'h3',
+          null,
+          'There are no results matching this.props.search, please try another search term'
+        );
       }
       return display;
     }
@@ -2787,6 +2834,67 @@ var ProjectForm = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = (0, _reactRouterDom.withRouter)(ProjectForm);
+
+/***/ }),
+
+/***/ "./frontend/components/projects/SearchIndexProjectsContainer.jsx":
+/*!***********************************************************************!*\
+  !*** ./frontend/components/projects/SearchIndexProjectsContainer.jsx ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _projects_actions = __webpack_require__(/*! ./../../actions/projects_actions */ "./frontend/actions/projects_actions.js");
+
+var _IndexProjects = __webpack_require__(/*! ./IndexProjects */ "./frontend/components/projects/IndexProjects.jsx");
+
+var _IndexProjects2 = _interopRequireDefault(_IndexProjects);
+
+var _search_actions = __webpack_require__(/*! ./../../actions/search_actions */ "./frontend/actions/search_actions.js");
+
+var Search_Actions = _interopRequireWildcard(_search_actions);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mstp = function mstp(state, ownProps) {
+
+  var search = ownProps.match.params.query;
+  debugger;
+  if (search === '' || search === undefined) {
+    ownProps.history.push('/');
+  }
+  debugger;
+  return {
+    projects: Object.values(state.entities.projects),
+    formType: 'Search Projects',
+    search: search
+  };
+};
+
+var mdtp = function mdtp(dispatch) {
+  return {
+    searchProjects: function searchProjects(search) {
+      return dispatch(Search_Actions.searchProjects(search));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mstp, mdtp)(_IndexProjects2.default);
 
 /***/ }),
 
@@ -3676,6 +3784,110 @@ var Root = function Root(_ref) {
 };
 
 exports.default = Root;
+
+/***/ }),
+
+/***/ "./frontend/components/search/searchbar.jsx":
+/*!**************************************************!*\
+  !*** ./frontend/components/search/searchbar.jsx ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SearchBar = function (_React$Component) {
+  _inherits(SearchBar, _React$Component);
+
+  function SearchBar(props) {
+    _classCallCheck(this, SearchBar);
+
+    var _this = _possibleConstructorReturn(this, (SearchBar.__proto__ || Object.getPrototypeOf(SearchBar)).call(this, props));
+
+    _this.state = {
+      search: ''
+    };
+    return _this;
+  }
+
+  _createClass(SearchBar, [{
+    key: 'updateSearch',
+    value: function updateSearch(e) {
+      this.setState({ search: e.target.value });
+    }
+  }, {
+    key: 'button',
+    value: function button() {
+      var _this2 = this;
+
+      if (this.state.search === '') {
+        return _react2.default.createElement(
+          _reactRouterDom.Link,
+          { to: { pathname: '/' } },
+          _react2.default.createElement('i', { className: 'fas fa-search search-bar-button' })
+        );
+      } else {
+        return _react2.default.createElement(
+          _reactRouterDom.Link,
+          { to: { pathname: '/projects/search/' + this.state.search, state: this.state.search }, onClick: function onClick() {
+              debugger;
+              _this2.setState({ search: '' });
+            } },
+          _react2.default.createElement('i', { className: 'fas fa-search search-bar-button' })
+        );
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this3 = this;
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'form',
+          { className: 'search-bar-form', id: 'search', onSubmit: function onSubmit(e) {
+              e.preventDefault();
+            } },
+          _react2.default.createElement('input', { form: 'search', type: 'text', placeholder: 'Let\'s Build ...', name: 'search2', className: 'search-bar-input', onChange: function onChange(e) {
+              return _this3.updateSearch(e);
+            }, onClick: function onClick(e) {
+              return e.preventDefault();
+            }, value: '' + this.state.search }),
+          this.button()
+        )
+      );
+    }
+  }]);
+
+  return SearchBar;
+}(_react2.default.Component);
+
+exports.default = SearchBar;
 
 /***/ }),
 
