@@ -12,29 +12,15 @@ class SearchBar extends React.Component{
     this.redirect = this.redirect.bind(this);
   }
 
-
   updateSearch(e){
     this.setState({search: e.target.value});
   }
 
-
-  button(){
-    if(this.state.search === ''){
-      return <Link to={{pathname:'/'}}>
-          <i className="fas fa-search search-bar-button"></i>
-          </Link>;
-    }else{
-      return <Link to={{pathname:`/projects/search/${this.state.search}`, state: this.state.search}} onClick={ () => {
-          debugger
-          this.setState({search: ''});}}>
-          <i className="fas fa-search search-bar-button"></i>
-          </Link>;
-    }
-  }
-
   redirect(){
-    debugger
+    if(this.state.search !== ''){
     this.props.history.push(`/projects/search/${this.state.search}`);
+    this.setState({search: ''});
+    }
   }
 
 
@@ -48,7 +34,11 @@ class SearchBar extends React.Component{
             this.redirect();
           }}>
           <input form='search' type="text" placeholder="Let's Build ..." name="search2" className='search-bar-input' onChange={(e) => this.updateSearch(e)} onClick={(e) => e.preventDefault()} value={`${this.state.search}`} />
-          {this.button()}
+          <i className="fas fa-search search-bar-button" onClick={(e) => {
+              e.preventDefault();
+              this.redirect();
+            }
+          }></i>
         </form>
       </div>
     );

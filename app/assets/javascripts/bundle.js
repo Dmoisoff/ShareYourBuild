@@ -526,9 +526,9 @@ var _SearchIndexProjectsContainer = __webpack_require__(/*! ./projects/SearchInd
 
 var _SearchIndexProjectsContainer2 = _interopRequireDefault(_SearchIndexProjectsContainer);
 
-var _SearchBarContainer = __webpack_require__(/*! ./search/SearchBarContainer.jsx */ "./frontend/components/search/SearchBarContainer.jsx");
+var _searchbar = __webpack_require__(/*! ./search/searchbar.jsx */ "./frontend/components/search/searchbar.jsx");
 
-var _SearchBarContainer2 = _interopRequireDefault(_SearchBarContainer);
+var _searchbar2 = _interopRequireDefault(_searchbar);
 
 var _WysiwygContainer = __webpack_require__(/*! ./rich_text_editor/WysiwygContainer */ "./frontend/components/rich_text_editor/WysiwygContainer.jsx");
 
@@ -575,7 +575,7 @@ var App = function App() {
             _react2.default.createElement(
               _reactRouterDom.Switch,
               null,
-              _react2.default.createElement(_SearchBarContainer2.default, null)
+              _react2.default.createElement(_searchbar2.default, null)
             ),
             _react2.default.createElement(
               _reactRouterDom.Link,
@@ -651,7 +651,7 @@ var App = function App() {
     )
   );
 };
-// import SearchBar from './search/searchbar.jsx';
+
 exports.default = App;
 
 /***/ }),
@@ -3791,41 +3791,6 @@ exports.default = Root;
 
 /***/ }),
 
-/***/ "./frontend/components/search/SearchBarContainer.jsx":
-/*!***********************************************************!*\
-  !*** ./frontend/components/search/SearchBarContainer.jsx ***!
-  \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-
-var _searchbar = __webpack_require__(/*! ./searchbar */ "./frontend/components/search/searchbar.jsx");
-
-var _searchbar2 = _interopRequireDefault(_searchbar);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var mstp = function mstp(state, ownProps) {
-  debugger;
-  return {};
-};
-
-var mdtp = function mdtp(dispatch) {
-  return {};
-};
-
-exports.default = (0, _reactRedux.connect)(mstp, mdtp)(_searchbar2.default);
-
-/***/ }),
-
 /***/ "./frontend/components/search/searchbar.jsx":
 /*!**************************************************!*\
   !*** ./frontend/components/search/searchbar.jsx ***!
@@ -3879,37 +3844,17 @@ var SearchBar = function (_React$Component) {
       this.setState({ search: e.target.value });
     }
   }, {
-    key: 'button',
-    value: function button() {
-      var _this2 = this;
-
-      if (this.state.search === '') {
-        return _react2.default.createElement(
-          _reactRouterDom.Link,
-          { to: { pathname: '/' } },
-          _react2.default.createElement('i', { className: 'fas fa-search search-bar-button' })
-        );
-      } else {
-        return _react2.default.createElement(
-          _reactRouterDom.Link,
-          { to: { pathname: '/projects/search/' + this.state.search, state: this.state.search }, onClick: function onClick() {
-              debugger;
-              _this2.setState({ search: '' });
-            } },
-          _react2.default.createElement('i', { className: 'fas fa-search search-bar-button' })
-        );
-      }
-    }
-  }, {
     key: 'redirect',
     value: function redirect() {
-      debugger;
-      this.props.history.push('/projects/search/' + this.state.search);
+      if (this.state.search !== '') {
+        this.props.history.push('/projects/search/' + this.state.search);
+        this.setState({ search: '' });
+      }
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
+      var _this2 = this;
 
       return _react2.default.createElement(
         'div',
@@ -3918,14 +3863,17 @@ var SearchBar = function (_React$Component) {
           'form',
           { className: 'search-bar-form', id: 'search', onSubmit: function onSubmit(e) {
               e.preventDefault();
-              _this3.redirect();
+              _this2.redirect();
             } },
           _react2.default.createElement('input', { form: 'search', type: 'text', placeholder: 'Let\'s Build ...', name: 'search2', className: 'search-bar-input', onChange: function onChange(e) {
-              return _this3.updateSearch(e);
+              return _this2.updateSearch(e);
             }, onClick: function onClick(e) {
               return e.preventDefault();
             }, value: '' + this.state.search }),
-          this.button()
+          _react2.default.createElement('i', { className: 'fas fa-search search-bar-button', onClick: function onClick(e) {
+              e.preventDefault();
+              _this2.redirect();
+            } })
         )
       );
     }

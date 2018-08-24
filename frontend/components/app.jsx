@@ -11,8 +11,7 @@ import IndexProjectsContainer from './projects/IndexProjectsContainer';
 import NewInstructionContainer from './instruction/NewInstructionContainer';
 import UserProjectsIndexContainer from './projects/UserProjectsIndexContainer';
 import SearchIndexProjectsContainer from './projects/SearchIndexProjectsContainer';
-import SearchBarContainer from './search/SearchBarContainer.jsx';
-// import SearchBar from './search/searchbar.jsx';
+import SearchBar from './search/searchbar.jsx';
 import WysiwygContainer from './rich_text_editor/WysiwygContainer';
 import MainPage from './main_page/main_page';
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
@@ -33,7 +32,7 @@ const App = () => (
         <div className='nav_spacing'>
           <div className='search-bar-formating'>
             <Switch>
-            <SearchBarContainer />
+            <SearchBar />
             </Switch>
             <Link to="/project/new" className="create-build-button" >Create a Build</Link>
           </div>
