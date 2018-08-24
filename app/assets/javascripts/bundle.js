@@ -526,9 +526,9 @@ var _SearchIndexProjectsContainer = __webpack_require__(/*! ./projects/SearchInd
 
 var _SearchIndexProjectsContainer2 = _interopRequireDefault(_SearchIndexProjectsContainer);
 
-var _searchbar = __webpack_require__(/*! ./search/searchbar.jsx */ "./frontend/components/search/searchbar.jsx");
+var _SearchBarContainer = __webpack_require__(/*! ./search/SearchBarContainer.jsx */ "./frontend/components/search/SearchBarContainer.jsx");
 
-var _searchbar2 = _interopRequireDefault(_searchbar);
+var _SearchBarContainer2 = _interopRequireDefault(_SearchBarContainer);
 
 var _WysiwygContainer = __webpack_require__(/*! ./rich_text_editor/WysiwygContainer */ "./frontend/components/rich_text_editor/WysiwygContainer.jsx");
 
@@ -572,7 +572,11 @@ var App = function App() {
           _react2.default.createElement(
             'div',
             { className: 'search-bar-formating' },
-            _react2.default.createElement(_searchbar2.default, null),
+            _react2.default.createElement(
+              _reactRouterDom.Switch,
+              null,
+              _react2.default.createElement(_SearchBarContainer2.default, null)
+            ),
             _react2.default.createElement(
               _reactRouterDom.Link,
               { to: '/project/new', className: 'create-build-button' },
@@ -647,7 +651,7 @@ var App = function App() {
     )
   );
 };
-
+// import SearchBar from './search/searchbar.jsx';
 exports.default = App;
 
 /***/ }),
@@ -1932,7 +1936,7 @@ var IndexProjects = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (IndexProjects.__proto__ || Object.getPrototypeOf(IndexProjects)).call(this, props));
 
     _this.state = {
-      projects: _this.props.projects
+      projects: []
     };
     if (_this.props.formType === 'User Index Projects') {
       _this.props.fetchProjectsByUser(_this.props.displayedUser).then(function (payload) {
@@ -3787,6 +3791,41 @@ exports.default = Root;
 
 /***/ }),
 
+/***/ "./frontend/components/search/SearchBarContainer.jsx":
+/*!***********************************************************!*\
+  !*** ./frontend/components/search/SearchBarContainer.jsx ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _searchbar = __webpack_require__(/*! ./searchbar */ "./frontend/components/search/searchbar.jsx");
+
+var _searchbar2 = _interopRequireDefault(_searchbar);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mstp = function mstp(state, ownProps) {
+  debugger;
+  return {};
+};
+
+var mdtp = function mdtp(dispatch) {
+  return {};
+};
+
+exports.default = (0, _reactRedux.connect)(mstp, mdtp)(_searchbar2.default);
+
+/***/ }),
+
 /***/ "./frontend/components/search/searchbar.jsx":
 /*!**************************************************!*\
   !*** ./frontend/components/search/searchbar.jsx ***!
@@ -3830,6 +3869,7 @@ var SearchBar = function (_React$Component) {
     _this.state = {
       search: ''
     };
+    _this.redirect = _this.redirect.bind(_this);
     return _this;
   }
 
@@ -3861,6 +3901,12 @@ var SearchBar = function (_React$Component) {
       }
     }
   }, {
+    key: 'redirect',
+    value: function redirect() {
+      debugger;
+      this.props.history.push('/projects/search/' + this.state.search);
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this3 = this;
@@ -3872,6 +3918,7 @@ var SearchBar = function (_React$Component) {
           'form',
           { className: 'search-bar-form', id: 'search', onSubmit: function onSubmit(e) {
               e.preventDefault();
+              _this3.redirect();
             } },
           _react2.default.createElement('input', { form: 'search', type: 'text', placeholder: 'Let\'s Build ...', name: 'search2', className: 'search-bar-input', onChange: function onChange(e) {
               return _this3.updateSearch(e);
@@ -3887,7 +3934,7 @@ var SearchBar = function (_React$Component) {
   return SearchBar;
 }(_react2.default.Component);
 
-exports.default = SearchBar;
+exports.default = (0, _reactRouterDom.withRouter)(SearchBar);
 
 /***/ }),
 

@@ -7,7 +7,7 @@ class IndexProjects extends React.Component{
     debugger
     super(props);
     this.state = {
-      projects: this.props.projects
+      projects: []
     };
       if(this.props.formType === 'User Index Projects'){
         this.props.fetchProjectsByUser(this.props.displayedUser).then((payload) => this.setState({

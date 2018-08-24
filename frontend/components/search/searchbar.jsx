@@ -9,6 +9,7 @@ class SearchBar extends React.Component{
     this.state = {
       search: ''
     };
+    this.redirect = this.redirect.bind(this);
   }
 
 
@@ -31,12 +32,21 @@ class SearchBar extends React.Component{
     }
   }
 
+  redirect(){
+    debugger
+    this.props.history.push(`/projects/search/${this.state.search}`);
+  }
+
 
   render(){
 
     return(
       <div>
-        <form className='search-bar-form' id='search' onSubmit={(e) => {e.preventDefault();}}>
+        <form className='search-bar-form' id='search' onSubmit={
+            (e) => {
+            e.preventDefault();
+            this.redirect();
+          }}>
           <input form='search' type="text" placeholder="Let's Build ..." name="search2" className='search-bar-input' onChange={(e) => this.updateSearch(e)} onClick={(e) => e.preventDefault()} value={`${this.state.search}`} />
           {this.button()}
         </form>
@@ -46,4 +56,4 @@ class SearchBar extends React.Component{
 }
 
 
-export default SearchBar;
+export default withRouter(SearchBar);
