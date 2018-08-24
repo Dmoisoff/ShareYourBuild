@@ -1936,7 +1936,8 @@ var IndexProjects = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (IndexProjects.__proto__ || Object.getPrototypeOf(IndexProjects)).call(this, props));
 
     _this.state = {
-      projects: []
+      projects: [],
+      search: false
     };
     if (_this.props.formType === 'User Index Projects') {
       _this.props.fetchProjectsByUser(_this.props.displayedUser).then(function (payload) {
@@ -1972,8 +1973,11 @@ var IndexProjects = function (_React$Component) {
       }
       if (prevProps.search != this.props.search && this.props.formType === 'Search Projects') {
         this.props.searchProjects(this.props.search).then(function (payload) {
+          debugger;
           _this2.setState({
-            projects: Object.values(payload) });
+            projects: Object.values(payload),
+            searched: true
+          });
         });
         // }else if (this.props.formType === 'User Index Projects') {
         //   this.props.fetchProjectsByUser(this.props.displayedUser).then((payload) => this.setState({
@@ -1985,6 +1989,16 @@ var IndexProjects = function (_React$Component) {
         //   );
       }
     }
+
+    // shouldComponentUpdate(nextProps){
+    //   if ((nextProps.search != this.props.search) && this.props.formType === 'Search Projects') {
+    //     this.props.searchProjects(this.props.search).then((payload) =>{
+    //       debugger
+    //     this.setState({
+    //       projects: Object.values(payload)});}
+    //     );
+    // }
+
 
     // componentDidMount(){
     //   if(this.props.formType === 'User Index Projects'){
@@ -2051,12 +2065,16 @@ var IndexProjects = function (_React$Component) {
           );
         }
       }
+      debugger;
       if (!display.length && this.props.formType === 'Search Projects') {
+
         debugger;
         display = _react2.default.createElement(
           'h3',
           null,
-          'There are no results matching this.props.search, please try another search term'
+          'There are no results matching "',
+          this.props.search,
+          '", please try another search term'
         );
       }
       return display;
@@ -2064,7 +2082,7 @@ var IndexProjects = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      if (!this.state.projects.length) {
+      if (!this.state.projects.length && this.props.formType !== 'Search Projects') {
         return _react2.default.createElement(
           'div',
           null,

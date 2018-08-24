@@ -7,7 +7,8 @@ class IndexProjects extends React.Component{
     debugger
     super(props);
     this.state = {
-      projects: []
+      projects: [],
+      search: false
     };
       if(this.props.formType === 'User Index Projects'){
         this.props.fetchProjectsByUser(this.props.displayedUser).then((payload) => this.setState({
@@ -36,8 +37,12 @@ class IndexProjects extends React.Component{
         }
       if ((prevProps.search != this.props.search) && this.props.formType === 'Search Projects') {
         this.props.searchProjects(this.props.search).then((payload) =>{
+          debugger
         this.setState({
-          projects:Object.values(payload)});}
+          projects: Object.values(payload),
+          searched: true
+          });
+        }
         );
       // }else if (this.props.formType === 'User Index Projects') {
       //   this.props.fetchProjectsByUser(this.props.displayedUser).then((payload) => this.setState({
@@ -49,6 +54,15 @@ class IndexProjects extends React.Component{
       //   );
       }
     }
+
+    // shouldComponentUpdate(nextProps){
+    //   if ((nextProps.search != this.props.search) && this.props.formType === 'Search Projects') {
+    //     this.props.searchProjects(this.props.search).then((payload) =>{
+    //       debugger
+    //     this.setState({
+    //       projects: Object.values(payload)});}
+    //     );
+    // }
 
 
 
@@ -101,9 +115,11 @@ class IndexProjects extends React.Component{
         display = <h3>This user doesn't have any projects</h3>;
       }
     }
+    debugger
     if(!display.length && this.props.formType === 'Search Projects'){
+
       debugger
-      display = <h3>There are no results matching this.props.search, please try another search term</h3>;
+      display = <h3>There are no results matching "{this.props.search}", please try another search term</h3>;
     }
     return(
       display
@@ -113,7 +129,7 @@ class IndexProjects extends React.Component{
 
 
   render(){
-    if (!this.state.projects.length) {
+    if (!this.state.projects.length && this.props.formType !== 'Search Projects') {
       return <div>Loading...</div>;
     }else{
       const header = this.props.formType === 'User Index Projects' ?
