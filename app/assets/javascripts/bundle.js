@@ -3617,7 +3617,8 @@ var WYSIWYG = function (_React$Component) {
       }
       this.setState({ instructionBody: this.ifr.getElementsByTagName('body')[0].innerHTML });
 
-      this.ifr.getElementsByTagName('body')[0].onblur = function () {
+      this.ifr.getElementsByTagName('body')[0].onblur = function (e) {
+        e.preventDefault();
         _this3.setState({ instructionBody: _this3.ifr.getElementsByTagName('body')[0].innerHTML }, function () {
           return _this3.props.updateDescription(_this3.state.instructionBody);
         });
@@ -3636,7 +3637,8 @@ var WYSIWYG = function (_React$Component) {
           { id: 'theRibbon' },
           _react2.default.createElement(
             'button',
-            { id: 'boldButton-' + this.state.refNumber, onClick: function onClick() {
+            { id: 'boldButton-' + this.state.refNumber, onClick: function onClick(e) {
+                e.preventDefault();
                 _this4.ifr.execCommand('Bold', false, null);
                 _this4.setState({ instructionBody: _this4.ifr.getElementsByTagName('body')[0].innerHTML }, function () {
                   return _this4.props.updateDescription(_this4.state.instructionBody);
@@ -3650,7 +3652,8 @@ var WYSIWYG = function (_React$Component) {
           ),
           _react2.default.createElement(
             'button',
-            { id: 'italicButton-' + this.state.refNumber, onClick: function onClick() {
+            { id: 'italicButton-' + this.state.refNumber, onClick: function onClick(e) {
+                e.preventDefault();
                 _this4.ifr.execCommand('italic', false, null);
                 _this4.setState({ instructionBody: _this4.ifr.getElementsByTagName('body')[0].innerHTML }, function () {
                   return _this4.props.updateDescription(_this4.state.instructionBody);
@@ -3664,7 +3667,8 @@ var WYSIWYG = function (_React$Component) {
           ),
           _react2.default.createElement(
             'button',
-            { id: 'underlineButton-' + this.state.refNumber, onClick: function onClick() {
+            { id: 'underlineButton-' + this.state.refNumber, onClick: function onClick(e) {
+                e.preventDefault();
                 _this4.ifr.execCommand('underline', false, null);
                 _this4.setState({ instructionBody: _this4.ifr.getElementsByTagName('body')[0].innerHTML }, function () {
                   return _this4.props.updateDescription(_this4.state.instructionBody);
@@ -3678,7 +3682,8 @@ var WYSIWYG = function (_React$Component) {
           ),
           _react2.default.createElement(
             'button',
-            { id: 'orderedListButton-' + this.state.refNumber, onClick: function onClick() {
+            { id: 'orderedListButton-' + this.state.refNumber, onClick: function onClick(e) {
+                e.preventDefault();
                 _this4.ifr.execCommand('InsertOrderedList', false, 'newOL ' + Math.round(Math.random() * 1000));
                 _this4.setState({ instructionBody: _this4.ifr.getElementsByTagName('body')[0].innerHTML }, function () {
                   return _this4.props.updateDescription(_this4.state.instructionBody);
@@ -3688,7 +3693,8 @@ var WYSIWYG = function (_React$Component) {
           ),
           _react2.default.createElement(
             'button',
-            { id: 'unorderedListButton-' + this.state.refNumber, onClick: function onClick() {
+            { id: 'unorderedListButton-' + this.state.refNumber, onClick: function onClick(e) {
+                e.preventDefault();
                 _this4.ifr.execCommand('InsertUnorderedList', false, 'newOL ' + Math.round(Math.random() * 1000));
                 _this4.setState({ instructionBody: _this4.ifr.getElementsByTagName('body')[0].innerHTML }, function () {
                   return _this4.props.updateDescription(_this4.state.instructionBody);

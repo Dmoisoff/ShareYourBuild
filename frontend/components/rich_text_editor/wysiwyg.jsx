@@ -69,7 +69,8 @@ class WYSIWYG extends React.Component{
      }
      this.setState({instructionBody: this.ifr.getElementsByTagName('body')[0].innerHTML});
 
-     this.ifr.getElementsByTagName('body')[0].onblur = () => {
+     this.ifr.getElementsByTagName('body')[0].onblur = (e) => {
+       e.preventDefault();
        this.setState({instructionBody: this.ifr.getElementsByTagName('body')[0].innerHTML}, () => (
          this.props.updateDescription(this.state.instructionBody))
        );
@@ -82,35 +83,40 @@ class WYSIWYG extends React.Component{
     return (
       <div id='textEditor'>
         <div id='theRibbon'>
-          <button id={`boldButton-${this.state.refNumber}`} onClick={ () => {
+          <button id={`boldButton-${this.state.refNumber}`} onClick={ (e) => {
+              e.preventDefault();
               this.ifr.execCommand('Bold', false, null);
               this.setState({instructionBody: this.ifr.getElementsByTagName('body')[0].innerHTML}, () => (
                 this.props.updateDescription(this.state.instructionBody))
               );
             }} title='bold'><b>B</b></button>
 
-          <button id={`italicButton-${this.state.refNumber}`} onClick={ () => {
+          <button id={`italicButton-${this.state.refNumber}`} onClick={ (e) => {
+            e.preventDefault();
             this.ifr.execCommand('italic', false, null);
             this.setState({instructionBody: this.ifr.getElementsByTagName('body')[0].innerHTML}, () => (
               this.props.updateDescription(this.state.instructionBody))
             );
             }} title='italic'><em>I</em></button>
 
-          <button id={`underlineButton-${this.state.refNumber}`} onClick={ () => {
+          <button id={`underlineButton-${this.state.refNumber}`} onClick={ (e) => {
+            e.preventDefault();
             this.ifr.execCommand('underline', false, null);
             this.setState({instructionBody: this.ifr.getElementsByTagName('body')[0].innerHTML}, () => (
               this.props.updateDescription(this.state.instructionBody))
             );
             } } title='underline'><u>U</u></button>
 
-          <button id={`orderedListButton-${this.state.refNumber}`} onClick={ () => {
+          <button id={`orderedListButton-${this.state.refNumber}`} onClick={ (e) => {
+            e.preventDefault();
             this.ifr.execCommand('InsertOrderedList', false, 'newOL ' + Math.round(Math.random() * 1000));
             this.setState({instructionBody: this.ifr.getElementsByTagName('body')[0].innerHTML}, () => (
               this.props.updateDescription(this.state.instructionBody))
             );
           } } title='Numbered list'>(i)</button>
 
-        <button id={`unorderedListButton-${this.state.refNumber}`} onClick={ () => {
+        <button id={`unorderedListButton-${this.state.refNumber}`} onClick={ (e) => {
+          e.preventDefault();
           this.ifr.execCommand('InsertUnorderedList', false, 'newOL ' + Math.round(Math.random() * 1000));
           this.setState({instructionBody: this.ifr.getElementsByTagName('body')[0].innerHTML}, () => (
             this.props.updateDescription(this.state.instructionBody))
