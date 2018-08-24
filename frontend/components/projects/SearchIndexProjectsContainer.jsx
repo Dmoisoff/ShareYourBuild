@@ -8,11 +8,9 @@ import * as Search_Actions from './../../actions/search_actions';
 const mstp = (state, ownProps) => {
 
   const search = ownProps.match.params.query;
-  debugger
   if(search === '' || search === undefined){
       ownProps.history.push('/');
     }
-  debugger
   return({
     projects: Object.values(state.entities.projects),
     formType: 'Search Projects',

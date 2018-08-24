@@ -4,7 +4,6 @@ import IndexProjectItem from './IndexProjectItem';
 
 class IndexProjects extends React.Component{
   constructor(props){
-    debugger
     super(props);
     this.state = {
       projects: [],
@@ -15,7 +14,6 @@ class IndexProjects extends React.Component{
           projects:Object.values(payload)})
         );
       }else if (this.props.formType === 'Search Projects') {
-        debugger
         if(this.props.search === ''){
             this.props.history.push('/');
           }
@@ -31,62 +29,20 @@ class IndexProjects extends React.Component{
     }
 
     componentDidUpdate(prevProps){
-      debugger
       if((this.props.search === '' || this.props.search === undefined) && this.props.formType === 'Search Projects'){
           this.props.history.push('/');
         }
       if ((prevProps.search != this.props.search) && this.props.formType === 'Search Projects') {
         this.props.searchProjects(this.props.search).then((payload) =>{
-          debugger
         this.setState({
           projects: Object.values(payload),
           searched: true
           });
-        }
-        );
-      // }else if (this.props.formType === 'User Index Projects') {
-      //   this.props.fetchProjectsByUser(this.props.displayedUser).then((payload) => this.setState({
-      //     projects:Object.values(payload)})
-      //   );
-      // }else if(this.props.formType === 'Index Projects'){
-      //   this.props.fetchProjects().then((payload) => this.setState({
-      //     projects:Object.values(payload)})
-      //   );
+        });
       }
     }
 
-    // shouldComponentUpdate(nextProps){
-    //   if ((nextProps.search != this.props.search) && this.props.formType === 'Search Projects') {
-    //     this.props.searchProjects(this.props.search).then((payload) =>{
-    //       debugger
-    //     this.setState({
-    //       projects: Object.values(payload)});}
-    //     );
-    // }
-
-
-
-  // componentDidMount(){
-  //   if(this.props.formType === 'User Index Projects'){
-  //     this.props.fetchProjectsByUser(this.props.displayedUser);
-  //   }else{
-  //     this.props.fetchProjects().then((payload) => {this.setState({
-  //       projects: Object.values(payload)
-  //     });
-  //   });
-  //   }
-  // }
-
-  // componentWillReceiveProps(nextProps){
-  //   if(this.props.displayedUser !== nextProps.displayedUser && this.props.formType === 'User Index Projects'){
-  //     this.props.fetchProjectsByUser(nextProps.displayedUser).then(() => {
-  //       this.setState({key: Math.random()});
-  //     });
-  //   }
-  // }
-
   renderProjects(){
-    debugger
     let display = [];
     let projects = this.state.projects;
     if(this.state.projects.length && this.props.formType === 'User Index Projects'){
@@ -115,18 +71,13 @@ class IndexProjects extends React.Component{
         display = <h3>This user doesn't have any projects</h3>;
       }
     }
-    debugger
     if(!display.length && this.props.formType === 'Search Projects'){
-
-      debugger
       display = <h3>There are no results matching "{this.props.search}", please try another search term</h3>;
     }
     return(
       display
     );
   }
-
-
 
   render(){
     if (!this.state.projects.length && this.props.formType !== 'Search Projects') {
@@ -144,8 +95,6 @@ class IndexProjects extends React.Component{
       );
     }
   }
-
-
 }
 
 export default IndexProjects;

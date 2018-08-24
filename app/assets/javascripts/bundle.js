@@ -1931,8 +1931,6 @@ var IndexProjects = function (_React$Component) {
   function IndexProjects(props) {
     _classCallCheck(this, IndexProjects);
 
-    debugger;
-
     var _this = _possibleConstructorReturn(this, (IndexProjects.__proto__ || Object.getPrototypeOf(IndexProjects)).call(this, props));
 
     _this.state = {
@@ -1945,7 +1943,6 @@ var IndexProjects = function (_React$Component) {
           projects: Object.values(payload) });
       });
     } else if (_this.props.formType === 'Search Projects') {
-      debugger;
       if (_this.props.search === '') {
         _this.props.history.push('/');
       }
@@ -1967,64 +1964,23 @@ var IndexProjects = function (_React$Component) {
     value: function componentDidUpdate(prevProps) {
       var _this2 = this;
 
-      debugger;
       if ((this.props.search === '' || this.props.search === undefined) && this.props.formType === 'Search Projects') {
         this.props.history.push('/');
       }
       if (prevProps.search != this.props.search && this.props.formType === 'Search Projects') {
         this.props.searchProjects(this.props.search).then(function (payload) {
-          debugger;
           _this2.setState({
             projects: Object.values(payload),
             searched: true
           });
         });
-        // }else if (this.props.formType === 'User Index Projects') {
-        //   this.props.fetchProjectsByUser(this.props.displayedUser).then((payload) => this.setState({
-        //     projects:Object.values(payload)})
-        //   );
-        // }else if(this.props.formType === 'Index Projects'){
-        //   this.props.fetchProjects().then((payload) => this.setState({
-        //     projects:Object.values(payload)})
-        //   );
       }
     }
-
-    // shouldComponentUpdate(nextProps){
-    //   if ((nextProps.search != this.props.search) && this.props.formType === 'Search Projects') {
-    //     this.props.searchProjects(this.props.search).then((payload) =>{
-    //       debugger
-    //     this.setState({
-    //       projects: Object.values(payload)});}
-    //     );
-    // }
-
-
-    // componentDidMount(){
-    //   if(this.props.formType === 'User Index Projects'){
-    //     this.props.fetchProjectsByUser(this.props.displayedUser);
-    //   }else{
-    //     this.props.fetchProjects().then((payload) => {this.setState({
-    //       projects: Object.values(payload)
-    //     });
-    //   });
-    //   }
-    // }
-
-    // componentWillReceiveProps(nextProps){
-    //   if(this.props.displayedUser !== nextProps.displayedUser && this.props.formType === 'User Index Projects'){
-    //     this.props.fetchProjectsByUser(nextProps.displayedUser).then(() => {
-    //       this.setState({key: Math.random()});
-    //     });
-    //   }
-    // }
-
   }, {
     key: 'renderProjects',
     value: function renderProjects() {
       var _this3 = this;
 
-      debugger;
       var display = [];
       var projects = this.state.projects;
       if (this.state.projects.length && this.props.formType === 'User Index Projects') {
@@ -2065,10 +2021,7 @@ var IndexProjects = function (_React$Component) {
           );
         }
       }
-      debugger;
       if (!display.length && this.props.formType === 'Search Projects') {
-
-        debugger;
         display = _react2.default.createElement(
           'h3',
           null,
@@ -2896,11 +2849,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var mstp = function mstp(state, ownProps) {
 
   var search = ownProps.match.params.query;
-  debugger;
   if (search === '' || search === undefined) {
     ownProps.history.push('/');
   }
-  debugger;
   return {
     projects: Object.values(state.entities.projects),
     formType: 'Search Projects',
