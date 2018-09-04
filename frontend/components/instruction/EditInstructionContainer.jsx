@@ -11,6 +11,7 @@ const mstp = (state, ownProps) => {
         title: ownProps.title,
         media: ownProps.media,
         mediaUrl: ownProps.media,
+        images: ownProps.images,
         uploadStatus: ownProps.uploadStatus,
         step: ownProps.step,
         projectId: ownProps.projectId,

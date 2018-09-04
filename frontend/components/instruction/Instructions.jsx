@@ -47,7 +47,7 @@ class Instructions extends React.Component{
     const file = e.currentTarget.files[0];
     const fileReader = new FileReader();
     fileReader.onloadend = () => {
-      this.setState({media: file, mediaUrl: fileReader.result });
+      this.setState({media: file, mediaUrl: fileReader.result, images: [...this.state.images, file]});
     };
     if(file){
       fileReader.readAsDataURL(file);
@@ -74,6 +74,11 @@ class Instructions extends React.Component{
       if(this.state.media){
         formData.append('instruction[media]', this.state.media);
       }
+      if(this.state.images.length){
+        this.state.images.forEach((file, i) => {
+          formData.append(`instruction[images][${i}]`, file);
+        });
+      }
       if(!this.state.rendered && this.props.formType === 'Update Instruction'){
         this.setState({rendered: true});
         this.props.submitInstruction(formData, this.state.id);
@@ -81,6 +86,16 @@ class Instructions extends React.Component{
         this.setState({rendered: true});
         this.props.submitInstruction(formData, projectId);
       }
+    }
+
+    displayMedia(){
+      return this.state.images.map((image, index) => {
+        <div key={index} className='project-picture-preview-format'>
+          <p>Picture Preview</p>
+          <img className='project-image-resize' src={image} />
+          <button className='project-submit' onClick={() => {this.setState({mediaUrl: null, media: null});}}>Remove Image</button>
+        </div>;
+      });
     }
 
   render(){
@@ -96,7 +111,7 @@ class Instructions extends React.Component{
     return(
         <div className='instruction-form-positioning'>
           <div className='project-form-styling'>
-            <form className='project-input-format'>
+            <form className='project-input-format' encType="multipart/form-data">
               <div>
                 <p>Step {this.state.step}:</p>
                 <input className='project-title-styling' type='text' onChange={this.updateTitle} placeholder='Step title (optional)' value={`${this.state.title}`} />
@@ -105,7 +120,7 @@ class Instructions extends React.Component{
                 <div className='project-image-input-format'>
                   <div>
                     <p className='project-image-text' >Please select a picture for your step</p>
-                    <input className='project-body-input' type='file' accept="image/*" onChange={this.uploadFile.bind(this)} />
+                    <input multiple='true' className='project-body-input' type='file' accept="image/*" onChange={this.uploadFile.bind(this)} />
                   </div>
                   {preview}
                 </div>

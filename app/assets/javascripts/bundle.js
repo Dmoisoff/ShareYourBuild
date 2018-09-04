@@ -1197,6 +1197,7 @@ var mstp = function mstp(state, ownProps) {
       title: ownProps.title,
       media: ownProps.media,
       mediaUrl: ownProps.media,
+      images: ownProps.images,
       uploadStatus: ownProps.uploadStatus,
       step: ownProps.step,
       projectId: ownProps.projectId,
@@ -1326,6 +1327,8 @@ var _WysiwygContainer2 = _interopRequireDefault(_WysiwygContainer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -1389,7 +1392,7 @@ var Instructions = function (_React$Component) {
       var file = e.currentTarget.files[0];
       var fileReader = new FileReader();
       fileReader.onloadend = function () {
-        _this2.setState({ media: file, mediaUrl: fileReader.result });
+        _this2.setState({ media: file, mediaUrl: fileReader.result, images: [].concat(_toConsumableArray(_this2.state.images), [file]) });
       };
       if (file) {
         fileReader.readAsDataURL(file);
@@ -1422,6 +1425,11 @@ var Instructions = function (_React$Component) {
       if (this.state.media) {
         formData.append('instruction[media]', this.state.media);
       }
+      if (this.state.images.length) {
+        this.state.images.forEach(function (file, i) {
+          formData.append('instruction[images][' + i + ']', file);
+        });
+      }
       if (!this.state.rendered && this.props.formType === 'Update Instruction') {
         this.setState({ rendered: true });
         this.props.submitInstruction(formData, this.state.id);
@@ -1431,9 +1439,34 @@ var Instructions = function (_React$Component) {
       }
     }
   }, {
+    key: 'displayMedia',
+    value: function displayMedia() {
+      var _this3 = this;
+
+      return this.state.images.map(function (image, index) {
+        _react2.default.createElement(
+          'div',
+          { key: index, className: 'project-picture-preview-format' },
+          _react2.default.createElement(
+            'p',
+            null,
+            'Picture Preview'
+          ),
+          _react2.default.createElement('img', { className: 'project-image-resize', src: image }),
+          _react2.default.createElement(
+            'button',
+            { className: 'project-submit', onClick: function onClick() {
+                _this3.setState({ mediaUrl: null, media: null });
+              } },
+            'Remove Image'
+          )
+        );
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       var preview = this.state.mediaUrl ? _react2.default.createElement(
         'div',
@@ -1447,7 +1480,7 @@ var Instructions = function (_React$Component) {
         _react2.default.createElement(
           'button',
           { className: 'project-submit', onClick: function onClick() {
-              _this3.setState({ mediaUrl: null, media: null });
+              _this4.setState({ mediaUrl: null, media: null });
             } },
           'Remove Image'
         )
@@ -1461,7 +1494,7 @@ var Instructions = function (_React$Component) {
           { className: 'project-form-styling' },
           _react2.default.createElement(
             'form',
-            { className: 'project-input-format' },
+            { className: 'project-input-format', encType: 'multipart/form-data' },
             _react2.default.createElement(
               'div',
               null,
@@ -1488,7 +1521,7 @@ var Instructions = function (_React$Component) {
                     { className: 'project-image-text' },
                     'Please select a picture for your step'
                   ),
-                  _react2.default.createElement('input', { className: 'project-body-input', type: 'file', accept: 'image/*', onChange: this.uploadFile.bind(this) })
+                  _react2.default.createElement('input', { multiple: 'true', className: 'project-body-input', type: 'file', accept: 'image/*', onChange: this.uploadFile.bind(this) })
                 ),
                 preview
               )
@@ -1507,7 +1540,7 @@ var Instructions = function (_React$Component) {
                 'button',
                 { form: 'submit-project',
                   onClick: function onClick() {
-                    return _this3.props.removeInstruction(_this3.state.step);
+                    return _this4.props.removeInstruction(_this4.state.step);
                   },
                   className: 'project-submit',
                   type: 'submit' },
@@ -1572,6 +1605,7 @@ var mstp = function mstp(state, ownProps) {
       title: "",
       media: null,
       mediaUrl: null,
+      images: [],
       uploadStatus: false,
       step: ownProps.step,
       projectId: ownProps.projectId,

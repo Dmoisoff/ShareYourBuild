@@ -2,6 +2,10 @@ class Api::InstructionsController < ApplicationController
 
   def create
     @instruction = Instruction.new(instruction_params)
+    images = params[:instruction][:images].values
+    if images
+      @instruction.images.attach(images)
+    end
     if @instruction.save
       render "api/instructions/show"
     else
@@ -38,7 +42,7 @@ class Api::InstructionsController < ApplicationController
 
   private
   def instruction_params
-    params.require(:instruction).permit(:project_id, :instruction_step, :title, :body, :media)
+    params.require(:instruction).permit(:project_id, :instruction_step, :title, :body, :media, images: [])
 
   end
 

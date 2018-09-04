@@ -56,6 +56,12 @@ technology_project1_step_6.media.attach(io: technology_1_step_6, filename: 'step
 technology_project1_step_7.media.attach(io: technology_1_step_7, filename: 'step_seven.png')
 technology_project1_step_8.media.attach(io: technology_1_step_8, filename: 'step_eight.png')
 technology_project1_step_9.media.attach(io: technology_1_step_9, filename: 'step_nine.png')
+#
+# technology_project1_step_9.images.attach(io: technology_1_step_9, filename: 'step_nine.png')
+# technology_project1_step_9.images.attach(io: technology_1_step_8, filename: 'step_eight.png')
+# technology_project1_step_9.images.attach(io: technology_1_step_7, filename: 'step_seven.png')
+# technology_project1_step_9.images.attach(io: technology_1_step_6, filename: 'step_six.png')
+
 
 technology_project1_step_1.save!
 technology_project1_step_2.save!

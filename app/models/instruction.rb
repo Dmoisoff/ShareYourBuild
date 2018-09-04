@@ -18,7 +18,7 @@ class Instruction < ApplicationRecord
     class_name: 'Project'
 
   has_one_attached :media
-
+  has_many_attached :images
 
 end
 
