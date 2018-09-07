@@ -10,6 +10,7 @@ const mstp = (state, ownProps) => {
         title: "",
         media: null,
         mediaUrl: null,
+        imagesUrl: [],
         images: [],
         uploadStatus: false,
         step: ownProps.step,

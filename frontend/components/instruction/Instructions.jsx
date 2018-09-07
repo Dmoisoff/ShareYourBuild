@@ -9,6 +9,7 @@ class Instructions extends React.Component{
     this.state = this.props.instruction;
     this.updateTitle = this.updateTitle.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.removeMedia = this.removeMedia.bind(this);
   }
 
   updateTitle(e){
@@ -43,16 +44,6 @@ class Instructions extends React.Component{
   }
 
 
-  uploadFile(e){
-    const file = e.currentTarget.files[0];
-    const fileReader = new FileReader();
-    fileReader.onloadend = () => {
-      this.setState({media: file, mediaUrl: fileReader.result, images: [...this.state.images, file]});
-    };
-    if(file){
-      fileReader.readAsDataURL(file);
-    }
-  }
 
   errors(){
     if(!this.props.errors){
@@ -88,14 +79,76 @@ class Instructions extends React.Component{
       }
     }
 
+    removeMedia(index){
+      debugger
+      if(this.state.images.length === 1){
+        this.setState({images: [],imagesUrl: []});
+      }else if (this.state.images.length - 1 === index) {
+        const newImages = this.state.images.slice(0, this.state.images.length - 1);
+        const newPreviewImages = this.state.imagesUrl.slice(0, this.state.imagesUrl.length - 1);
+        this.setState({images: newImages, imagesUrl: newPreviewImages});
+      } else {
+        const newImages = [...this.state.images.slice(0, index), ...this.state.images.slice(index+1)];
+        const newPreviewImages = [...this.state.imagesUrl.slice(0, index), ...this.state.imagesUrl.slice(index+1)];
+        this.setState({images: newImages, imagesUrl: newPreviewImages});
+      }
+    }
+
     displayMedia(){
-      return this.state.images.map((image, index) => {
-        <div key={index} className='project-picture-preview-format'>
-          <p>Picture Preview</p>
-          <img className='project-image-resize' src={image} />
-          <button className='project-submit' onClick={() => {this.setState({mediaUrl: null, media: null});}}>Remove Image</button>
+      const imagesUrls = this.state.imagesUrl;
+      let position;
+      let alignment;
+      let images1 = [];
+      let images2 = [];
+      const format = 'instruction-show-image-scale';
+      if(this.state.images.length === 1){
+        position = 'multiple-images-position-instruction-1';
+        alignment = 'multiple-images-aligment-instruction';
+      }else{
+        position = 'multiple-images-position-instruction-2';
+      }
+      const images = this.state.images.map((image, index) => {
+        let boundRemove = this.removeMedia.bind(this, index);
+        if(this.state.images.length !== 1){
+          alignment = 'multiple-images-aligment-instruction-' + index;
+        }
+        return <div key={index} className={alignment}>
+          <img className={format} src={imagesUrls[index]} />
+          <div>
+            <button value={index} className='project-submit' onClick={() => {
+                boundRemove();}}>Remove Image</button>
+          </div>
         </div>;
       });
+      debugger
+      if(images.length > 2){
+        images1 = images.slice(0,2);
+        images2 = images.slice(2);
+      }else{
+        images1 = images;
+      }
+      return (
+        <div className='project-show-image-placement'>
+          <p className='center'>Picture Preview</p>
+          <div className={position}>
+            {images1}
+          </div>
+          <div className={position}>
+            {images2}
+          </div>
+        </div>
+      );
+    }
+
+    uploadFile(e){
+      const file = e.currentTarget.files[0];
+      const fileReader = new FileReader();
+      fileReader.onloadend = () => {
+        this.setState({media: file, mediaUrl: fileReader.result, images: [...this.state.images, file], imagesUrl: [...this.state.imagesUrl, fileReader.result]});
+      };
+      if(file){
+        fileReader.readAsDataURL(file);
+      }
     }
 
   render(){
@@ -106,6 +159,10 @@ class Instructions extends React.Component{
       <button className='project-submit' onClick={() => {this.setState({mediaUrl: null, media: null});}}>Remove Image</button>
     </div>
      : null;
+
+     const preview2 = this.state.images.length ?
+     this.displayMedia()
+      : null;
 
 
     return(
@@ -122,7 +179,7 @@ class Instructions extends React.Component{
                     <p className='project-image-text' >Please select a picture for your step</p>
                     <input multiple='true' className='project-body-input' type='file' accept="image/*" onChange={this.uploadFile.bind(this)} />
                   </div>
-                  {preview}
+                  {preview2}
                 </div>
               </div>
               <p>Description</p>

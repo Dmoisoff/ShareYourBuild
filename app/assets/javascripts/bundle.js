@@ -1346,6 +1346,7 @@ var Instructions = function (_React$Component) {
     _this.state = _this.props.instruction;
     _this.updateTitle = _this.updateTitle.bind(_this);
     _this.handleSubmit = _this.handleSubmit.bind(_this);
+    _this.removeMedia = _this.removeMedia.bind(_this);
     return _this;
   }
 
@@ -1382,20 +1383,6 @@ var Instructions = function (_React$Component) {
     value: function componentWillReceiveProps(nextProps) {
       if (this.props.step !== nextProps.step) {
         this.setState({ step: nextProps.step });
-      }
-    }
-  }, {
-    key: 'uploadFile',
-    value: function uploadFile(e) {
-      var _this2 = this;
-
-      var file = e.currentTarget.files[0];
-      var fileReader = new FileReader();
-      fileReader.onloadend = function () {
-        _this2.setState({ media: file, mediaUrl: fileReader.result, images: [].concat(_toConsumableArray(_this2.state.images), [file]) });
-      };
-      if (file) {
-        fileReader.readAsDataURL(file);
       }
     }
   }, {
@@ -1439,29 +1426,100 @@ var Instructions = function (_React$Component) {
       }
     }
   }, {
+    key: 'removeMedia',
+    value: function removeMedia(index) {
+      debugger;
+      if (this.state.images.length === 1) {
+        this.setState({ images: [], imagesUrl: [] });
+      } else if (this.state.images.length - 1 === index) {
+        var newImages = this.state.images.slice(0, this.state.images.length - 1);
+        var newPreviewImages = this.state.imagesUrl.slice(0, this.state.imagesUrl.length - 1);
+        this.setState({ images: newImages, imagesUrl: newPreviewImages });
+      } else {
+        var _newImages = [].concat(_toConsumableArray(this.state.images.slice(0, index)), _toConsumableArray(this.state.images.slice(index + 1)));
+        var _newPreviewImages = [].concat(_toConsumableArray(this.state.imagesUrl.slice(0, index)), _toConsumableArray(this.state.imagesUrl.slice(index + 1)));
+        this.setState({ images: _newImages, imagesUrl: _newPreviewImages });
+      }
+    }
+  }, {
     key: 'displayMedia',
     value: function displayMedia() {
-      var _this3 = this;
+      var _this2 = this;
 
-      return this.state.images.map(function (image, index) {
-        _react2.default.createElement(
+      var imagesUrls = this.state.imagesUrl;
+      var position = void 0;
+      var alignment = void 0;
+      var images1 = [];
+      var images2 = [];
+      var format = 'instruction-show-image-scale';
+      if (this.state.images.length === 1) {
+        position = 'multiple-images-position-instruction-1';
+        alignment = 'multiple-images-aligment-instruction';
+      } else {
+        position = 'multiple-images-position-instruction-2';
+      }
+      var images = this.state.images.map(function (image, index) {
+        var boundRemove = _this2.removeMedia.bind(_this2, index);
+        if (_this2.state.images.length !== 1) {
+          alignment = 'multiple-images-aligment-instruction-' + index;
+        }
+        return _react2.default.createElement(
           'div',
-          { key: index, className: 'project-picture-preview-format' },
+          { key: index, className: alignment },
+          _react2.default.createElement('img', { className: format, src: imagesUrls[index] }),
           _react2.default.createElement(
-            'p',
+            'div',
             null,
-            'Picture Preview'
-          ),
-          _react2.default.createElement('img', { className: 'project-image-resize', src: image }),
-          _react2.default.createElement(
-            'button',
-            { className: 'project-submit', onClick: function onClick() {
-                _this3.setState({ mediaUrl: null, media: null });
-              } },
-            'Remove Image'
+            _react2.default.createElement(
+              'button',
+              { value: index, className: 'project-submit', onClick: function onClick() {
+                  boundRemove();
+                } },
+              'Remove Image'
+            )
           )
         );
       });
+      debugger;
+      if (images.length > 2) {
+        images1 = images.slice(0, 2);
+        images2 = images.slice(2);
+      } else {
+        images1 = images;
+      }
+      return _react2.default.createElement(
+        'div',
+        { className: 'project-show-image-placement' },
+        _react2.default.createElement(
+          'p',
+          { className: 'center' },
+          'Picture Preview'
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: position },
+          images1
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: position },
+          images2
+        )
+      );
+    }
+  }, {
+    key: 'uploadFile',
+    value: function uploadFile(e) {
+      var _this3 = this;
+
+      var file = e.currentTarget.files[0];
+      var fileReader = new FileReader();
+      fileReader.onloadend = function () {
+        _this3.setState({ media: file, mediaUrl: fileReader.result, images: [].concat(_toConsumableArray(_this3.state.images), [file]), imagesUrl: [].concat(_toConsumableArray(_this3.state.imagesUrl), [fileReader.result]) });
+      };
+      if (file) {
+        fileReader.readAsDataURL(file);
+      }
     }
   }, {
     key: 'render',
@@ -1485,6 +1543,8 @@ var Instructions = function (_React$Component) {
           'Remove Image'
         )
       ) : null;
+
+      var preview2 = this.state.images.length ? this.displayMedia() : null;
 
       return _react2.default.createElement(
         'div',
@@ -1523,7 +1583,7 @@ var Instructions = function (_React$Component) {
                   ),
                   _react2.default.createElement('input', { multiple: 'true', className: 'project-body-input', type: 'file', accept: 'image/*', onChange: this.uploadFile.bind(this) })
                 ),
-                preview
+                preview2
               )
             ),
             _react2.default.createElement(
@@ -1605,6 +1665,7 @@ var mstp = function mstp(state, ownProps) {
       title: "",
       media: null,
       mediaUrl: null,
+      imagesUrl: [],
       images: [],
       uploadStatus: false,
       step: ownProps.step,

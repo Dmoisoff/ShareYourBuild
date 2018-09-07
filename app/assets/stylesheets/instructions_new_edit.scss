@@ -21,3 +21,46 @@
   border-right-color: #cf6000;
   border-top-color: #cf6000;
 }
+
+
+.multiple-images-position-instruction-1{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.multiple-images-position-instruction-2{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.multiple-images-aligment-instruction{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.multiple-images-aligment-instruction-0{
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+.multiple-images-aligment-instruction-1{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.multiple-images-aligment-instruction-2{
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+.multiple-images-aligment-instruction-3{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

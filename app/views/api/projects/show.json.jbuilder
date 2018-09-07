@@ -21,6 +21,13 @@ json.instructions do
       if instruction.media.attached?
         json.media url_for(instruction.media)
       end
+      json.images do
+        image_arr = []
+        instruction.images.each do |image|
+          image_arr << url_for(image)
+        end
+        json.array! image_arr
+      end
     end
   end
 end
