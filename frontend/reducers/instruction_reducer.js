@@ -13,6 +13,7 @@ const instructionReducer = (state = {}, action) => {
       newState = merge({}, state, action.instructions);
       return newState;
     case Instruction_Actions.FETCH_INSTRUCTION:
+
       newState = merge({}, state, {[action.instruction.id]: action.instruction});
       return newState;
     case Instruction_Actions.REMOVE_INSTRUCTION:

@@ -70,6 +70,14 @@ class Instructions extends React.Component{
           formData.append(`instruction[images][${i}]`, file);
         });
       }
+      if(this.props.formType === 'Update Instruction'){
+        // debugger
+        if(this.state.imagesStorageId.length){
+          this.state.imagesStorageId.forEach((file, i) => {
+            formData.append(`instruction[imagesStorageId][${i}]`, file);
+          });
+        }
+      }
       if(!this.state.rendered && this.props.formType === 'Update Instruction'){
         this.setState({rendered: true});
         this.props.submitInstruction(formData, this.state.id);
@@ -80,21 +88,24 @@ class Instructions extends React.Component{
     }
 
     removeMedia(index){
-      debugger
+      // debugger
       if(this.state.images.length === 1){
-        this.setState({images: [],imagesUrl: []});
+        this.setState({images: [], imagesUrl: [], imagesStorageId: []});
       }else if (this.state.images.length - 1 === index) {
         const newImages = this.state.images.slice(0, this.state.images.length - 1);
         const newPreviewImages = this.state.imagesUrl.slice(0, this.state.imagesUrl.length - 1);
-        this.setState({images: newImages, imagesUrl: newPreviewImages});
+        const imagesStoraged = this.state.imagesStorageId.slice(0,this.state.imagesStorageId.length - 1);
+        this.setState({images: newImages, imagesUrl: newPreviewImages, imagesStorageId: imagesStoraged});
       } else {
         const newImages = [...this.state.images.slice(0, index), ...this.state.images.slice(index+1)];
         const newPreviewImages = [...this.state.imagesUrl.slice(0, index), ...this.state.imagesUrl.slice(index+1)];
-        this.setState({images: newImages, imagesUrl: newPreviewImages});
+        const imagesStoraged = [...this.state.imagesStorageId.slice(0, index), ...this.state.imagesStorageId.slice(index+1)];
+        this.setState({images: newImages, imagesUrl: newPreviewImages, imagesStorageId: imagesStoraged});
       }
     }
 
     displayMedia(){
+      // debugger
       const imagesUrls = this.state.imagesUrl;
       let position;
       let alignment;
@@ -115,12 +126,12 @@ class Instructions extends React.Component{
         return <div key={index} className={alignment}>
           <img className={format} src={imagesUrls[index]} />
           <div>
-            <button value={index} className='project-submit' onClick={() => {
+            <button value={index} className='project-submit' onClick={(e) => { e.preventDefault();
                 boundRemove();}}>Remove Image</button>
           </div>
         </div>;
       });
-      debugger
+      // debugger
       if(images.length > 2){
         images1 = images.slice(0,2);
         images2 = images.slice(2);

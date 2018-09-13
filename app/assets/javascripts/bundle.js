@@ -1190,6 +1190,7 @@ var _instructions_actions = __webpack_require__(/*! ./../../actions/instructions
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state, ownProps) {
+  // debugger
   return {
     instruction: {
       id: ownProps.id,
@@ -1198,6 +1199,8 @@ var mstp = function mstp(state, ownProps) {
       media: ownProps.media,
       mediaUrl: ownProps.media,
       images: ownProps.images,
+      imagesUrl: ownProps.images,
+      imagesStorageId: ownProps.imagesStorageId,
       uploadStatus: ownProps.uploadStatus,
       step: ownProps.step,
       projectId: ownProps.projectId,
@@ -1258,14 +1261,67 @@ var InstructionStep = function (_React$Component) {
   function InstructionStep(props) {
     _classCallCheck(this, InstructionStep);
 
-    return _possibleConstructorReturn(this, (InstructionStep.__proto__ || Object.getPrototypeOf(InstructionStep)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (InstructionStep.__proto__ || Object.getPrototypeOf(InstructionStep)).call(this, props));
+
+    _this.displayMedia = _this.displayMedia.bind(_this);
+    return _this;
   }
 
   _createClass(InstructionStep, [{
+    key: 'displayMedia',
+    value: function displayMedia() {
+      var _this2 = this;
+
+      // debugger
+      var imagesUrls = this.props.images;
+      var position = void 0;
+      var alignment = void 0;
+      var images1 = [];
+      var images2 = [];
+      var format = 'instruction-show-image-scale';
+      if (this.props.images.length === 1) {
+        position = 'multiple-images-position-instruction-1';
+        alignment = 'multiple-images-aligment-instruction';
+      } else {
+        position = 'multiple-images-position-instruction-2';
+      }
+      var images = this.props.images.map(function (image, index) {
+        if (_this2.props.images.length !== 1) {
+          alignment = 'multiple-images-aligment-instruction-' + index;
+        }
+        return _react2.default.createElement(
+          'div',
+          { key: index, className: alignment },
+          _react2.default.createElement('img', { className: format, src: imagesUrls[index] })
+        );
+      });
+      if (images.length > 2) {
+        images1 = images.slice(0, 2);
+        images2 = images.slice(2);
+      } else {
+        images1 = images;
+      }
+      return _react2.default.createElement(
+        'div',
+        { className: 'project-show-image-placement' },
+        _react2.default.createElement(
+          'div',
+          { className: position },
+          images1
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: position },
+          images2
+        )
+      );
+    }
+  }, {
     key: 'render',
     value: function render() {
+      // debugger
       var body = this.props.body;
-      var media = this.props.media ? _react2.default.createElement('img', { className: 'instruction-show-image-scale', src: '' + this.props.media }) : null;
+      var media = this.props.images ? this.displayMedia() : null;
       return _react2.default.createElement(
         'div',
         { className: 'instruction-step-format' },
@@ -1417,6 +1473,14 @@ var Instructions = function (_React$Component) {
           formData.append('instruction[images][' + i + ']', file);
         });
       }
+      if (this.props.formType === 'Update Instruction') {
+        // debugger
+        if (this.state.imagesStorageId.length) {
+          this.state.imagesStorageId.forEach(function (file, i) {
+            formData.append('instruction[imagesStorageId][' + i + ']', file);
+          });
+        }
+      }
       if (!this.state.rendered && this.props.formType === 'Update Instruction') {
         this.setState({ rendered: true });
         this.props.submitInstruction(formData, this.state.id);
@@ -1428,17 +1492,19 @@ var Instructions = function (_React$Component) {
   }, {
     key: 'removeMedia',
     value: function removeMedia(index) {
-      debugger;
+      // debugger
       if (this.state.images.length === 1) {
-        this.setState({ images: [], imagesUrl: [] });
+        this.setState({ images: [], imagesUrl: [], imagesStorageId: [] });
       } else if (this.state.images.length - 1 === index) {
         var newImages = this.state.images.slice(0, this.state.images.length - 1);
         var newPreviewImages = this.state.imagesUrl.slice(0, this.state.imagesUrl.length - 1);
-        this.setState({ images: newImages, imagesUrl: newPreviewImages });
+        var imagesStoraged = this.state.imagesStorageId.slice(0, this.state.imagesStorageId.length - 1);
+        this.setState({ images: newImages, imagesUrl: newPreviewImages, imagesStorageId: imagesStoraged });
       } else {
         var _newImages = [].concat(_toConsumableArray(this.state.images.slice(0, index)), _toConsumableArray(this.state.images.slice(index + 1)));
         var _newPreviewImages = [].concat(_toConsumableArray(this.state.imagesUrl.slice(0, index)), _toConsumableArray(this.state.imagesUrl.slice(index + 1)));
-        this.setState({ images: _newImages, imagesUrl: _newPreviewImages });
+        var _imagesStoraged = [].concat(_toConsumableArray(this.state.imagesStorageId.slice(0, index)), _toConsumableArray(this.state.imagesStorageId.slice(index + 1)));
+        this.setState({ images: _newImages, imagesUrl: _newPreviewImages, imagesStorageId: _imagesStoraged });
       }
     }
   }, {
@@ -1446,6 +1512,7 @@ var Instructions = function (_React$Component) {
     value: function displayMedia() {
       var _this2 = this;
 
+      // debugger
       var imagesUrls = this.state.imagesUrl;
       var position = void 0;
       var alignment = void 0;
@@ -1472,7 +1539,8 @@ var Instructions = function (_React$Component) {
             null,
             _react2.default.createElement(
               'button',
-              { value: index, className: 'project-submit', onClick: function onClick() {
+              { value: index, className: 'project-submit', onClick: function onClick(e) {
+                  e.preventDefault();
                   boundRemove();
                 } },
               'Remove Image'
@@ -1480,7 +1548,7 @@ var Instructions = function (_React$Component) {
           )
         );
       });
-      debugger;
+      // debugger
       if (images.length > 2) {
         images1 = images.slice(0, 2);
         images2 = images.slice(2);
@@ -2673,6 +2741,8 @@ var ProjectForm = function (_React$Component) {
             projectId: instruction.projectId,
             key: keyValue,
             media: instruction.media,
+            images: instruction.images,
+            imagesStorageId: instruction.imagesStorageId,
             instructionBodiesState: _this7.instructionBodiesState.bind(_this7),
             removeInstruction: _this7.removeInstruction.bind(_this7),
             instructionPhotoUploadCheck: _this7.instructionPhotoUploadCheck.bind(_this7)
@@ -3119,7 +3189,8 @@ var ProjectShow = function (_React$Component) {
             title: instruction.title,
             projectId: instruction.projectId,
             key: instruction.instructionStep,
-            media: instruction.media
+            media: instruction.media,
+            images: instruction.images
           });
         });
       } else {
@@ -3445,30 +3516,15 @@ var mstp = function mstp(state, ownProps) {
 
   var projectId = ownProps.match.params.projectId;
 
-  // const instructionsArray = Object.values(state.entities.instructions).filter((instruction) =>{
-  //   return instruction.projectId === Number(projectId);
-  // });
-  // const sortedInstructions = instructionsArray.sort((x,y) => {
-  //   return  x.instructionStep - y.instructionStep;
-  // });
-
   var commentsArray = Object.values(state.entities.comments).filter(function (comment) {
     return comment.projectId === Number(projectId);
   });
-  // const sortedComments = commentsArray.sort((x,y) => {
-  //   return  x.id - y.id;
-  // });
   var userId = state.session.id;
   var project = state.entities.projects[ownProps.match.params.projectId] || {};
-  // project['newComment'] = false;
-  // project['commentBody'] = '';
-  // project['edit'] = null;
-  // project['commentError'] = null;
   return {
     formType: 'Show Project',
     currentUserId: userId,
     ownsProject: userId === project.authorId,
-    // instructions: state.entities.instructions,
     comments: commentsArray,
     errors: state.errors.project
   };
@@ -4824,6 +4880,7 @@ var instructionReducer = function instructionReducer() {
       newState = (0, _merge3.default)({}, state, action.instructions);
       return newState;
     case Instruction_Actions.FETCH_INSTRUCTION:
+
       newState = (0, _merge3.default)({}, state, _defineProperty({}, action.instruction.id, action.instruction));
       return newState;
     case Instruction_Actions.REMOVE_INSTRUCTION:

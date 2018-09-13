@@ -287,6 +287,8 @@ class ProjectForm extends React.Component{
                   projectId={instruction.projectId}
                   key={keyValue}
                   media={instruction.media}
+                  images={instruction.images}
+                  imagesStorageId={instruction.imagesStorageId}
                   instructionBodiesState={this.instructionBodiesState.bind(this)}
                   removeInstruction={this.removeInstruction.bind(this)}
                   instructionPhotoUploadCheck={this.instructionPhotoUploadCheck.bind(this)}

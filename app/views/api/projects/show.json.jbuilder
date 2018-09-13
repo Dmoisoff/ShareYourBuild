@@ -28,11 +28,17 @@ json.instructions do
         end
         json.array! image_arr
       end
+      json.imagesStorageId do
+        images_id = []
+        instruction.images.each do |image|
+          images_id << image.id
+        end
+        json.array! images_id
+      end
     end
   end
 end
 
-# instructions.sort! {|x,y| x.instructionStep <=> y.instructionStep }
 
 if !@project.comments
   json.comment = {}

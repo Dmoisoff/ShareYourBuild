@@ -93,6 +93,7 @@ class ProjectShow extends React.Component {
               projectId={instruction.projectId}
               key={instruction.instructionStep}
               media={instruction.media}
+              images={instruction.images}
               />;
           });
     }else{

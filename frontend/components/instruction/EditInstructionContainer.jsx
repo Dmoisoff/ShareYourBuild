@@ -4,6 +4,7 @@ import Instructions from './Instructions';
 import { updateInstruction } from './../../actions/instructions_actions';
 
 const mstp = (state, ownProps) => {
+  // debugger
     return({
       instruction: {
         id: ownProps.id,
@@ -12,6 +13,8 @@ const mstp = (state, ownProps) => {
         media: ownProps.media,
         mediaUrl: ownProps.media,
         images: ownProps.images,
+        imagesUrl: ownProps.images,
+        imagesStorageId: ownProps.imagesStorageId,
         uploadStatus: ownProps.uploadStatus,
         step: ownProps.step,
         projectId: ownProps.projectId,
