@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchProject, updateProject, createProject, CLEAR_ERRORS } from './../../actions/projects_actions';
 import ProjectForm from './ProjectForm';
-import { deleteInstruction, deleteInstructions } from './../../actions/instructions_actions';
+import { deleteInstruction, deleteInstructions, updateInstructions } from './../../actions/instructions_actions';
 
 
 
@@ -61,7 +61,9 @@ const mstp = (state, ownProps) =>{
     instructionBodies: [],
     instructionIssues: [],
     removedInstructions: [],
-    key:0
+    key:0,
+    agrogatedInstruction: false,
+    instructionData: []
     };
 
   const currentProject = state.entities.projects[ownProps.match.params.projectId] || defaultProject;
@@ -92,7 +94,9 @@ const mstp = (state, ownProps) =>{
       instructionBodies: [],
       instructionIssues: [],
       removedInstructions: [],
-      key:0
+      key:0,
+      agrogatedInstruction: false,
+      instructionData: []
     },
     errors: state.errors.project,
     formType: 'Update Project'
@@ -105,7 +109,8 @@ const mdtp = (dispatch) => {
     fetchProject: (id) =>  dispatch(fetchProject(id)),
     createProject: (instruction) =>  dispatch(createProject(instruction)),
     deleteInstruction: (ids) => dispatch(deleteInstructions(ids)),
-    clearProjectErrors: () => dispatch({type: CLEAR_ERRORS})
+    clearProjectErrors: () => dispatch({type: CLEAR_ERRORS}),
+    updateInstructions: (instructions, projectId) => dispatch(updateInstructions(instructions, projectId))
   });
 };
 

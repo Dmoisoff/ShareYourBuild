@@ -40,5 +40,27 @@ export const deleteInstruction = (id) => {
   });
 };
 
+export const updateInstructions = (instructions, id) => {
+  debugger
+  return $.ajax({
+    method: 'PATCH',
+    url: `api/instructions/${id}`,
+    data: instructions,
+    contentType: false,
+    processData: false
+  });
+};
+
+export const createInstructions = (instructions,id) => {
+  debugger
+  return $.ajax({
+    method: 'POST',
+    url: `/api/projects/${id}/instructions`,
+    data: instructions,
+    contentType: false,
+    processData: false
+  });
+};
+
 
 // {instruction: {project_id: 88, instruction_step: 7, body:'test'}}

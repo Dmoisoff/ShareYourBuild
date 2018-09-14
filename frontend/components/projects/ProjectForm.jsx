@@ -39,6 +39,7 @@ class ProjectForm extends React.Component{
 
   removeInstruction(instructionStep){
     const instructions = this.state.instructions;
+    const reorderedInstructionData = this.state.instructionData.slice(0, instructionStep-1).concat(this.state.instructionData.slice(instructionStep));
     const removedInstruction = instructions[instructionStep-1].props.id;
     const newOrderInstructions = instructions.slice(0, instructionStep-1).concat(instructions.slice(instructionStep));
     const modifiedStepNumberInstructions = newOrderInstructions.map((instruction,i) => {
@@ -64,6 +65,7 @@ class ProjectForm extends React.Component{
     });
     if(this.state.newlyAddedSteps.includes(instructionStep)){
       this.setState({
+        instructionData: reorderedInstructionData,
         newlyAddedSteps: this.state.newlyAddedSteps.filter((num) =>{
           if(num !== instructionStep){
             return num;
@@ -76,6 +78,7 @@ class ProjectForm extends React.Component{
       });
     }else if(removedInstruction){
       this.setState({
+        instructionData: reorderedInstructionData,
         instructionBodies: reorderedNewInstructionBodyStatus,
         removedInstructions: [...this.state.removedInstructions,removedInstruction],
         instructions: modifiedStepNumberInstructions,
@@ -83,12 +86,23 @@ class ProjectForm extends React.Component{
       });
     }else{
       this.setState({
+        instructionData: reorderedInstructionData,
         instructionBodies: reorderedNewInstructionBodyStatus,
         instructions: modifiedStepNumberInstructions,
         stepNum: (this.state.stepNum-1)
       });
     }
   }
+
+  aggregateInstructionData(instructionData){
+    debugger
+    const index = instructionData.get('instruction[instruction_step]');
+    let instructions = this.state.instructionData;
+    instructions[index - 1] = instructionData;
+    instructions = instructions.slice(0, this.state.instructions.length);
+    this.setState({instructionData: [...instructions]});
+  }
+
 
   handleSubmit(e){
     e.preventDefault();
@@ -115,7 +129,8 @@ class ProjectForm extends React.Component{
         this.props.submitProject(formData, projectId).then((payload) => {
           const projectId = payload.project.id;
           this.setState({projectId: projectId});
-          this.redirect(projectId);
+          this.props.submitInstructions(this.state.instructionData, this.state.projectId).then(() => this.redirect(payload.project.id));
+          // this.redirect(projectId);
         });
       }else if (this.props.formType === 'Update Project') {
         const that = this;
@@ -140,7 +155,10 @@ class ProjectForm extends React.Component{
               });
               updatedInstructions = updatedInstructions.concat(newInstructions);
               that.setState({instructions: updatedInstructions});
-              that.redirect(payload.project.id);
+              // instruction ajax call
+
+              that.props.submitInstructions(that.state.instructionData, that.state.projectId).then(() => that.redirect(payload.project.id));
+              // that.redirect(payload.project.id);
             });
           }else{
             newInstructions = newInstructions.map((instruction) => {
@@ -152,8 +170,10 @@ class ProjectForm extends React.Component{
               return instruction;
             });
             updatedInstructions = updatedInstructions.concat(newInstructions);
-            that.setState({instructions: updatedInstructions, projectId: projectId}, () => {that.redirect(payload.project.id);
-            });
+            that.setState({instructions: updatedInstructions, projectId: projectId});
+            that.props.submitInstructions(that.state.instructionData, that.state.projectId).then(() => that.redirect(payload.project.id));
+            // that.setState({instructions: updatedInstructions, projectId: projectId}, () => {that.redirect(payload.project.id);
+            // });
           }
         });
       }
@@ -262,6 +282,7 @@ class ProjectForm extends React.Component{
               instructionBodiesState={this.instructionBodiesState.bind(this)}
               removeInstruction={this.removeInstruction.bind(this)}
               instructionPhotoUploadCheck={this.instructionPhotoUploadCheck.bind(this)}
+              aggregateInstructionData={this.aggregateInstructionData.bind(this)}
               />
           ],
           key: keyValue
@@ -292,6 +313,7 @@ class ProjectForm extends React.Component{
                   instructionBodiesState={this.instructionBodiesState.bind(this)}
                   removeInstruction={this.removeInstruction.bind(this)}
                   instructionPhotoUploadCheck={this.instructionPhotoUploadCheck.bind(this)}
+                  aggregateInstructionData={this.aggregateInstructionData.bind(this)}
                   />;
         });
        this.setState({instructions: instructions, key: keyValue});

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import React from 'react';
 import { connect } from 'react-redux';
 import { createProject, CLEAR_ERRORS } from './../../actions/projects_actions';
+import { createInstructions } from './../../actions/projects_actions';
 import { projectErrorsReducer } from './../../reducers/project_errors_reducer';
 import ProjectForm from './ProjectForm';
 
@@ -24,7 +25,9 @@ const mstp = (state) => {
       instructionBodies: [],
       instructionIssues: [],
       removedInstructions: [],
-      key:0
+      key:0,
+      agrogatedInstruction: false,
+      instructionData: []
      },
     formType: 'New Project',
     errors: state.errors.project,
@@ -34,7 +37,8 @@ const mstp = (state) => {
 const mdtp = (dispatch) => {
   return({
     submitProject: (project) => dispatch(createProject(project)),
-    clearProjectErrors: () => dispatch({type: CLEAR_ERRORS})
+    clearProjectErrors: () => dispatch({type: CLEAR_ERRORS}),
+    createInstructions: (instructions, projectId) => dispatch(createInstructions(instructions, projectId))
   });
 };
 

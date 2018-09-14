@@ -3,6 +3,7 @@ require 'open-uri'
 class Api::InstructionsController < ApplicationController
 
   def create
+    debugger
     @instruction = Instruction.new(instruction_params)
     images = params[:instruction][:images].values
     if images
@@ -15,6 +16,20 @@ class Api::InstructionsController < ApplicationController
     end
   end
 
+  # def create
+      # instructions = params[:instruction][]
+  #   @instruction = Instruction.new(instruction_params)
+  #   images = params[:instruction][:images].values
+  #   if images
+  #     @instruction.images.attach(images)
+  #   end
+  #   if @instruction.save
+  #     render "api/instructions/show"
+  #   else
+  #     render json: @instruction.errors.full_messages, status: 422
+  #   end
+  # end
+
   def index
     @instructions = Instruction.where(project_id: params[:project_id])
     render "api/instructions/index"
@@ -25,6 +40,7 @@ class Api::InstructionsController < ApplicationController
   end
 
   def update
+    debugger
     saved_images_id = []
     updated_images = []
     @instruction = Instruction.find(params[:id])

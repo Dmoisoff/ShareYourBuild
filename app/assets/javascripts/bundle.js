@@ -1401,8 +1401,9 @@ var Instructions = function (_React$Component) {
 
     _this.state = _this.props.instruction;
     _this.updateTitle = _this.updateTitle.bind(_this);
-    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    _this.passBackInfo = _this.passBackInfo.bind(_this);
     _this.removeMedia = _this.removeMedia.bind(_this);
+    _this.passBackInfo();
     return _this;
   }
 
@@ -1425,13 +1426,13 @@ var Instructions = function (_React$Component) {
     }
   }, {
     key: 'componentDidUpdate',
-    value: function componentDidUpdate(prevProps) {
+    value: function componentDidUpdate(prevProps, prevState) {
       if (this.props.formType === 'Update Instruction' && !this.state.rendered) {
         if (this.props.uploadStatus) {
-          this.handleSubmit();
+          this.passBackInfo();
         }
-      } else if (this.props.projectId !== prevProps.projectId) {
-        this.handleSubmit();
+      } else if (this.props !== prevProps || this.state !== prevState) {
+        this.passBackInfo();
       }
     }
   }, {
@@ -1457,12 +1458,12 @@ var Instructions = function (_React$Component) {
       }
     }
   }, {
-    key: 'handleSubmit',
-    value: function handleSubmit() {
-      var projectId = this.props.projectId;
+    key: 'passBackInfo',
+    value: function passBackInfo() {
+      // const projectId = this.props.projectId;
       var formData = new FormData();
       formData.append('instruction[title]', this.state.title);
-      formData.append('instruction[project_id]', this.props.projectId);
+      // formData.append('instruction[project_id]', this.props.projectId);
       formData.append('instruction[instruction_step]', this.state.step);
       formData.append('instruction[body]', this.state.body);
       if (this.state.media) {
@@ -1481,12 +1482,15 @@ var Instructions = function (_React$Component) {
           });
         }
       }
+      debugger;
       if (!this.state.rendered && this.props.formType === 'Update Instruction') {
-        this.setState({ rendered: true });
-        this.props.submitInstruction(formData, this.state.id);
+        // this.setState({rendered: true});
+        this.props.aggregateInstructionData(formData);
+        // this.props.submitInstruction(formData, this.state.id);
       } else if (!this.state.rendered) {
-        this.setState({ rendered: true });
-        this.props.submitInstruction(formData, projectId);
+        // this.setState({rendered: true});
+        this.props.aggregateInstructionData(formData);
+        // this.props.submitInstruction(formData, projectId);
       }
     }
   }, {
@@ -1919,7 +1923,9 @@ var mstp = function mstp(state, ownProps) {
     instructionBodies: [],
     instructionIssues: [],
     removedInstructions: [],
-    key: 0
+    key: 0,
+    agrogatedInstruction: false,
+    instructionData: []
   };
 
   var currentProject = state.entities.projects[ownProps.match.params.projectId] || defaultProject;
@@ -1949,7 +1955,9 @@ var mstp = function mstp(state, ownProps) {
       instructionBodies: [],
       instructionIssues: [],
       removedInstructions: [],
-      key: 0
+      key: 0,
+      agrogatedInstruction: false,
+      instructionData: []
     },
     errors: state.errors.project,
     formType: 'Update Project'
@@ -1972,6 +1980,9 @@ var mdtp = function mdtp(dispatch) {
     },
     clearProjectErrors: function clearProjectErrors() {
       return dispatch({ type: _projects_actions.CLEAR_ERRORS });
+    },
+    updateInstructions: function updateInstructions(instructions, projectId) {
+      return dispatch((0, _instructions_actions.updateInstructions)(instructions, projectId));
     }
   };
 };
@@ -2333,7 +2344,9 @@ var mstp = function mstp(state) {
       instructionBodies: [],
       instructionIssues: [],
       removedInstructions: [],
-      key: 0
+      key: 0,
+      agrogatedInstruction: false,
+      instructionData: []
     },
     formType: 'New Project',
     errors: state.errors.project
@@ -2347,6 +2360,9 @@ var mdtp = function mdtp(dispatch) {
     },
     clearProjectErrors: function clearProjectErrors() {
       return dispatch({ type: _projects_actions.CLEAR_ERRORS });
+    },
+    createInstructions: function createInstructions(instructions, projectId) {
+      return dispatch((0, _projects_actions.createInstructions)(instructions, projectId));
     }
   };
 };
@@ -2445,6 +2461,7 @@ var ProjectForm = function (_React$Component) {
     key: 'removeInstruction',
     value: function removeInstruction(instructionStep) {
       var instructions = this.state.instructions;
+      var reorderedInstructionData = this.state.instructionData.slice(0, instructionStep - 1).concat(this.state.instructionData.slice(instructionStep));
       var removedInstruction = instructions[instructionStep - 1].props.id;
       var newOrderInstructions = instructions.slice(0, instructionStep - 1).concat(instructions.slice(instructionStep));
       var modifiedStepNumberInstructions = newOrderInstructions.map(function (instruction, i) {
@@ -2470,6 +2487,7 @@ var ProjectForm = function (_React$Component) {
       });
       if (this.state.newlyAddedSteps.includes(instructionStep)) {
         this.setState({
+          instructionData: reorderedInstructionData,
           newlyAddedSteps: this.state.newlyAddedSteps.filter(function (num) {
             if (num !== instructionStep) {
               return num;
@@ -2482,6 +2500,7 @@ var ProjectForm = function (_React$Component) {
         });
       } else if (removedInstruction) {
         this.setState({
+          instructionData: reorderedInstructionData,
           instructionBodies: reorderedNewInstructionBodyStatus,
           removedInstructions: [].concat(_toConsumableArray(this.state.removedInstructions), [removedInstruction]),
           instructions: modifiedStepNumberInstructions,
@@ -2489,11 +2508,22 @@ var ProjectForm = function (_React$Component) {
         });
       } else {
         this.setState({
+          instructionData: reorderedInstructionData,
           instructionBodies: reorderedNewInstructionBodyStatus,
           instructions: modifiedStepNumberInstructions,
           stepNum: this.state.stepNum - 1
         });
       }
+    }
+  }, {
+    key: 'aggregateInstructionData',
+    value: function aggregateInstructionData(instructionData) {
+      debugger;
+      var index = instructionData.get('instruction[instruction_step]');
+      var instructions = this.state.instructionData;
+      instructions[index - 1] = instructionData;
+      instructions = instructions.slice(0, this.state.instructions.length);
+      this.setState({ instructionData: [].concat(_toConsumableArray(instructions)) });
     }
   }, {
     key: 'handleSubmit',
@@ -2524,7 +2554,10 @@ var ProjectForm = function (_React$Component) {
           this.props.submitProject(formData, projectId).then(function (payload) {
             var projectId = payload.project.id;
             _this3.setState({ projectId: projectId });
-            _this3.redirect(projectId);
+            _this3.props.submitInstructions(_this3.state.instructionData, _this3.state.projectId).then(function () {
+              return _this3.redirect(payload.project.id);
+            });
+            // this.redirect(projectId);
           });
         } else if (this.props.formType === 'Update Project') {
           var that = this;
@@ -2549,7 +2582,12 @@ var ProjectForm = function (_React$Component) {
                 });
                 updatedInstructions = updatedInstructions.concat(newInstructions);
                 that.setState({ instructions: updatedInstructions });
-                that.redirect(payload.project.id);
+                // instruction ajax call
+
+                that.props.submitInstructions(that.state.instructionData, that.state.projectId).then(function () {
+                  return that.redirect(payload.project.id);
+                });
+                // that.redirect(payload.project.id);
               });
             } else {
               newInstructions = newInstructions.map(function (instruction) {
@@ -2561,9 +2599,12 @@ var ProjectForm = function (_React$Component) {
                 return instruction;
               });
               updatedInstructions = updatedInstructions.concat(newInstructions);
-              that.setState({ instructions: updatedInstructions, projectId: projectId }, function () {
-                that.redirect(payload.project.id);
+              that.setState({ instructions: updatedInstructions, projectId: projectId });
+              that.props.submitInstructions(that.state.instructionData, that.state.projectId).then(function () {
+                return that.redirect(payload.project.id);
               });
+              // that.setState({instructions: updatedInstructions, projectId: projectId}, () => {that.redirect(payload.project.id);
+              // });
             }
           });
         }
@@ -2714,7 +2755,8 @@ var ProjectForm = function (_React$Component) {
             step: this.state.stepNum,
             instructionBodiesState: this.instructionBodiesState.bind(this),
             removeInstruction: this.removeInstruction.bind(this),
-            instructionPhotoUploadCheck: this.instructionPhotoUploadCheck.bind(this)
+            instructionPhotoUploadCheck: this.instructionPhotoUploadCheck.bind(this),
+            aggregateInstructionData: this.aggregateInstructionData.bind(this)
           })]),
           key: keyValue
         });
@@ -2745,7 +2787,8 @@ var ProjectForm = function (_React$Component) {
             imagesStorageId: instruction.imagesStorageId,
             instructionBodiesState: _this7.instructionBodiesState.bind(_this7),
             removeInstruction: _this7.removeInstruction.bind(_this7),
-            instructionPhotoUploadCheck: _this7.instructionPhotoUploadCheck.bind(_this7)
+            instructionPhotoUploadCheck: _this7.instructionPhotoUploadCheck.bind(_this7),
+            aggregateInstructionData: _this7.aggregateInstructionData.bind(_this7)
           });
         });
         this.setState({ instructions: instructions, key: keyValue });
@@ -5413,6 +5456,28 @@ var deleteInstruction = exports.deleteInstruction = function deleteInstruction(i
   return $.ajax({
     method: 'DELETE',
     url: 'api/instructions/' + id
+  });
+};
+
+var updateInstructions = exports.updateInstructions = function updateInstructions(instructions, id) {
+  debugger;
+  return $.ajax({
+    method: 'PATCH',
+    url: 'api/instructions/' + id,
+    data: instructions,
+    contentType: false,
+    processData: false
+  });
+};
+
+var createInstructions = exports.createInstructions = function createInstructions(instructions, id) {
+  debugger;
+  return $.ajax({
+    method: 'POST',
+    url: '/api/projects/' + id + '/instructions',
+    data: instructions,
+    contentType: false,
+    processData: false
   });
 };
 

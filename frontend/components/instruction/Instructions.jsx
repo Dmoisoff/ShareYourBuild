@@ -8,8 +8,9 @@ class Instructions extends React.Component{
     super(props);
     this.state = this.props.instruction;
     this.updateTitle = this.updateTitle.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.passBackInfo = this.passBackInfo.bind(this);
     this.removeMedia = this.removeMedia.bind(this);
+    this.passBackInfo();
   }
 
   updateTitle(e){
@@ -27,13 +28,13 @@ class Instructions extends React.Component{
     this.setState({body: input});
   }
 
-  componentDidUpdate(prevProps){
+  componentDidUpdate(prevProps, prevState){
     if (this.props.formType === 'Update Instruction' && !this.state.rendered) {
       if(this.props.uploadStatus){
-        this.handleSubmit();
+        this.passBackInfo();
       }
-    }else if(this.props.projectId !== prevProps.projectId){
-     this.handleSubmit();
+    }else if(this.props !== prevProps || this.state !==  prevState){
+     this.passBackInfo();
     }
   }
 
@@ -55,11 +56,11 @@ class Instructions extends React.Component{
       }
     }
 
-    handleSubmit(){
-      const projectId = this.props.projectId;
+    passBackInfo(){
+      // const projectId = this.props.projectId;
       const formData = new FormData();
       formData.append('instruction[title]', this.state.title);
-      formData.append('instruction[project_id]', this.props.projectId);
+      // formData.append('instruction[project_id]', this.props.projectId);
       formData.append('instruction[instruction_step]', this.state.step);
       formData.append('instruction[body]', this.state.body);
       if(this.state.media){
@@ -78,12 +79,15 @@ class Instructions extends React.Component{
           });
         }
       }
+      debugger
       if(!this.state.rendered && this.props.formType === 'Update Instruction'){
-        this.setState({rendered: true});
-        this.props.submitInstruction(formData, this.state.id);
+        // this.setState({rendered: true});
+        this.props.aggregateInstructionData(formData);
+        // this.props.submitInstruction(formData, this.state.id);
       }else if(!this.state.rendered){
-        this.setState({rendered: true});
-        this.props.submitInstruction(formData, projectId);
+        // this.setState({rendered: true});
+        this.props.aggregateInstructionData(formData);
+        // this.props.submitInstruction(formData, projectId);
       }
     }
 
@@ -174,6 +178,7 @@ class Instructions extends React.Component{
      const preview2 = this.state.images.length ?
      this.displayMedia()
       : null;
+
 
 
     return(
