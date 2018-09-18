@@ -1496,7 +1496,7 @@ var Instructions = function (_React$Component) {
   }, {
     key: 'removeMedia',
     value: function removeMedia(index) {
-      // debugger
+      debugger;
       if (this.state.images.length === 1) {
         this.setState({ images: [], imagesUrl: [], imagesStorageId: [] });
       } else if (this.state.images.length - 1 === index) {
@@ -1520,8 +1520,6 @@ var Instructions = function (_React$Component) {
       var imagesUrls = this.state.imagesUrl;
       var position = void 0;
       var alignment = void 0;
-      var images1 = [];
-      var images2 = [];
       var format = 'instruction-show-image-scale';
       if (this.state.images.length === 1) {
         position = 'multiple-images-position-instruction-1';
@@ -1529,15 +1527,17 @@ var Instructions = function (_React$Component) {
       } else {
         position = 'multiple-images-position-instruction-2';
       }
-      var images = this.state.images.map(function (image, index) {
+      var imagesUrl = this.state.imagesUrl.slice(-4);
+      debugger;
+      imagesUrl = imagesUrl.map(function (imageUrl, index) {
         var boundRemove = _this2.removeMedia.bind(_this2, index);
-        if (_this2.state.images.length !== 1) {
+        if (_this2.state.imagesUrl.length !== 1) {
           alignment = 'multiple-images-aligment-instruction-' + index;
         }
         return _react2.default.createElement(
           'div',
           { key: index, className: alignment },
-          _react2.default.createElement('img', { className: format, src: imagesUrls[index] }),
+          _react2.default.createElement('img', { className: format, src: imageUrl }),
           _react2.default.createElement(
             'div',
             null,
@@ -1552,13 +1552,9 @@ var Instructions = function (_React$Component) {
           )
         );
       });
-      // debugger
-      if (images.length > 2) {
-        images1 = images.slice(0, 2);
-        images2 = images.slice(2);
-      } else {
-        images1 = images;
-      }
+      var imagesUrlGroup1 = imagesUrl.slice(0, 2);
+      var imagesUrlGroup2 = imagesUrl.slice(2);
+
       return _react2.default.createElement(
         'div',
         { className: 'project-show-image-placement' },
@@ -1570,12 +1566,12 @@ var Instructions = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: position },
-          images1
+          imagesUrlGroup1
         ),
         _react2.default.createElement(
           'div',
           { className: position },
-          images2
+          imagesUrlGroup2
         )
       );
     }
@@ -1584,14 +1580,26 @@ var Instructions = function (_React$Component) {
     value: function uploadFile(e) {
       var _this3 = this;
 
-      var file = e.currentTarget.files[0];
-      var fileReader = new FileReader();
-      fileReader.onloadend = function () {
-        _this3.setState({ media: file, mediaUrl: fileReader.result, images: [].concat(_toConsumableArray(_this3.state.images), [file]), imagesUrl: [].concat(_toConsumableArray(_this3.state.imagesUrl), [fileReader.result]) });
-      };
-      if (file) {
-        fileReader.readAsDataURL(file);
+      debugger;
+      var files = Object.values(e.currentTarget.files);
+      if (files.length > 4) {
+        files = files.slice(0, 4);
       }
+      files.forEach(function (file) {
+        var fileReader = new FileReader();
+        fileReader.onloadend = function () {
+          _this3.setState({ images: [].concat(_toConsumableArray(_this3.state.images), [file]), imagesUrl: [].concat(_toConsumableArray(_this3.state.imagesUrl), [fileReader.result]) });
+        };
+        fileReader.readAsDataURL(file);
+      });
+      // const file = e.currentTarget.files[0];
+      // const fileReader = new FileReader();
+      // fileReader.onloadend = () => {
+      //   this.setState({media: file, mediaUrl: fileReader.result, images: [...this.state.images, file], imagesUrl: [...this.state.imagesUrl, fileReader.result]});
+      // };
+      // if(file){
+      //   fileReader.readAsDataURL(file);
+      // }
     }
   }, {
     key: 'render',
@@ -1742,7 +1750,8 @@ var mstp = function mstp(state, ownProps) {
       uploadStatus: false,
       step: ownProps.step,
       projectId: ownProps.projectId,
-      rendered: false
+      rendered: false,
+      imagesStorageId: []
       // instructionBody: false
     },
     formType: 'New Instruction',
@@ -2554,6 +2563,7 @@ var ProjectForm = function (_React$Component) {
           this.props.submitProject(formData, projectId).then(function (payload) {
             var projectId = payload.project.id;
             _this3.setState({ projectId: projectId });
+            debugger;
             _this3.props.submitInstructions(_this3.state.instructionData, _this3.state.projectId).then(function () {
               return _this3.redirect(payload.project.id);
             });
@@ -5291,9 +5301,9 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // testing
-  window.getState = store.getState;
-  window.dispatch = store.dispatch;
-  window.searchProjects = _search_actions.searchProjects;
+  // window.getState = store.getState;
+  // window.dispatch = store.dispatch;
+  // window.searchProjects = searchProjects;
   // window.fetchProject = fetchProject;
   // window.fetchInstruction = fetchInstruction;
   // window.createInstruction = createInstruction;

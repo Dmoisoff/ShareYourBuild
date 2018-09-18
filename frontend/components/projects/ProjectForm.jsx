@@ -129,6 +129,7 @@ class ProjectForm extends React.Component{
         this.props.submitProject(formData, projectId).then((payload) => {
           const projectId = payload.project.id;
           this.setState({projectId: projectId});
+          debugger
           this.props.submitInstructions(this.state.instructionData, this.state.projectId).then(() => this.redirect(payload.project.id));
           // this.redirect(projectId);
         });

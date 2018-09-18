@@ -16,6 +16,7 @@ const mstp = (state, ownProps) => {
         step: ownProps.step,
         projectId: ownProps.projectId,
         rendered: false,
+        imagesStorageId: []
         // instructionBody: false
        },
       formType: 'New Instruction',

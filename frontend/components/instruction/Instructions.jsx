@@ -92,7 +92,7 @@ class Instructions extends React.Component{
     }
 
     removeMedia(index){
-      // debugger
+      debugger
       if(this.state.images.length === 1){
         this.setState({images: [], imagesUrl: [], imagesStorageId: []});
       }else if (this.state.images.length - 1 === index) {
@@ -113,8 +113,6 @@ class Instructions extends React.Component{
       const imagesUrls = this.state.imagesUrl;
       let position;
       let alignment;
-      let images1 = [];
-      let images2 = [];
       const format = 'instruction-show-image-scale';
       if(this.state.images.length === 1){
         position = 'multiple-images-position-instruction-1';
@@ -122,48 +120,58 @@ class Instructions extends React.Component{
       }else{
         position = 'multiple-images-position-instruction-2';
       }
-      const images = this.state.images.map((image, index) => {
+      let imagesUrl = this.state.imagesUrl.slice(-4);
+      debugger
+      imagesUrl = imagesUrl.map((imageUrl, index) => {
         let boundRemove = this.removeMedia.bind(this, index);
-        if(this.state.images.length !== 1){
+        if(this.state.imagesUrl.length !== 1){
           alignment = 'multiple-images-aligment-instruction-' + index;
         }
         return <div key={index} className={alignment}>
-          <img className={format} src={imagesUrls[index]} />
+          <img className={format} src={imageUrl} />
           <div>
             <button value={index} className='project-submit' onClick={(e) => { e.preventDefault();
                 boundRemove();}}>Remove Image</button>
           </div>
         </div>;
       });
-      // debugger
-      if(images.length > 2){
-        images1 = images.slice(0,2);
-        images2 = images.slice(2);
-      }else{
-        images1 = images;
-      }
+        const imagesUrlGroup1 = imagesUrl.slice(0,2);
+        const imagesUrlGroup2 = imagesUrl.slice(2);
+
       return (
         <div className='project-show-image-placement'>
           <p className='center'>Picture Preview</p>
           <div className={position}>
-            {images1}
+            {imagesUrlGroup1}
           </div>
           <div className={position}>
-            {images2}
+            {imagesUrlGroup2}
           </div>
         </div>
       );
     }
 
     uploadFile(e){
-      const file = e.currentTarget.files[0];
-      const fileReader = new FileReader();
-      fileReader.onloadend = () => {
-        this.setState({media: file, mediaUrl: fileReader.result, images: [...this.state.images, file], imagesUrl: [...this.state.imagesUrl, fileReader.result]});
-      };
-      if(file){
-        fileReader.readAsDataURL(file);
+      debugger
+      let files = Object.values(e.currentTarget.files);
+      if(files.length > 4){
+        files = files.slice(0,4);
       }
+      files.forEach((file) => {
+        const fileReader = new FileReader();
+        fileReader.onloadend = () => {
+          this.setState({images: [...this.state.images, file], imagesUrl: [...this.state.imagesUrl, fileReader.result]});
+        };
+        fileReader.readAsDataURL(file);
+      });
+      // const file = e.currentTarget.files[0];
+      // const fileReader = new FileReader();
+      // fileReader.onloadend = () => {
+      //   this.setState({media: file, mediaUrl: fileReader.result, images: [...this.state.images, file], imagesUrl: [...this.state.imagesUrl, fileReader.result]});
+      // };
+      // if(file){
+      //   fileReader.readAsDataURL(file);
+      // }
     }
 
   render(){

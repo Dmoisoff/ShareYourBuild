@@ -1,7 +1,6 @@
 import React from 'react';
 import GreetingContainer from './greeting/greeting_container';
 import { Route, Switch, Link, Redirect, withRouter } from 'react-router-dom';
-
 import LoginFormContainer from './session/LoginFormContainer';
 import SignupFormContainer from './session/SignupFormContainer';
 import NewProjectContainer from './projects/NewProjectContainer';

@@ -27,9 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // testing
-  window.getState = store.getState;
-  window.dispatch = store.dispatch;
-  window.searchProjects = searchProjects;
+  // window.getState = store.getState;
+  // window.dispatch = store.dispatch;
+  // window.searchProjects = searchProjects;
   // window.fetchProject = fetchProject;
   // window.fetchInstruction = fetchInstruction;
   // window.createInstruction = createInstruction;
