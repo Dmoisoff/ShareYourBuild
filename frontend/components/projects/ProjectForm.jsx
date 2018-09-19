@@ -125,16 +125,17 @@ class ProjectForm extends React.Component{
       if(this.state.pictureFile){
         formData.append('project[picture]', this.state.pictureFile);
       }
+      const that = this;
       if(this.props.formType === 'New Project'){
         this.props.submitProject(formData, projectId).then((payload) => {
           const projectId = payload.project.id;
-          this.setState({projectId: projectId});
+          that.setState({projectId: projectId});
           debugger
-          this.props.submitInstructions(this.state.instructionData, this.state.projectId).then(() => this.redirect(payload.project.id));
+          that.props.submitInstructions(that.state.instructionData, that.state.projectId).then(() => that.redirect(payload.project.id));
           // this.redirect(projectId);
         });
       }else if (this.props.formType === 'Update Project') {
-        const that = this;
+        // const that = this;
         that.props.submitProject(formData, projectId).then((payload) => {
           let newInstructions = [];
           let updatedInstructions = [];

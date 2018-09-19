@@ -110,7 +110,6 @@ class Instructions extends React.Component{
 
     displayMedia(){
       // debugger
-      const imagesUrls = this.state.imagesUrl;
       let position;
       let alignment;
       const format = 'instruction-show-image-scale';
@@ -160,7 +159,9 @@ class Instructions extends React.Component{
       files.forEach((file) => {
         const fileReader = new FileReader();
         fileReader.onloadend = () => {
-          this.setState({images: [...this.state.images, file], imagesUrl: [...this.state.imagesUrl, fileReader.result]});
+          const images = this.state.images.slice(-3);
+          const imagesUrl = this.state.imagesUrl.slice(-3);
+          this.setState({images: [...images, file], imagesUrl: [...imagesUrl, fileReader.result]});
         };
         fileReader.readAsDataURL(file);
       });

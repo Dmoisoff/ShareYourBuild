@@ -64,5 +64,21 @@ export const deleteInstructions = (ids) => dispatch => {
     );
   };
 
+export const createInstructions = (instructions,id) => {
+  return dispatch => {
+    return Instruction_Util.createInstructions(instructions,id).then((instruction) =>{
+      return dispatch({
+        type: FETCH_INSTRUCTION,
+        instruction: instruction
+      });
+    }, (errors) => {
+      return dispatch({
+        type: RECEIVE_INSTRUCTION_ERRORS,
+        errors: errors.responseJSON
+      });
+    });
+  };
+};
+
 
 // {instruction: {project_id: 88, instruction_step: 10, body: "5", media_url: nil}}

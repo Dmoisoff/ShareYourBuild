@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import React from 'react';
 import { connect } from 'react-redux';
 import { createProject, CLEAR_ERRORS } from './../../actions/projects_actions';
-import { createInstructions } from './../../actions/projects_actions';
+import { createInstructions } from './../../actions/instructions_actions';
 import { projectErrorsReducer } from './../../reducers/project_errors_reducer';
 import ProjectForm from './ProjectForm';
 
@@ -38,7 +38,11 @@ const mdtp = (dispatch) => {
   return({
     submitProject: (project) => dispatch(createProject(project)),
     clearProjectErrors: () => dispatch({type: CLEAR_ERRORS}),
-    createInstructions: (instructions, projectId) => dispatch(createInstructions(instructions, projectId))
+    submitInstructions: (instructions, id) => {
+      debugger
+      return dispatch(createInstructions(instructions, id));
+    },
+    // createInstructions: (instructions, projectId) => dispatch(createInstructions(instructions, projectId))
   });
 };
 
