@@ -1476,38 +1476,39 @@ var Instructions = function (_React$Component) {
   }, {
     key: 'passBackInfo',
     value: function passBackInfo() {
-      // const projectId = this.props.projectId;
-      var formData = new FormData();
-      formData.append('instruction[title]', this.state.title);
-      // formData.append('instruction[project_id]', this.props.projectId);
-      formData.append('instruction[instruction_step]', this.state.step);
-      formData.append('instruction[body]', this.state.body);
-      if (this.state.media) {
-        formData.append('instruction[media]', this.state.media);
-      }
-      if (this.state.images.length) {
-        this.state.images.forEach(function (file, i) {
-          formData.append('instruction[images][' + i + ']', file);
-        });
-      }
-      if (this.props.formType === 'Update Instruction') {
-        // debugger
-        if (this.state.imagesStorageId.length) {
-          this.state.imagesStorageId.forEach(function (file, i) {
-            formData.append('instruction[imagesStorageId][' + i + ']', file);
-          });
-        }
-      }
-      debugger;
-      if (!this.state.rendered && this.props.formType === 'Update Instruction') {
-        // this.setState({rendered: true});
-        this.props.aggregateInstructionData(formData);
-        // this.props.submitInstruction(formData, this.state.id);
-      } else if (!this.state.rendered) {
-        // this.setState({rendered: true});
-        this.props.aggregateInstructionData(formData);
-        // this.props.submitInstruction(formData, projectId);
-      }
+      // let instruction = [
+      //   ['title', this.state.title],
+      //   ['instruction_step', this.state.step],
+      //   ['body', this.state.body],
+      //   ['images', this.state.images]
+      // ]
+      // this.props.aggregateInstructionData(instruction)
+      this.props.aggregateInstructionData(this.state);
+      //   const formData = new FormData();
+      //   formData.append('instruction[title]', this.state.title);
+      //   formData.append('instruction[instruction_step]', this.state.step);
+      //   formData.append('instruction[body]', this.state.body);
+      //   if(this.state.media){
+      //     formData.append('instruction[media]', this.state.media);
+      //   }
+      //   if(this.state.images.length){
+      //     this.state.images.forEach((file, i) => {
+      //       formData.append(`instruction[images][${i}]`, file);
+      //     });
+      //   }
+      //   if(this.props.formType === 'Update Instruction'){
+      //     if(this.state.imagesStorageId.length){
+      //       this.state.imagesStorageId.forEach((file, i) => {
+      //         formData.append(`instruction[imagesStorageId][${i}]`, file);
+      //       });
+      //     }
+      //   }
+      //   debugger
+      //   if(!this.state.rendered && this.props.formType === 'Update Instruction'){
+      //     this.props.aggregateInstructionData(formData);
+      //   }else if(!this.state.rendered){
+      //     this.props.aggregateInstructionData(formData);
+      //   }
     }
   }, {
     key: 'removeMedia',
@@ -2549,7 +2550,9 @@ var ProjectForm = function (_React$Component) {
     key: 'aggregateInstructionData',
     value: function aggregateInstructionData(instructionData) {
       debugger;
-      var index = instructionData.get('instruction[instruction_step]');
+      // const index = instructionData.get('instruction[instruction_step]');
+      // const index = instructionData[1][1];
+      var index = instructionData['step'];
       var instructions = this.state.instructionData;
       instructions[index - 1] = instructionData;
       instructions = instructions.slice(0, this.state.instructions.length);
@@ -2571,27 +2574,39 @@ var ProjectForm = function (_React$Component) {
         return;
       } else {
         var projectId = this.props.match.params.projectId;
-        var formData = new FormData();
-        formData.append('project[title]', this.state.title);
-        formData.append('project[keywords]', this.state.keyWords);
-        formData.append('project[description]', this.state.description);
+        var formDataProject = new FormData();
+        var formDataInstruction = new FormData();
+        formDataProject.append('project[title]', this.state.title);
+        formDataProject.append('project[keywords]', this.state.keyWords);
+        formDataProject.append('project[description]', this.state.description);
         if (this.state.pictureFile) {
-          formData.append('project[picture]', this.state.pictureFile);
+          formDataProject.append('project[picture]', this.state.pictureFile);
         }
+        debugger;
+        this.state.instructionData.forEach(function (instruction, i) {
+          formDataInstruction.append('instructions[' + (i + 1) + '][body]', instruction['body']);
+          formDataInstruction.append('instructions[' + (i + 1) + '][title]', instruction['title']);
+          formDataInstruction.append('instructions[' + (i + 1) + '][instruction_step]', instruction['step']);
+          if (instruction['images'].length) {
+            instruction['images'].forEach(function (file, j) {
+              formDataInstruction.append('instructions[' + (i + 1) + '][images][' + j + ']', file);
+            });
+          }
+        });
         var that = this;
         if (this.props.formType === 'New Project') {
-          this.props.submitProject(formData, projectId).then(function (payload) {
+          this.props.submitProject(formDataProject, projectId).then(function (payload) {
             var projectId = payload.project.id;
             that.setState({ projectId: projectId });
             debugger;
-            that.props.submitInstructions(that.state.instructionData, that.state.projectId).then(function () {
+            that.props.submitInstructions(formDataInstruction, that.state.projectId).then(function () {
               return that.redirect(payload.project.id);
             });
             // this.redirect(projectId);
           });
         } else if (this.props.formType === 'Update Project') {
           // const that = this;
-          that.props.submitProject(formData, projectId).then(function (payload) {
+          that.props.submitProject(formDataProject, projectId).then(function (payload) {
             var newInstructions = [];
             var updatedInstructions = [];
             if (that.state.newlyAddedSteps.length !== 0) {
