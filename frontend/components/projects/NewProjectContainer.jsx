@@ -38,11 +38,9 @@ const mdtp = (dispatch) => {
   return({
     submitProject: (project) => dispatch(createProject(project)),
     clearProjectErrors: () => dispatch({type: CLEAR_ERRORS}),
-    submitInstructions: (instructions, id) => {
-      debugger
+    createInstructions: (instructions, id) => {
       return dispatch(createInstructions(instructions, id));
     },
-    // createInstructions: (instructions, projectId) => dispatch(createInstructions(instructions, projectId))
   });
 };
 

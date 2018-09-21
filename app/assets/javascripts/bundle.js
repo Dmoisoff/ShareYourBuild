@@ -253,13 +253,7 @@ var deleteInstructions = exports.deleteInstructions = function deleteInstruction
 
 var createInstructions = exports.createInstructions = function createInstructions(instructions, id) {
   return function (dispatch) {
-    return Instruction_Util.createInstructions(instructions, id).then(function (instruction) {
-      debugger;
-      // return dispatch({
-      //   type: FETCH_INSTRUCTION,
-      //   instruction: instruction
-      // });
-    }, function (errors) {
+    return Instruction_Util.createInstructions(instructions, id).then(function (instruction) {}, function (errors) {
       return dispatch({
         type: RECEIVE_INSTRUCTION_ERRORS,
         errors: errors.responseJSON
@@ -1979,6 +1973,9 @@ var mdtp = function mdtp(dispatch) {
     },
     updateInstructions: function updateInstructions(instructions, projectId) {
       return dispatch((0, _instructions_actions.updateInstructions)(instructions, projectId));
+    },
+    createInstructions: function createInstructions(instructions, id) {
+      return dispatch((0, _instructions_actions.createInstructions)(instructions, id));
     }
   };
 };
@@ -2359,11 +2356,9 @@ var mdtp = function mdtp(dispatch) {
     clearProjectErrors: function clearProjectErrors() {
       return dispatch({ type: _projects_actions.CLEAR_ERRORS });
     },
-    submitInstructions: function submitInstructions(instructions, id) {
-      debugger;
+    createInstructions: function createInstructions(instructions, id) {
       return dispatch((0, _instructions_actions.createInstructions)(instructions, id));
     }
-    // createInstructions: (instructions, projectId) => dispatch(createInstructions(instructions, projectId))
   };
 };
 
@@ -2496,7 +2491,6 @@ var ProjectForm = function (_React$Component) {
             }
           }),
           instructionBodies: reorderedNewInstructionBodyStatus,
-          // removedInstructions: [...this.state.removedInstructions,removedInstruction],
           instructions: modifiedStepNumberInstructions,
           stepNum: this.state.stepNum - 1
         });
@@ -2580,11 +2574,13 @@ var ProjectForm = function (_React$Component) {
           this.props.submitProject(formDataProject, projectId).then(function (payload) {
             projectId = payload.project.id;
             var formDataInstruction = _this3.appendInstructions(projectId);
-            that.props.submitInstructions(formDataInstruction, projectId).then(function () {
+            that.props.createInstructions(formDataInstruction, projectId).then(function () {
               that.redirect(projectId);
             });
           });
-        } else if (this.props.formType === 'Update Project') {
+        } else {
+
+          var formDataInstruction = this.appendInstructions(projectId);
           that.props.submitProject(formDataProject, projectId).then(function (payload) {
             var newInstructions = [];
             var updatedInstructions = [];
@@ -2597,7 +2593,7 @@ var ProjectForm = function (_React$Component) {
             if (that.state.removedInstructions.length) {
               that.props.deleteInstruction(that.state.removedInstructions.toString()).then(function () {
                 newInstructions = newInstructions.map(function (instruction) {
-                  instruction = _react2.default.cloneElement(instruction, { projectId: that.state.projectId });
+                  instruction = _react2.default.cloneElement(instruction, { projectId: projectId });
                   return instruction;
                 });
                 updatedInstructions = updatedInstructions.map(function (instruction) {
@@ -2607,13 +2603,13 @@ var ProjectForm = function (_React$Component) {
                 updatedInstructions = updatedInstructions.concat(newInstructions);
                 that.setState({ instructions: updatedInstructions });
 
-                that.props.submitInstructions(that.state.instructionData, that.state.projectId).then(function () {
+                that.props.submitInstructions(formDataInstruction, projectId).then(function () {
                   return that.redirect(payload.project.id);
                 });
               });
             } else {
               newInstructions = newInstructions.map(function (instruction) {
-                instruction = _react2.default.cloneElement(instruction, { projectId: that.state.projectId });
+                instruction = _react2.default.cloneElement(instruction, { projectId: projectId });
                 return instruction;
               });
               updatedInstructions = updatedInstructions.map(function (instruction) {
@@ -2622,11 +2618,9 @@ var ProjectForm = function (_React$Component) {
               });
               updatedInstructions = updatedInstructions.concat(newInstructions);
               that.setState({ instructions: updatedInstructions, projectId: projectId });
-              that.props.submitInstructions(that.state.instructionData, that.state.projectId).then(function () {
-                return that.redirect(payload.project.id);
+              that.props.submitInstructions(formDataInstruction, projectId).then(function () {
+                return that.redirect(projectId);
               });
-              // that.setState({instructions: updatedInstructions, projectId: projectId}, () => {that.redirect(payload.project.id);
-              // });
             }
           });
         }
@@ -2875,11 +2869,9 @@ var ProjectForm = function (_React$Component) {
 
       var submitButton = this.props.formType === 'New Project' ? "Publish" : "Update";
 
-      var update = null;
-      var create = null;
+      var project = void 0;
       if (this.props.formType === 'Update Project') {
-        // this is the view for updating a new project
-        update = _react2.default.createElement(
+        project = _react2.default.createElement(
           'div',
           { className: 'project-input-format' },
           _react2.default.createElement(
@@ -2921,8 +2913,7 @@ var ProjectForm = function (_React$Component) {
             value: '' + this.state.description })
         );
       } else {
-        // this is the view for creating a new project
-        create = _react2.default.createElement(
+        project = _react2.default.createElement(
           'div',
           { className: 'project-input-format' },
           _react2.default.createElement(
@@ -2959,8 +2950,9 @@ var ProjectForm = function (_React$Component) {
             value: '' + this.state.description })
         );
       }
-      // this will pass the project id
+
       var instructions = this.state.instructions;
+
       if (this.state.projectId && this.props.formType === 'New Project') {
         instructions = instructions.map(function (instruction) {
           instruction = _react2.default.cloneElement(instruction, { projectId: _this8.state.projectId });
@@ -2982,8 +2974,7 @@ var ProjectForm = function (_React$Component) {
             _react2.default.createElement(
               'form',
               { className: 'project-form-styling', id: 'submit-project' },
-              create,
-              update
+              project
             ),
             _react2.default.createElement(
               'div',

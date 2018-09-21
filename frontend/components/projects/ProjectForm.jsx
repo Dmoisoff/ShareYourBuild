@@ -74,7 +74,6 @@ class ProjectForm extends React.Component{
           }
         }),
         instructionBodies: reorderedNewInstructionBodyStatus,
-        // removedInstructions: [...this.state.removedInstructions,removedInstruction],
         instructions: modifiedStepNumberInstructions,
         stepNum: (this.state.stepNum-1)
       });
@@ -153,11 +152,13 @@ class ProjectForm extends React.Component{
         this.props.submitProject(formDataProject, projectId).then((payload) => {
           projectId = payload.project.id;
           const formDataInstruction = this.appendInstructions(projectId);
-          that.props.submitInstructions(formDataInstruction, projectId).then(() => {
+          that.props.createInstructions(formDataInstruction, projectId).then(() => {
             that.redirect(projectId);
           });
         });
-      }else if (this.props.formType === 'Update Project') {
+      }else{
+
+        const formDataInstruction = this.appendInstructions(projectId);
         that.props.submitProject(formDataProject, projectId).then((payload) => {
           let newInstructions = [];
           let updatedInstructions = [];
@@ -170,7 +171,7 @@ class ProjectForm extends React.Component{
           if(that.state.removedInstructions.length){
             that.props.deleteInstruction(that.state.removedInstructions.toString()).then(() =>{
               newInstructions = newInstructions.map((instruction) => {
-                instruction = React.cloneElement(instruction, {projectId: that.state.projectId});
+                instruction = React.cloneElement(instruction, {projectId: projectId});
                 return instruction;
               });
               updatedInstructions = updatedInstructions.map((instruction) => {
@@ -180,11 +181,11 @@ class ProjectForm extends React.Component{
               updatedInstructions = updatedInstructions.concat(newInstructions);
               that.setState({instructions: updatedInstructions});
 
-              that.props.submitInstructions(that.state.instructionData, that.state.projectId).then(() => that.redirect(payload.project.id));
+              that.props.submitInstructions(formDataInstruction, projectId).then(() => that.redirect(payload.project.id));
             });
           }else{
             newInstructions = newInstructions.map((instruction) => {
-              instruction = React.cloneElement(instruction, {projectId: that.state.projectId});
+              instruction = React.cloneElement(instruction, {projectId: projectId});
               return instruction;
             });
             updatedInstructions = updatedInstructions.map((instruction) => {
@@ -193,9 +194,7 @@ class ProjectForm extends React.Component{
             });
             updatedInstructions = updatedInstructions.concat(newInstructions);
             that.setState({instructions: updatedInstructions, projectId: projectId});
-            that.props.submitInstructions(that.state.instructionData, that.state.projectId).then(() => that.redirect(payload.project.id));
-            // that.setState({instructions: updatedInstructions, projectId: projectId}, () => {that.redirect(payload.project.id);
-            // });
+            that.props.submitInstructions(formDataInstruction, projectId).then(() => that.redirect(projectId));
           }
         });
       }
@@ -380,11 +379,9 @@ class ProjectForm extends React.Component{
 
     const submitButton = this.props.formType === 'New Project' ? "Publish" : "Update";
 
-    let update = null;
-    let create = null;
+    let project;
      if(this.props.formType === 'Update Project'){
-       // this is the view for updating a new project
-       update = <div className='project-input-format'>
+       project = <div className='project-input-format'>
                    <p className='project-edit-title-text'>Edit Title Below</p>
                    <input className='project-title-styling'
                      type='text'
@@ -408,8 +405,7 @@ class ProjectForm extends React.Component{
                      value={`${this.state.description}`}></textarea>
                  </div>;
      }else{
-       // this is the view for creating a new project
-       create = <div className='project-input-format'>
+       project = <div className='project-input-format'>
                  <p className='project-edit-title-text'>Please select a title for your project</p>
                  {titleEdit}
                  <input className='project-title-styling'
@@ -430,32 +426,28 @@ class ProjectForm extends React.Component{
                    placeholder='Please enter a brief description of your build'
                    className='project-body-text' rows="8" cols="80"
                    value={`${this.state.description}`}></textarea>
-
                </div>;
      }
-     // this will pass the project id
+
     let instructions = this.state.instructions;
-      if (this.state.projectId && this.props.formType === 'New Project') {
-        instructions = instructions.map((instruction) => {
-          instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
-          return instruction;
-        });
+
+    if (this.state.projectId && this.props.formType === 'New Project') {
+      instructions = instructions.map((instruction) => {
+        instruction = React.cloneElement(instruction, {projectId: this.state.projectId});
+        return instruction;
+      });
     }
-
-
 
     const instructionErrors = this.state.instructionIssues.length ?
                                   this.instructionErrors()
                                   : null;
-
 
     return(
       <div className='page-background'>
         <div className='project-background'>
           <div className='project-form-positioning'>
             <form className='project-form-styling' id='submit-project'>
-              {create}
-              {update}
+              {project}
             </form>
             <div className='project-message-position '>
 

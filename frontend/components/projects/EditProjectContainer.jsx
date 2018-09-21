@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchProject, updateProject, createProject, CLEAR_ERRORS } from './../../actions/projects_actions';
 import ProjectForm from './ProjectForm';
-import { deleteInstruction, deleteInstructions, updateInstructions } from './../../actions/instructions_actions';
+import { deleteInstruction, deleteInstructions, updateInstructions, createInstructions } from './../../actions/instructions_actions';
 
 
 
@@ -110,7 +110,10 @@ const mdtp = (dispatch) => {
     createProject: (instruction) =>  dispatch(createProject(instruction)),
     deleteInstruction: (ids) => dispatch(deleteInstructions(ids)),
     clearProjectErrors: () => dispatch({type: CLEAR_ERRORS}),
-    updateInstructions: (instructions, projectId) => dispatch(updateInstructions(instructions, projectId))
+    updateInstructions: (instructions, projectId) => dispatch(updateInstructions(instructions, projectId)),
+    createInstructions: (instructions, id) => {
+      return dispatch(createInstructions(instructions, id));
+    },
   });
 };
 

@@ -1,15 +1,13 @@
-require 'open-uri'
-
 class Api::InstructionsController < ApplicationController
 
   def create
     debugger
     index = 0
     while params['instructions'].dig("#{index}")
-      instruction_data = params['instructions'].dig("#{index}")
-      permitted = instruction_data.permit(:project_id, :instruction_step, :title, :body)
+      permitted = instructions_params(params['instructions'].dig("#{index}"))
       debugger
       instruction = Instruction.new(permitted)
+      debugger
       images = params['instructions']["#{index}"]['images'].values
       if images
         instruction.images.attach(images)
@@ -17,13 +15,6 @@ class Api::InstructionsController < ApplicationController
       render json: instruction.errors.full_messages, status: 422 unless instruction.save
       index += 1
     end
-
-    # @project = Project.includes(:instructions, :comments).find_by(id: params[:id])
-    # if(@project)
-    #   render "api/projects/show"
-    # else
-    #   render json: "Error", status: 422
-    # end
   end
 
   # def create
@@ -108,6 +99,11 @@ class Api::InstructionsController < ApplicationController
   def instruction_params
     params.require(:instruction).permit(:project_id, :instruction_step, :title, :body)
 
+  end
+
+  def instructions_params(instruction_data)
+    debugger
+    instruction_data.permit(:project_id, :instruction_step, :title, :body)
   end
 
 
