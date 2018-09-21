@@ -254,10 +254,11 @@ var deleteInstructions = exports.deleteInstructions = function deleteInstruction
 var createInstructions = exports.createInstructions = function createInstructions(instructions, id) {
   return function (dispatch) {
     return Instruction_Util.createInstructions(instructions, id).then(function (instruction) {
-      return dispatch({
-        type: FETCH_INSTRUCTION,
-        instruction: instruction
-      });
+      debugger;
+      // return dispatch({
+      //   type: FETCH_INSTRUCTION,
+      //   instruction: instruction
+      // });
     }, function (errors) {
       return dispatch({
         type: RECEIVE_INSTRUCTION_ERRORS,
@@ -1476,39 +1477,7 @@ var Instructions = function (_React$Component) {
   }, {
     key: 'passBackInfo',
     value: function passBackInfo() {
-      // let instruction = [
-      //   ['title', this.state.title],
-      //   ['instruction_step', this.state.step],
-      //   ['body', this.state.body],
-      //   ['images', this.state.images]
-      // ]
-      // this.props.aggregateInstructionData(instruction)
       this.props.aggregateInstructionData(this.state);
-      //   const formData = new FormData();
-      //   formData.append('instruction[title]', this.state.title);
-      //   formData.append('instruction[instruction_step]', this.state.step);
-      //   formData.append('instruction[body]', this.state.body);
-      //   if(this.state.media){
-      //     formData.append('instruction[media]', this.state.media);
-      //   }
-      //   if(this.state.images.length){
-      //     this.state.images.forEach((file, i) => {
-      //       formData.append(`instruction[images][${i}]`, file);
-      //     });
-      //   }
-      //   if(this.props.formType === 'Update Instruction'){
-      //     if(this.state.imagesStorageId.length){
-      //       this.state.imagesStorageId.forEach((file, i) => {
-      //         formData.append(`instruction[imagesStorageId][${i}]`, file);
-      //       });
-      //     }
-      //   }
-      //   debugger
-      //   if(!this.state.rendered && this.props.formType === 'Update Instruction'){
-      //     this.props.aggregateInstructionData(formData);
-      //   }else if(!this.state.rendered){
-      //     this.props.aggregateInstructionData(formData);
-      //   }
     }
   }, {
     key: 'removeMedia',
@@ -2461,6 +2430,8 @@ var ProjectForm = function (_React$Component) {
     _this.uploadResult = _this.uploadResult.bind(_this);
     _this.redirect = _this.redirect.bind(_this);
     _this.instructions = _this.instructions.bind(_this);
+    _this.appendInstructions = _this.appendInstructions.bind(_this);
+    _this.appendProject = _this.appendProject.bind(_this);
     return _this;
   }
 
@@ -2550,8 +2521,6 @@ var ProjectForm = function (_React$Component) {
     key: 'aggregateInstructionData',
     value: function aggregateInstructionData(instructionData) {
       debugger;
-      // const index = instructionData.get('instruction[instruction_step]');
-      // const index = instructionData[1][1];
       var index = instructionData['step'];
       var instructions = this.state.instructionData;
       instructions[index - 1] = instructionData;
@@ -2559,8 +2528,39 @@ var ProjectForm = function (_React$Component) {
       this.setState({ instructionData: [].concat(_toConsumableArray(instructions)) });
     }
   }, {
+    key: 'appendInstructions',
+    value: function appendInstructions(projectId) {
+      var formDataInstruction = new FormData();
+      this.state.instructionData.forEach(function (instruction, i) {
+        formDataInstruction.append('instructions[' + i + '][body]', instruction['body']);
+        formDataInstruction.append('instructions[' + i + '][title]', instruction['title']);
+        formDataInstruction.append('instructions[' + i + '][instruction_step]', instruction['step']);
+        formDataInstruction.append('instructions[' + i + '][project_id]', projectId);
+        if (instruction['images'].length) {
+          instruction['images'].forEach(function (file, j) {
+            formDataInstruction.append('instructions[' + i + '][images][' + j + ']', file);
+          });
+        }
+      });
+      return formDataInstruction;
+    }
+  }, {
+    key: 'appendProject',
+    value: function appendProject(projectId) {
+      var formDataProject = new FormData();
+      formDataProject.append('project[title]', this.state.title);
+      formDataProject.append('project[keywords]', this.state.keyWords);
+      formDataProject.append('project[description]', this.state.description);
+      if (this.state.pictureFile) {
+        formDataProject.append('project[picture]', this.state.pictureFile);
+      }
+      return formDataProject;
+    }
+  }, {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
+      var _this3 = this;
+
       e.preventDefault();
       var completeStatus = true;
       for (var i = 0; i < this.state.instructionBodies.length; i++) {
@@ -2574,38 +2574,17 @@ var ProjectForm = function (_React$Component) {
         return;
       } else {
         var projectId = this.props.match.params.projectId;
-        var formDataProject = new FormData();
-        var formDataInstruction = new FormData();
-        formDataProject.append('project[title]', this.state.title);
-        formDataProject.append('project[keywords]', this.state.keyWords);
-        formDataProject.append('project[description]', this.state.description);
-        if (this.state.pictureFile) {
-          formDataProject.append('project[picture]', this.state.pictureFile);
-        }
-        debugger;
-        this.state.instructionData.forEach(function (instruction, i) {
-          formDataInstruction.append('instructions[' + (i + 1) + '][body]', instruction['body']);
-          formDataInstruction.append('instructions[' + (i + 1) + '][title]', instruction['title']);
-          formDataInstruction.append('instructions[' + (i + 1) + '][instruction_step]', instruction['step']);
-          if (instruction['images'].length) {
-            instruction['images'].forEach(function (file, j) {
-              formDataInstruction.append('instructions[' + (i + 1) + '][images][' + j + ']', file);
-            });
-          }
-        });
+        var formDataProject = this.appendProject(projectId);
         var that = this;
         if (this.props.formType === 'New Project') {
           this.props.submitProject(formDataProject, projectId).then(function (payload) {
-            var projectId = payload.project.id;
-            that.setState({ projectId: projectId });
-            debugger;
-            that.props.submitInstructions(formDataInstruction, that.state.projectId).then(function () {
-              return that.redirect(payload.project.id);
+            projectId = payload.project.id;
+            var formDataInstruction = _this3.appendInstructions(projectId);
+            that.props.submitInstructions(formDataInstruction, projectId).then(function () {
+              that.redirect(projectId);
             });
-            // this.redirect(projectId);
           });
         } else if (this.props.formType === 'Update Project') {
-          // const that = this;
           that.props.submitProject(formDataProject, projectId).then(function (payload) {
             var newInstructions = [];
             var updatedInstructions = [];
@@ -2627,12 +2606,10 @@ var ProjectForm = function (_React$Component) {
                 });
                 updatedInstructions = updatedInstructions.concat(newInstructions);
                 that.setState({ instructions: updatedInstructions });
-                // instruction ajax call
 
                 that.props.submitInstructions(that.state.instructionData, that.state.projectId).then(function () {
                   return that.redirect(payload.project.id);
                 });
-                // that.redirect(payload.project.id);
               });
             } else {
               newInstructions = newInstructions.map(function (instruction) {
@@ -2658,11 +2635,11 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'redirect',
     value: function redirect(id) {
-      var _this3 = this;
+      var _this4 = this;
 
       this.setState({ uploadStatus: true });
       setTimeout(function () {
-        _this3.props.history.push('/project/' + id);
+        _this4.props.history.push('/project/' + id);
       }, 1500);
     }
   }, {
@@ -2720,13 +2697,13 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'errors',
     value: function errors() {
-      var _this4 = this;
+      var _this5 = this;
 
       if (this.props.errors.length === 0) {
         return [];
       } else {
         setTimeout(function () {
-          _this4.props.clearProjectErrors();
+          _this5.props.clearProjectErrors();
         }, 3000);
         return this.props.errors.map(function (error, i) {
           return _react2.default.createElement(
@@ -2748,13 +2725,13 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'instructionErrors',
     value: function instructionErrors() {
-      var _this5 = this;
+      var _this6 = this;
 
       if (!this.state.instructionIssues.length) {
         return [];
       } else {
         setTimeout(function () {
-          _this5.setState({ instructionIssues: [] });
+          _this6.setState({ instructionIssues: [] });
         }, 3000);
         return this.state.instructionIssues.map(function (error, i) {
           return _react2.default.createElement(
@@ -2811,7 +2788,7 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'componentWillMount',
     value: function componentWillMount() {
-      var _this6 = this;
+      var _this7 = this;
 
       if (this.props.project.lastPrefilledInstruction === this.state.stepNum && this.props.formType === 'Update Project') {
         var keyValue = this.state.key;
@@ -2830,10 +2807,10 @@ var ProjectForm = function (_React$Component) {
             media: instruction.media,
             images: instruction.images,
             imagesStorageId: instruction.imagesStorageId,
-            instructionBodiesState: _this6.instructionBodiesState.bind(_this6),
-            removeInstruction: _this6.removeInstruction.bind(_this6),
-            instructionPhotoUploadCheck: _this6.instructionPhotoUploadCheck.bind(_this6),
-            aggregateInstructionData: _this6.aggregateInstructionData.bind(_this6)
+            instructionBodiesState: _this7.instructionBodiesState.bind(_this7),
+            removeInstruction: _this7.removeInstruction.bind(_this7),
+            instructionPhotoUploadCheck: _this7.instructionPhotoUploadCheck.bind(_this7),
+            aggregateInstructionData: _this7.aggregateInstructionData.bind(_this7)
           });
         });
         this.setState({ instructions: instructions, key: keyValue });
@@ -2857,7 +2834,7 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this7 = this;
+      var _this8 = this;
 
       var previousPicture = this.state.picture && this.props.formType === 'Update Project' ? _react2.default.createElement(
         'div',
@@ -2986,7 +2963,7 @@ var ProjectForm = function (_React$Component) {
       var instructions = this.state.instructions;
       if (this.state.projectId && this.props.formType === 'New Project') {
         instructions = instructions.map(function (instruction) {
-          instruction = _react2.default.cloneElement(instruction, { projectId: _this7.state.projectId });
+          instruction = _react2.default.cloneElement(instruction, { projectId: _this8.state.projectId });
           return instruction;
         });
       }
@@ -3036,7 +3013,7 @@ var ProjectForm = function (_React$Component) {
                   'button',
                   { className: 'add-instruction',
                     onClick: function onClick() {
-                      _this7.instructions();
+                      _this8.instructions();
                     } },
                   'Add Instruction'
                 )

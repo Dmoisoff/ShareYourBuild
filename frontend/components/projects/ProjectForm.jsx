@@ -15,6 +15,8 @@ class ProjectForm extends React.Component{
     this.uploadResult = this.uploadResult.bind(this);
     this.redirect = this.redirect.bind(this);
     this.instructions = this.instructions.bind(this);
+    this.appendInstructions = this.appendInstructions.bind(this);
+    this.appendProject = this.appendProject.bind(this);
     }
 
   updateTitle(e){
@@ -96,13 +98,38 @@ class ProjectForm extends React.Component{
 
   aggregateInstructionData(instructionData){
     debugger
-    // const index = instructionData.get('instruction[instruction_step]');
-    // const index = instructionData[1][1];
     const index = instructionData['step'];
     let instructions = this.state.instructionData;
     instructions[index - 1] = instructionData;
     instructions = instructions.slice(0, this.state.instructions.length);
     this.setState({instructionData: [...instructions]});
+  }
+
+  appendInstructions(projectId){
+    const formDataInstruction = new FormData();
+    this.state.instructionData.forEach((instruction,i) => {
+      formDataInstruction.append(`instructions[${i}][body]`,instruction['body'] );
+      formDataInstruction.append(`instructions[${i}][title]`,instruction['title'] );
+      formDataInstruction.append(`instructions[${i}][instruction_step]`,instruction['step'] );
+      formDataInstruction.append(`instructions[${i}][project_id]`, projectId );
+      if(instruction['images'].length){
+        instruction['images'].forEach((file, j) => {
+          formDataInstruction.append(`instructions[${i}][images][${j}]`, file);
+        });
+      }
+    });
+    return formDataInstruction;
+  }
+
+  appendProject(projectId){
+    const formDataProject = new FormData();
+    formDataProject.append('project[title]', this.state.title);
+    formDataProject.append('project[keywords]', this.state.keyWords);
+    formDataProject.append('project[description]', this.state.description);
+    if(this.state.pictureFile){
+      formDataProject.append('project[picture]', this.state.pictureFile);
+    }
+    return formDataProject;
   }
 
 
@@ -119,37 +146,18 @@ class ProjectForm extends React.Component{
       this.instructions();
       return;
     }else{
-      const projectId = this.props.match.params.projectId;
-      const formDataProject = new FormData();
-      const formDataInstruction = new FormData();
-      formDataProject.append('project[title]', this.state.title);
-      formDataProject.append('project[keywords]', this.state.keyWords);
-      formDataProject.append('project[description]', this.state.description);
-      if(this.state.pictureFile){
-        formDataProject.append('project[picture]', this.state.pictureFile);
-      }
-      debugger
-      this.state.instructionData.forEach((instruction,i) => {
-        formDataInstruction.append(`instructions[${i+1}][body]`,instruction['body'] );
-        formDataInstruction.append(`instructions[${i+1}][title]`,instruction['title'] );
-        formDataInstruction.append(`instructions[${i+1}][instruction_step]`,instruction['step'] );
-        if(instruction['images'].length){
-          instruction['images'].forEach((file, j) => {
-            formDataInstruction.append(`instructions[${i+1}][images][${j}]`, file);
-          });
-        }
-      });
+      let projectId = this.props.match.params.projectId;
+      const formDataProject = this.appendProject(projectId);
       const that = this;
       if(this.props.formType === 'New Project'){
         this.props.submitProject(formDataProject, projectId).then((payload) => {
-          const projectId = payload.project.id;
-          that.setState({projectId: projectId});
-          debugger
-          that.props.submitInstructions(formDataInstruction, that.state.projectId).then(() => that.redirect(payload.project.id));
-          // this.redirect(projectId);
+          projectId = payload.project.id;
+          const formDataInstruction = this.appendInstructions(projectId);
+          that.props.submitInstructions(formDataInstruction, projectId).then(() => {
+            that.redirect(projectId);
+          });
         });
       }else if (this.props.formType === 'Update Project') {
-        // const that = this;
         that.props.submitProject(formDataProject, projectId).then((payload) => {
           let newInstructions = [];
           let updatedInstructions = [];
@@ -171,10 +179,8 @@ class ProjectForm extends React.Component{
               });
               updatedInstructions = updatedInstructions.concat(newInstructions);
               that.setState({instructions: updatedInstructions});
-              // instruction ajax call
 
               that.props.submitInstructions(that.state.instructionData, that.state.projectId).then(() => that.redirect(payload.project.id));
-              // that.redirect(payload.project.id);
             });
           }else{
             newInstructions = newInstructions.map((instruction) => {

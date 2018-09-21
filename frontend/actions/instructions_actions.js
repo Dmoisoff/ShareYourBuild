@@ -67,10 +67,11 @@ export const deleteInstructions = (ids) => dispatch => {
 export const createInstructions = (instructions,id) => {
   return dispatch => {
     return Instruction_Util.createInstructions(instructions,id).then((instruction) =>{
-      return dispatch({
-        type: FETCH_INSTRUCTION,
-        instruction: instruction
-      });
+      debugger
+      // return dispatch({
+      //   type: FETCH_INSTRUCTION,
+      //   instruction: instruction
+      // });
     }, (errors) => {
       return dispatch({
         type: RECEIVE_INSTRUCTION_ERRORS,

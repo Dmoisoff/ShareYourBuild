@@ -4,20 +4,43 @@ class Api::InstructionsController < ApplicationController
 
   def create
     debugger
-    @instruction = Instruction.new(instruction_params)
-    images = params[:instruction][:images].values
-    if images
-      @instruction.images.attach(images)
+    index = 0
+    while params['instructions'].dig("#{index}")
+      instruction_data = params['instructions'].dig("#{index}")
+      permitted = instruction_data.permit(:project_id, :instruction_step, :title, :body)
+      debugger
+      instruction = Instruction.new(permitted)
+      images = params['instructions']["#{index}"]['images'].values
+      if images
+        instruction.images.attach(images)
+      end
+      render json: instruction.errors.full_messages, status: 422 unless instruction.save
+      index += 1
     end
-    if @instruction.save
-      render "api/instructions/show"
-    else
-      render json: @instruction.errors.full_messages, status: 422
-    end
+
+    # @project = Project.includes(:instructions, :comments).find_by(id: params[:id])
+    # if(@project)
+    #   render "api/projects/show"
+    # else
+    #   render json: "Error", status: 422
+    # end
   end
 
   # def create
-      # instructions = params[:instruction][]
+  #   # @instruction = Instruction.new(instruction_params)
+  #   # images = params[:instruction][:images].values
+  #   # if images
+  #   #   @instruction.images.attach(images)
+  #   # end
+  #   if instruction.save
+  #     render "api/instructions/show"
+  #   else
+  #     render json: instruction.errors.full_messages, status: 422
+  #   end
+  # end
+
+  # def create
+
   #   @instruction = Instruction.new(instruction_params)
   #   images = params[:instruction][:images].values
   #   if images
@@ -86,5 +109,6 @@ class Api::InstructionsController < ApplicationController
     params.require(:instruction).permit(:project_id, :instruction_step, :title, :body)
 
   end
+
 
 end

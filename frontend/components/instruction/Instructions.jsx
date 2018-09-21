@@ -57,39 +57,7 @@ class Instructions extends React.Component{
     }
 
     passBackInfo(){
-      // let instruction = [
-      //   ['title', this.state.title],
-      //   ['instruction_step', this.state.step],
-      //   ['body', this.state.body],
-      //   ['images', this.state.images]
-      // ]
-      // this.props.aggregateInstructionData(instruction)
       this.props.aggregateInstructionData(this.state);
-    //   const formData = new FormData();
-    //   formData.append('instruction[title]', this.state.title);
-    //   formData.append('instruction[instruction_step]', this.state.step);
-    //   formData.append('instruction[body]', this.state.body);
-    //   if(this.state.media){
-    //     formData.append('instruction[media]', this.state.media);
-    //   }
-    //   if(this.state.images.length){
-    //     this.state.images.forEach((file, i) => {
-    //       formData.append(`instruction[images][${i}]`, file);
-    //     });
-    //   }
-    //   if(this.props.formType === 'Update Instruction'){
-    //     if(this.state.imagesStorageId.length){
-    //       this.state.imagesStorageId.forEach((file, i) => {
-    //         formData.append(`instruction[imagesStorageId][${i}]`, file);
-    //       });
-    //     }
-    //   }
-    //   debugger
-    //   if(!this.state.rendered && this.props.formType === 'Update Instruction'){
-    //     this.props.aggregateInstructionData(formData);
-    //   }else if(!this.state.rendered){
-    //     this.props.aggregateInstructionData(formData);
-    //   }
     }
 
     removeMedia(index){
