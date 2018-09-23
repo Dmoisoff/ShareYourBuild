@@ -179,7 +179,7 @@ var deleteComments = exports.deleteComments = function deleteComments(ids) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.createInstructions = exports.deleteInstructions = exports.deleteInstruction = exports.updateInstruction = exports.createInstruction = exports.fetchInstruction = exports.RECEIVE_INSTRUCTION_ERRORS = exports.REMOVE_INSTRUCTIONS = exports.REMOVE_INSTRUCTION = exports.FETCH_INSTRUCTION = undefined;
+exports.updateInstructions = exports.createInstructions = exports.deleteInstructions = exports.deleteInstruction = exports.updateInstruction = exports.createInstruction = exports.fetchInstruction = exports.RECEIVE_INSTRUCTION_ERRORS = exports.REMOVE_INSTRUCTIONS = exports.REMOVE_INSTRUCTION = exports.FETCH_INSTRUCTION = undefined;
 
 var _instruction_api_util = __webpack_require__(/*! ./../util/instruction_api_util */ "./frontend/util/instruction_api_util.js");
 
@@ -253,7 +253,19 @@ var deleteInstructions = exports.deleteInstructions = function deleteInstruction
 
 var createInstructions = exports.createInstructions = function createInstructions(instructions, id) {
   return function (dispatch) {
-    return Instruction_Util.createInstructions(instructions, id).then(function (instruction) {}, function (errors) {
+    return Instruction_Util.createInstructions(instructions, id).then(function () {}, function (errors) {
+      return dispatch({
+        type: RECEIVE_INSTRUCTION_ERRORS,
+        errors: errors.responseJSON
+      });
+    });
+  };
+};
+
+var updateInstructions = exports.updateInstructions = function updateInstructions(instructions) {
+  debugger;
+  return function (dispatch) {
+    return Instruction_Util.updateInstructions(instructions).then(function () {}, function (errors) {
       return dispatch({
         type: RECEIVE_INSTRUCTION_ERRORS,
         errors: errors.responseJSON
@@ -1201,7 +1213,7 @@ var _instructions_actions = __webpack_require__(/*! ./../../actions/instructions
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state, ownProps) {
-  // debugger
+  debugger;
   return {
     instruction: {
       id: ownProps.id,
@@ -1217,10 +1229,12 @@ var mstp = function mstp(state, ownProps) {
       projectId: ownProps.projectId,
       rendered: false,
       instructionBody: true,
-      instructionPhotoUploadCheck: ownProps.instructionPhotoUploadCheck
+      instructionPhotoUploadCheck: ownProps.instructionPhotoUploadCheck,
+      aggregateInstructionData: ownProps.aggregateInstructionData
     },
     formType: 'Update Instruction',
     errors: state.errors.instruction
+
   };
 };
 
@@ -1438,11 +1452,16 @@ var Instructions = function (_React$Component) {
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps, prevState) {
-      if (this.props.formType === 'Update Instruction' && !this.state.rendered) {
-        if (this.props.uploadStatus) {
-          this.passBackInfo();
-        }
-      } else if (this.props !== prevProps || this.state !== prevState) {
+      // debugger
+      // if (this.props.formType === 'Update Instruction' && !this.state.rendered) {
+      //   if(this.props.uploadStatus){
+      //     this.passBackInfo();
+      //   }
+      // }else if(this.props !== prevProps || this.state !==  prevState){
+      //   debugger
+      //  this.passBackInfo();
+      // }
+      if (this.props !== prevProps || this.state !== prevState) {
         this.passBackInfo();
       }
     }
@@ -1471,12 +1490,12 @@ var Instructions = function (_React$Component) {
   }, {
     key: 'passBackInfo',
     value: function passBackInfo() {
+      debugger;
       this.props.aggregateInstructionData(this.state);
     }
   }, {
     key: 'removeMedia',
     value: function removeMedia(index) {
-      debugger;
       if (this.state.images.length === 1) {
         this.setState({ images: [], imagesUrl: [], imagesStorageId: [] });
       } else if (this.state.images.length - 1 === index) {
@@ -1496,7 +1515,6 @@ var Instructions = function (_React$Component) {
     value: function displayMedia() {
       var _this2 = this;
 
-      // debugger
       var position = void 0;
       var alignment = void 0;
       var format = 'instruction-show-image-scale';
@@ -1507,7 +1525,6 @@ var Instructions = function (_React$Component) {
         position = 'multiple-images-position-instruction-2';
       }
       var imagesUrl = this.state.imagesUrl.slice(-4);
-      debugger;
       imagesUrl = imagesUrl.map(function (imageUrl, index) {
         var boundRemove = _this2.removeMedia.bind(_this2, index);
         if (_this2.state.imagesUrl.length !== 1) {
@@ -1640,7 +1657,7 @@ var Instructions = function (_React$Component) {
                   _react2.default.createElement(
                     'p',
                     { className: 'project-image-text' },
-                    'Please select a picture for your step'
+                    'Please select up to four a pictures for each step'
                   ),
                   _react2.default.createElement('input', { multiple: 'true', className: 'project-body-input', type: 'file', accept: 'image/*', onChange: this.uploadFile.bind(this) })
                 ),
@@ -1877,7 +1894,9 @@ var EditProjectForm = function (_React$Component) {
           project = _props.project,
           errors = _props.errors,
           deleteInstruction = _props.deleteInstruction,
-          clearProjectErrors = _props.clearProjectErrors;
+          clearProjectErrors = _props.clearProjectErrors,
+          createInstructions = _props.createInstructions,
+          updateInstructions = _props.updateInstructions;
 
       return _react2.default.createElement(_ProjectForm2.default, {
         submitProject: submitProject,
@@ -1885,7 +1904,10 @@ var EditProjectForm = function (_React$Component) {
         clearProjectErrors: clearProjectErrors,
         formType: formType,
         errors: errors,
-        project: project });
+        project: project,
+        createInstructions: createInstructions,
+        updateInstructions: updateInstructions
+      });
     }
   }]);
 
@@ -1971,8 +1993,8 @@ var mdtp = function mdtp(dispatch) {
     clearProjectErrors: function clearProjectErrors() {
       return dispatch({ type: _projects_actions.CLEAR_ERRORS });
     },
-    updateInstructions: function updateInstructions(instructions, projectId) {
-      return dispatch((0, _instructions_actions.updateInstructions)(instructions, projectId));
+    updateInstructions: function updateInstructions(instructions, id) {
+      return dispatch((0, _instructions_actions.updateInstructions)(instructions, id));
     },
     createInstructions: function createInstructions(instructions, id) {
       return dispatch((0, _instructions_actions.createInstructions)(instructions, id));
@@ -2523,13 +2545,18 @@ var ProjectForm = function (_React$Component) {
     }
   }, {
     key: 'appendInstructions',
-    value: function appendInstructions(projectId) {
+    value: function appendInstructions(instructions, projectId) {
+      debugger;
       var formDataInstruction = new FormData();
-      this.state.instructionData.forEach(function (instruction, i) {
+      instructions.forEach(function (instruction, i) {
         formDataInstruction.append('instructions[' + i + '][body]', instruction['body']);
         formDataInstruction.append('instructions[' + i + '][title]', instruction['title']);
         formDataInstruction.append('instructions[' + i + '][instruction_step]', instruction['step']);
         formDataInstruction.append('instructions[' + i + '][project_id]', projectId);
+        if (instruction['id']) {
+          formDataInstruction.append('instructions[' + i + '][id]', instruction['id']);
+          formDataInstruction.append('instructions[' + i + '][imagesStorageId]', instruction['imagesStorageId']);
+        }
         if (instruction['images'].length) {
           instruction['images'].forEach(function (file, j) {
             formDataInstruction.append('instructions[' + i + '][images][' + j + ']', file);
@@ -2573,54 +2600,72 @@ var ProjectForm = function (_React$Component) {
         if (this.props.formType === 'New Project') {
           this.props.submitProject(formDataProject, projectId).then(function (payload) {
             projectId = payload.project.id;
-            var formDataInstruction = _this3.appendInstructions(projectId);
+            var formDataInstruction = _this3.appendInstructions(_this3.state.instructionData, projectId);
             that.props.createInstructions(formDataInstruction, projectId).then(function () {
               that.redirect(projectId);
             });
           });
         } else {
-
-          var formDataInstruction = this.appendInstructions(projectId);
           that.props.submitProject(formDataProject, projectId).then(function (payload) {
-            var newInstructions = [];
-            var updatedInstructions = [];
+            debugger;
+
+            var newInstructions = void 0;
+            var updatedInstructions = void 0;
+
             if (that.state.newlyAddedSteps.length !== 0) {
-              newInstructions = that.state.instructions.slice(-that.state.newlyAddedSteps.length);
-              updatedInstructions = that.state.instructions.slice(0, -that.state.newlyAddedSteps.length);
+              newInstructions = _this3.state.instructionData.slice(-that.state.newlyAddedSteps.length);
+              updatedInstructions = _this3.state.instructionData.slice(0, -that.state.newlyAddedSteps.length);
             } else {
-              updatedInstructions = that.state.instructions;
+              updatedInstructions = _this3.state.instructionData;
             }
+
             if (that.state.removedInstructions.length) {
               that.props.deleteInstruction(that.state.removedInstructions.toString()).then(function () {
-                newInstructions = newInstructions.map(function (instruction) {
-                  instruction = _react2.default.cloneElement(instruction, { projectId: projectId });
-                  return instruction;
+                that.props.updateInstructions(_this3.appendInstructions(updatedInstructions, projectId), projectId).then(function () {
+                  if (newInstructions) {
+                    that.props.createInstructions(_this3.appendInstructions(newInstructions, projectId), projectId).then(function () {
+                      that.redirect(projectId);
+                    });
+                  } else {
+                    that.redirect(projectId);
+                  }
                 });
-                updatedInstructions = updatedInstructions.map(function (instruction) {
-                  instruction = _react2.default.cloneElement(instruction, { uploadStatus: true });
-                  return instruction;
-                });
-                updatedInstructions = updatedInstructions.concat(newInstructions);
-                that.setState({ instructions: updatedInstructions });
 
-                that.props.submitInstructions(formDataInstruction, projectId).then(function () {
-                  return that.redirect(payload.project.id);
-                });
+                // newInstructions = newInstructions.map((instruction) => {
+                //   instruction = React.cloneElement(instruction, {projectId: projectId});
+                //   return instruction;
+                // });
+                // updatedInstructions = updatedInstructions.map((instruction) => {
+                //   instruction = React.cloneElement(instruction, {uploadStatus: true});
+                //   return instruction;
+                // });
+                // updatedInstructions = updatedInstructions.concat(newInstructions);
+                // that.setState({instructions: updatedInstructions});
+
+                // that.props.submitInstructions(formDataInstruction, projectId).then(() => that.redirect(payload.project.id));
               });
             } else {
-              newInstructions = newInstructions.map(function (instruction) {
-                instruction = _react2.default.cloneElement(instruction, { projectId: projectId });
-                return instruction;
+              debugger;
+              that.props.updateInstructions(_this3.appendInstructions(updatedInstructions, projectId), projectId).then(function () {
+                if (newInstructions) {
+                  that.props.createInstructions(_this3.appendInstructions(newInstructions, projectId), projectId).then(function () {
+                    that.redirect(projectId);
+                  });
+                } else {
+                  that.redirect(projectId);
+                }
               });
-              updatedInstructions = updatedInstructions.map(function (instruction) {
-                instruction = _react2.default.cloneElement(instruction, { uploadStatus: true });
-                return instruction;
-              });
-              updatedInstructions = updatedInstructions.concat(newInstructions);
-              that.setState({ instructions: updatedInstructions, projectId: projectId });
-              that.props.submitInstructions(formDataInstruction, projectId).then(function () {
-                return that.redirect(projectId);
-              });
+              // newInstructions = newInstructions.map((instruction) => {
+              //   instruction = React.cloneElement(instruction, {projectId: projectId});
+              //   return instruction;
+              // });
+              // updatedInstructions = updatedInstructions.map((instruction) => {
+              //   instruction = React.cloneElement(instruction, {uploadStatus: true});
+              //   return instruction;
+              // });
+              // updatedInstructions = updatedInstructions.concat(newInstructions);
+              // that.setState({instructions: updatedInstructions, projectId: projectId});
+              // that.props.submitInstructions(formDataInstruction, projectId).then(() => that.redirect(projectId));
             }
           });
         }
@@ -5472,11 +5517,11 @@ var deleteInstruction = exports.deleteInstruction = function deleteInstruction(i
   });
 };
 
-var updateInstructions = exports.updateInstructions = function updateInstructions(instructions, id) {
+var updateInstructions = exports.updateInstructions = function updateInstructions(instructions) {
   debugger;
   return $.ajax({
     method: 'PATCH',
-    url: 'api/instructions/' + id,
+    url: 'api/instructions/update',
     data: instructions,
     contentType: false,
     processData: false

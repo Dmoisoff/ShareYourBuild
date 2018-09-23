@@ -24,7 +24,7 @@ class EditProjectForm extends React.Component{
       return <div>Loading...</div>;
     }
 
-    const { submitProject, formType, project, errors, deleteInstruction, clearProjectErrors } = this.props;
+    const { submitProject, formType, project, errors, deleteInstruction, clearProjectErrors, createInstructions, updateInstructions } = this.props;
     return (
       <ProjectForm
         submitProject={submitProject}
@@ -32,7 +32,10 @@ class EditProjectForm extends React.Component{
         clearProjectErrors={clearProjectErrors}
         formType={formType}
         errors={errors}
-        project={project} />
+        project={project}
+        createInstructions={createInstructions}
+        updateInstructions={updateInstructions}
+         />
     );
   }
 }
@@ -110,10 +113,12 @@ const mdtp = (dispatch) => {
     createProject: (instruction) =>  dispatch(createProject(instruction)),
     deleteInstruction: (ids) => dispatch(deleteInstructions(ids)),
     clearProjectErrors: () => dispatch({type: CLEAR_ERRORS}),
-    updateInstructions: (instructions, projectId) => dispatch(updateInstructions(instructions, projectId)),
+    updateInstructions: (instructions, id) => {
+      return dispatch(updateInstructions(instructions, id));
+    },
     createInstructions: (instructions, id) => {
       return dispatch(createInstructions(instructions, id));
-    },
+    }
   });
 };
 

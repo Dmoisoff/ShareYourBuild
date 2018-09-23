@@ -40,11 +40,11 @@ export const deleteInstruction = (id) => {
   });
 };
 
-export const updateInstructions = (instructions, id) => {
+export const updateInstructions = (instructions) => {
   debugger
   return $.ajax({
     method: 'PATCH',
-    url: `api/instructions/${id}`,
+    url: `api/instructions/update`,
     data: instructions,
     contentType: false,
     processData: false

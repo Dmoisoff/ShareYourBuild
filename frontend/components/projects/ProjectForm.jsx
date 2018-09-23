@@ -104,13 +104,18 @@ class ProjectForm extends React.Component{
     this.setState({instructionData: [...instructions]});
   }
 
-  appendInstructions(projectId){
+  appendInstructions(instructions, projectId){
+    debugger
     const formDataInstruction = new FormData();
-    this.state.instructionData.forEach((instruction,i) => {
+    instructions.forEach((instruction,i) => {
       formDataInstruction.append(`instructions[${i}][body]`,instruction['body'] );
       formDataInstruction.append(`instructions[${i}][title]`,instruction['title'] );
       formDataInstruction.append(`instructions[${i}][instruction_step]`,instruction['step'] );
       formDataInstruction.append(`instructions[${i}][project_id]`, projectId );
+      if (instruction['id']) {
+        formDataInstruction.append(`instructions[${i}][id]`, instruction['id'] );
+        formDataInstruction.append(`instructions[${i}][imagesStorageId]`, instruction['imagesStorageId'] );
+      }
       if(instruction['images'].length){
         instruction['images'].forEach((file, j) => {
           formDataInstruction.append(`instructions[${i}][images][${j}]`, file);
@@ -151,50 +156,73 @@ class ProjectForm extends React.Component{
       if(this.props.formType === 'New Project'){
         this.props.submitProject(formDataProject, projectId).then((payload) => {
           projectId = payload.project.id;
-          const formDataInstruction = this.appendInstructions(projectId);
+          const formDataInstruction = this.appendInstructions(this.state.instructionData, projectId);
           that.props.createInstructions(formDataInstruction, projectId).then(() => {
             that.redirect(projectId);
           });
         });
       }else{
-
-        const formDataInstruction = this.appendInstructions(projectId);
         that.props.submitProject(formDataProject, projectId).then((payload) => {
-          let newInstructions = [];
-          let updatedInstructions = [];
+          debugger
+
+          let newInstructions;
+          let updatedInstructions;
+
           if(that.state.newlyAddedSteps.length !== 0){
-            newInstructions = that.state.instructions.slice(-(that.state.newlyAddedSteps.length));
-            updatedInstructions = that.state.instructions.slice(0,-(that.state.newlyAddedSteps.length));
+            newInstructions = this.state.instructionData.slice(-(that.state.newlyAddedSteps.length));
+            updatedInstructions = this.state.instructionData.slice(0,-(that.state.newlyAddedSteps.length));
           }else{
-            updatedInstructions = that.state.instructions;
+            updatedInstructions = this.state.instructionData;
           }
+
           if(that.state.removedInstructions.length){
             that.props.deleteInstruction(that.state.removedInstructions.toString()).then(() =>{
-              newInstructions = newInstructions.map((instruction) => {
-                instruction = React.cloneElement(instruction, {projectId: projectId});
-                return instruction;
+              that.props.updateInstructions(this.appendInstructions(updatedInstructions, projectId), projectId).then(() => {
+                if(newInstructions){
+                  that.props.createInstructions(this.appendInstructions(newInstructions, projectId), projectId).then(() => {
+                    that.redirect(projectId);
+                  });
+                }else{
+                  that.redirect(projectId);
+                }
               });
-              updatedInstructions = updatedInstructions.map((instruction) => {
-                instruction = React.cloneElement(instruction, {uploadStatus: true});
-                return instruction;
-              });
-              updatedInstructions = updatedInstructions.concat(newInstructions);
-              that.setState({instructions: updatedInstructions});
 
-              that.props.submitInstructions(formDataInstruction, projectId).then(() => that.redirect(payload.project.id));
+              // newInstructions = newInstructions.map((instruction) => {
+              //   instruction = React.cloneElement(instruction, {projectId: projectId});
+              //   return instruction;
+              // });
+              // updatedInstructions = updatedInstructions.map((instruction) => {
+              //   instruction = React.cloneElement(instruction, {uploadStatus: true});
+              //   return instruction;
+              // });
+              // updatedInstructions = updatedInstructions.concat(newInstructions);
+              // that.setState({instructions: updatedInstructions});
+
+              // that.props.submitInstructions(formDataInstruction, projectId).then(() => that.redirect(payload.project.id));
             });
+
           }else{
-            newInstructions = newInstructions.map((instruction) => {
-              instruction = React.cloneElement(instruction, {projectId: projectId});
-              return instruction;
+            debugger
+            that.props.updateInstructions(this.appendInstructions(updatedInstructions, projectId), projectId).then(() => {
+              if(newInstructions){
+                that.props.createInstructions(this.appendInstructions(newInstructions, projectId), projectId).then(() => {
+                  that.redirect(projectId);
+                });
+              }else{
+                that.redirect(projectId);
+              }
             });
-            updatedInstructions = updatedInstructions.map((instruction) => {
-              instruction = React.cloneElement(instruction, {uploadStatus: true});
-              return instruction;
-            });
-            updatedInstructions = updatedInstructions.concat(newInstructions);
-            that.setState({instructions: updatedInstructions, projectId: projectId});
-            that.props.submitInstructions(formDataInstruction, projectId).then(() => that.redirect(projectId));
+            // newInstructions = newInstructions.map((instruction) => {
+            //   instruction = React.cloneElement(instruction, {projectId: projectId});
+            //   return instruction;
+            // });
+            // updatedInstructions = updatedInstructions.map((instruction) => {
+            //   instruction = React.cloneElement(instruction, {uploadStatus: true});
+            //   return instruction;
+            // });
+            // updatedInstructions = updatedInstructions.concat(newInstructions);
+            // that.setState({instructions: updatedInstructions, projectId: projectId});
+            // that.props.submitInstructions(formDataInstruction, projectId).then(() => that.redirect(projectId));
           }
         });
       }
@@ -450,7 +478,6 @@ class ProjectForm extends React.Component{
               {project}
             </form>
             <div className='project-message-position '>
-
               <ul>
                 {instructions}
               </ul>

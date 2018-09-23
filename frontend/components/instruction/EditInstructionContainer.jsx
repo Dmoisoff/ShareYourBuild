@@ -4,7 +4,7 @@ import Instructions from './Instructions';
 import { updateInstruction } from './../../actions/instructions_actions';
 
 const mstp = (state, ownProps) => {
-  // debugger
+  debugger
     return({
       instruction: {
         id: ownProps.id,
@@ -20,10 +20,12 @@ const mstp = (state, ownProps) => {
         projectId: ownProps.projectId,
         rendered: false,
         instructionBody: true,
-        instructionPhotoUploadCheck: ownProps.instructionPhotoUploadCheck
+        instructionPhotoUploadCheck: ownProps.instructionPhotoUploadCheck,
+        aggregateInstructionData: ownProps.aggregateInstructionData
        },
       formType: 'Update Instruction',
       errors: state.errors.instruction,
+
     });
 };
 

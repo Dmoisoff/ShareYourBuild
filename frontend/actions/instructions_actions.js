@@ -66,8 +66,21 @@ export const deleteInstructions = (ids) => dispatch => {
 
 export const createInstructions = (instructions,id) => {
   return dispatch => {
-    return Instruction_Util.createInstructions(instructions,id).then((instruction) =>{
-    }, (errors) => {
+    return Instruction_Util.createInstructions(instructions,id).then(() =>{ },
+     (errors) => {
+      return dispatch({
+        type: RECEIVE_INSTRUCTION_ERRORS,
+        errors: errors.responseJSON
+      });
+    });
+  };
+};
+
+export const updateInstructions = (instructions) => {
+  debugger
+  return dispatch => {
+    return Instruction_Util.updateInstructions(instructions).then(() =>{ },
+     (errors) => {
       return dispatch({
         type: RECEIVE_INSTRUCTION_ERRORS,
         errors: errors.responseJSON

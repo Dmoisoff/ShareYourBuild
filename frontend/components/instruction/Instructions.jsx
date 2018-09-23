@@ -29,11 +29,16 @@ class Instructions extends React.Component{
   }
 
   componentDidUpdate(prevProps, prevState){
-    if (this.props.formType === 'Update Instruction' && !this.state.rendered) {
-      if(this.props.uploadStatus){
-        this.passBackInfo();
-      }
-    }else if(this.props !== prevProps || this.state !==  prevState){
+    // debugger
+    // if (this.props.formType === 'Update Instruction' && !this.state.rendered) {
+    //   if(this.props.uploadStatus){
+    //     this.passBackInfo();
+    //   }
+    // }else if(this.props !== prevProps || this.state !==  prevState){
+    //   debugger
+    //  this.passBackInfo();
+    // }
+    if(this.props !== prevProps || this.state !==  prevState){
      this.passBackInfo();
     }
   }
@@ -57,11 +62,11 @@ class Instructions extends React.Component{
     }
 
     passBackInfo(){
+      debugger
       this.props.aggregateInstructionData(this.state);
     }
 
     removeMedia(index){
-      debugger
       if(this.state.images.length === 1){
         this.setState({images: [], imagesUrl: [], imagesStorageId: []});
       }else if (this.state.images.length - 1 === index) {
@@ -78,7 +83,6 @@ class Instructions extends React.Component{
     }
 
     displayMedia(){
-      // debugger
       let position;
       let alignment;
       const format = 'instruction-show-image-scale';
@@ -89,7 +93,6 @@ class Instructions extends React.Component{
         position = 'multiple-images-position-instruction-2';
       }
       let imagesUrl = this.state.imagesUrl.slice(-4);
-      debugger
       imagesUrl = imagesUrl.map((imageUrl, index) => {
         let boundRemove = this.removeMedia.bind(this, index);
         if(this.state.imagesUrl.length !== 1){
@@ -170,7 +173,7 @@ class Instructions extends React.Component{
               <div className='project-images-display-create-format'>
                 <div className='project-image-input-format'>
                   <div>
-                    <p className='project-image-text' >Please select a picture for your step</p>
+                    <p className='project-image-text' >Please select up to four a pictures for each step</p>
                     <input multiple='true' className='project-body-input' type='file' accept="image/*" onChange={this.uploadFile.bind(this)} />
                   </div>
                   {preview2}

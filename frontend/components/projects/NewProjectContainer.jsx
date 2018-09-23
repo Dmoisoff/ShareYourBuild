@@ -40,7 +40,7 @@ const mdtp = (dispatch) => {
     clearProjectErrors: () => dispatch({type: CLEAR_ERRORS}),
     createInstructions: (instructions, id) => {
       return dispatch(createInstructions(instructions, id));
-    },
+    }
   });
 };
 
