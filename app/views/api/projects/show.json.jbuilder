@@ -10,6 +10,7 @@ json.project do
   end
 end
 
+
 json.instructions do
   @project.instructions.order('instructions.instruction_step ASC').each do |instruction|
     json.set! instruction.id do
@@ -40,18 +41,21 @@ json.instructions do
 end
 
 
-if !@project.comments
-  json.comment = {}
+if !@project.comments[0];
+  json.set! :comments do
+    {}
+  end
 else
+  debugger
   json.comments do
-    @project.comments.order('comments.id ASC').each do |comment|
-      json.set! comment.id do
-        json.id comment.id
-        json.projectId comment.project_id
-        json.authorId comment.author_id
-        json.body comment.body
-        json.username comment.user.username
+      @project.comments.order('comments.id ASC').each do |comment|
+        json.set! comment.id do
+          json.id comment.id
+          json.projectId comment.project_id
+          json.authorId comment.author_id
+          json.body comment.body
+          json.username comment.user.username
+        end
       end
-    end
   end
 end

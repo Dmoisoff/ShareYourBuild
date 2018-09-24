@@ -7,13 +7,18 @@ import merge from 'lodash/merge';
 const instructionReducer = (state = {}, action) => {
   let ids;
   let newState;
+  debugger
   const oldState = Object.freeze(state);
   switch (action.type) {
     case Projects_Actions.FETCH_PROJECT:
-      newState = merge({}, state, action.instructions);
-      return newState;
+    newState = merge({}, state);
+    if(action.instructions){
+      Object.values(action.instructions).forEach((instruction) => {
+        newState = merge(newState, {[instruction.id]: instruction});
+      });
+    }
+    return newState;
     case Instruction_Actions.FETCH_INSTRUCTION:
-
       newState = merge({}, state, {[action.instruction.id]: action.instruction});
       return newState;
     case Instruction_Actions.REMOVE_INSTRUCTION:

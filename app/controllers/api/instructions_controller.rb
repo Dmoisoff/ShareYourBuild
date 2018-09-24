@@ -28,10 +28,10 @@ class Api::InstructionsController < ApplicationController
 
   def update_instructions
     debugger
-    saved_images_id = []
-    updated_images = []
     index = 0
     while params['instructions'].dig("#{index}")
+      saved_images_id = []
+      updated_images = []
       instruction_params = params['instructions'].dig("#{index}")
 
       @instruction = Instruction.find(instruction_params[:id])
@@ -39,9 +39,9 @@ class Api::InstructionsController < ApplicationController
       if instruction_params[:images]
         updated_images = instruction_params[:images].values
       end
-      
+
       unless instruction_params[:imagesStorageId] === ''
-        saved_images_id = instruction_params[:imagesStorageId].values
+        saved_images_id = instruction_params[:imagesStorageId].split(',')
       end
 
       @instruction.images.attachments.each do |image|
