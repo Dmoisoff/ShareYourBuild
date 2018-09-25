@@ -223,6 +223,11 @@ class ProjectShow extends React.Component {
     if(this.props.currentUserId){
       createCommentButton = this.state.newComment ? null : <button className='comment-create-button' onClick={() =>{this.setState({newComment: true, edit: null});}}>Create A Comment</button>;
     }
+    let createCommentButton2;
+    if(this.props.currentUserId){
+      debugger
+      createCommentButton2 = this.state.comments.length === 0 ? null : <button className='comment-create-button' onClick={() =>{this.setState({newComment: true, edit: null});}}>Create A Comment</button>;
+    }
     const commentHeader = this.state.comments.length ? this.state.comments.length === 1 ? <p className='comments-header'>{this.state.comments.length} Comment</p>: <p className='comments-header'>{this.state.comments.length} Comments</p> : null;
     const description = this.state.description;
     return (
@@ -258,6 +263,9 @@ class ProjectShow extends React.Component {
           </div>
           <div>
             {this.displayComments()}
+          </div>
+          <div className='comment-errors-placement'>
+            {createCommentButton2}
           </div>
         </div>
       </div>

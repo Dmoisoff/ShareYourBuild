@@ -3435,6 +3435,17 @@ var ProjectShow = function (_React$Component) {
           'Create A Comment'
         );
       }
+      var createCommentButton2 = void 0;
+      if (this.props.currentUserId) {
+        debugger;
+        createCommentButton2 = this.state.comments.length === 0 ? null : _react2.default.createElement(
+          'button',
+          { className: 'comment-create-button', onClick: function onClick() {
+              _this9.setState({ newComment: true, edit: null });
+            } },
+          'Create A Comment'
+        );
+      }
       var commentHeader = this.state.comments.length ? this.state.comments.length === 1 ? _react2.default.createElement(
         'p',
         { className: 'comments-header' },
@@ -3521,6 +3532,11 @@ var ProjectShow = function (_React$Component) {
             'div',
             null,
             this.displayComments()
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'comment-errors-placement' },
+            createCommentButton2
           )
         )
       );
