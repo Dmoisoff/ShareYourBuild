@@ -47,16 +47,25 @@ class ProjectShow extends React.Component {
         this.props.clearProjectErrors;
         this.props.history.push('/');
       }
+      debugger
     if (prevProps.match.params.projectId != this.props.match.params.projectId) {
       this.props.fetchProject(this.props.match.params.projectId).then((payload) => {
+        let comments = [];
+        let instructions = [];
+        if(payload.comments){
+          comments = Object.values(payload.comments);
+        }
+        if(payload.instructions){
+          instructions = Object.values(payload.instructions).sort((a,b) => (a.instructionStep - b.instructionStep));
+        }
         this.setState({
           title: payload.project.title,
           authorUsername: payload.project.authorUsername,
           picture: payload.project.picture,
           description: payload.project.description,
           project: payload.project,
-          instructions: Object.values(payload.instructions).sort((a,b) => (a.instructionStep - b.instructionStep)),
-          comments: Object.values(payload.comments),
+          instructions: instructions,
+          comments: comments,
           commentBody: ''
         });});
     }

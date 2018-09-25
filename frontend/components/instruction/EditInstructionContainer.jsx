@@ -20,7 +20,6 @@ const mstp = (state, ownProps) => {
         projectId: ownProps.projectId,
         rendered: false,
         instructionBody: true,
-        instructionPhotoUploadCheck: ownProps.instructionPhotoUploadCheck,
         aggregateInstructionData: ownProps.aggregateInstructionData
        },
       formType: 'Update Instruction',

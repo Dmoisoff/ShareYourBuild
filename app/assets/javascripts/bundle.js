@@ -1229,7 +1229,6 @@ var mstp = function mstp(state, ownProps) {
       projectId: ownProps.projectId,
       rendered: false,
       instructionBody: true,
-      instructionPhotoUploadCheck: ownProps.instructionPhotoUploadCheck,
       aggregateInstructionData: ownProps.aggregateInstructionData
     },
     formType: 'Update Instruction',
@@ -1452,15 +1451,6 @@ var Instructions = function (_React$Component) {
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps, prevState) {
-      // debugger
-      // if (this.props.formType === 'Update Instruction' && !this.state.rendered) {
-      //   if(this.props.uploadStatus){
-      //     this.passBackInfo();
-      //   }
-      // }else if(this.props !== prevProps || this.state !==  prevState){
-      //   debugger
-      //  this.passBackInfo();
-      // }
       if (this.props !== prevProps || this.state !== prevState) {
         this.passBackInfo();
       }
@@ -1490,7 +1480,6 @@ var Instructions = function (_React$Component) {
   }, {
     key: 'passBackInfo',
     value: function passBackInfo() {
-      debugger;
       this.props.aggregateInstructionData(this.state);
     }
   }, {
@@ -1590,14 +1579,6 @@ var Instructions = function (_React$Component) {
         };
         fileReader.readAsDataURL(file);
       });
-      // const file = e.currentTarget.files[0];
-      // const fileReader = new FileReader();
-      // fileReader.onloadend = () => {
-      //   this.setState({media: file, mediaUrl: fileReader.result, images: [...this.state.images, file], imagesUrl: [...this.state.imagesUrl, fileReader.result]});
-      // };
-      // if(file){
-      //   fileReader.readAsDataURL(file);
-      // }
     }
   }, {
     key: 'render',
@@ -1754,8 +1735,7 @@ var mstp = function mstp(state, ownProps) {
     },
     formType: 'New Instruction',
     errors: state.errors.instruction,
-    instructionBodiesState: ownProps.instructionBodiesState,
-    instructionPhotoUploadCheck: ownProps.instructionPhotoUploadCheck
+    instructionBodiesState: ownProps.instructionBodiesState
   };
 };
 
@@ -2452,6 +2432,7 @@ var ProjectForm = function (_React$Component) {
     _this.createInstructions = _this.createInstructions.bind(_this);
     _this.updateInstructions = _this.updateInstructions.bind(_this);
     _this.removeInstructions = _this.removeInstructions.bind(_this);
+    _this.instructionsComplete = _this.instructionsComplete.bind(_this);
     return _this;
   }
 
@@ -2585,14 +2566,7 @@ var ProjectForm = function (_React$Component) {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
       e.preventDefault();
-      var completeStatus = true;
-      for (var i = 0; i < this.state.instructionBodies.length; i++) {
-        var status = Object.values(this.state.instructionBodies[i])[0];
-        if (!status) {
-          completeStatus = false;
-        }
-      }
-      if (!completeStatus) {
+      if (!this.instructionsComplete) {
         this.instructions();
         return;
       } else {
@@ -2604,18 +2578,9 @@ var ProjectForm = function (_React$Component) {
           this.props.submitProject(formDataProject, projectId).then(function (payload) {
             projectId = payload.project.id;
             debugger;
-            var newInstructions = that.appendInstructions(that.state.instructionData, projectId);
-            that.createInstructions(that, newInstructions, projectId).then(function () {
+            that.createInstructions(that, that.state.instructionData, projectId).then(function () {
               that.redirect(projectId);
             });
-            // if(!that.state.instructionData.length){
-            //   const formDataInstruction = that.appendInstructions(that.state.instructionData, projectId);
-            //   that.props.createInstructions(formDataInstruction, projectId).then(() => {
-            //     that.redirect(projectId);
-            //   });
-            // }else{
-            //   that.redirect(projectId);
-            // }
           });
         } else {
           that.props.submitProject(formDataProject, projectId).then(function (payload) {
@@ -2665,6 +2630,17 @@ var ProjectForm = function (_React$Component) {
       } else {
         return Promise.resolve('Success');
       }
+    }
+  }, {
+    key: 'instructionsComplete',
+    value: function instructionsComplete() {
+      for (var i = 0; i < this.state.instructionBodies.length; i++) {
+        var status = Object.values(this.state.instructionBodies[i])[0];
+        if (!status) {
+          return false;
+        }
+      }
+      return true;
     }
   }, {
     key: 'redirect',
@@ -2749,14 +2725,6 @@ var ProjectForm = function (_React$Component) {
       }
     }
   }, {
-    key: 'instructionPhotoUploadCheck',
-    value: function instructionPhotoUploadCheck(boolean) {
-      if (!boolean) {
-        this.setState({ instructionIssues: ['That is an improper file format, please choose a different file'] });
-        this.instructionErrors();
-      }
-    }
-  }, {
     key: 'instructionErrors',
     value: function instructionErrors() {
       var _this5 = this;
@@ -2810,9 +2778,7 @@ var ProjectForm = function (_React$Component) {
             key: keyValue,
             step: this.state.stepNum,
             instructionBodiesState: this.instructionBodiesState.bind(this),
-            removeInstruction: this.removeInstruction.bind(this),
-            instructionPhotoUploadCheck: this.instructionPhotoUploadCheck.bind(this),
-            aggregateInstructionData: this.aggregateInstructionData.bind(this)
+            removeInstruction: this.removeInstruction.bind(this), aggregateInstructionData: this.aggregateInstructionData.bind(this)
           })]),
           key: keyValue
         });
@@ -2843,7 +2809,6 @@ var ProjectForm = function (_React$Component) {
             imagesStorageId: instruction.imagesStorageId,
             instructionBodiesState: _this6.instructionBodiesState.bind(_this6),
             removeInstruction: _this6.removeInstruction.bind(_this6),
-            instructionPhotoUploadCheck: _this6.instructionPhotoUploadCheck.bind(_this6),
             aggregateInstructionData: _this6.aggregateInstructionData.bind(_this6)
           });
         });
@@ -3232,18 +3197,27 @@ var ProjectShow = function (_React$Component) {
         this.props.clearProjectErrors;
         this.props.history.push('/');
       }
+      debugger;
       if (prevProps.match.params.projectId != this.props.match.params.projectId) {
         this.props.fetchProject(this.props.match.params.projectId).then(function (payload) {
+          var comments = [];
+          var instructions = [];
+          if (payload.comments) {
+            comments = Object.values(payload.comments);
+          }
+          if (payload.instructions) {
+            instructions = Object.values(payload.instructions).sort(function (a, b) {
+              return a.instructionStep - b.instructionStep;
+            });
+          }
           _this3.setState({
             title: payload.project.title,
             authorUsername: payload.project.authorUsername,
             picture: payload.project.picture,
             description: payload.project.description,
             project: payload.project,
-            instructions: Object.values(payload.instructions).sort(function (a, b) {
-              return a.instructionStep - b.instructionStep;
-            }),
-            comments: Object.values(payload.comments),
+            instructions: instructions,
+            comments: comments,
             commentBody: ''
           });
         });

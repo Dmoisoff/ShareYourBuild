@@ -8,7 +8,6 @@
 User.destroy_all
 Project.destroy_all
 Instruction.destroy_all
-ActiveStorage::Attachment.all.each { |attachment| attachment.purge }
 
 defaultProfilePicture = File.open('app/assets/images/user_profile_pic.png')
 shibeProfilePicture = File.open('app/assets/images/FullSizeRendercopy.png')

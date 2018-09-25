@@ -29,15 +29,6 @@ class Instructions extends React.Component{
   }
 
   componentDidUpdate(prevProps, prevState){
-    // debugger
-    // if (this.props.formType === 'Update Instruction' && !this.state.rendered) {
-    //   if(this.props.uploadStatus){
-    //     this.passBackInfo();
-    //   }
-    // }else if(this.props !== prevProps || this.state !==  prevState){
-    //   debugger
-    //  this.passBackInfo();
-    // }
     if(this.props !== prevProps || this.state !==  prevState){
      this.passBackInfo();
     }
@@ -62,7 +53,6 @@ class Instructions extends React.Component{
     }
 
     passBackInfo(){
-      debugger
       this.props.aggregateInstructionData(this.state);
     }
 
@@ -137,14 +127,6 @@ class Instructions extends React.Component{
         };
         fileReader.readAsDataURL(file);
       });
-      // const file = e.currentTarget.files[0];
-      // const fileReader = new FileReader();
-      // fileReader.onloadend = () => {
-      //   this.setState({media: file, mediaUrl: fileReader.result, images: [...this.state.images, file], imagesUrl: [...this.state.imagesUrl, fileReader.result]});
-      // };
-      // if(file){
-      //   fileReader.readAsDataURL(file);
-      // }
     }
 
   render(){

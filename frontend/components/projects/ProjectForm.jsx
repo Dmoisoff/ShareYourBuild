@@ -20,6 +20,7 @@ class ProjectForm extends React.Component{
     this.createInstructions = this.createInstructions.bind(this);
     this.updateInstructions = this.updateInstructions.bind(this);
     this.removeInstructions = this.removeInstructions.bind(this);
+    this.instructionsComplete = this.instructionsComplete.bind(this);
     }
 
   updateTitle(e){
@@ -143,14 +144,7 @@ class ProjectForm extends React.Component{
 
   handleSubmit(e){
     e.preventDefault();
-    let completeStatus = true;
-    for (let i = 0; i < this.state.instructionBodies.length; i++) {
-      const status = Object.values(this.state.instructionBodies[i])[0];
-      if(!status){
-        completeStatus = false;
-      }
-    }
-    if(!completeStatus){
+    if(!this.instructionsComplete){
       this.instructions();
       return;
     }else{
@@ -162,19 +156,10 @@ class ProjectForm extends React.Component{
         this.props.submitProject(formDataProject, projectId).then((payload) => {
           projectId = payload.project.id;
           debugger
-          const newInstructions = that.appendInstructions(that.state.instructionData, projectId);
-          that.createInstructions(that, newInstructions, projectId)
+          that.createInstructions(that, that.state.instructionData, projectId)
           .then(() => {
             that.redirect(projectId);
           });
-          // if(!that.state.instructionData.length){
-          //   const formDataInstruction = that.appendInstructions(that.state.instructionData, projectId);
-          //   that.props.createInstructions(formDataInstruction, projectId).then(() => {
-          //     that.redirect(projectId);
-          //   });
-          // }else{
-          //   that.redirect(projectId);
-          // }
         });
       }else{
         that.props.submitProject(formDataProject, projectId).then((payload) => {
@@ -224,10 +209,15 @@ class ProjectForm extends React.Component{
     }
   }
 
-
-
-
-
+  instructionsComplete(){
+    for (let i = 0; i < this.state.instructionBodies.length; i++) {
+      const status = Object.values(this.state.instructionBodies[i])[0];
+      if(!status){
+        return false;
+      }
+    }
+    return true;
+  }
 
 
   redirect(id){
@@ -280,13 +270,6 @@ class ProjectForm extends React.Component{
       }
     }
 
-    instructionPhotoUploadCheck(boolean){
-      if(!boolean){
-        this.setState({instructionIssues: [`That is an improper file format, please choose a different file`]});
-        this.instructionErrors();
-      }
-    }
-
   instructionErrors(){
     if(!this.state.instructionIssues.length){
       return [];
@@ -330,9 +313,7 @@ class ProjectForm extends React.Component{
               key={keyValue}
               step={this.state.stepNum}
               instructionBodiesState={this.instructionBodiesState.bind(this)}
-              removeInstruction={this.removeInstruction.bind(this)}
-              instructionPhotoUploadCheck={this.instructionPhotoUploadCheck.bind(this)}
-              aggregateInstructionData={this.aggregateInstructionData.bind(this)}
+              removeInstruction={this.removeInstruction.bind(this)}              aggregateInstructionData={this.aggregateInstructionData.bind(this)}
               />
           ],
           key: keyValue
@@ -362,7 +343,6 @@ class ProjectForm extends React.Component{
                   imagesStorageId={instruction.imagesStorageId}
                   instructionBodiesState={this.instructionBodiesState.bind(this)}
                   removeInstruction={this.removeInstruction.bind(this)}
-                  instructionPhotoUploadCheck={this.instructionPhotoUploadCheck.bind(this)}
                   aggregateInstructionData={this.aggregateInstructionData.bind(this)}
                   />;
         });
