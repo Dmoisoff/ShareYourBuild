@@ -225,7 +225,6 @@ class ProjectShow extends React.Component {
     }
     let createCommentButton2;
     if(this.props.currentUserId){
-      debugger
       createCommentButton2 = this.state.comments.length === 0 ? null : <button className='comment-create-button' onClick={() =>{this.setState({newComment: true, edit: null});}}>Create A Comment</button>;
     }
     const commentHeader = this.state.comments.length ? this.state.comments.length === 1 ? <p className='comments-header'>{this.state.comments.length} Comment</p>: <p className='comments-header'>{this.state.comments.length} Comments</p> : null;

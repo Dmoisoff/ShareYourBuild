@@ -3437,7 +3437,6 @@ var ProjectShow = function (_React$Component) {
       }
       var createCommentButton2 = void 0;
       if (this.props.currentUserId) {
-        debugger;
         createCommentButton2 = this.state.comments.length === 0 ? null : _react2.default.createElement(
           'button',
           { className: 'comment-create-button', onClick: function onClick() {
