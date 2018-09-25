@@ -17,7 +17,6 @@ const mstp = (state, ownProps) => {
         projectId: ownProps.projectId,
         rendered: false,
         imagesStorageId: []
-        // instructionBody: false
        },
       formType: 'New Instruction',
       errors: state.errors.instruction,

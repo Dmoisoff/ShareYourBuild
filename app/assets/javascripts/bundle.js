@@ -1731,7 +1731,6 @@ var mstp = function mstp(state, ownProps) {
       projectId: ownProps.projectId,
       rendered: false,
       imagesStorageId: []
-      // instructionBody: false
     },
     formType: 'New Instruction',
     errors: state.errors.instruction,
@@ -4739,7 +4738,6 @@ var commentReducer = function commentReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments[1];
 
-  debugger;
   var ids = void 0;
   var newState = (0, _merge3.default)({}, state);
   var oldState = Object.freeze(state);
@@ -4748,7 +4746,6 @@ var commentReducer = function commentReducer() {
       if (action.comments) {
         newState = (0, _merge3.default)({}, state, action.comments);
       }
-      debugger;
       return newState;
     case Comment_Actions.CREATE_COMMENT:
     case Comment_Actions.FETCH_COMMENT:

@@ -47,15 +47,15 @@ technology_project1_step_7 = Instruction.new({project_id: technology_project1.id
 technology_project1_step_8 = Instruction.new({project_id: technology_project1.id, instruction_step: 8, title: '', body: 'To bond everything together and fill all the extra space inside the USB cable end, I use gel-style 5 minute epoxy. Fortunately, five minutes gives you enough time to apply the glue, place the flash drive in place, and put the rubber molded housing back on. Hold the connector firmly– paying attention to the seams for alignment– until the epoxy cures, about five more minutes.' })
 technology_project1_step_9 = Instruction.new({project_id: technology_project1.id, instruction_step: 9, title: '', body: 'Last step: Cut the cable as desired. A jagged cut looks different than a clean cut– take your pick. So that’s it– how to make your own cut-off usb cable flash drive.' })
 
-technology_project1_step_1.media.attach(io: technology_1_step_1, filename: 'step_one.png')
-technology_project1_step_2.media.attach(io: technology_1_step_2, filename: 'step_two.png')
-technology_project1_step_3.media.attach(io: technology_1_step_3, filename: 'step_three.png')
-technology_project1_step_4.media.attach(io: technology_1_step_4, filename: 'step_four.png')
-technology_project1_step_5.media.attach(io: technology_1_step_5, filename: 'step_five.png')
-technology_project1_step_6.media.attach(io: technology_1_step_6, filename: 'step_six.png')
-technology_project1_step_7.media.attach(io: technology_1_step_7, filename: 'step_seven.png')
-technology_project1_step_8.media.attach(io: technology_1_step_8, filename: 'step_eight.png')
-technology_project1_step_9.media.attach(io: technology_1_step_9, filename: 'step_nine.png')
+technology_project1_step_1.images.attach(io: technology_1_step_1, filename: 'step_one.png')
+technology_project1_step_2.images.attach(io: technology_1_step_2, filename: 'step_two.png')
+technology_project1_step_3.images.attach(io: technology_1_step_3, filename: 'step_three.png')
+technology_project1_step_4.images.attach(io: technology_1_step_4, filename: 'step_four.png')
+technology_project1_step_5.images.attach(io: technology_1_step_5, filename: 'step_five.png')
+technology_project1_step_6.images.attach(io: technology_1_step_6, filename: 'step_six.png')
+technology_project1_step_7.images.attach(io: technology_1_step_7, filename: 'step_seven.png')
+technology_project1_step_8.images.attach(io: technology_1_step_8, filename: 'step_eight.png')
+technology_project1_step_9.images.attach(io: technology_1_step_9, filename: 'step_nine.png')
 
 
 technology_project1_step_1.save!
@@ -84,9 +84,9 @@ technology_2_step_1 = File.open("app/assets/images/non_instrucable_seeds/technol
 technology_2_step_2 = File.open("app/assets/images/non_instrucable_seeds/technology/Diy Tech Gloves With Conductive Thread/step_two.png")
 technology_2_step_3 = File.open("app/assets/images/non_instrucable_seeds/technology/Diy Tech Gloves With Conductive Thread/step_three.png")
 
-technology_project2_step_1.media.attach(io: technology_2_step_1, filename: 'step_one.png')
-technology_project2_step_2.media.attach(io: technology_2_step_2, filename: 'step_two.png')
-technology_project2_step_3.media.attach(io: technology_2_step_3, filename: 'step_three.png')
+technology_project2_step_1.images.attach(io: technology_2_step_1, filename: 'step_one.png')
+technology_project2_step_2.images.attach(io: technology_2_step_2, filename: 'step_two.png')
+technology_project2_step_3.images.attach(io: technology_2_step_3, filename: 'step_three.png')
 
 technology_project2_step_1.save!
 technology_project2_step_2.save!
@@ -149,10 +149,10 @@ recipe_project1_step_4 = Instruction.new({project_id: recipe_project1.id, instru
 
 
 
-recipe_project1_step_1.media.attach(io: recipe_1_step_1, filename: 'step_one_LARGE.jpg')
-recipe_project1_step_2.media.attach(io: recipe_1_step_2, filename: 'step_two.jpg')
-recipe_project1_step_3.media.attach(io: recipe_1_step_3, filename: 'step_three.jpg')
-recipe_project1_step_4.media.attach(io: recipe_1_step_4, filename: 'step_four.jpg')
+recipe_project1_step_1.images.attach(io: recipe_1_step_1, filename: 'step_one_LARGE.jpg')
+recipe_project1_step_2.images.attach(io: recipe_1_step_2, filename: 'step_two.jpg')
+recipe_project1_step_3.images.attach(io: recipe_1_step_3, filename: 'step_three.jpg')
+recipe_project1_step_4.images.attach(io: recipe_1_step_4, filename: 'step_four.jpg')
 
 recipe_project1_step_1.save!
 recipe_project1_step_2.save!
@@ -198,11 +198,11 @@ Enjoy!<br><br>
 NOTE: This recipe was not tested for canning and long term storage.</p>".html_safe })
 
 
-recipe_project2_step_1.media.attach(io: recipe_2_step_1, filename: 'step_one.jpg')
-recipe_project2_step_2.media.attach(io: recipe_2_step_2, filename: 'step_two.jpg')
-recipe_project2_step_3.media.attach(io: recipe_2_step_3, filename: 'step_three.jpg')
-recipe_project2_step_4.media.attach(io: recipe_2_step_4, filename: 'step_four.jpg')
-recipe_project2_step_5.media.attach(io: recipe_2_step_5, filename: 'step_four.jpg')
+recipe_project2_step_1.images.attach(io: recipe_2_step_1, filename: 'step_one.jpg')
+recipe_project2_step_2.images.attach(io: recipe_2_step_2, filename: 'step_two.jpg')
+recipe_project2_step_3.images.attach(io: recipe_2_step_3, filename: 'step_three.jpg')
+recipe_project2_step_4.images.attach(io: recipe_2_step_4, filename: 'step_four.jpg')
+recipe_project2_step_5.images.attach(io: recipe_2_step_5, filename: 'step_four.jpg')
 
 recipe_project2_step_1.save!
 recipe_project2_step_2.save!
@@ -235,10 +235,10 @@ recipe_project3_step_4 = Instruction.new({project_id: recipe_project3.id, instru
 
 
 
-recipe_project3_step_1.media.attach(io: recipe3_project3_step_1, filename: 'step_one.jpg')
-recipe_project3_step_2.media.attach(io: recipe3_project3_step_2, filename: 'step_two.jpg')
-recipe_project3_step_3.media.attach(io: recipe3_project3_step_3, filename: 'step_three.jpg')
-recipe_project3_step_4.media.attach(io: recipe3_project3_step_4, filename: 'step_four.jpg')
+recipe_project3_step_1.images.attach(io: recipe3_project3_step_1, filename: 'step_one.jpg')
+recipe_project3_step_2.images.attach(io: recipe3_project3_step_2, filename: 'step_two.jpg')
+recipe_project3_step_3.images.attach(io: recipe3_project3_step_3, filename: 'step_three.jpg')
+recipe_project3_step_4.images.attach(io: recipe3_project3_step_4, filename: 'step_four.jpg')
 
 
 recipe_project3_step_1.save!
@@ -292,10 +292,10 @@ Let the salad stay for an hour and ... enjoy!<br><br>
 Bone appetite!</p>'.html_safe})
 
 
-recipe_project4_step_1.media.attach(io: recipe4_step_1, filename: 'step_one.jpg')
-recipe_project4_step_2.media.attach(io: recipe4_step_2, filename: 'step_two.jpg')
-recipe_project4_step_3.media.attach(io: recipe4_step_3, filename: 'step_three.jpg')
-recipe_project4_step_4.media.attach(io: recipe4_step_4, filename: 'step_four.jpg')
+recipe_project4_step_1.images.attach(io: recipe4_step_1, filename: 'step_one.jpg')
+recipe_project4_step_2.images.attach(io: recipe4_step_2, filename: 'step_two.jpg')
+recipe_project4_step_3.images.attach(io: recipe4_step_3, filename: 'step_three.jpg')
+recipe_project4_step_4.images.attach(io: recipe4_step_4, filename: 'step_four.jpg')
 
 
 recipe_project4_step_1.save!
@@ -347,22 +347,22 @@ If you find your flames want to flop over, glue a circle of dark green felt into
 costume_project2_step_6 = Instruction.new({project_id: costume_project2.id, instruction_step: 6, title: 'Engage Your Fire Powers', body: '<p>Let cool and engage your fire flower powers. Although light, I wouldn’t recommend actually throwing this at anyone. Happy Making!</p>'.html_safe})
 
 costume1_step_1 = File.open("app/assets/images/costumes_seeds/LUIGI'S GREEN FIREBALL PROP - SUPER MARIO BROTHERS/step_one.jpg")
-costume_project2_step_1.media.attach(io: costume1_step_1, filename: "step_one.jpg")
+costume_project2_step_1.images.attach(io: costume1_step_1, filename: "step_one.jpg")
 
 costume1_step_2 = File.open("app/assets/images/costumes_seeds/LUIGI'S GREEN FIREBALL PROP - SUPER MARIO BROTHERS/step_2.jpg")
-costume_project2_step_2.media.attach(io: costume1_step_2, filename: "step_2.jpg")
+costume_project2_step_2.images.attach(io: costume1_step_2, filename: "step_2.jpg")
 
 costume1_step_3 = File.open("app/assets/images/costumes_seeds/LUIGI'S GREEN FIREBALL PROP - SUPER MARIO BROTHERS/step_three.jpg")
-costume_project2_step_3.media.attach(io: costume1_step_3, filename: "step_three.jpg")
+costume_project2_step_3.images.attach(io: costume1_step_3, filename: "step_three.jpg")
 
 costume1_step_4 = File.open("app/assets/images/costumes_seeds/LUIGI'S GREEN FIREBALL PROP - SUPER MARIO BROTHERS/stpe_four.jpg")
-costume_project2_step_4.media.attach(io: costume1_step_4, filename: "stpe_four.jpg")
+costume_project2_step_4.images.attach(io: costume1_step_4, filename: "stpe_four.jpg")
 
 costume1_step_5 = File.open("app/assets/images/costumes_seeds/LUIGI'S GREEN FIREBALL PROP - SUPER MARIO BROTHERS/step_five.jpg")
-costume_project2_step_5.media.attach(io: costume1_step_5, filename: "step_five.jpg")
+costume_project2_step_5.images.attach(io: costume1_step_5, filename: "step_five.jpg")
 
 costume1_step_6 = File.open("app/assets/images/costumes_seeds/LUIGI'S GREEN FIREBALL PROP - SUPER MARIO BROTHERS/step_6.jpg")
-costume_project2_step_6.media.attach(io: costume1_step_6, filename: "step_6.jpg")
+costume_project2_step_6.images.attach(io: costume1_step_6, filename: "step_6.jpg")
 
 costume_project2_step_1.save!
 costume_project2_step_2.save!
@@ -406,25 +406,25 @@ This project could easily be adapted into a bowser shell as well. I hope you enj
 
 
 costume1_step_1 = File.open("app/assets/images/costumes_seeds/master_roshi/step_one.jpg")
-costume_project1_step_1.media.attach(io: costume1_step_1, filename: "step_one.jpg")
+costume_project1_step_1.images.attach(io: costume1_step_1, filename: "step_one.jpg")
 costume1_step_2 = File.open("app/assets/images/costumes_seeds/master_roshi/step_two.jpg")
-costume_project1_step_2.media.attach(io: costume1_step_2, filename: "step_two.jpg")
+costume_project1_step_2.images.attach(io: costume1_step_2, filename: "step_two.jpg")
 costume1_step_3 = File.open("app/assets/images/costumes_seeds/master_roshi/step_three.jpg")
-costume_project1_step_3.media.attach(io: costume1_step_3, filename: "step_three.jpg")
+costume_project1_step_3.images.attach(io: costume1_step_3, filename: "step_three.jpg")
 costume1_step_4 = File.open("app/assets/images/costumes_seeds/master_roshi/step_four.jpg")
-costume_project1_step_4.media.attach(io: costume1_step_4, filename: "step_four.jpg")
+costume_project1_step_4.images.attach(io: costume1_step_4, filename: "step_four.jpg")
 costume1_step_5 = File.open("app/assets/images/costumes_seeds/master_roshi/step_five.jpg")
-costume_project1_step_5.media.attach(io: costume1_step_5, filename: "step_five.jpg")
+costume_project1_step_5.images.attach(io: costume1_step_5, filename: "step_five.jpg")
 costume1_step_6 = File.open("app/assets/images/costumes_seeds/master_roshi/step_six.jpg")
-costume_project1_step_6.media.attach(io: costume1_step_6, filename: "step_six.jpg")
+costume_project1_step_6.images.attach(io: costume1_step_6, filename: "step_six.jpg")
 costume1_step_7 = File.open("app/assets/images/costumes_seeds/master_roshi/step_seven.jpg")
-costume_project1_step_7.media.attach(io: costume1_step_7, filename: "step_seven.jpg")
+costume_project1_step_7.images.attach(io: costume1_step_7, filename: "step_seven.jpg")
 costume1_step_8 = File.open("app/assets/images/costumes_seeds/master_roshi/step_eight.jpg")
-costume_project1_step_8.media.attach(io: costume1_step_8, filename: "step_eight.jpg")
+costume_project1_step_8.images.attach(io: costume1_step_8, filename: "step_eight.jpg")
 costume1_step_9 = File.open("app/assets/images/costumes_seeds/master_roshi/step_nine.jpg")
-costume_project1_step_9.media.attach(io: costume1_step_9, filename: "step_nine.jpg")
+costume_project1_step_9.images.attach(io: costume1_step_9, filename: "step_nine.jpg")
 costume1_step_10 = File.open("app/assets/images/costumes_seeds/master_roshi/step_ten.jpg")
-costume_project1_step_10.media.attach(io: costume1_step_10, filename: "step_ten.jpg")
+costume_project1_step_10.images.attach(io: costume1_step_10, filename: "step_ten.jpg")
 
 costume_project1_step_1.save!
 costume_project1_step_2.save!
@@ -500,17 +500,17 @@ If you want to make a finger puppet, cut another base and make loop stitches alo
 And there you have it: your Neko Atsume craft. I will definitely be looking into making some more Neko Atsume inspired crafts in the future. Maybe some cardboard painted cafe? Or could I possibly make a cat pancake for my cats to crawl into? We shall see.</p>".html_safe })
 
 carft1_step_2 = File.open("app/assets/images/non_instrucable_seeds/neko_atsume_cats/step 2.jpg")
-carft_project1_step_2.media.attach(io: carft1_step_2, filename: "step 2.jpg")
+carft_project1_step_2.images.attach(io: carft1_step_2, filename: "step 2.jpg")
 carft1_step_3 = File.open("app/assets/images/non_instrucable_seeds/neko_atsume_cats/step 3.jpg")
-carft_project1_step_3.media.attach(io: carft1_step_3, filename: "step 3.jpg")
+carft_project1_step_3.images.attach(io: carft1_step_3, filename: "step 3.jpg")
 carft1_step_4 = File.open("app/assets/images/non_instrucable_seeds/neko_atsume_cats/step 4.jpg")
-carft_project1_step_4.media.attach(io: carft1_step_4, filename: "step 4.jpg")
+carft_project1_step_4.images.attach(io: carft1_step_4, filename: "step 4.jpg")
 carft1_step_5 = File.open("app/assets/images/non_instrucable_seeds/neko_atsume_cats/step 5.jpg")
-carft_project1_step_5.media.attach(io: carft1_step_5, filename: "step 5.jpg")
+carft_project1_step_5.images.attach(io: carft1_step_5, filename: "step 5.jpg")
 carft1_step_6 = File.open("app/assets/images/non_instrucable_seeds/neko_atsume_cats/step 6.jpg")
-carft_project1_step_6.media.attach(io: carft1_step_6, filename: "step 6.jpg")
+carft_project1_step_6.images.attach(io: carft1_step_6, filename: "step 6.jpg")
 carft1_step_7 = File.open("app/assets/images/non_instrucable_seeds/neko_atsume_cats/step 7.jpg")
-carft_project1_step_7.media.attach(io: carft1_step_7, filename: "step 7.jpg")
+carft_project1_step_7.images.attach(io: carft1_step_7, filename: "step 7.jpg")
 
 carft_project1_step_2.save!
 carft_project1_step_3.save!
@@ -546,11 +546,11 @@ carft_project2_step_3 = Instruction.new({project_id: carft_project2.id, instruct
 
 
 carft2_step_1 = File.open("app/assets/images/non_instrucable_seeds/5_min_white_board/step_one.jpg")
-carft_project2_step_1.media.attach(io: carft2_step_1, filename: "step_one.jpg")
+carft_project2_step_1.images.attach(io: carft2_step_1, filename: "step_one.jpg")
 carft2_step_2 = File.open("app/assets/images/non_instrucable_seeds/5_min_white_board/step_two.jpg")
-carft_project2_step_2.media.attach(io: carft2_step_2, filename: "step_two.jpg")
+carft_project2_step_2.images.attach(io: carft2_step_2, filename: "step_two.jpg")
 carft2_step_3 = File.open("app/assets/images/non_instrucable_seeds/5_min_white_board/step_three.jpg")
-carft_project2_step_3.media.attach(io: carft2_step_3, filename: "step_three.jpg")
+carft_project2_step_3.images.attach(io: carft2_step_3, filename: "step_three.jpg")
 
 carft_project2_step_1.save!
 carft_project2_step_2.save!
@@ -595,23 +595,23 @@ carft_project3_step_9 = Instruction.new({project_id: carft_project3.id, instruct
 
 
 carft3_step_1 = File.open("app/assets/images/non_instrucable_seeds/DIY- Geometric Paper Wall Art/step_1.jpg")
-carft_project3_step_1.media.attach(io: carft3_step_1, filename: "step_1.jpg")
+carft_project3_step_1.images.attach(io: carft3_step_1, filename: "step_1.jpg")
 carft3_step_2 = File.open("app/assets/images/non_instrucable_seeds/DIY- Geometric Paper Wall Art/step_2.jpg")
-carft_project3_step_2.media.attach(io: carft3_step_2, filename: "step_2.jpg")
+carft_project3_step_2.images.attach(io: carft3_step_2, filename: "step_2.jpg")
 carft3_step_3 = File.open("app/assets/images/non_instrucable_seeds/DIY- Geometric Paper Wall Art/step_3.jpg")
-carft_project3_step_3.media.attach(io: carft3_step_3, filename: "step_3.jpg")
+carft_project3_step_3.images.attach(io: carft3_step_3, filename: "step_3.jpg")
 carft3_step_4 = File.open("app/assets/images/non_instrucable_seeds/DIY- Geometric Paper Wall Art/step_4.jpg")
-carft_project3_step_4.media.attach(io: carft3_step_4, filename: "step_4.jpg")
+carft_project3_step_4.images.attach(io: carft3_step_4, filename: "step_4.jpg")
 carft3_step_5 = File.open("app/assets/images/non_instrucable_seeds/DIY- Geometric Paper Wall Art/step 5.jpg")
-carft_project3_step_5.media.attach(io: carft3_step_5, filename: "step 5.jpg")
+carft_project3_step_5.images.attach(io: carft3_step_5, filename: "step 5.jpg")
 carft3_step_6 = File.open("app/assets/images/non_instrucable_seeds/DIY- Geometric Paper Wall Art/step 6.jpg")
-carft_project3_step_6.media.attach(io: carft3_step_6, filename: "step 6.jpg")
+carft_project3_step_6.images.attach(io: carft3_step_6, filename: "step 6.jpg")
 carft3_step_7 = File.open("app/assets/images/non_instrucable_seeds/DIY- Geometric Paper Wall Art/step_7.jpg")
-carft_project3_step_7.media.attach(io: carft3_step_7, filename: "step_7.jpg")
+carft_project3_step_7.images.attach(io: carft3_step_7, filename: "step_7.jpg")
 carft3_step_8 = File.open("app/assets/images/non_instrucable_seeds/DIY- Geometric Paper Wall Art/step_8.jpg")
-carft_project3_step_8.media.attach(io: carft3_step_8, filename: "step_8.jpg")
+carft_project3_step_8.images.attach(io: carft3_step_8, filename: "step_8.jpg")
 carft3_step_9 = File.open("app/assets/images/non_instrucable_seeds/DIY- Geometric Paper Wall Art/step 9.png")
-carft_project3_step_9.media.attach(io: carft3_step_9, filename: "step 9.png")
+carft_project3_step_9.images.attach(io: carft3_step_9, filename: "step 9.png")
 
 carft_project3_step_1.save!
 carft_project3_step_2.save!

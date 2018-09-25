@@ -479,7 +479,6 @@ class ProjectForm extends React.Component{
                   {instructionErrors}
                 </ul>
               </div>
-
             </div>
           </div>
         </div>
