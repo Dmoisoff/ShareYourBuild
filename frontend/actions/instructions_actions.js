@@ -77,7 +77,6 @@ export const createInstructions = (instructions,id) => {
 };
 
 export const updateInstructions = (instructions) => {
-  debugger
   return dispatch => {
     return Instruction_Util.updateInstructions(instructions).then(() =>{ },
      (errors) => {

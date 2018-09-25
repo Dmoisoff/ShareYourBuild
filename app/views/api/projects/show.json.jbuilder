@@ -49,7 +49,6 @@ end
 if !@project.comments[0]
   json.comments ({})
 else
-  debugger
   json.comments do
       @project.comments.order('comments.id ASC').each do |comment|
         json.set! comment.id do

@@ -10,7 +10,6 @@ class InstructionStep extends React.Component{
   }
 
   displayMedia(){
-    // debugger
     const imagesUrls = this.props.images;
     let position;
     let alignment;
@@ -50,7 +49,6 @@ class InstructionStep extends React.Component{
   }
 
   render(){
-    // debugger
     const body = this.props.body;
     const media = this.props.images ? this.displayMedia() : null;
     return(

@@ -113,7 +113,6 @@ class Instructions extends React.Component{
     }
 
     uploadFile(e){
-      debugger
       let files = Object.values(e.currentTarget.files);
       if(files.length > 4){
         files = files.slice(0,4);

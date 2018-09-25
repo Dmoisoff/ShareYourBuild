@@ -41,7 +41,6 @@ export const deleteInstruction = (id) => {
 };
 
 export const updateInstructions = (instructions) => {
-  debugger
   return $.ajax({
     method: 'PATCH',
     url: `api/instructions/update`,
@@ -52,7 +51,6 @@ export const updateInstructions = (instructions) => {
 };
 
 export const createInstructions = (instructions,id) => {
-  debugger
   return $.ajax({
     method: 'POST',
     url: `/api/projects/${id}/instructions`,

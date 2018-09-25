@@ -100,7 +100,6 @@ class ProjectForm extends React.Component{
   }
 
   aggregateInstructionData(instructionData){
-    debugger
     const index = instructionData['step'];
     let instructions = this.state.instructionData;
     instructions[index - 1] = instructionData;
@@ -109,7 +108,6 @@ class ProjectForm extends React.Component{
   }
 
   appendInstructions(instructions, projectId){
-    debugger
     const formDataInstruction = new FormData();
     instructions.forEach((instruction,i) => {
       formDataInstruction.append(`instructions[${i}][body]`,instruction['body'] );
@@ -120,7 +118,6 @@ class ProjectForm extends React.Component{
         formDataInstruction.append(`instructions[${i}][id]`, instruction['id'] );
         formDataInstruction.append(`instructions[${i}][imagesStorageId]`, instruction['imagesStorageId'] );
       }
-      debugger
       if(instruction['images'].length){
         instruction['images'].forEach((file, j) => {
           formDataInstruction.append(`instructions[${i}][images][${j}]`, file);
@@ -151,11 +148,9 @@ class ProjectForm extends React.Component{
       let projectId = this.props.match.params.projectId;
       const formDataProject = this.appendProject(projectId);
       const that = this;
-      debugger
       if(this.props.formType === 'New Project'){
         this.props.submitProject(formDataProject, projectId).then((payload) => {
           projectId = payload.project.id;
-          debugger
           that.createInstructions(that, that.state.instructionData, projectId)
           .then(() => {
             that.redirect(projectId);
@@ -185,7 +180,6 @@ class ProjectForm extends React.Component{
   }
 
   createInstructions(context, newInstructions, projectId){
-    debugger
     if(newInstructions.length){
       return context.props.createInstructions(context.appendInstructions(newInstructions, projectId), projectId);
     }else{

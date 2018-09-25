@@ -24,6 +24,3 @@ class Instruction < ApplicationRecord
 }
 
 end
-
-
-  # i = Instruction.create!({project_id: 131, instruction_step: 2, title: 'test', body: 'temp' })

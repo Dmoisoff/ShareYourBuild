@@ -47,7 +47,6 @@ class ProjectShow extends React.Component {
         this.props.clearProjectErrors;
         this.props.history.push('/');
       }
-      debugger
     if (prevProps.match.params.projectId != this.props.match.params.projectId) {
       this.props.fetchProject(this.props.match.params.projectId).then((payload) => {
         let comments = [];
@@ -90,7 +89,6 @@ class ProjectShow extends React.Component {
 
   displayInstructions(){
     if(this.state.instructions){
-      // const sortedInstructions = this.state.instructions.sort((a,b) => (a.instructionStep - b.instructionStep));
       return this.state.instructions.map((instruction,i) => {
       if(!instruction){
         return [];

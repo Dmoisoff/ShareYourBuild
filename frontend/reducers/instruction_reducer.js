@@ -7,7 +7,6 @@ import merge from 'lodash/merge';
 const instructionReducer = (state = {}, action) => {
   let ids;
   let newState;
-  debugger
   const oldState = Object.freeze(state);
   switch (action.type) {
     case Projects_Actions.FETCH_PROJECT:

@@ -263,7 +263,6 @@ var createInstructions = exports.createInstructions = function createInstruction
 };
 
 var updateInstructions = exports.updateInstructions = function updateInstructions(instructions) {
-  debugger;
   return function (dispatch) {
     return Instruction_Util.updateInstructions(instructions).then(function () {}, function (errors) {
       return dispatch({
@@ -1213,7 +1212,6 @@ var _instructions_actions = __webpack_require__(/*! ./../../actions/instructions
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state, ownProps) {
-  debugger;
   return {
     instruction: {
       id: ownProps.id,
@@ -1296,7 +1294,6 @@ var InstructionStep = function (_React$Component) {
     value: function displayMedia() {
       var _this2 = this;
 
-      // debugger
       var imagesUrls = this.props.images;
       var position = void 0;
       var alignment = void 0;
@@ -1343,7 +1340,6 @@ var InstructionStep = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      // debugger
       var body = this.props.body;
       var media = this.props.images ? this.displayMedia() : null;
       return _react2.default.createElement(
@@ -1565,7 +1561,6 @@ var Instructions = function (_React$Component) {
     value: function uploadFile(e) {
       var _this3 = this;
 
-      debugger;
       var files = Object.values(e.currentTarget.files);
       if (files.length > 4) {
         files = files.slice(0, 4);
@@ -2519,7 +2514,6 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'aggregateInstructionData',
     value: function aggregateInstructionData(instructionData) {
-      debugger;
       var index = instructionData['step'];
       var instructions = this.state.instructionData;
       instructions[index - 1] = instructionData;
@@ -2529,7 +2523,6 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'appendInstructions',
     value: function appendInstructions(instructions, projectId) {
-      debugger;
       var formDataInstruction = new FormData();
       instructions.forEach(function (instruction, i) {
         formDataInstruction.append('instructions[' + i + '][body]', instruction['body']);
@@ -2540,7 +2533,6 @@ var ProjectForm = function (_React$Component) {
           formDataInstruction.append('instructions[' + i + '][id]', instruction['id']);
           formDataInstruction.append('instructions[' + i + '][imagesStorageId]', instruction['imagesStorageId']);
         }
-        debugger;
         if (instruction['images'].length) {
           instruction['images'].forEach(function (file, j) {
             formDataInstruction.append('instructions[' + i + '][images][' + j + ']', file);
@@ -2572,11 +2564,9 @@ var ProjectForm = function (_React$Component) {
         var projectId = this.props.match.params.projectId;
         var formDataProject = this.appendProject(projectId);
         var that = this;
-        debugger;
         if (this.props.formType === 'New Project') {
           this.props.submitProject(formDataProject, projectId).then(function (payload) {
             projectId = payload.project.id;
-            debugger;
             that.createInstructions(that, that.state.instructionData, projectId).then(function () {
               that.redirect(projectId);
             });
@@ -2605,7 +2595,6 @@ var ProjectForm = function (_React$Component) {
   }, {
     key: 'createInstructions',
     value: function createInstructions(context, newInstructions, projectId) {
-      debugger;
       if (newInstructions.length) {
         return context.props.createInstructions(context.appendInstructions(newInstructions, projectId), projectId);
       } else {
@@ -3196,7 +3185,6 @@ var ProjectShow = function (_React$Component) {
         this.props.clearProjectErrors;
         this.props.history.push('/');
       }
-      debugger;
       if (prevProps.match.params.projectId != this.props.match.params.projectId) {
         this.props.fetchProject(this.props.match.params.projectId).then(function (payload) {
           var comments = [];
@@ -3247,7 +3235,6 @@ var ProjectShow = function (_React$Component) {
     key: 'displayInstructions',
     value: function displayInstructions() {
       if (this.state.instructions) {
-        // const sortedInstructions = this.state.instructions.sort((a,b) => (a.instructionStep - b.instructionStep));
         return this.state.instructions.map(function (instruction, i) {
           if (!instruction) {
             return [];
@@ -4743,9 +4730,9 @@ var commentReducer = function commentReducer() {
   var oldState = Object.freeze(state);
   switch (action.type) {
     case Projects_Actions.FETCH_PROJECT:
-      if (action.comments) {
-        newState = (0, _merge3.default)({}, state, action.comments);
-      }
+      newState = (0, _merge3.default)({}, state, action.comments);
+      // if(action.comments){
+      // }
       return newState;
     case Comment_Actions.CREATE_COMMENT:
     case Comment_Actions.FETCH_COMMENT:
@@ -4945,7 +4932,6 @@ var instructionReducer = function instructionReducer() {
 
   var ids = void 0;
   var newState = void 0;
-  debugger;
   var oldState = Object.freeze(state);
   switch (action.type) {
     case Projects_Actions.FETCH_PROJECT:
@@ -5493,7 +5479,6 @@ var deleteInstruction = exports.deleteInstruction = function deleteInstruction(i
 };
 
 var updateInstructions = exports.updateInstructions = function updateInstructions(instructions) {
-  debugger;
   return $.ajax({
     method: 'PATCH',
     url: 'api/instructions/update',
@@ -5504,7 +5489,6 @@ var updateInstructions = exports.updateInstructions = function updateInstruction
 };
 
 var createInstructions = exports.createInstructions = function createInstructions(instructions, id) {
-  debugger;
   return $.ajax({
     method: 'POST',
     url: '/api/projects/' + id + '/instructions',

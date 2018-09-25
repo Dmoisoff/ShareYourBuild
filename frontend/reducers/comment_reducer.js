@@ -10,9 +10,9 @@ const commentReducer = (state = {}, action) => {
   const oldState = Object.freeze(state);
   switch (action.type) {
     case Projects_Actions.FETCH_PROJECT:
-    if(action.comments){
-      newState = merge({}, state, action.comments);
-    }
+    newState = merge({}, state, action.comments);
+    // if(action.comments){
+    // }
       return newState;
     case Comment_Actions.CREATE_COMMENT:
     case Comment_Actions.FETCH_COMMENT:
