@@ -158,8 +158,8 @@ class ProjectForm extends React.Component{
         });
       }else{
         that.props.submitProject(formDataProject, projectId).then((payload) => {
-          let newInstructions;
-          let updatedInstructions;
+          let newInstructions = [];
+          let updatedInstructions = [];
           if(that.state.newlyAddedSteps.length !== 0){
             newInstructions = that.state.instructionData.slice(-(that.state.newlyAddedSteps.length));
             updatedInstructions = that.state.instructionData.slice(0,-(that.state.newlyAddedSteps.length));

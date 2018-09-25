@@ -2573,8 +2573,8 @@ var ProjectForm = function (_React$Component) {
           });
         } else {
           that.props.submitProject(formDataProject, projectId).then(function (payload) {
-            var newInstructions = void 0;
-            var updatedInstructions = void 0;
+            var newInstructions = [];
+            var updatedInstructions = [];
             if (that.state.newlyAddedSteps.length !== 0) {
               newInstructions = that.state.instructionData.slice(-that.state.newlyAddedSteps.length);
               updatedInstructions = that.state.instructionData.slice(0, -that.state.newlyAddedSteps.length);
