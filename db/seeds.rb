@@ -469,12 +469,12 @@ carft_project1.picture.attach(io: carft1, filename: 'main_pic.jpg')
 carft_project1.save!
 
 
-carft_1_step_2 = File.open("app/assets/images/non_instrucable_seeds/neko_atsume_cats/step 2.jpg")
-carft_1_step_3 = File.open("app/assets/images/non_instrucable_seeds/neko_atsume_cats/step 3.jpg")
-carft_1_step_4 = File.open("app/assets/images/non_instrucable_seeds/neko_atsume_cats/step 4.jpg")
-carft_1_step_5 = File.open("app/assets/images/non_instrucable_seeds/neko_atsume_cats/step 5.jpg")
-carft_1_step_6 = File.open("app/assets/images/non_instrucable_seeds/neko_atsume_cats/step 6.jpg")
-carft_1_step_7 = File.open("app/assets/images/non_instrucable_seeds/neko_atsume_cats/step 7.jpg")
+carft_1_step_1 = File.open("app/assets/images/non_instrucable_seeds/neko_atsume_cats/step 2.jpg")
+carft_1_step_2 = File.open("app/assets/images/non_instrucable_seeds/neko_atsume_cats/step 3.jpg")
+carft_1_step_3 = File.open("app/assets/images/non_instrucable_seeds/neko_atsume_cats/step 4.jpg")
+carft_1_step_4 = File.open("app/assets/images/non_instrucable_seeds/neko_atsume_cats/step 5.jpg")
+carft_1_step_5 = File.open("app/assets/images/non_instrucable_seeds/neko_atsume_cats/step 6.jpg")
+carft_1_step_6 = File.open("app/assets/images/non_instrucable_seeds/neko_atsume_cats/step 7.jpg")
 
 carft_project1_step_1 = Instruction.new({project_id: carft_project1.id, instruction_step: 1, title: 'Here’s what you need:', body: "<p>felt (white, black, two shades of grey, red, warm yellow, two shades of brown)<br>
 		fabric scissors (I love this pair from Fiskars!)<br>
