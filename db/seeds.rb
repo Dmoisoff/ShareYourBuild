@@ -476,12 +476,13 @@ carft_1_step_4 = File.open("app/assets/images/non_instrucable_seeds/neko_atsume_
 carft_1_step_5 = File.open("app/assets/images/non_instrucable_seeds/neko_atsume_cats/step 6.jpg")
 carft_1_step_6 = File.open("app/assets/images/non_instrucable_seeds/neko_atsume_cats/step 7.jpg")
 
-carft_project1_step_1 = Instruction.new({project_id: carft_project1.id, instruction_step: 1, title: 'Here’s what you need:', body: "<p>felt (white, black, two shades of grey, red, warm yellow, two shades of brown)<br>
-		fabric scissors (I love this pair from Fiskars!)<br>
-		fabric glue (quick dry)<br>
-		needle<br>
-		embroidery floss (black, white, grey, etc)<br>
-		magnets and E6000 glue (if making magnets, can also just make finger puppets)</p>".html_safe })
+carft_project1_step_1 = Instruction.new({project_id: carft_project1.id, instruction_step: 1, title: 'Here’s what you need', body: "<p>
+		<li>felt (white, black, two shades of grey, red, warm yellow, two shades of brown)</li>
+		<li>fabric scissors (I love this pair from Fiskars!)</li>
+		<li>fabric glue (quick dry)</li>
+		<li>needle</li>
+		<li>embroidery floss (black, white, grey, etc)</li>
+		<li>magnets and E6000 glue (if making magnets, can also just make finger puppets)</li>".html_safe })
 
 carft_project1_step_2 = Instruction.new({project_id: carft_project1.id, instruction_step: 2, title: '', body: "<p>Print off screenshots of the cat in the size and pose that you want to recreate.</p>".html_safe })
 
@@ -512,6 +513,7 @@ carft_project1_step_6.images.attach(io: carft1_step_6, filename: "step 6.jpg")
 carft1_step_7 = File.open("app/assets/images/non_instrucable_seeds/neko_atsume_cats/step 7.jpg")
 carft_project1_step_7.images.attach(io: carft1_step_7, filename: "step 7.jpg")
 
+carft_project1_step_1.save!
 carft_project1_step_2.save!
 carft_project1_step_3.save!
 carft_project1_step_4.save!
