@@ -5295,19 +5295,9 @@ var _root = __webpack_require__(/*! ./components/root */ "./frontend/components/
 
 var _root2 = _interopRequireDefault(_root);
 
-var _projects_actions = __webpack_require__(/*! ./actions/projects_actions */ "./frontend/actions/projects_actions.js");
-
-var _instructions_actions = __webpack_require__(/*! ./actions/instructions_actions */ "./frontend/actions/instructions_actions.js");
-
-var _search_actions = __webpack_require__(/*! ./actions/search_actions */ "./frontend/actions/search_actions.js");
-
-var _comments_actions = __webpack_require__(/*! ./actions/comments_actions */ "./frontend/actions/comments_actions.js");
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-// import { fetchComments, createComment, updateComment, deleteComment } from './util/comment_util';
-
 
 document.addEventListener('DOMContentLoaded', function () {
   var store = void 0;
@@ -5323,20 +5313,6 @@ document.addEventListener('DOMContentLoaded', function () {
   } else {
     store = (0, _store2.default)();
   }
-
-  // testing
-  // window.getState = store.getState;
-  // window.dispatch = store.dispatch;
-  // window.searchProjects = searchProjects;
-  // window.fetchProject = fetchProject;
-  // window.fetchInstruction = fetchInstruction;
-  // window.createInstruction = createInstruction;
-  // window.updateInstruction = updateInstruction;
-  // window.deleteInstruction = deleteInstruction;
-  // window.fetchProjectsByUser = fetchProjectsByUser;
-  // window.createComment = createComment;
-  // window.updateComment = updateComment;
-  // window.deleteComment = deleteComment;
 
   var root = document.getElementById('root');
   _reactDom2.default.render(_react2.default.createElement(_root2.default, { store: store }), root);
