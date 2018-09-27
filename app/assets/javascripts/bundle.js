@@ -107,11 +107,11 @@ var Comment_Util = _interopRequireWildcard(_comment_util);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-var FETCH_COMMENT = exports.FETCH_COMMENT = 'FETCH_COMMENTS';
-var CREATE_COMMENT = exports.CREATE_COMMENT = 'CREATE_COMMENTS';
-var REMOVE_COMMENT = exports.REMOVE_COMMENT = 'REMOVE_COMMENT';
-var REMOVE_COMMENTS = exports.REMOVE_COMMENTS = 'REMOVE_COMMENTS';
-var RECEIVE_COMMENT_ERRORS = exports.RECEIVE_COMMENT_ERRORS = 'RECEIVE_COMMENT_ERRORS';
+var FETCH_COMMENT = exports.FETCH_COMMENT = "FETCH_COMMENTS";
+var CREATE_COMMENT = exports.CREATE_COMMENT = "CREATE_COMMENTS";
+var REMOVE_COMMENT = exports.REMOVE_COMMENT = "REMOVE_COMMENT";
+var REMOVE_COMMENTS = exports.REMOVE_COMMENTS = "REMOVE_COMMENTS";
+var RECEIVE_COMMENT_ERRORS = exports.RECEIVE_COMMENT_ERRORS = "RECEIVE_COMMENT_ERRORS";
 
 var createComment = exports.createComment = function createComment(comment, id) {
   return function (dispatch) {
@@ -157,12 +157,10 @@ var deleteComment = exports.deleteComment = function deleteComment(id) {
 var deleteComments = exports.deleteComments = function deleteComments(ids) {
   return function (dispatch) {
     return Comment_Util.deleteComment(ids).then(function () {
-      return dispatch({ type: REMOVE_COMMENTS, commentId: ids.split(',') });
+      return dispatch({ type: REMOVE_COMMENTS, commentId: ids.split(",") });
     });
   };
 };
-
-// {instruction: {project_id: 88, instruction_step: 10, body: "5", media_url: nil}}
 
 /***/ }),
 
@@ -187,10 +185,10 @@ var Instruction_Util = _interopRequireWildcard(_instruction_api_util);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-var FETCH_INSTRUCTION = exports.FETCH_INSTRUCTION = 'FETCH_INSTRUCTION';
-var REMOVE_INSTRUCTION = exports.REMOVE_INSTRUCTION = 'REMOVE_INSTRUCTION';
-var REMOVE_INSTRUCTIONS = exports.REMOVE_INSTRUCTIONS = 'REMOVE_INSTRUCTIONS';
-var RECEIVE_INSTRUCTION_ERRORS = exports.RECEIVE_INSTRUCTION_ERRORS = 'RECEIVE_INSTRUCTION_ERRORS';
+var FETCH_INSTRUCTION = exports.FETCH_INSTRUCTION = "FETCH_INSTRUCTION";
+var REMOVE_INSTRUCTION = exports.REMOVE_INSTRUCTION = "REMOVE_INSTRUCTION";
+var REMOVE_INSTRUCTIONS = exports.REMOVE_INSTRUCTIONS = "REMOVE_INSTRUCTIONS";
+var RECEIVE_INSTRUCTION_ERRORS = exports.RECEIVE_INSTRUCTION_ERRORS = "RECEIVE_INSTRUCTION_ERRORS";
 
 var fetchInstruction = exports.fetchInstruction = function fetchInstruction(id) {
   return function (dispatch) {
@@ -246,7 +244,7 @@ var deleteInstruction = exports.deleteInstruction = function deleteInstruction(i
 var deleteInstructions = exports.deleteInstructions = function deleteInstructions(ids) {
   return function (dispatch) {
     return Instruction_Util.deleteInstruction(ids).then(function () {
-      return dispatch({ type: REMOVE_INSTRUCTIONS, instructionId: ids.split(',') });
+      return dispatch({ type: REMOVE_INSTRUCTIONS, instructionId: ids.split(",") });
     });
   };
 };
@@ -298,14 +296,14 @@ var Projects_Util = _interopRequireWildcard(_project_api_util);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-var FETCH_ALL_PROJECTS = exports.FETCH_ALL_PROJECTS = 'FETCH_ALL_PROJECTS';
-var FETCH_PROJECT = exports.FETCH_PROJECT = 'FETCH_PROJECT';
-var RECIEVE_PROJECT = exports.RECIEVE_PROJECT = 'RECIEVE_PROJECT';
-var REMOVE_PROJECT = exports.REMOVE_PROJECT = 'REMOVE_PROJECT';
-var RECEIVE_PROJECT_ERRORS = exports.RECEIVE_PROJECT_ERRORS = 'RECEIVE_PROJECT_ERRORS';
-var PROJECT_NOT_FOUND_ERROR = exports.PROJECT_NOT_FOUND_ERROR = 'PROJECT_NOT_FOUND_ERROR';
-var FETCH_PROJECTS_BY_USER = exports.FETCH_PROJECTS_BY_USER = 'FETCH_PROJECTS_BY_USER';
-var CLEAR_ERRORS = exports.CLEAR_ERRORS = 'CLEAR_ERRORS';
+var FETCH_ALL_PROJECTS = exports.FETCH_ALL_PROJECTS = "FETCH_ALL_PROJECTS";
+var FETCH_PROJECT = exports.FETCH_PROJECT = "FETCH_PROJECT";
+var RECIEVE_PROJECT = exports.RECIEVE_PROJECT = "RECIEVE_PROJECT";
+var REMOVE_PROJECT = exports.REMOVE_PROJECT = "REMOVE_PROJECT";
+var RECEIVE_PROJECT_ERRORS = exports.RECEIVE_PROJECT_ERRORS = "RECEIVE_PROJECT_ERRORS";
+var PROJECT_NOT_FOUND_ERROR = exports.PROJECT_NOT_FOUND_ERROR = "PROJECT_NOT_FOUND_ERROR";
+var FETCH_PROJECTS_BY_USER = exports.FETCH_PROJECTS_BY_USER = "FETCH_PROJECTS_BY_USER";
+var CLEAR_ERRORS = exports.CLEAR_ERRORS = "CLEAR_ERRORS";
 
 var fetchProjects = exports.fetchProjects = function fetchProjects() {
   return function (dispatch) {
@@ -415,7 +413,7 @@ var Search_Util = _interopRequireWildcard(_search_api_util);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-var SEARCH_PROJECTS = exports.SEARCH_PROJECTS = 'SEARCH_PROJECTS';
+var SEARCH_PROJECTS = exports.SEARCH_PROJECTS = "SEARCH_PROJECTS";
 
 var searchProjects = exports.searchProjects = function searchProjects(search) {
   return function (dispatch) {
@@ -452,16 +450,19 @@ var Session_Util = _interopRequireWildcard(_session_api_util);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-var RECEIVE_CURRENT_USER = exports.RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
-var LOGOUT_CURRENT_USER = exports.LOGOUT_CURRENT_USER = 'LOGOUT_CURRENT_USER';
-var RECEIVE_SESSION_ERRORS = exports.RECEIVE_SESSION_ERRORS = 'RECEIVE_SESSION_ERRORS';
+var RECEIVE_CURRENT_USER = exports.RECEIVE_CURRENT_USER = "RECEIVE_CURRENT_USER";
+var LOGOUT_CURRENT_USER = exports.LOGOUT_CURRENT_USER = "LOGOUT_CURRENT_USER";
+var RECEIVE_SESSION_ERRORS = exports.RECEIVE_SESSION_ERRORS = "RECEIVE_SESSION_ERRORS";
 
 var logIn = exports.logIn = function logIn(user) {
   return function (dispatch) {
     return Session_Util.logIn(user).then(function (user) {
       return dispatch({ type: RECEIVE_CURRENT_USER, user: user });
     }, function (errors) {
-      return dispatch({ type: RECEIVE_SESSION_ERRORS, errors: errors.responseJSON });
+      return dispatch({
+        type: RECEIVE_SESSION_ERRORS,
+        errors: errors.responseJSON
+      });
     });
   };
 };
@@ -471,7 +472,10 @@ var signUp = exports.signUp = function signUp(user) {
     return Session_Util.signUp(user).then(function (user) {
       return dispatch({ type: RECEIVE_CURRENT_USER, user: user });
     }, function (errors) {
-      return dispatch({ type: RECEIVE_SESSION_ERRORS, errors: errors.responseJSON });
+      return dispatch({
+        type: RECEIVE_SESSION_ERRORS,
+        errors: errors.responseJSON
+      });
     });
   };
 };
@@ -481,7 +485,10 @@ var logOut = exports.logOut = function logOut() {
     return Session_Util.logOut().then(function () {
       return dispatch({ type: LOGOUT_CURRENT_USER });
     }, function (errors) {
-      return dispatch({ type: RECEIVE_SESSION_ERRORS, errors: errors.responseJSON });
+      return dispatch({
+        type: RECEIVE_SESSION_ERRORS,
+        errors: errors.responseJSON
+      });
     });
   };
 };
@@ -566,34 +573,34 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var App = function App() {
   return _react2.default.createElement(
-    'div',
+    "div",
     null,
     _react2.default.createElement(
-      'div',
+      "div",
       null,
       _react2.default.createElement(
-        'header',
-        { className: 'navbar' },
+        "header",
+        { className: "navbar" },
         _react2.default.createElement(
-          'div',
+          "div",
           null,
           _react2.default.createElement(
             _reactRouterDom.Link,
-            { className: 'clickable icon-space', to: '/' },
-            _react2.default.createElement('div', { id: 'syb-logo' }),
+            { className: "clickable icon-space", to: "/" },
+            _react2.default.createElement("div", { id: "syb-logo" }),
             _react2.default.createElement(
-              'p',
+              "p",
               null,
-              'Share Your Build'
+              "Share Your Build"
             )
           )
         ),
         _react2.default.createElement(
-          'div',
-          { className: 'nav_spacing' },
+          "div",
+          { className: "nav_spacing" },
           _react2.default.createElement(
-            'div',
-            { className: 'search-bar-formating' },
+            "div",
+            { className: "search-bar-formating" },
             _react2.default.createElement(
               _reactRouterDom.Switch,
               null,
@@ -601,73 +608,85 @@ var App = function App() {
             ),
             _react2.default.createElement(
               _reactRouterDom.Link,
-              { to: '/project/new', className: 'create-build-button' },
-              'Create a Build'
+              { to: "/project/new", className: "create-build-button" },
+              "Create a Build"
             )
           )
         ),
         _react2.default.createElement(_greeting_container2.default, null)
       ),
       _react2.default.createElement(
-        'div',
-        { className: 'window-size' },
+        "div",
+        { className: "window-size" },
         _react2.default.createElement(
           _reactRouterDom.Switch,
           null,
-          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _main_page2.default }),
-          _react2.default.createElement(_route_util.ProtectedRoute, { path: '/project/new', component: _NewProjectContainer2.default }),
-          _react2.default.createElement(_route_util.ProtectedRoute, { exact: true, path: '/project/:projectId/edit', component: _EditProjectContainer2.default }),
-          _react2.default.createElement(_reactRouterDom.Route, { path: '/project/:projectId', component: _ShowProjectContainer2.default }),
-          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/projects', component: _IndexProjectsContainer2.default }),
-          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/:username/:id/projects', component: _UserProjectsIndexContainer2.default }),
-          _react2.default.createElement(_reactRouterDom.Route, { path: '/projects/search/:query', component: _SearchIndexProjectsContainer2.default }),
-          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/projects/search/', component: _main_page2.default }),
-          '// ',
-          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/test', component: _SearchIndexProjectsContainer2.default }),
-          _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/login', component: _LoginFormContainer2.default }),
-          _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: '/signup', component: _SignupFormContainer2.default })
+          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/", component: _main_page2.default }),
+          _react2.default.createElement(_route_util.ProtectedRoute, { path: "/project/new", component: _NewProjectContainer2.default }),
+          _react2.default.createElement(_route_util.ProtectedRoute, {
+            exact: true,
+            path: "/project/:projectId/edit",
+            component: _EditProjectContainer2.default
+          }),
+          _react2.default.createElement(_reactRouterDom.Route, { path: "/project/:projectId", component: _ShowProjectContainer2.default }),
+          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/projects", component: _IndexProjectsContainer2.default }),
+          _react2.default.createElement(_reactRouterDom.Route, {
+            exact: true,
+            path: "/:username/:id/projects",
+            component: _UserProjectsIndexContainer2.default
+          }),
+          _react2.default.createElement(_reactRouterDom.Route, {
+            path: "/projects/search/:query",
+            component: _SearchIndexProjectsContainer2.default
+          }),
+          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/projects/search/", component: _main_page2.default }),
+          "//",
+          " ",
+          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/test", component: _SearchIndexProjectsContainer2.default }),
+          _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: "/login", component: _LoginFormContainer2.default }),
+          _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: "/signup", component: _SignupFormContainer2.default })
         )
       )
     ),
     _react2.default.createElement(
-      'footer',
-      { className: 'footer' },
+      "footer",
+      { className: "footer" },
       _react2.default.createElement(
-        'div',
-        { className: 'icon-space' },
-        _react2.default.createElement('div', { id: 'syb-logo' }),
+        "div",
+        { className: "icon-space" },
+        _react2.default.createElement("div", { id: "syb-logo" }),
         _react2.default.createElement(
           _reactRouterDom.Link,
-          { className: 'clickable', to: '/' },
-          'Share Your Build'
+          { className: "clickable", to: "/" },
+          "Share Your Build"
         )
       ),
       _react2.default.createElement(
-        'div',
-        { className: 'icon-space' },
+        "div",
+        { className: "icon-space" },
         _react2.default.createElement(
-          'a',
-          { href: 'https://dmoisoff.com/' },
-          'Coded by Daniel Moisoff'
+          "a",
+          { href: "https://dmoisoff.com/" },
+          "Coded by Daniel Moisoff"
         )
       ),
       _react2.default.createElement(
-        'div',
-        { className: 'icon-space' },
+        "div",
+        { className: "icon-space" },
         _react2.default.createElement(
-          'a',
-          { href: 'https://www.linkedin.com/in/dmoisoff/' },
-          _react2.default.createElement('div', { id: 'linkedin-logo' })
+          "a",
+          { href: "https://www.linkedin.com/in/dmoisoff/" },
+          _react2.default.createElement("div", { id: "linkedin-logo" })
         ),
         _react2.default.createElement(
-          'a',
-          { href: 'https://github.com/Dmoisoff/ShareYourBuild' },
-          _react2.default.createElement('div', { id: 'github-logo' })
+          "a",
+          { href: "https://github.com/Dmoisoff/ShareYourBuild" },
+          _react2.default.createElement("div", { id: "github-logo" })
         ),
         _react2.default.createElement(
-          'a',
-          { href: 'https://angel.co/daniel-moisoff' },
-          _react2.default.createElement('div', { id: 'angellist-logo' })
+          "a",
+          { href: "https://angel.co/daniel-moisoff" },
+          _react2.default.createElement("div", { id: "angellist-logo" })
         )
       )
     )
@@ -721,77 +740,91 @@ var Comments = function (_React$Component) {
   }
 
   _createClass(Comments, [{
-    key: 'handleSubmit',
+    key: "handleSubmit",
     value: function handleSubmit(e) {
       var _this2 = this;
 
-      if (this.state.body === '') {
+      if (this.state.body === "") {
         this.displayError();
         return;
       }
-      this.props.updateComment({ comment: {
+      this.props.updateComment({
+        comment: {
           body: this.state.body,
           project_id: this.props.projectId,
-          author_id: this.props.currentUserId } }, this.props.commentId).then(function () {
+          author_id: this.props.currentUserId
+        }
+      }, this.props.commentId).then(function () {
         _this2.props.updatedComment(true);
       });
     }
   }, {
-    key: 'updateComment',
+    key: "updateComment",
     value: function updateComment(e) {
       this.setState({ body: e.target.value });
     }
   }, {
-    key: 'displayError',
+    key: "displayError",
     value: function displayError(errorMessage) {
       this.setState({ error: true });
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
       var _this3 = this;
 
       var error = this.state.error ? _react2.default.createElement(
-        'div',
-        { className: 'comment-errors-placement' },
+        "div",
+        { className: "comment-errors-placement" },
         _react2.default.createElement(
-          'div',
-          { className: 'comment-errors-container' },
+          "div",
+          { className: "comment-errors-container" },
           _react2.default.createElement(
-            'p',
-            { className: 'comment-errors' },
-            'The comment can not be empty, please finish filling it out'
+            "p",
+            { className: "comment-errors" },
+            "The comment can not be empty, please finish filling it out"
           )
         )
       ) : null;
       return _react2.default.createElement(
-        'div',
-        { className: 'comment-textbox-placement' },
+        "div",
+        { className: "comment-textbox-placement" },
         _react2.default.createElement(
-          'div',
-          { className: 'comment-textbox-area' },
-          _react2.default.createElement('textarea', { id: 'textarea', onChange: this.updateComment.bind(this),
-            placeholder: 'Please enter a nice comment',
-            className: 'project-body-text', rows: '8', cols: '80',
-            value: '' + this.state.body })
+          "div",
+          { className: "comment-textbox-area" },
+          _react2.default.createElement("textarea", {
+            id: "textarea",
+            onChange: this.updateComment.bind(this),
+            placeholder: "Please enter a nice comment",
+            className: "project-body-text",
+            rows: "8",
+            cols: "80",
+            value: "" + this.state.body
+          })
         ),
         error,
         _react2.default.createElement(
-          'div',
-          { className: 'comment-edit-button-placement' },
+          "div",
+          { className: "comment-edit-button-placement" },
           _react2.default.createElement(
-            'button',
-            { className: 'comment-buttons', onClick: function onClick() {
+            "button",
+            {
+              className: "comment-buttons",
+              onClick: function onClick() {
                 _this3.props.updatedComment(true);
-              } },
-            'Cancel'
+              }
+            },
+            "Cancel"
           ),
           _react2.default.createElement(
-            'button',
-            { className: 'comment-buttons', onClick: function onClick() {
+            "button",
+            {
+              className: "comment-buttons",
+              onClick: function onClick() {
                 _this3.handleSubmit();
-              } },
-            'Update'
+              }
+            },
+            "Update"
           )
         )
       );
@@ -843,7 +876,7 @@ var mstp = function mstp(state, ownProps) {
     currentUserId: state.session.id,
     currentUsername: state.session.username,
     projectId: ownProps.projectId,
-    formType: 'Edit Comment',
+    formType: "Edit Comment",
     errors: state.errors.comments,
     updatedComment: ownProps.updatedComment
   };
@@ -901,14 +934,14 @@ var ShowComment = function (_React$Component) {
   }
 
   _createClass(ShowComment, [{
-    key: 'errors',
+    key: "errors",
     value: function errors() {
       if (this.props.errors) {
         return this.props.errors.map(function (error, i) {
           _react2.default.createElement(
-            'li',
+            "li",
             { key: i },
-            'error'
+            "error"
           );
         });
       } else {
@@ -916,35 +949,38 @@ var ShowComment = function (_React$Component) {
       }
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
       return _react2.default.createElement(
-        'div',
-        { className: 'instruction-step-format' },
+        "div",
+        { className: "instruction-step-format" },
         _react2.default.createElement(
-          'div',
+          "div",
           null,
           _react2.default.createElement(
-            'div',
+            "div",
             null,
             _react2.default.createElement(
-              'p',
+              "p",
               null,
               _react2.default.createElement(
                 _reactRouterDom.Link,
-                { className: 'clickable', to: '/' + this.props.username + '/' + this.props.authorId + '/projects' },
+                {
+                  className: "clickable",
+                  to: "/" + this.props.username + "/" + this.props.authorId + "/projects"
+                },
                 this.props.username
               )
             ),
             _react2.default.createElement(
-              'p',
-              { className: 'project-font-format' },
+              "p",
+              { className: "project-font-format" },
               this.props.body
             )
           )
         ),
         _react2.default.createElement(
-          'ul',
+          "ul",
           null,
           this.errors()
         )
@@ -1008,18 +1044,18 @@ var Greeting = function (_React$Component) {
   }
 
   _createClass(Greeting, [{
-    key: 'componentWillReceiveProps',
+    key: "componentWillReceiveProps",
     value: function componentWillReceiveProps() {
       this.setState({ active: false });
     }
   }, {
-    key: 'componentDidMount',
+    key: "componentDidMount",
     value: function componentDidMount() {
-      this.dropDownList = document.getElementById('drop-down-list');
-      this.dropDown = document.getElementById('dropDown');
+      this.dropDownList = document.getElementById("drop-down-list");
+      this.dropDown = document.getElementById("dropDown");
     }
   }, {
-    key: 'toggleDropdown',
+    key: "toggleDropdown",
     value: function toggleDropdown(e) {
       var target = e.target;
       target;
@@ -1034,66 +1070,80 @@ var Greeting = function (_React$Component) {
       }
     }
   }, {
-    key: 'greeting',
+    key: "greeting",
     value: function greeting() {
       var _this2 = this;
 
       if (this.props.currentUser) {
-        document.addEventListener('click', function (e) {
+        document.addEventListener("click", function (e) {
           _this2.toggleDropdown(e);
         });
         var active = void 0;
         if (this.state.active) {
-          active = 'user-profile-dropdown';
+          active = "user-profile-dropdown";
         } else {
-          active = 'hidden';
+          active = "hidden";
         }
 
         return _react2.default.createElement(
-          'div',
+          "div",
           null,
-          _react2.default.createElement('div', null),
+          _react2.default.createElement("div", null),
           _react2.default.createElement(
-            'div',
-            { className: 'user-dropdown-position' },
+            "div",
+            { className: "user-dropdown-position" },
             _react2.default.createElement(
-              'ul',
+              "ul",
               null,
               _react2.default.createElement(
-                'li',
+                "li",
                 null,
-                _react2.default.createElement('img', { className: 'user-profile-pic clickable', id: 'dropDown', src: this.props.currentUser.profilePic }),
+                _react2.default.createElement("img", {
+                  className: "user-profile-pic clickable",
+                  id: "dropDown",
+                  src: this.props.currentUser.profilePic
+                }),
                 _react2.default.createElement(
-                  'ul',
-                  { className: active + ' ', id: 'drop-down-list' },
+                  "ul",
+                  { className: active + " ", id: "drop-down-list" },
                   _react2.default.createElement(
-                    'li',
-                    { className: 'user-dropDown-content' },
+                    "li",
+                    { className: "user-dropDown-content" },
                     _react2.default.createElement(
                       _reactRouterDom.Link,
-                      { className: 'clickable user-drop-items', onClick: function onClick() {
+                      {
+                        className: "clickable user-drop-items",
+                        onClick: function onClick() {
                           _this2.props.logOut();
-                        }, to: '/' },
-                      'Sign Out'
+                        },
+                        to: "/"
+                      },
+                      "Sign Out"
                     )
                   ),
-                  _react2.default.createElement('li', { className: 'divide' }),
+                  _react2.default.createElement("li", { className: "divide" }),
                   _react2.default.createElement(
-                    'li',
-                    { className: 'user-dropDown-content' },
+                    "li",
+                    { className: "user-dropDown-content" },
                     _react2.default.createElement(
                       _reactRouterDom.Link,
-                      { className: 'clickable user-drop-items', to: '/' + this.props.currentUser.username + '/' + this.props.currentUser.id + '/projects' },
-                      'Your Builds'
+                      {
+                        className: "clickable user-drop-items",
+                        to: "/" + this.props.currentUser.username + "/" + this.props.currentUser.id + "/projects"
+                      },
+                      "Your Builds"
                     )
                   ),
                   _react2.default.createElement(
-                    'li',
-                    { className: 'user-dropDown-content create' },
+                    "li",
+                    { className: "user-dropDown-content create" },
                     _react2.default.createElement(
                       _reactRouterDom.Link,
-                      { className: 'clickable user-drop-items', to: '/project/new' },
-                      'Create Your Build >>'
+                      {
+                        className: "clickable user-drop-items",
+                        to: "/project/new"
+                      },
+                      "Create Your Build >>"
                     )
                   )
                 )
@@ -1102,32 +1152,31 @@ var Greeting = function (_React$Component) {
           )
         );
       } else {
-        document.removeEventListener('click', function (e) {
+        document.removeEventListener("click", function (e) {
           _this2.toggleDropdown(e);
         });
         return _react2.default.createElement(
-          'div',
-          { className: 'user-nav' },
+          "div",
+          { className: "user-nav" },
           _react2.default.createElement(
             _reactRouterDom.Link,
-            { className: 'clickable', to: '/login' },
-            'Log In'
+            { className: "clickable", to: "/login" },
+            "Log In"
           ),
-          _react2.default.createElement('div', { className: 'divider' }),
+          _react2.default.createElement("div", { className: "divider" }),
           _react2.default.createElement(
             _reactRouterDom.Link,
-            { className: 'clickable', to: '/signup' },
-            'Sign Up'
+            { className: "clickable", to: "/signup" },
+            "Sign Up"
           )
         );
       }
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
-
       return _react2.default.createElement(
-        'div',
+        "div",
         null,
         this.greeting()
       );
@@ -1229,9 +1278,8 @@ var mstp = function mstp(state, ownProps) {
       instructionBody: true,
       aggregateInstructionData: ownProps.aggregateInstructionData
     },
-    formType: 'Update Instruction',
+    formType: "Update Instruction",
     errors: state.errors.instruction
-
   };
 };
 
@@ -1290,7 +1338,7 @@ var InstructionStep = function (_React$Component) {
   }
 
   _createClass(InstructionStep, [{
-    key: 'displayMedia',
+    key: "displayMedia",
     value: function displayMedia() {
       var _this2 = this;
 
@@ -1299,21 +1347,21 @@ var InstructionStep = function (_React$Component) {
       var alignment = void 0;
       var images1 = [];
       var images2 = [];
-      var format = 'instruction-show-image-scale';
+      var format = "instruction-show-image-scale";
       if (this.props.images.length === 1) {
-        position = 'multiple-images-position-instruction-1';
-        alignment = 'multiple-images-aligment-instruction';
+        position = "multiple-images-position-instruction-1";
+        alignment = "multiple-images-aligment-instruction";
       } else {
-        position = 'multiple-images-position-instruction-2';
+        position = "multiple-images-position-instruction-2";
       }
       var images = this.props.images.map(function (image, index) {
         if (_this2.props.images.length !== 1) {
-          alignment = 'multiple-images-aligment-instruction-' + index;
+          alignment = "multiple-images-aligment-instruction-" + index;
         }
         return _react2.default.createElement(
-          'div',
+          "div",
           { key: index, className: alignment },
-          _react2.default.createElement('img', { className: format, src: imagesUrls[index] })
+          _react2.default.createElement("img", { className: format, src: imagesUrls[index] })
         );
       });
       if (images.length > 2) {
@@ -1323,47 +1371,51 @@ var InstructionStep = function (_React$Component) {
         images1 = images;
       }
       return _react2.default.createElement(
-        'div',
-        { className: 'project-show-image-placement' },
+        "div",
+        { className: "project-show-image-placement" },
         _react2.default.createElement(
-          'div',
+          "div",
           { className: position },
           images1
         ),
         _react2.default.createElement(
-          'div',
+          "div",
           { className: position },
           images2
         )
       );
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
       var body = this.props.body;
       var media = this.props.images ? this.displayMedia() : null;
       return _react2.default.createElement(
-        'div',
-        { className: 'instruction-step-format' },
+        "div",
+        { className: "instruction-step-format" },
         _react2.default.createElement(
-          'div',
+          "div",
           null,
           _react2.default.createElement(
-            'p',
-            { className: 'instruction-step-title' },
-            ' Step ',
+            "p",
+            { className: "instruction-step-title" },
+            " ",
+            "Step ",
             this.props.step,
-            ': ',
+            ": ",
             this.props.title
           )
         ),
         media,
         _react2.default.createElement(
-          'div',
+          "div",
           null,
-          _react2.default.createElement('p', { className: 'project-font-format', dangerouslySetInnerHTML: { __html: body } })
+          _react2.default.createElement("p", {
+            className: "project-font-format",
+            dangerouslySetInnerHTML: { __html: body }
+          })
         ),
-        _react2.default.createElement('div', { className: 'instruction-divider' })
+        _react2.default.createElement("div", { className: "instruction-divider" })
       );
     }
   }]);
@@ -1428,12 +1480,12 @@ var Instructions = function (_React$Component) {
   }
 
   _createClass(Instructions, [{
-    key: 'updateTitle',
+    key: "updateTitle",
     value: function updateTitle(e) {
       this.setState({ title: e.target.value });
     }
   }, {
-    key: 'updateDescription',
+    key: "updateDescription",
     value: function updateDescription(input) {
       var regex = /<[a-z]*>|<\/[a-z]*>/g;
       var filteredInput = input.replace(regex, "");
@@ -1445,41 +1497,41 @@ var Instructions = function (_React$Component) {
       this.setState({ body: input });
     }
   }, {
-    key: 'componentDidUpdate',
+    key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps, prevState) {
       if (this.props !== prevProps || this.state !== prevState) {
         this.passBackInfo();
       }
     }
   }, {
-    key: 'componentWillReceiveProps',
+    key: "componentWillReceiveProps",
     value: function componentWillReceiveProps(nextProps) {
       if (this.props.step !== nextProps.step) {
         this.setState({ step: nextProps.step });
       }
     }
   }, {
-    key: 'errors',
+    key: "errors",
     value: function errors() {
       if (!this.props.errors) {
         return [];
       } else {
         return this.props.errors.map(function (error, i) {
           return _react2.default.createElement(
-            'li',
-            { className: 'project-errors', key: i },
+            "li",
+            { className: "project-errors", key: i },
             error
           );
         });
       }
     }
   }, {
-    key: 'passBackInfo',
+    key: "passBackInfo",
     value: function passBackInfo() {
       this.props.aggregateInstructionData(this.state);
     }
   }, {
-    key: 'removeMedia',
+    key: "removeMedia",
     value: function removeMedia(index) {
       if (this.state.images.length === 1) {
         this.setState({ images: [], imagesUrl: [], imagesStorageId: [] });
@@ -1487,48 +1539,60 @@ var Instructions = function (_React$Component) {
         var newImages = this.state.images.slice(0, this.state.images.length - 1);
         var newPreviewImages = this.state.imagesUrl.slice(0, this.state.imagesUrl.length - 1);
         var imagesStoraged = this.state.imagesStorageId.slice(0, this.state.imagesStorageId.length - 1);
-        this.setState({ images: newImages, imagesUrl: newPreviewImages, imagesStorageId: imagesStoraged });
+        this.setState({
+          images: newImages,
+          imagesUrl: newPreviewImages,
+          imagesStorageId: imagesStoraged
+        });
       } else {
         var _newImages = [].concat(_toConsumableArray(this.state.images.slice(0, index)), _toConsumableArray(this.state.images.slice(index + 1)));
         var _newPreviewImages = [].concat(_toConsumableArray(this.state.imagesUrl.slice(0, index)), _toConsumableArray(this.state.imagesUrl.slice(index + 1)));
         var _imagesStoraged = [].concat(_toConsumableArray(this.state.imagesStorageId.slice(0, index)), _toConsumableArray(this.state.imagesStorageId.slice(index + 1)));
-        this.setState({ images: _newImages, imagesUrl: _newPreviewImages, imagesStorageId: _imagesStoraged });
+        this.setState({
+          images: _newImages,
+          imagesUrl: _newPreviewImages,
+          imagesStorageId: _imagesStoraged
+        });
       }
     }
   }, {
-    key: 'displayMedia',
+    key: "displayMedia",
     value: function displayMedia() {
       var _this2 = this;
 
       var position = void 0;
       var alignment = void 0;
-      var format = 'instruction-show-image-scale';
+      var format = "instruction-show-image-scale";
       if (this.state.images.length === 1) {
-        position = 'multiple-images-position-instruction-1';
-        alignment = 'multiple-images-aligment-instruction';
+        position = "multiple-images-position-instruction-1";
+        alignment = "multiple-images-aligment-instruction";
       } else {
-        position = 'multiple-images-position-instruction-2';
+        position = "multiple-images-position-instruction-2";
       }
       var imagesUrl = this.state.imagesUrl.slice(-4);
       imagesUrl = imagesUrl.map(function (imageUrl, index) {
         var boundRemove = _this2.removeMedia.bind(_this2, index);
         if (_this2.state.imagesUrl.length !== 1) {
-          alignment = 'multiple-images-aligment-instruction-' + index;
+          alignment = "multiple-images-aligment-instruction-" + index;
         }
         return _react2.default.createElement(
-          'div',
+          "div",
           { key: index, className: alignment },
-          _react2.default.createElement('img', { className: format, src: imageUrl }),
+          _react2.default.createElement("img", { className: format, src: imageUrl }),
           _react2.default.createElement(
-            'div',
+            "div",
             null,
             _react2.default.createElement(
-              'button',
-              { value: index, className: 'project-submit', onClick: function onClick(e) {
+              "button",
+              {
+                value: index,
+                className: "project-submit",
+                onClick: function onClick(e) {
                   e.preventDefault();
                   boundRemove();
-                } },
-              'Remove Image'
+                }
+              },
+              "Remove Image"
             )
           )
         );
@@ -1537,27 +1601,27 @@ var Instructions = function (_React$Component) {
       var imagesUrlGroup2 = imagesUrl.slice(2);
 
       return _react2.default.createElement(
-        'div',
-        { className: 'project-show-image-placement' },
+        "div",
+        { className: "project-show-image-placement" },
         _react2.default.createElement(
-          'p',
-          { className: 'center' },
-          'Picture Preview'
+          "p",
+          { className: "center" },
+          "Picture Preview"
         ),
         _react2.default.createElement(
-          'div',
+          "div",
           { className: position },
           imagesUrlGroup1
         ),
         _react2.default.createElement(
-          'div',
+          "div",
           { className: position },
           imagesUrlGroup2
         )
       );
     }
   }, {
-    key: 'uploadFile',
+    key: "uploadFile",
     value: function uploadFile(e) {
       var _this3 = this;
 
@@ -1570,106 +1634,129 @@ var Instructions = function (_React$Component) {
         fileReader.onloadend = function () {
           var images = _this3.state.images.slice(-3);
           var imagesUrl = _this3.state.imagesUrl.slice(-3);
-          _this3.setState({ images: [].concat(_toConsumableArray(images), [file]), imagesUrl: [].concat(_toConsumableArray(imagesUrl), [fileReader.result]) });
+          _this3.setState({
+            images: [].concat(_toConsumableArray(images), [file]),
+            imagesUrl: [].concat(_toConsumableArray(imagesUrl), [fileReader.result])
+          });
         };
         fileReader.readAsDataURL(file);
       });
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
       var _this4 = this;
 
       var preview = this.state.mediaUrl ? _react2.default.createElement(
-        'div',
-        { className: 'project-picture-preview-format' },
+        "div",
+        { className: "project-picture-preview-format" },
         _react2.default.createElement(
-          'p',
+          "p",
           null,
-          'Picture Preview'
+          "Picture Preview"
         ),
-        _react2.default.createElement('img', { className: 'project-image-resize', src: this.state.mediaUrl }),
+        _react2.default.createElement("img", { className: "project-image-resize", src: this.state.mediaUrl }),
         _react2.default.createElement(
-          'button',
-          { className: 'project-submit', onClick: function onClick() {
+          "button",
+          {
+            className: "project-submit",
+            onClick: function onClick() {
               _this4.setState({ mediaUrl: null, media: null });
-            } },
-          'Remove Image'
+            }
+          },
+          "Remove Image"
         )
       ) : null;
 
       var preview2 = this.state.images.length ? this.displayMedia() : null;
 
       return _react2.default.createElement(
-        'div',
-        { className: 'instruction-form-positioning' },
+        "div",
+        { className: "instruction-form-positioning" },
         _react2.default.createElement(
-          'div',
-          { className: 'project-form-styling' },
+          "div",
+          { className: "project-form-styling" },
           _react2.default.createElement(
-            'form',
-            { className: 'project-input-format', encType: 'multipart/form-data' },
+            "form",
+            { className: "project-input-format", encType: "multipart/form-data" },
             _react2.default.createElement(
-              'div',
+              "div",
               null,
               _react2.default.createElement(
-                'p',
+                "p",
                 null,
-                'Step ',
+                "Step ",
                 this.state.step,
-                ':'
+                ":"
               ),
-              _react2.default.createElement('input', { className: 'project-title-styling', type: 'text', onChange: this.updateTitle, placeholder: 'Step title (optional)', value: '' + this.state.title })
+              _react2.default.createElement("input", {
+                className: "project-title-styling",
+                type: "text",
+                onChange: this.updateTitle,
+                placeholder: "Step title (optional)",
+                value: "" + this.state.title
+              })
             ),
             _react2.default.createElement(
-              'div',
-              { className: 'project-images-display-create-format' },
+              "div",
+              { className: "project-images-display-create-format" },
               _react2.default.createElement(
-                'div',
-                { className: 'project-image-input-format' },
+                "div",
+                { className: "project-image-input-format" },
                 _react2.default.createElement(
-                  'div',
+                  "div",
                   null,
                   _react2.default.createElement(
-                    'p',
-                    { className: 'project-image-text' },
-                    'Please select up to four a pictures for each step'
+                    "p",
+                    { className: "project-image-text" },
+                    "Please select up to four a pictures for each step"
                   ),
-                  _react2.default.createElement('input', { multiple: 'true', className: 'project-body-input', type: 'file', accept: 'image/*', onChange: this.uploadFile.bind(this) })
+                  _react2.default.createElement("input", {
+                    multiple: "true",
+                    className: "project-body-input",
+                    type: "file",
+                    accept: "image/*",
+                    onChange: this.uploadFile.bind(this)
+                  })
                 ),
                 preview2
               )
             ),
             _react2.default.createElement(
-              'p',
+              "p",
               null,
-              'Description'
+              "Description"
             ),
-            _react2.default.createElement(_WysiwygContainer2.default, { body: this.state.body,
-              step: this.state.step, updateDescription: this.updateDescription.bind(this) }),
+            _react2.default.createElement(_WysiwygContainer2.default, {
+              body: this.state.body,
+              step: this.state.step,
+              updateDescription: this.updateDescription.bind(this)
+            }),
             _react2.default.createElement(
-              'div',
+              "div",
               null,
               _react2.default.createElement(
-                'button',
-                { form: 'submit-project',
+                "button",
+                {
+                  form: "submit-project",
                   onClick: function onClick() {
                     return _this4.props.removeInstruction(_this4.state.step);
                   },
-                  className: 'project-submit',
-                  type: 'submit' },
-                'Remove Instruction'
+                  className: "project-submit",
+                  type: "submit"
+                },
+                "Remove Instruction"
               )
             )
           )
         ),
-        _react2.default.createElement('div', { className: 'project-message-position' }),
+        _react2.default.createElement("div", { className: "project-message-position" }),
         _react2.default.createElement(
-          'div',
-          { className: 'project-message-position' },
+          "div",
+          { className: "project-message-position" },
           _react2.default.createElement(
-            'ul',
-            { className: 'project-errors-container' },
+            "ul",
+            { className: "project-errors-container" },
             this.errors()
           )
         )
@@ -1727,7 +1814,7 @@ var mstp = function mstp(state, ownProps) {
       rendered: false,
       imagesStorageId: []
     },
-    formType: 'New Instruction',
+    formType: "New Instruction",
     errors: state.errors.instruction,
     instructionBodiesState: ownProps.instructionBodiesState
   };
@@ -1779,8 +1866,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var HomePage = function HomePage() {
   return _react2.default.createElement(
-    'div',
-    { className: 'main-page' },
+    "div",
+    { className: "main-page" },
     _react2.default.createElement(_Slides2.default, null),
     _react2.default.createElement(_IndexProjectsContainer2.default, null)
   );
@@ -1840,25 +1927,31 @@ var EditProjectForm = function (_React$Component) {
   }
 
   _createClass(EditProjectForm, [{
-    key: 'componentDidMount',
+    key: "componentDidMount",
     value: function componentDidMount() {
       this.props.fetchProject(this.props.match.params.projectId);
     }
   }, {
-    key: 'componentWillReceiveProps',
+    key: "componentWillReceiveProps",
     value: function componentWillReceiveProps(nextProps) {
       if (this.props.project.id != nextProps.match.params.projectId) {
-        this.setState({ title: nextProps.project.title, picture: nextProps.project.picture, pictureUrl: nextProps.project.pictureUrl, description: nextProps.project.description, uploadStatus: false });
+        this.setState({
+          title: nextProps.project.title,
+          picture: nextProps.project.picture,
+          pictureUrl: nextProps.project.pictureUrl,
+          description: nextProps.project.description,
+          uploadStatus: false
+        });
       }
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
       if (!this.state) {
         return _react2.default.createElement(
-          'div',
+          "div",
           null,
-          'Loading...'
+          "Loading..."
         );
       }
 
@@ -1889,17 +1982,16 @@ var EditProjectForm = function (_React$Component) {
 }(_react2.default.Component);
 
 var mstp = function mstp(state, ownProps) {
-
   if (state.entities.projects[ownProps.match.params.projectId] && state.session.id != state.entities.projects[ownProps.match.params.projectId].authorId) {
-    ownProps.history.push('/');
+    ownProps.history.push("/");
   }
 
   var defaultProject = {
-    title: '',
+    title: "",
     author_id: state.session.id,
     author_username: state.entities.users[state.session.id],
-    description: '',
-    keyWords: '',
+    description: "",
+    keyWords: "",
     pictureFile: null,
     pictureUrl: null,
     uploadStatus: false,
@@ -1946,7 +2038,7 @@ var mstp = function mstp(state, ownProps) {
       instructionData: []
     },
     errors: state.errors.project,
-    formType: 'Update Project'
+    formType: "Update Project"
   };
 };
 
@@ -2018,28 +2110,31 @@ var IndexProjectItem = function (_React$Component) {
   }
 
   _createClass(IndexProjectItem, [{
-    key: 'render',
+    key: "render",
     value: function render() {
       return _react2.default.createElement(
-        'div',
-        { className: 'index-display-container' },
+        "div",
+        { className: "index-display-container" },
         _react2.default.createElement(
-          'div',
+          "div",
           null,
-          _react2.default.createElement('img', { className: 'index-image-resize', src: '' + this.props.mainPicture })
+          _react2.default.createElement("img", {
+            className: "index-image-resize",
+            src: "" + this.props.mainPicture
+          })
         ),
         _react2.default.createElement(
-          'div',
-          { className: 'index-description' },
+          "div",
+          { className: "index-description" },
           _react2.default.createElement(
-            'div',
+            "div",
             null,
             this.props.title
           ),
           _react2.default.createElement(
-            'div',
+            "div",
             null,
-            'by ',
+            "by ",
             this.props.author
           )
         )
@@ -2100,37 +2195,40 @@ var IndexProjects = function (_React$Component) {
       projects: [],
       search: false
     };
-    if (_this.props.formType === 'User Index Projects') {
+    if (_this.props.formType === "User Index Projects") {
       _this.props.fetchProjectsByUser(_this.props.displayedUser).then(function (payload) {
         return _this.setState({
-          projects: Object.values(payload) });
+          projects: Object.values(payload)
+        });
       });
-    } else if (_this.props.formType === 'Search Projects') {
-      if (_this.props.search === '') {
-        _this.props.history.push('/');
+    } else if (_this.props.formType === "Search Projects") {
+      if (_this.props.search === "") {
+        _this.props.history.push("/");
       }
       _this.props.searchProjects(_this.props.search).then(function (payload) {
         _this.setState({
-          projects: Object.values(payload) });
+          projects: Object.values(payload)
+        });
       });
     } else {
       _this.props.fetchProjects().then(function (payload) {
         return _this.setState({
-          projects: Object.values(payload) });
+          projects: Object.values(payload)
+        });
       });
     }
     return _this;
   }
 
   _createClass(IndexProjects, [{
-    key: 'componentDidUpdate',
+    key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
       var _this2 = this;
 
-      if ((this.props.search === '' || this.props.search === undefined) && this.props.formType === 'Search Projects') {
-        this.props.history.push('/');
+      if ((this.props.search === "" || this.props.search === undefined) && this.props.formType === "Search Projects") {
+        this.props.history.push("/");
       }
-      if (prevProps.search != this.props.search && this.props.formType === 'Search Projects') {
+      if (prevProps.search != this.props.search && this.props.formType === "Search Projects") {
         this.props.searchProjects(this.props.search).then(function (payload) {
           _this2.setState({
             projects: Object.values(payload),
@@ -2140,13 +2238,13 @@ var IndexProjects = function (_React$Component) {
       }
     }
   }, {
-    key: 'renderProjects',
+    key: "renderProjects",
     value: function renderProjects() {
       var _this3 = this;
 
       var display = [];
       var projects = this.state.projects;
-      if (this.state.projects.length && this.props.formType === 'User Index Projects') {
+      if (this.state.projects.length && this.props.formType === "User Index Projects") {
         projects = this.state.projects.filter(function (project) {
           return project.authorUsername === _this3.props.username && project.author_id == _this3.props.displayedUser;
         });
@@ -2154,74 +2252,75 @@ var IndexProjects = function (_React$Component) {
       projects.map(function (project) {
         var component = _react2.default.createElement(
           _reactRouterDom.Link,
-          { key: project.id, to: '/project/' + project.id },
+          { key: project.id, to: "/project/" + project.id },
           _react2.default.createElement(_IndexProjectItem2.default, {
             key: project.id,
             title: project.title,
             mainPicture: project.picture,
             author: project.authorUsername,
             featured: project.featured,
-            viewCount: project.view_count })
+            viewCount: project.view_count
+          })
         );
-        if (project.author_id == _this3.props.displayedUser && _this3.props.formType === 'User Index Projects') {
+        if (project.author_id == _this3.props.displayedUser && _this3.props.formType === "User Index Projects") {
           display.push(component);
-        } else if (_this3.props.formType === 'Index Projects' || _this3.props.formType === 'Search Projects') {
+        } else if (_this3.props.formType === "Index Projects" || _this3.props.formType === "Search Projects") {
           display.push(component);
         }
       });
-      if (!display.length && this.props.formType === 'User Index Projects') {
+      if (!display.length && this.props.formType === "User Index Projects") {
         if (this.props.currentUserPage) {
           display = _react2.default.createElement(
-            'h3',
+            "h3",
             null,
-            'You have no builds, share an idea and create a build!'
+            "You have no builds, share an idea and create a build!"
           );
         } else {
           display = _react2.default.createElement(
-            'h3',
+            "h3",
             null,
-            'This user doesn\'t have any projects'
+            "This user doesn't have any projects"
           );
         }
       }
-      if (!display.length && this.props.formType === 'Search Projects') {
+      if (!display.length && this.props.formType === "Search Projects") {
         display = _react2.default.createElement(
-          'h3',
+          "h3",
           null,
-          'There are no results matching "',
+          "There are no results matching \"",
           this.props.search,
-          '", please try another search term'
+          "\", please try another search term"
         );
       }
       return display;
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
-      if (!this.state.projects.length && this.props.formType !== 'Search Projects') {
+      if (!this.state.projects.length && this.props.formType !== "Search Projects") {
         return _react2.default.createElement(
-          'div',
+          "div",
           null,
-          'Loading...'
+          "Loading..."
         );
       } else {
-        var header = this.props.formType === 'User Index Projects' ? _react2.default.createElement(
-          'p',
-          { className: 'index-title' },
+        var header = this.props.formType === "User Index Projects" ? _react2.default.createElement(
+          "p",
+          { className: "index-title" },
           this.props.username,
-          ' builds'
+          " builds"
         ) : _react2.default.createElement(
-          'p',
-          { className: 'index-title' },
-          'Builds'
+          "p",
+          { className: "index-title" },
+          "Builds"
         );
         return _react2.default.createElement(
-          'div',
-          { className: 'index-background' },
+          "div",
+          { className: "index-background" },
           header,
           _react2.default.createElement(
-            'ul',
-            { className: 'index-display-items' },
+            "ul",
+            { className: "index-display-items" },
             this.renderProjects()
           )
         );
@@ -2267,7 +2366,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var mstp = function mstp(state, ownProps) {
   return {
     projects: Object.values(state.entities.projects),
-    formType: 'Index Projects'
+    formType: "Index Projects"
   };
 };
 
@@ -2319,11 +2418,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var mstp = function mstp(state) {
   return {
-    project: { title: '',
+    project: {
+      title: "",
       author_id: state.session.id,
       author_username: state.entities.users[state.session.id].username,
-      description: '',
-      keyWords: '',
+      description: "",
+      keyWords: "",
       pictureFile: null,
       pictureUrl: null,
       uploadStatus: false,
@@ -2339,7 +2439,7 @@ var mstp = function mstp(state) {
       agrogatedInstruction: false,
       instructionData: []
     },
-    formType: 'New Project',
+    formType: "New Project",
     errors: state.errors.project
   };
 };
@@ -2431,31 +2531,252 @@ var ProjectForm = function (_React$Component) {
   }
 
   _createClass(ProjectForm, [{
-    key: 'updateTitle',
+    key: "aggregateInstructionData",
+    value: function aggregateInstructionData(instructionData) {
+      var index = instructionData["step"];
+      var instructions = this.state.instructionData;
+      instructions[index - 1] = instructionData;
+      instructions = instructions.slice(0, this.state.instructions.length);
+      this.setState({ instructionData: [].concat(_toConsumableArray(instructions)) });
+    }
+  }, {
+    key: "appendInstructions",
+    value: function appendInstructions(instructions, projectId) {
+      var formDataInstruction = new FormData();
+      instructions.forEach(function (instruction, i) {
+        formDataInstruction.append("instructions[" + i + "][body]", instruction["body"]);
+        formDataInstruction.append("instructions[" + i + "][title]", instruction["title"]);
+        formDataInstruction.append("instructions[" + i + "][instruction_step]", instruction["step"]);
+        formDataInstruction.append("instructions[" + i + "][project_id]", projectId);
+        if (instruction["id"]) {
+          formDataInstruction.append("instructions[" + i + "][id]", instruction["id"]);
+          formDataInstruction.append("instructions[" + i + "][imagesStorageId]", instruction["imagesStorageId"]);
+        }
+        if (instruction["images"].length) {
+          instruction["images"].forEach(function (file, j) {
+            formDataInstruction.append("instructions[" + i + "][images][" + j + "]", file);
+          });
+        }
+      });
+      return formDataInstruction;
+    }
+  }, {
+    key: "appendProject",
+    value: function appendProject(projectId) {
+      var formDataProject = new FormData();
+      formDataProject.append("project[title]", this.state.title);
+      formDataProject.append("project[keywords]", this.state.keyWords);
+      formDataProject.append("project[description]", this.state.description);
+      if (this.state.pictureFile) {
+        formDataProject.append("project[picture]", this.state.pictureFile);
+      }
+      return formDataProject;
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      if (!this.instructionsComplete) {
+        this.instructions();
+        return;
+      } else {
+        var projectId = this.props.match.params.projectId;
+        var formDataProject = this.appendProject(projectId);
+        var that = this;
+        if (this.props.formType === "New Project") {
+          this.props.submitProject(formDataProject, projectId).then(function (payload) {
+            projectId = payload.project.id;
+            that.createInstructions(that, that.state.instructionData, projectId).then(function () {
+              that.redirect(projectId);
+            });
+          });
+        } else {
+          that.props.submitProject(formDataProject, projectId).then(function (payload) {
+            var newInstructions = [];
+            var updatedInstructions = [];
+            if (that.state.newlyAddedSteps.length !== 0) {
+              newInstructions = that.state.instructionData.slice(-that.state.newlyAddedSteps.length);
+              updatedInstructions = that.state.instructionData.slice(0, -that.state.newlyAddedSteps.length);
+            } else {
+              updatedInstructions = that.state.instructionData;
+            }
+            that.removeInstructions(that, that.state.removedInstructions).then(function () {
+              that.updateInstructions(that, updatedInstructions, projectId).then(function () {
+                that.createInstructions(that, newInstructions, projectId).then(function () {
+                  that.redirect(projectId);
+                });
+              });
+            });
+          });
+        }
+      }
+    }
+  }, {
+    key: "createInstructions",
+    value: function createInstructions(context, newInstructions, projectId) {
+      if (newInstructions.length) {
+        return context.props.createInstructions(context.appendInstructions(newInstructions, projectId), projectId);
+      } else {
+        return Promise.resolve("Success");
+      }
+    }
+  }, {
+    key: "updateInstructions",
+    value: function updateInstructions(context, updatedInstructions, projectId) {
+      if (updatedInstructions.length) {
+        return context.props.updateInstructions(context.appendInstructions(updatedInstructions, projectId), projectId);
+      } else {
+        return Promise.resolve("Success");
+      }
+    }
+  }, {
+    key: "removeInstructions",
+    value: function removeInstructions(context, removedInstructions) {
+      if (removedInstructions.length) {
+        return context.props.deleteInstruction(context.state.removedInstructions.toString());
+      } else {
+        return Promise.resolve("Success");
+      }
+    }
+  }, {
+    key: "instructionsComplete",
+    value: function instructionsComplete() {
+      for (var i = 0; i < this.state.instructionBodies.length; i++) {
+        var status = Object.values(this.state.instructionBodies[i])[0];
+        if (!status) {
+          return false;
+        }
+      }
+      return true;
+    }
+  }, {
+    key: "redirect",
+    value: function redirect(id) {
+      var _this2 = this;
+
+      this.setState({ uploadStatus: true });
+      setTimeout(function () {
+        _this2.props.history.push("/project/" + id);
+      }, 1500);
+    }
+  }, {
+    key: "uploadResult",
+    value: function uploadResult() {
+      if (this.state.uploadStatus === true) {
+        if (this.props.formType === "New Project") {
+          return _react2.default.createElement(
+            "div",
+            { className: "project-success-container" },
+            _react2.default.createElement(
+              "p",
+              { className: "project-success" },
+              "Build Successfully Saved"
+            )
+          );
+        } else {
+          return _react2.default.createElement(
+            "div",
+            { className: "project-success-container" },
+            _react2.default.createElement(
+              "p",
+              { className: "project-success" },
+              "Build Successfully Updated"
+            )
+          );
+        }
+      } else {
+        return [];
+      }
+    }
+  }, {
+    key: "instructionBodiesState",
+    value: function instructionBodiesState(instructionBodyFilled, instructionStep) {
+      var newInstructions = {};
+      newInstructions[instructionStep] = instructionBodyFilled;
+      if (!this.state.instructionBodies.length) {
+        this.setState({ instructionBodies: [newInstructions] });
+      } else {
+        var present = false;
+        var updatedInstructions = this.state.instructionBodies.map(function (instruction) {
+          if (Object.keys(instruction)[0] === Object.keys(newInstructions)[0]) {
+            present = true;
+            return newInstructions;
+          } else {
+            return instruction;
+          }
+        });
+        if (!present) {
+          updatedInstructions.push(newInstructions);
+        }
+        this.setState({ instructionBodies: updatedInstructions });
+      }
+    }
+  }, {
+    key: "errors",
+    value: function errors() {
+      var _this3 = this;
+
+      if (this.props.errors.length === 0) {
+        return [];
+      } else {
+        setTimeout(function () {
+          _this3.props.clearProjectErrors();
+        }, 3000);
+        return this.props.errors.map(function (error, i) {
+          return _react2.default.createElement(
+            "li",
+            { className: "project-errors", key: i },
+            error
+          );
+        });
+      }
+    }
+  }, {
+    key: "instructionErrors",
+    value: function instructionErrors() {
+      var _this4 = this;
+
+      if (!this.state.instructionIssues.length) {
+        return [];
+      } else {
+        setTimeout(function () {
+          _this4.setState({ instructionIssues: [] });
+        }, 3000);
+        return this.state.instructionIssues.map(function (error, i) {
+          return _react2.default.createElement(
+            "li",
+            { className: "project-errors", key: i },
+            error
+          );
+        });
+      }
+    }
+  }, {
+    key: "updateTitle",
     value: function updateTitle(e) {
       this.setState({ title: e.target.value });
     }
   }, {
-    key: 'updateDescription',
+    key: "updateDescription",
     value: function updateDescription(e) {
       this.setState({ description: e.target.value });
     }
   }, {
-    key: 'uploadFile',
+    key: "uploadFile",
     value: function uploadFile(e) {
-      var _this2 = this;
+      var _this5 = this;
 
       var file = e.currentTarget.files[0];
       var fileReader = new FileReader();
       fileReader.onloadend = function () {
-        _this2.setState({ pictureFile: file, pictureUrl: fileReader.result });
+        _this5.setState({ pictureFile: file, pictureUrl: fileReader.result });
       };
       if (file) {
         fileReader.readAsDataURL(file);
       }
     }
   }, {
-    key: 'removeInstruction',
+    key: "removeInstruction",
     value: function removeInstruction(instructionStep) {
       var instructions = this.state.instructions;
       var reorderedInstructionData = this.state.instructionData.slice(0, instructionStep - 1).concat(this.state.instructionData.slice(instructionStep));
@@ -2512,228 +2833,7 @@ var ProjectForm = function (_React$Component) {
       }
     }
   }, {
-    key: 'aggregateInstructionData',
-    value: function aggregateInstructionData(instructionData) {
-      var index = instructionData['step'];
-      var instructions = this.state.instructionData;
-      instructions[index - 1] = instructionData;
-      instructions = instructions.slice(0, this.state.instructions.length);
-      this.setState({ instructionData: [].concat(_toConsumableArray(instructions)) });
-    }
-  }, {
-    key: 'appendInstructions',
-    value: function appendInstructions(instructions, projectId) {
-      var formDataInstruction = new FormData();
-      instructions.forEach(function (instruction, i) {
-        formDataInstruction.append('instructions[' + i + '][body]', instruction['body']);
-        formDataInstruction.append('instructions[' + i + '][title]', instruction['title']);
-        formDataInstruction.append('instructions[' + i + '][instruction_step]', instruction['step']);
-        formDataInstruction.append('instructions[' + i + '][project_id]', projectId);
-        if (instruction['id']) {
-          formDataInstruction.append('instructions[' + i + '][id]', instruction['id']);
-          formDataInstruction.append('instructions[' + i + '][imagesStorageId]', instruction['imagesStorageId']);
-        }
-        if (instruction['images'].length) {
-          instruction['images'].forEach(function (file, j) {
-            formDataInstruction.append('instructions[' + i + '][images][' + j + ']', file);
-          });
-        }
-      });
-      return formDataInstruction;
-    }
-  }, {
-    key: 'appendProject',
-    value: function appendProject(projectId) {
-      var formDataProject = new FormData();
-      formDataProject.append('project[title]', this.state.title);
-      formDataProject.append('project[keywords]', this.state.keyWords);
-      formDataProject.append('project[description]', this.state.description);
-      if (this.state.pictureFile) {
-        formDataProject.append('project[picture]', this.state.pictureFile);
-      }
-      return formDataProject;
-    }
-  }, {
-    key: 'handleSubmit',
-    value: function handleSubmit(e) {
-      e.preventDefault();
-      if (!this.instructionsComplete) {
-        this.instructions();
-        return;
-      } else {
-        var projectId = this.props.match.params.projectId;
-        var formDataProject = this.appendProject(projectId);
-        var that = this;
-        if (this.props.formType === 'New Project') {
-          this.props.submitProject(formDataProject, projectId).then(function (payload) {
-            projectId = payload.project.id;
-            that.createInstructions(that, that.state.instructionData, projectId).then(function () {
-              that.redirect(projectId);
-            });
-          });
-        } else {
-          that.props.submitProject(formDataProject, projectId).then(function (payload) {
-            var newInstructions = [];
-            var updatedInstructions = [];
-            if (that.state.newlyAddedSteps.length !== 0) {
-              newInstructions = that.state.instructionData.slice(-that.state.newlyAddedSteps.length);
-              updatedInstructions = that.state.instructionData.slice(0, -that.state.newlyAddedSteps.length);
-            } else {
-              updatedInstructions = that.state.instructionData;
-            }
-            that.removeInstructions(that, that.state.removedInstructions).then(function () {
-              that.updateInstructions(that, updatedInstructions, projectId).then(function () {
-                that.createInstructions(that, newInstructions, projectId).then(function () {
-                  that.redirect(projectId);
-                });
-              });
-            });
-          });
-        }
-      }
-    }
-  }, {
-    key: 'createInstructions',
-    value: function createInstructions(context, newInstructions, projectId) {
-      if (newInstructions.length) {
-        return context.props.createInstructions(context.appendInstructions(newInstructions, projectId), projectId);
-      } else {
-        return Promise.resolve('Success');
-      }
-    }
-  }, {
-    key: 'updateInstructions',
-    value: function updateInstructions(context, updatedInstructions, projectId) {
-      if (updatedInstructions.length) {
-        return context.props.updateInstructions(context.appendInstructions(updatedInstructions, projectId), projectId);
-      } else {
-        return Promise.resolve('Success');
-      }
-    }
-  }, {
-    key: 'removeInstructions',
-    value: function removeInstructions(context, removedInstructions) {
-      if (removedInstructions.length) {
-        return context.props.deleteInstruction(context.state.removedInstructions.toString());
-      } else {
-        return Promise.resolve('Success');
-      }
-    }
-  }, {
-    key: 'instructionsComplete',
-    value: function instructionsComplete() {
-      for (var i = 0; i < this.state.instructionBodies.length; i++) {
-        var status = Object.values(this.state.instructionBodies[i])[0];
-        if (!status) {
-          return false;
-        }
-      }
-      return true;
-    }
-  }, {
-    key: 'redirect',
-    value: function redirect(id) {
-      var _this3 = this;
-
-      this.setState({ uploadStatus: true });
-      setTimeout(function () {
-        _this3.props.history.push('/project/' + id);
-      }, 1500);
-    }
-  }, {
-    key: 'uploadResult',
-    value: function uploadResult() {
-      if (this.state.uploadStatus === true) {
-        if (this.props.formType === 'New Project') {
-          return _react2.default.createElement(
-            'div',
-            { className: 'project-success-container' },
-            _react2.default.createElement(
-              'p',
-              { className: 'project-success' },
-              'Build Successfully Saved'
-            )
-          );
-        } else {
-          return _react2.default.createElement(
-            'div',
-            { className: 'project-success-container' },
-            _react2.default.createElement(
-              'p',
-              { className: 'project-success' },
-              'Build Successfully Updated'
-            )
-          );
-        }
-      } else {
-        return [];
-      }
-    }
-  }, {
-    key: 'instructionBodiesState',
-    value: function instructionBodiesState(instructionBodyFilled, instructionStep) {
-      var newInstructions = {};
-      newInstructions[instructionStep] = instructionBodyFilled;
-      if (!this.state.instructionBodies.length) {
-        this.setState({ instructionBodies: [newInstructions] });
-      } else {
-        var present = false;
-        var updatedInstructions = this.state.instructionBodies.map(function (instruction) {
-          if (Object.keys(instruction)[0] === Object.keys(newInstructions)[0]) {
-            present = true;
-            return newInstructions;
-          } else {
-            return instruction;
-          }
-        });
-        if (!present) {
-          updatedInstructions.push(newInstructions);
-        }
-        this.setState({ instructionBodies: updatedInstructions });
-      }
-    }
-  }, {
-    key: 'errors',
-    value: function errors() {
-      var _this4 = this;
-
-      if (this.props.errors.length === 0) {
-        return [];
-      } else {
-        setTimeout(function () {
-          _this4.props.clearProjectErrors();
-        }, 3000);
-        return this.props.errors.map(function (error, i) {
-          return _react2.default.createElement(
-            'li',
-            { className: 'project-errors', key: i },
-            error
-          );
-        });
-      }
-    }
-  }, {
-    key: 'instructionErrors',
-    value: function instructionErrors() {
-      var _this5 = this;
-
-      if (!this.state.instructionIssues.length) {
-        return [];
-      } else {
-        setTimeout(function () {
-          _this5.setState({ instructionIssues: [] });
-        }, 3000);
-        return this.state.instructionIssues.map(function (error, i) {
-          return _react2.default.createElement(
-            'li',
-            { className: 'project-errors', key: i },
-            error
-          );
-        });
-      }
-    }
-  }, {
-    key: 'instructions',
+    key: "instructions",
     value: function instructions() {
       var incompleteInstructions = [];
       var instructionBodyErrors = [];
@@ -2747,7 +2847,7 @@ var ProjectForm = function (_React$Component) {
           return a - b;
         });
         incompleteInstructions.forEach(function (instructionNumber) {
-          instructionBodyErrors.push(['Please finish filling out the body for step ' + instructionNumber]);
+          instructionBodyErrors.push(["Please finish filling out the body for step " + instructionNumber]);
         });
       }
       if (instructionBodyErrors.length) {
@@ -2766,7 +2866,8 @@ var ProjectForm = function (_React$Component) {
             key: keyValue,
             step: this.state.stepNum,
             instructionBodiesState: this.instructionBodiesState.bind(this),
-            removeInstruction: this.removeInstruction.bind(this), aggregateInstructionData: this.aggregateInstructionData.bind(this)
+            removeInstruction: this.removeInstruction.bind(this),
+            aggregateInstructionData: this.aggregateInstructionData.bind(this)
           })]),
           key: keyValue
         });
@@ -2774,11 +2875,11 @@ var ProjectForm = function (_React$Component) {
       this.state.instructions;
     }
   }, {
-    key: 'componentWillMount',
+    key: "componentWillMount",
     value: function componentWillMount() {
       var _this6 = this;
 
-      if (this.props.project.lastPrefilledInstruction === this.state.stepNum && this.props.formType === 'Update Project') {
+      if (this.props.project.lastPrefilledInstruction === this.state.stepNum && this.props.formType === "Update Project") {
         var keyValue = this.state.key;
         var instructions = this.state.instructions.map(function (instruction, i) {
           if (!instruction) {
@@ -2804,13 +2905,13 @@ var ProjectForm = function (_React$Component) {
       }
     }
   }, {
-    key: 'componentDidUpdate',
+    key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
       if (this.props.errors.length !== 0 && prevProps.errors.length === 0) {
         var instructionBodyErrors = [];
         this.state.instructionBodies.forEach(function (instructionBody) {
           if (!Object.values(instructionBody)[0]) {
-            instructionBodyErrors.push(['Please finish filling out the body for step ' + Object.keys(instructionBody)]);
+            instructionBodyErrors.push(["Please finish filling out the body for step " + Object.keys(instructionBody)]);
           }
         });
         if (instructionBodyErrors.length) {
@@ -2819,136 +2920,162 @@ var ProjectForm = function (_React$Component) {
       }
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
       var _this7 = this;
 
-      var previousPicture = this.state.picture && this.props.formType === 'Update Project' ? _react2.default.createElement(
-        'div',
-        { className: 'project-picture-preview-format' },
+      var previousPicture = this.state.picture && this.props.formType === "Update Project" ? _react2.default.createElement(
+        "div",
+        { className: "project-picture-preview-format" },
         _react2.default.createElement(
-          'p',
+          "p",
           null,
-          'Previous Image'
+          "Previous Image"
         ),
-        _react2.default.createElement('img', { className: 'project-previous-picture-format', src: this.state.picture })
+        _react2.default.createElement("img", {
+          className: "project-previous-picture-format",
+          src: this.state.picture
+        })
       ) : null;
 
       var preview = this.state.pictureUrl ? _react2.default.createElement(
-        'div',
-        { className: 'project-picture-preview-format' },
+        "div",
+        { className: "project-picture-preview-format" },
         _react2.default.createElement(
-          'p',
+          "p",
           null,
-          'Picture Preview'
+          "Picture Preview"
         ),
-        _react2.default.createElement('img', { className: 'project-image-resize', src: this.state.pictureUrl })
+        _react2.default.createElement("img", { className: "project-image-resize", src: this.state.pictureUrl })
       ) : null;
 
       var titleEdit = null;
       var bodyEdit = null;
-      if (this.props.formType === 'Update Project') {
+      if (this.props.formType === "Update Project") {
         titleEdit = _react2.default.createElement(
-          'p',
-          { className: 'project-edit-title-text' },
-          'Edit Title Below'
+          "p",
+          { className: "project-edit-title-text" },
+          "Edit Title Below"
         );
         bodyEdit = _react2.default.createElement(
-          'p',
-          { className: 'project-edit-body-text' },
-          'Edit Main Description Below'
+          "p",
+          { className: "project-edit-body-text" },
+          "Edit Main Description Below"
         );
       }
 
-      var submitButton = this.props.formType === 'New Project' ? "Publish" : "Update";
+      var submitButton = this.props.formType === "New Project" ? "Publish" : "Update";
 
       var project = void 0;
-      if (this.props.formType === 'Update Project') {
+      if (this.props.formType === "Update Project") {
         project = _react2.default.createElement(
-          'div',
-          { className: 'project-input-format' },
+          "div",
+          { className: "project-input-format" },
           _react2.default.createElement(
-            'p',
-            { className: 'project-edit-title-text' },
-            'Edit Title Below'
+            "p",
+            { className: "project-edit-title-text" },
+            "Edit Title Below"
           ),
-          _react2.default.createElement('input', { className: 'project-title-styling',
-            type: 'text',
+          _react2.default.createElement("input", {
+            className: "project-title-styling",
+            type: "text",
             onChange: this.updateTitle,
-            placeholder: 'Title',
-            value: '' + this.state.title }),
+            placeholder: "Title",
+            value: "" + this.state.title
+          }),
           _react2.default.createElement(
-            'div',
-            { className: 'project-images-display-update-format' },
+            "div",
+            { className: "project-images-display-update-format" },
             previousPicture,
             _react2.default.createElement(
-              'div',
-              { className: 'project-image-input-format' },
+              "div",
+              { className: "project-image-input-format" },
               _react2.default.createElement(
-                'p',
-                { className: 'project-image-text' },
-                'Please select a main picture for your build'
+                "p",
+                { className: "project-image-text" },
+                "Please select a main picture for your build"
               ),
-              _react2.default.createElement('input', { className: 'project-body-input',
-                type: 'file', accept: 'image/*',
-                onChange: this.uploadFile.bind(this) }),
+              _react2.default.createElement("input", {
+                className: "project-body-input",
+                type: "file",
+                accept: "image/*",
+                onChange: this.uploadFile.bind(this)
+              }),
               preview
             )
           ),
           _react2.default.createElement(
-            'p',
-            { className: 'project-edit-body-text' },
-            'Edit Main Description Below'
+            "p",
+            { className: "project-edit-body-text" },
+            "Edit Main Description Below"
           ),
-          _react2.default.createElement('textarea', { id: 'textarea', onChange: this.updateDescription.bind(this),
-            placeholder: 'Please enter a brief description of your build',
-            className: 'project-body-text', rows: '8', cols: '80',
-            value: '' + this.state.description })
+          _react2.default.createElement("textarea", {
+            id: "textarea",
+            onChange: this.updateDescription.bind(this),
+            placeholder: "Please enter a brief description of your build",
+            className: "project-body-text",
+            rows: "8",
+            cols: "80",
+            value: "" + this.state.description
+          })
         );
       } else {
         project = _react2.default.createElement(
-          'div',
-          { className: 'project-input-format' },
+          "div",
+          { className: "project-input-format" },
           _react2.default.createElement(
-            'p',
-            { className: 'project-edit-title-text' },
-            'Please select a title for your project'
+            "p",
+            { className: "project-edit-title-text" },
+            "Please select a title for your project"
           ),
           titleEdit,
-          _react2.default.createElement('input', { className: 'project-title-styling',
-            type: 'text', onChange: this.updateTitle,
-            placeholder: 'Title',
-            value: '' + this.state.title }),
+          _react2.default.createElement("input", {
+            className: "project-title-styling",
+            type: "text",
+            onChange: this.updateTitle,
+            placeholder: "Title",
+            value: "" + this.state.title
+          }),
           _react2.default.createElement(
-            'div',
-            { className: 'project-images-display-create-format' },
+            "div",
+            { className: "project-images-display-create-format" },
             _react2.default.createElement(
-              'div',
-              { className: 'project-image-input-format' },
+              "div",
+              { className: "project-image-input-format" },
               _react2.default.createElement(
-                'p',
-                { className: 'project-image-text' },
-                'Please select a main picture for your build'
+                "p",
+                { className: "project-image-text" },
+                "Please select a main picture for your build"
               ),
-              _react2.default.createElement('input', { className: 'project-body-input',
-                type: 'file', accept: 'image/*',
-                onChange: this.uploadFile.bind(this) }),
+              _react2.default.createElement("input", {
+                className: "project-body-input",
+                type: "file",
+                accept: "image/*",
+                onChange: this.uploadFile.bind(this)
+              }),
               preview
             )
           ),
           bodyEdit,
-          _react2.default.createElement('textarea', { id: 'textarea', onChange: this.updateDescription.bind(this),
-            placeholder: 'Please enter a brief description of your build',
-            className: 'project-body-text', rows: '8', cols: '80',
-            value: '' + this.state.description })
+          _react2.default.createElement("textarea", {
+            id: "textarea",
+            onChange: this.updateDescription.bind(this),
+            placeholder: "Please enter a brief description of your build",
+            className: "project-body-text",
+            rows: "8",
+            cols: "80",
+            value: "" + this.state.description
+          })
         );
       }
 
       var instructions = this.state.instructions;
 
-      if (this.state.projectId && this.props.formType === 'New Project') {
+      if (this.state.projectId && this.props.formType === "New Project") {
         instructions = instructions.map(function (instruction) {
-          instruction = _react2.default.cloneElement(instruction, { projectId: _this7.state.projectId });
+          instruction = _react2.default.cloneElement(instruction, {
+            projectId: _this7.state.projectId
+          });
           return instruction;
         });
       }
@@ -2956,58 +3083,62 @@ var ProjectForm = function (_React$Component) {
       var instructionErrors = this.state.instructionIssues.length ? this.instructionErrors() : null;
 
       return _react2.default.createElement(
-        'div',
-        { className: 'page-background' },
+        "div",
+        { className: "page-background" },
         _react2.default.createElement(
-          'div',
-          { className: 'project-background' },
+          "div",
+          { className: "project-background" },
           _react2.default.createElement(
-            'div',
-            { className: 'project-form-positioning' },
+            "div",
+            { className: "project-form-positioning" },
             _react2.default.createElement(
-              'form',
-              { className: 'project-form-styling', id: 'submit-project' },
+              "form",
+              { className: "project-form-styling", id: "submit-project" },
               project
             ),
             _react2.default.createElement(
-              'div',
-              { className: 'project-message-position ' },
+              "div",
+              { className: "project-message-position " },
               _react2.default.createElement(
-                'ul',
+                "ul",
                 null,
                 instructions
               )
             ),
             _react2.default.createElement(
-              'div',
+              "div",
               null,
               _react2.default.createElement(
-                'div',
-                { className: 'project-button-placement' },
+                "div",
+                { className: "project-button-placement" },
                 _react2.default.createElement(
-                  'button',
-                  { form: 'submit-project',
+                  "button",
+                  {
+                    form: "submit-project",
                     onClick: this.handleSubmit.bind(this),
-                    className: 'project-submit',
-                    type: 'submit' },
+                    className: "project-submit",
+                    type: "submit"
+                  },
                   submitButton
                 ),
                 this.uploadResult(),
                 _react2.default.createElement(
-                  'button',
-                  { className: 'add-instruction',
+                  "button",
+                  {
+                    className: "add-instruction",
                     onClick: function onClick() {
                       _this7.instructions();
-                    } },
-                  'Add Instruction'
+                    }
+                  },
+                  "Add Instruction"
                 )
               ),
               _react2.default.createElement(
-                'div',
-                { className: 'project-error-message-position' },
+                "div",
+                { className: "project-error-message-position" },
                 _react2.default.createElement(
-                  'ul',
-                  { className: 'project-errors-container' },
+                  "ul",
+                  { className: "project-errors-container" },
                   this.errors(),
                   instructionErrors
                 )
@@ -3061,14 +3192,13 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state, ownProps) {
-
   var search = ownProps.match.params.query;
-  if (search === '' || search === undefined) {
-    ownProps.history.push('/');
+  if (search === "" || search === undefined) {
+    ownProps.history.push("/");
   }
   return {
     projects: Object.values(state.entities.projects),
-    formType: 'Search Projects',
+    formType: "Search Projects",
     search: search
   };
 };
@@ -3146,14 +3276,14 @@ var ProjectShow = function (_React$Component) {
   }
 
   _createClass(ProjectShow, [{
-    key: 'componentDidMount',
+    key: "componentDidMount",
     value: function componentDidMount() {
       var _this2 = this;
 
       this.props.fetchProject(this.props.match.params.projectId).then(function (payload) {
         if (!_this2.props.errors) {
           _this2.props.clearProjectErrors;
-          _this2.props.history.push('/');
+          _this2.props.history.push("/");
         }
         if (!payload.comments) {
           payload.comments = {};
@@ -3171,19 +3301,19 @@ var ProjectShow = function (_React$Component) {
             return a.instructionStep - b.instructionStep;
           }),
           comments: Object.values(payload.comments),
-          commentBody: ''
+          commentBody: ""
         });
       });
       window.scrollTo(0, 0);
     }
   }, {
-    key: 'componentDidUpdate',
+    key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
       var _this3 = this;
 
       if (!this.props.errors) {
         this.props.clearProjectErrors;
-        this.props.history.push('/');
+        this.props.history.push("/");
       }
       if (prevProps.match.params.projectId != this.props.match.params.projectId) {
         this.props.fetchProject(this.props.match.params.projectId).then(function (payload) {
@@ -3205,13 +3335,13 @@ var ProjectShow = function (_React$Component) {
             project: payload.project,
             instructions: instructions,
             comments: comments,
-            commentBody: ''
+            commentBody: ""
           });
         });
       }
     }
   }, {
-    key: 'remove',
+    key: "remove",
     value: function remove() {
       var _this4 = this;
 
@@ -3223,16 +3353,16 @@ var ProjectShow = function (_React$Component) {
         setTimeout(function () {
           _this4.props.deleteInstruction(instructions, projectId);
         }, 500);
-        _this4.props.history.push('/' + username + '/' + userId + '/projects');
+        _this4.props.history.push("/" + username + "/" + userId + "/projects");
       });
     }
   }, {
-    key: 'edit',
+    key: "edit",
     value: function edit() {
-      this.props.history.push('/project/' + this.state.project.id + '/edit');
+      this.props.history.push("/project/" + this.state.project.id + "/edit");
     }
   }, {
-    key: 'displayInstructions',
+    key: "displayInstructions",
     value: function displayInstructions() {
       if (this.state.instructions) {
         return this.state.instructions.map(function (instruction, i) {
@@ -3254,33 +3384,41 @@ var ProjectShow = function (_React$Component) {
       }
     }
   }, {
-    key: 'modifyComment',
+    key: "modifyComment",
     value: function modifyComment(commentUserId, i, id) {
       var _this5 = this;
 
       if (commentUserId === this.props.currentUserId) {
         var that = this;
         return _react2.default.createElement(
-          'div',
-          { className: 'project-show-delete-position' },
+          "div",
+          { className: "project-show-delete-position" },
           _react2.default.createElement(
-            'button',
-            { id: '' + i, className: 'comment-buttons', onClick: function onClick(e) {
+            "button",
+            {
+              id: "" + i,
+              className: "comment-buttons",
+              onClick: function onClick(e) {
                 var num = e.target.id;
                 _this5.setState({ edit: num, newComment: false });
-              } },
-            'Edit Comment'
+              }
+            },
+            "Edit Comment"
           ),
           _react2.default.createElement(
-            'button',
-            { id: '' + i, className: 'comment-buttons', onClick: function onClick(e) {
+            "button",
+            {
+              id: "" + i,
+              className: "comment-buttons",
+              onClick: function onClick(e) {
                 _this5.props.deleteComment(id).then(function (e) {
                   that.setState({
                     comments: that.props.comments
                   });
                 });
-              } },
-            'Remove Comment'
+              }
+            },
+            "Remove Comment"
           )
         );
       } else {
@@ -3288,7 +3426,7 @@ var ProjectShow = function (_React$Component) {
       }
     }
   }, {
-    key: 'displayComments',
+    key: "displayComments",
     value: function displayComments() {
       var _this6 = this;
 
@@ -3301,7 +3439,7 @@ var ProjectShow = function (_React$Component) {
           }
           if (edit != i) {
             return _react2.default.createElement(
-              'div',
+              "div",
               { key: comment.id },
               _react2.default.createElement(_ShowComment2.default, {
                 body: comment.body,
@@ -3309,11 +3447,11 @@ var ProjectShow = function (_React$Component) {
                 authorId: comment.authorId
               }),
               modify,
-              _react2.default.createElement('div', { className: 'comment-divider' })
+              _react2.default.createElement("div", { className: "comment-divider" })
             );
           } else {
             return _react2.default.createElement(
-              'div',
+              "div",
               { key: comment.id },
               _react2.default.createElement(_EditCommentContainer2.default, {
                 body: comment.body,
@@ -3321,7 +3459,7 @@ var ProjectShow = function (_React$Component) {
                 commentId: comment.id,
                 updatedComment: _this6.updatedComment.bind(_this6)
               }),
-              _react2.default.createElement('div', { className: 'comment-divider' })
+              _react2.default.createElement("div", { className: "comment-divider" })
             );
           }
         });
@@ -3330,66 +3468,78 @@ var ProjectShow = function (_React$Component) {
       }
     }
   }, {
-    key: 'updatedComment',
+    key: "updatedComment",
     value: function updatedComment(boolean) {
       if (boolean) {
-        this.setState({ edit: null,
+        this.setState({
+          edit: null,
           comments: this.props.comments
         });
       }
     }
   }, {
-    key: 'updatedNewComment',
+    key: "updatedNewComment",
     value: function updatedNewComment(e) {
       this.setState({ commentBody: e.target.value });
     }
   }, {
-    key: 'newComment',
+    key: "newComment",
     value: function newComment() {
       var _this7 = this;
 
       if (this.state.newComment) {
         var error = this.state.commentError ? _react2.default.createElement(
-          'div',
-          { className: 'comment-errors-placement' },
+          "div",
+          { className: "comment-errors-placement" },
           _react2.default.createElement(
-            'div',
-            { className: 'comment-errors-container' },
+            "div",
+            { className: "comment-errors-container" },
             _react2.default.createElement(
-              'p',
-              { className: 'comment-errors' },
-              'The comment can not be empty, please finish filling it out'
+              "p",
+              { className: "comment-errors" },
+              "The comment can not be empty, please finish filling it out"
             )
           )
         ) : null;
         return _react2.default.createElement(
-          'div',
-          { className: 'comment-textbox-placement' },
+          "div",
+          { className: "comment-textbox-placement" },
           _react2.default.createElement(
-            'div',
-            { className: 'comment-textbox-area' },
-            _react2.default.createElement('textarea', { id: 'textarea', onChange: this.updatedNewComment.bind(this),
-              placeholder: 'Please enter a nice comment',
-              className: 'project-body-text', rows: '8', cols: '80',
-              value: '' + this.state.commentBody })
+            "div",
+            { className: "comment-textbox-area" },
+            _react2.default.createElement("textarea", {
+              id: "textarea",
+              onChange: this.updatedNewComment.bind(this),
+              placeholder: "Please enter a nice comment",
+              className: "project-body-text",
+              rows: "8",
+              cols: "80",
+              value: "" + this.state.commentBody
+            })
           ),
           error,
           _react2.default.createElement(
-            'div',
-            { className: 'project-show-delete-position' },
+            "div",
+            { className: "project-show-delete-position" },
             _react2.default.createElement(
-              'button',
-              { className: 'comment-buttons', onClick: function onClick() {
-                  _this7.setState({ newComment: false, commentBody: '' });
-                } },
-              'Cancel'
+              "button",
+              {
+                className: "comment-buttons",
+                onClick: function onClick() {
+                  _this7.setState({ newComment: false, commentBody: "" });
+                }
+              },
+              "Cancel"
             ),
             _react2.default.createElement(
-              'button',
-              { className: 'comment-buttons', onClick: function onClick() {
+              "button",
+              {
+                className: "comment-buttons",
+                onClick: function onClick() {
                   _this7.handleSubmit();
-                } },
-              'Submit'
+                }
+              },
+              "Submit"
             )
           )
         );
@@ -3398,143 +3548,172 @@ var ProjectShow = function (_React$Component) {
       }
     }
   }, {
-    key: 'handleSubmit',
+    key: "handleSubmit",
     value: function handleSubmit(e) {
       var _this8 = this;
 
-      if (this.state.commentBody === '') {
+      if (this.state.commentBody === "") {
         this.setState({ commentError: true });
         return;
       }
-      this.props.createComment({ comment: { body: this.state.commentBody, project_id: this.state.project.id, author_id: this.props.currentUserId } }, this.state.project.id).then(function (payload) {
+      this.props.createComment({
+        comment: {
+          body: this.state.commentBody,
+          project_id: this.state.project.id,
+          author_id: this.props.currentUserId
+        }
+      }, this.state.project.id).then(function (payload) {
         _this8.setState({
           newComment: false,
-          commentBody: '',
-          comments: [].concat(_toConsumableArray(_this8.state.comments), [payload]) });
+          commentBody: "",
+          comments: [].concat(_toConsumableArray(_this8.state.comments), [payload])
+        });
       });
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
       var _this9 = this;
 
       if (!this.state) {
         return _react2.default.createElement(
-          'div',
+          "div",
           null,
-          'Loading...'
+          "Loading..."
         );
       }
       var createCommentButton = void 0;
       if (this.props.currentUserId) {
         createCommentButton = this.state.newComment ? null : _react2.default.createElement(
-          'button',
-          { className: 'comment-create-button', onClick: function onClick() {
+          "button",
+          {
+            className: "comment-create-button",
+            onClick: function onClick() {
               _this9.setState({ newComment: true, edit: null });
-            } },
-          'Create A Comment'
+            }
+          },
+          "Create A Comment"
         );
       }
       var createCommentButton2 = void 0;
       if (this.props.currentUserId) {
         createCommentButton2 = this.state.comments.length === 0 ? null : _react2.default.createElement(
-          'button',
-          { className: 'comment-create-button', onClick: function onClick() {
+          "button",
+          {
+            className: "comment-create-button",
+            onClick: function onClick() {
               _this9.setState({ newComment: true, edit: null });
-            } },
-          'Create A Comment'
+            }
+          },
+          "Create A Comment"
         );
       }
       var commentHeader = this.state.comments.length ? this.state.comments.length === 1 ? _react2.default.createElement(
-        'p',
-        { className: 'comments-header' },
+        "p",
+        { className: "comments-header" },
         this.state.comments.length,
-        ' Comment'
+        " Comment"
       ) : _react2.default.createElement(
-        'p',
-        { className: 'comments-header' },
+        "p",
+        { className: "comments-header" },
         this.state.comments.length,
-        ' Comments'
+        " Comments"
       ) : null;
       var description = this.state.description;
       return _react2.default.createElement(
-        'div',
+        "div",
         null,
         _react2.default.createElement(
-          'div',
+          "div",
           null,
           _react2.default.createElement(
-            'div',
-            { className: 'project-header' },
+            "div",
+            { className: "project-header" },
             _react2.default.createElement(
-              'p',
-              { className: 'project-title' },
+              "p",
+              { className: "project-title" },
               this.state.title
             ),
             _react2.default.createElement(
-              'p',
-              { className: 'project-by' },
-              ' by',
+              "p",
+              { className: "project-by" },
+              " ",
+              "by",
               _react2.default.createElement(
                 _reactRouterDom.Link,
-                { className: 'clickable', to: '/' + this.state.authorUsername + '/' + this.state.project.authorId + '/projects' },
-                ' ',
+                {
+                  className: "clickable",
+                  to: "/" + this.state.authorUsername + "/" + this.state.project.authorId + "/projects"
+                },
+                " ",
                 this.state.authorUsername
               )
             )
           ),
           _react2.default.createElement(
-            'div',
-            { className: 'project-show-image-placement' },
-            _react2.default.createElement('img', { className: 'project-show-image-scale', src: '' + this.state.picture })
+            "div",
+            { className: "project-show-image-placement" },
+            _react2.default.createElement("img", {
+              className: "project-show-image-scale",
+              src: "" + this.state.picture
+            })
           ),
           _react2.default.createElement(
-            'div',
+            "div",
             null,
-            _react2.default.createElement('p', { className: 'project-font-format', dangerouslySetInnerHTML: { __html: description } })
+            _react2.default.createElement("p", {
+              className: "project-font-format",
+              dangerouslySetInnerHTML: { __html: description }
+            })
           ),
           _react2.default.createElement(
-            'div',
+            "div",
             null,
             _react2.default.createElement(
-              'ul',
-              { className: 'instructions-show-format' },
+              "ul",
+              { className: "instructions-show-format" },
               this.displayInstructions()
             )
           ),
           this.props.ownsProject ? _react2.default.createElement(
-            'div',
-            { className: 'project-show-delete-position' },
+            "div",
+            { className: "project-show-delete-position" },
             _react2.default.createElement(
-              'button',
-              { className: 'project-show-delete-button', onClick: this.edit },
-              'Edit Build'
+              "button",
+              {
+                className: "project-show-delete-button",
+                onClick: this.edit
+              },
+              "Edit Build"
             ),
             _react2.default.createElement(
-              'button',
-              { className: 'project-show-delete-button', onClick: this.remove },
-              'Remove Build'
+              "button",
+              {
+                className: "project-show-delete-button",
+                onClick: this.remove
+              },
+              "Remove Build"
             )
           ) : null,
           _react2.default.createElement(
-            'div',
-            { className: 'comment-errors-placement' },
+            "div",
+            { className: "comment-errors-placement" },
             this.newComment(),
             createCommentButton
           ),
           _react2.default.createElement(
-            'div',
-            { className: 'comment-errors-placement' },
+            "div",
+            { className: "comment-errors-placement" },
             commentHeader
           ),
           _react2.default.createElement(
-            'div',
+            "div",
             null,
             this.displayComments()
           ),
           _react2.default.createElement(
-            'div',
-            { className: 'comment-errors-placement' },
+            "div",
+            { className: "comment-errors-placement" },
             createCommentButton2
           )
         )
@@ -3584,7 +3763,6 @@ var _ShowProject2 = _interopRequireDefault(_ShowProject);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state, ownProps) {
-
   var projectId = ownProps.match.params.projectId;
 
   var commentsArray = Object.values(state.entities.comments).filter(function (comment) {
@@ -3593,7 +3771,7 @@ var mstp = function mstp(state, ownProps) {
   var userId = state.session.id;
   var project = state.entities.projects[ownProps.match.params.projectId] || {};
   return {
-    formType: 'Show Project',
+    formType: "Show Project",
     currentUserId: userId,
     ownsProject: userId === project.authorId,
     comments: commentsArray,
@@ -3661,11 +3839,11 @@ var _IndexProjects2 = _interopRequireDefault(_IndexProjects);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state, ownProps) {
-  var displayedUser = ownProps.match.url.split('/')[2];
-  var username = ownProps.match.url.split('/')[1];
+  var displayedUser = ownProps.match.url.split("/")[2];
+  var username = ownProps.match.url.split("/")[1];
   return {
     projects: Object.values(state.entities.projects),
-    formType: 'User Index Projects',
+    formType: "User Index Projects",
     displayedUser: displayedUser,
     username: username
   };
@@ -3706,13 +3884,13 @@ var _wysiwyg2 = _interopRequireDefault(_wysiwyg);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mstp = function mstp(state, ownProps) {
-  var html = '';
+  var html = "";
   var information = "";
-  if (ownProps.body !== '' && ownProps.body !== undefined) {
+  if (ownProps.body !== "" && ownProps.body !== undefined) {
     information = ownProps.body;
   }
-  var htmlDoc = new DOMParser().parseFromString(html, 'text/html');
-  var body = htmlDoc.querySelectorAll('body');
+  var htmlDoc = new DOMParser().parseFromString(html, "text/html");
+  var body = htmlDoc.querySelectorAll("body");
   body[0].innerHTML = information;
   return {
     instructionBody: body[0].innerHTML,
@@ -3779,7 +3957,7 @@ var WYSIWYG = function (_React$Component) {
   }
 
   _createClass(WYSIWYG, [{
-    key: 'shouldComponentUpdate',
+    key: "shouldComponentUpdate",
     value: function shouldComponentUpdate(nextProps, nextState) {
       if (nextProps.step !== this.props.step) {
         this.setState({ refNumber: nextProps.step });
@@ -3793,7 +3971,7 @@ var WYSIWYG = function (_React$Component) {
       return false;
     }
   }, {
-    key: 'componentDidUpdate',
+    key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps, prevState, snapshot) {
       if (this.nextRefNum === this.state.refNumber && this.rerender) {
         this.updatelisteners(this.props.step);
@@ -3804,133 +3982,173 @@ var WYSIWYG = function (_React$Component) {
       }
     }
   }, {
-    key: 'componentDidMount',
+    key: "componentDidMount",
     value: function componentDidMount() {
       var _this2 = this;
 
-      this.ifr = document.getElementById('theWYSIWYG-' + this.state.refNumber).contentDocument;
-      this.ifr.designMode = 'on';
+      this.ifr = document.getElementById("theWYSIWYG-" + this.state.refNumber).contentDocument;
+      this.ifr.designMode = "on";
 
-      this.ifr.getElementsByTagName('body')[0].id = 'theWYSIWYG';
+      this.ifr.getElementsByTagName("body")[0].id = "theWYSIWYG";
 
       if (this.state.instructionBody) {
-        this.ifr.getElementsByTagName('body')[0].innerHTML = this.state.instructionBody;
+        this.ifr.getElementsByTagName("body")[0].innerHTML = this.state.instructionBody;
       }
-      this.setState({ instructionBody: this.ifr.getElementsByTagName('body')[0].innerHTML });
+      this.setState({
+        instructionBody: this.ifr.getElementsByTagName("body")[0].innerHTML
+      });
 
-      this.ifr.getElementsByTagName('body')[0].onblur = function () {
-        _this2.setState({ instructionBody: _this2.ifr.getElementsByTagName('body')[0].innerHTML }, function () {
+      this.ifr.getElementsByTagName("body")[0].onblur = function () {
+        _this2.setState({ instructionBody: _this2.ifr.getElementsByTagName("body")[0].innerHTML }, function () {
           return _this2.props.updateDescription(_this2.state.instructionBody);
         });
       };
     }
   }, {
-    key: 'updatelisteners',
+    key: "updatelisteners",
     value: function updatelisteners(newStep) {
       var _this3 = this;
 
-      this.ifr = document.getElementById('theWYSIWYG-' + newStep).contentDocument;
-      this.ifr.designMode = 'on';
+      this.ifr = document.getElementById("theWYSIWYG-" + newStep).contentDocument;
+      this.ifr.designMode = "on";
 
-      this.ifr.getElementsByTagName('body')[0].id = 'theWYSIWYG';
+      this.ifr.getElementsByTagName("body")[0].id = "theWYSIWYG";
 
       if (this.state.instructionBody) {
-        this.ifr.getElementsByTagName('body')[0].innerHTML = this.state.instructionBody;
+        this.ifr.getElementsByTagName("body")[0].innerHTML = this.state.instructionBody;
       }
-      this.setState({ instructionBody: this.ifr.getElementsByTagName('body')[0].innerHTML });
+      this.setState({
+        instructionBody: this.ifr.getElementsByTagName("body")[0].innerHTML
+      });
 
-      this.ifr.getElementsByTagName('body')[0].onblur = function (e) {
+      this.ifr.getElementsByTagName("body")[0].onblur = function (e) {
         e.preventDefault();
-        _this3.setState({ instructionBody: _this3.ifr.getElementsByTagName('body')[0].innerHTML }, function () {
+        _this3.setState({ instructionBody: _this3.ifr.getElementsByTagName("body")[0].innerHTML }, function () {
           return _this3.props.updateDescription(_this3.state.instructionBody);
         });
       };
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
       var _this4 = this;
 
       return _react2.default.createElement(
-        'div',
-        { id: 'textEditor' },
+        "div",
+        { id: "textEditor" },
         _react2.default.createElement(
-          'div',
-          { id: 'theRibbon' },
+          "div",
+          { id: "theRibbon" },
           _react2.default.createElement(
-            'button',
-            { id: 'boldButton-' + this.state.refNumber, onClick: function onClick(e) {
+            "button",
+            {
+              id: "boldButton-" + this.state.refNumber,
+              onClick: function onClick(e) {
                 e.preventDefault();
-                _this4.ifr.execCommand('Bold', false, null);
-                _this4.setState({ instructionBody: _this4.ifr.getElementsByTagName('body')[0].innerHTML }, function () {
+                _this4.ifr.execCommand("Bold", false, null);
+                _this4.setState({
+                  instructionBody: _this4.ifr.getElementsByTagName("body")[0].innerHTML
+                }, function () {
                   return _this4.props.updateDescription(_this4.state.instructionBody);
                 });
-              }, title: 'bold' },
+              },
+              title: "bold"
+            },
             _react2.default.createElement(
-              'b',
+              "b",
               null,
-              'B'
+              "B"
             )
           ),
           _react2.default.createElement(
-            'button',
-            { id: 'italicButton-' + this.state.refNumber, onClick: function onClick(e) {
+            "button",
+            {
+              id: "italicButton-" + this.state.refNumber,
+              onClick: function onClick(e) {
                 e.preventDefault();
-                _this4.ifr.execCommand('italic', false, null);
-                _this4.setState({ instructionBody: _this4.ifr.getElementsByTagName('body')[0].innerHTML }, function () {
+                _this4.ifr.execCommand("italic", false, null);
+                _this4.setState({
+                  instructionBody: _this4.ifr.getElementsByTagName("body")[0].innerHTML
+                }, function () {
                   return _this4.props.updateDescription(_this4.state.instructionBody);
                 });
-              }, title: 'italic' },
+              },
+              title: "italic"
+            },
             _react2.default.createElement(
-              'em',
+              "em",
               null,
-              'I'
+              "I"
             )
           ),
           _react2.default.createElement(
-            'button',
-            { id: 'underlineButton-' + this.state.refNumber, onClick: function onClick(e) {
+            "button",
+            {
+              id: "underlineButton-" + this.state.refNumber,
+              onClick: function onClick(e) {
                 e.preventDefault();
-                _this4.ifr.execCommand('underline', false, null);
-                _this4.setState({ instructionBody: _this4.ifr.getElementsByTagName('body')[0].innerHTML }, function () {
+                _this4.ifr.execCommand("underline", false, null);
+                _this4.setState({
+                  instructionBody: _this4.ifr.getElementsByTagName("body")[0].innerHTML
+                }, function () {
                   return _this4.props.updateDescription(_this4.state.instructionBody);
                 });
-              }, title: 'underline' },
+              },
+              title: "underline"
+            },
             _react2.default.createElement(
-              'u',
+              "u",
               null,
-              'U'
+              "U"
             )
           ),
           _react2.default.createElement(
-            'button',
-            { id: 'orderedListButton-' + this.state.refNumber, onClick: function onClick(e) {
+            "button",
+            {
+              id: "orderedListButton-" + this.state.refNumber,
+              onClick: function onClick(e) {
                 e.preventDefault();
-                _this4.ifr.execCommand('InsertOrderedList', false, 'newOL ' + Math.round(Math.random() * 1000));
-                _this4.setState({ instructionBody: _this4.ifr.getElementsByTagName('body')[0].innerHTML }, function () {
+                _this4.ifr.execCommand("InsertOrderedList", false, "newOL " + Math.round(Math.random() * 1000));
+                _this4.setState({
+                  instructionBody: _this4.ifr.getElementsByTagName("body")[0].innerHTML
+                }, function () {
                   return _this4.props.updateDescription(_this4.state.instructionBody);
                 });
-              }, title: 'Numbered list' },
-            '(i)'
+              },
+              title: "Numbered list"
+            },
+            "(i)"
           ),
           _react2.default.createElement(
-            'button',
-            { id: 'unorderedListButton-' + this.state.refNumber, onClick: function onClick(e) {
+            "button",
+            {
+              id: "unorderedListButton-" + this.state.refNumber,
+              onClick: function onClick(e) {
                 e.preventDefault();
-                _this4.ifr.execCommand('InsertUnorderedList', false, 'newOL ' + Math.round(Math.random() * 1000));
-                _this4.setState({ instructionBody: _this4.ifr.getElementsByTagName('body')[0].innerHTML }, function () {
+                _this4.ifr.execCommand("InsertUnorderedList", false, "newOL " + Math.round(Math.random() * 1000));
+                _this4.setState({
+                  instructionBody: _this4.ifr.getElementsByTagName("body")[0].innerHTML
+                }, function () {
                   return _this4.props.updateDescription(_this4.state.instructionBody);
                 });
-              }, title: 'Bulleted list' },
-            '\u2022'
+              },
+              title: "Bulleted list"
+            },
+            "\u2022"
           )
         ),
         _react2.default.createElement(
-          'div',
-          { id: 'richTextArea' },
-          _react2.default.createElement('iframe', { id: 'theWYSIWYG-' + this.state.refNumber, className: 'theWYSIWYG', name: 'theWYSIWYG', frameBorder: '0', ref: function ref(f) {
+          "div",
+          { id: "richTextArea" },
+          _react2.default.createElement("iframe", {
+            id: "theWYSIWYG-" + this.state.refNumber,
+            className: "theWYSIWYG",
+            name: "theWYSIWYG",
+            frameBorder: "0",
+            ref: function ref(f) {
               return _this4.ifr = f;
-            } })
+            }
+          })
         )
       );
     }
@@ -4029,48 +4247,64 @@ var SearchBar = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (SearchBar.__proto__ || Object.getPrototypeOf(SearchBar)).call(this, props));
 
     _this.state = {
-      search: ''
+      search: ""
     };
     _this.redirect = _this.redirect.bind(_this);
     return _this;
   }
 
   _createClass(SearchBar, [{
-    key: 'updateSearch',
+    key: "updateSearch",
     value: function updateSearch(e) {
       this.setState({ search: e.target.value });
     }
   }, {
-    key: 'redirect',
+    key: "redirect",
     value: function redirect() {
-      if (this.state.search !== '') {
-        this.props.history.push('/projects/search/' + this.state.search);
-        this.setState({ search: '' });
+      if (this.state.search !== "") {
+        this.props.history.push("/projects/search/" + this.state.search);
+        this.setState({ search: "" });
       }
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
       var _this2 = this;
 
       return _react2.default.createElement(
-        'div',
+        "div",
         null,
         _react2.default.createElement(
-          'form',
-          { className: 'search-bar-form', id: 'search', onSubmit: function onSubmit(e) {
+          "form",
+          {
+            className: "search-bar-form",
+            id: "search",
+            onSubmit: function onSubmit(e) {
               e.preventDefault();
               _this2.redirect();
-            } },
-          _react2.default.createElement('input', { form: 'search', type: 'text', placeholder: 'Let\'s Build ...', name: 'search2', className: 'search-bar-input', onChange: function onChange(e) {
+            }
+          },
+          _react2.default.createElement("input", {
+            form: "search",
+            type: "text",
+            placeholder: "Let's Build ...",
+            name: "search2",
+            className: "search-bar-input",
+            onChange: function onChange(e) {
               return _this2.updateSearch(e);
-            }, onClick: function onClick(e) {
+            },
+            onClick: function onClick(e) {
               return e.preventDefault();
-            }, value: '' + this.state.search }),
-          _react2.default.createElement('i', { className: 'fas fa-search search-bar-button', onClick: function onClick(e) {
+            },
+            value: "" + this.state.search
+          }),
+          _react2.default.createElement("i", {
+            className: "fas fa-search search-bar-button",
+            onClick: function onClick(e) {
               e.preventDefault();
               _this2.redirect();
-            } })
+            }
+          })
         )
       );
     }
@@ -4116,17 +4350,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var mstp = function mstp(state) {
   return {
     errors: state.errors.session.logIn,
-    formType: 'Log In',
+    formType: "Log In",
     navLink: _react2.default.createElement(
       _reactRouterDom.Link,
-      { className: 'clickable user-welcome-link', to: '/signup' },
-      ' Sign up here'
+      { className: "clickable user-welcome-link", to: "/signup" },
+      " ",
+      "Sign up here"
     )
   };
 };
 
 var mdtp = function mdtp(dispatch) {
-  var demo = { username: 'Demo-Bot', password: '123456' };
+  var demo = { username: "Demo-Bot", password: "123456" };
   return {
     processForm: function processForm(user) {
       dispatch((0, _session_actions.logIn)(user));
@@ -4180,11 +4415,11 @@ var SessionForm = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (SessionForm.__proto__ || Object.getPrototypeOf(SessionForm)).call(this, props));
 
     _this.state = {
-      username: '',
-      password: '',
-      email: '',
-      age: '',
-      about: '',
+      username: "",
+      password: "",
+      email: "",
+      age: "",
+      about: "",
       active: false
     };
     _this.updateUsername = _this.updateUsername.bind(_this);
@@ -4203,102 +4438,144 @@ var SessionForm = function (_React$Component) {
   }
 
   _createClass(SessionForm, [{
-    key: 'handleSubmit',
+    key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
       var user = Object.assign({}, this.state);
       this.props.processForm(user);
     }
   }, {
-    key: 'updateUsername',
+    key: "updateUsername",
     value: function updateUsername(e) {
       this.setState({ username: e.target.value });
     }
   }, {
-    key: 'updateEmail',
+    key: "updateEmail",
     value: function updateEmail(e) {
       this.setState({ email: e.target.value });
     }
   }, {
-    key: 'updatePassword',
+    key: "updatePassword",
     value: function updatePassword(e) {
       this.setState({ password: e.target.value });
     }
   }, {
-    key: 'updateAge',
+    key: "updateAge",
     value: function updateAge(e) {
       this.setState({ age: e.target.value });
     }
   }, {
-    key: 'updateAboutMe',
+    key: "updateAboutMe",
     value: function updateAboutMe(e) {
       this.setState({ about: e.target.value });
     }
   }, {
-    key: 'toggleClass',
+    key: "toggleClass",
     value: function toggleClass() {
       var currentState = this.state.active;
       this.setState({ active: !currentState });
     }
   }, {
-    key: 'email',
+    key: "email",
     value: function email(formType) {
-      if (formType === 'Sign Up') {
+      if (formType === "Sign Up") {
         return _react2.default.createElement(
-          'div',
+          "div",
           null,
-          _react2.default.createElement('input', { className: 'width-email user-input-field', onChange: this.updateEmail, type: 'email', required: true, placeholder: 'Email', value: this.state.email }),
-          _react2.default.createElement('br', null)
+          _react2.default.createElement("input", {
+            className: "width-email user-input-field",
+            onChange: this.updateEmail,
+            type: "email",
+            required: true,
+            placeholder: "Email",
+            value: this.state.email
+          }),
+          _react2.default.createElement("br", null)
         );
       }
     }
   }, {
-    key: 'age',
+    key: "age",
     value: function age(formType) {
       var _this2 = this;
 
-      if (formType === 'Sign Up') {
+      if (formType === "Sign Up") {
         if (!this.state.active) {
-          return _react2.default.createElement('input', { onClick: function onClick() {
+          return _react2.default.createElement("input", {
+            onClick: function onClick() {
               _this2.toggleClass();
-            }, onChange: this.updateAge, type: 'text', placeholder: 'Birthdate (mm/dd/yyyy)', value: this.state.age });
+            },
+            onChange: this.updateAge,
+            type: "text",
+            placeholder: "Birthdate (mm/dd/yyyy)",
+            value: this.state.age
+          });
         } else {
-          return _react2.default.createElement('input', { className: 'user-date-show user-input-field', onChange: this.updateAge, type: 'date', value: this.state.age });
+          return _react2.default.createElement("input", {
+            className: "user-date-show user-input-field",
+            onChange: this.updateAge,
+            type: "date",
+            value: this.state.age
+          });
         }
       }
     }
   }, {
-    key: 'user',
+    key: "user",
     value: function user(formType) {
-      if (formType === 'Sign Up') {
-        return _react2.default.createElement('input', { className: 'user-username-signup user-input-field', onChange: this.updateUsername, type: 'text', value: this.state.username, placeholder: 'Username' });
+      if (formType === "Sign Up") {
+        return _react2.default.createElement("input", {
+          className: "user-username-signup user-input-field",
+          onChange: this.updateUsername,
+          type: "text",
+          value: this.state.username,
+          placeholder: "Username"
+        });
       } else {
-        return _react2.default.createElement('input', { className: 'user-username-login user-input-field', onChange: this.updateUsername, type: 'text', value: this.state.username, placeholder: 'Username' });
+        return _react2.default.createElement("input", {
+          className: "user-username-login user-input-field",
+          onChange: this.updateUsername,
+          type: "text",
+          value: this.state.username,
+          placeholder: "Username"
+        });
       }
     }
   }, {
-    key: 'password',
+    key: "password",
     value: function password(formType) {
-      if (formType === 'Sign Up') {
-        return _react2.default.createElement('input', { onChange: this.updatePassword, className: 'user-password-signup user-input-field width-password-sign-up', type: 'password', placeholder: 'Password', value: this.state.password });
+      if (formType === "Sign Up") {
+        return _react2.default.createElement("input", {
+          onChange: this.updatePassword,
+          className: "user-password-signup user-input-field width-password-sign-up",
+          type: "password",
+          placeholder: "Password",
+          value: this.state.password
+        });
       } else {
-        return _react2.default.createElement('input', { onChange: this.updatePassword, className: 'user-password-login user-input-field width-password', type: 'password', placeholder: 'Password', value: this.state.password });
+        return _react2.default.createElement("input", {
+          onChange: this.updatePassword,
+          className: "user-password-login user-input-field width-password",
+          type: "password",
+          placeholder: "Password",
+          value: this.state.password
+        });
       }
     }
   }, {
-    key: 'about',
+    key: "about",
     value: function about() {
-      var aboutMe = 'About me,student,K-5 Teacher,6-8 Teacher,9-12 Teacher,Post-Secondary Teacher,Instructor,Hobbyist,Professional, Parent,Robot'.split(',');
+      var aboutMe = "About me,student,K-5 Teacher,6-8 Teacher,9-12 Teacher,Post-Secondary Teacher,Instructor,Hobbyist,Professional, Parent,Robot".split(",");
       return aboutMe.map(function (type, i) {
         if (i === 0) {
           return _react2.default.createElement(
-            'option',
+            "option",
             { key: i, value: type, selected: true, disabled: true, hidden: true },
             type
           );
         } else {
           return _react2.default.createElement(
-            'option',
+            "option",
             { key: i, value: type },
             type
           );
@@ -4306,86 +4583,86 @@ var SessionForm = function (_React$Component) {
       });
     }
   }, {
-    key: 'DemoSubmit',
+    key: "DemoSubmit",
     value: function DemoSubmit(e) {
       var _this3 = this;
 
       e.preventDefault();
-      var user = 'Demo-Bot';
-      this.setState({ username: user, password: '123456' });
+      var user = "Demo-Bot";
+      this.setState({ username: user, password: "123456" });
       setTimeout(function () {
         _this3.props.demoLogin();
       }, 1000);
     }
   }, {
-    key: 'aboutMe',
+    key: "aboutMe",
     value: function aboutMe(formType) {
-      if (formType === 'Sign Up') {
+      if (formType === "Sign Up") {
         return _react2.default.createElement(
-          'select',
-          { className: 'about-me', onChange: this.updateAboutMe },
+          "select",
+          { className: "about-me", onChange: this.updateAboutMe },
           this.about(this.props.formType)
         );
       }
     }
   }, {
-    key: 'errors',
+    key: "errors",
     value: function errors() {
       if (!this.props.errors) {
         return [];
       } else {
         return this.props.errors.map(function (error, i) {
           return _react2.default.createElement(
-            'li',
-            { className: 'user-errors', key: i },
+            "li",
+            { className: "user-errors", key: i },
             error
           );
         });
       }
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
       var _this4 = this;
 
       return _react2.default.createElement(
-        'div',
+        "div",
         null,
         _react2.default.createElement(
-          'div',
-          { className: 'user-entry-background' },
+          "div",
+          { className: "user-entry-background" },
           _react2.default.createElement(
-            'div',
-            { className: 'user-entry-background-blur' },
-            _react2.default.createElement('div', { className: 'user-entry-blur' })
+            "div",
+            { className: "user-entry-background-blur" },
+            _react2.default.createElement("div", { className: "user-entry-blur" })
           )
         ),
         _react2.default.createElement(
-          'div',
-          { className: 'user-entry' },
+          "div",
+          { className: "user-entry" },
           _react2.default.createElement(
-            'div',
-            { className: 'user-welcome' },
+            "div",
+            { className: "user-welcome" },
             _react2.default.createElement(
-              'p',
+              "p",
               null,
-              'Welcome to Share Your Build!'
+              "Welcome to Share Your Build!"
             ),
             _react2.default.createElement(
-              'p',
+              "p",
               null,
-              'Please ',
+              "Please ",
               this.props.formType,
-              ' or ',
+              " or ",
               this.props.navLink
             )
           ),
           _react2.default.createElement(
-            'form',
+            "form",
             { onSubmit: this.handleSubmit },
             _react2.default.createElement(
-              'div',
-              { className: 'user-form-font-size' },
+              "div",
+              { className: "user-form-font-size" },
               this.email(this.props.formType),
               this.user(this.props.formType),
               this.password(this.props.formType),
@@ -4393,28 +4670,36 @@ var SessionForm = function (_React$Component) {
               this.aboutMe(this.props.formType)
             ),
             _react2.default.createElement(
-              'button',
-              { className: 'submit', onClick: this.handleSubmit, value: this.props.formType },
+              "button",
+              {
+                className: "submit",
+                onClick: this.handleSubmit,
+                value: this.props.formType
+              },
               this.props.formType
             )
           ),
           _react2.default.createElement(
-            'form',
-            { className: 'demo-move' },
+            "form",
+            { className: "demo-move" },
             _react2.default.createElement(
-              'button',
-              { className: 'user-demo', onClick: function onClick(e) {
+              "button",
+              {
+                className: "user-demo",
+                onClick: function onClick(e) {
                   _this4.DemoSubmit(e);
-                } },
-              ' Demo Login'
+                }
+              },
+              " ",
+              "Demo Login"
             )
           ),
           _react2.default.createElement(
-            'div',
-            { className: 'user-error-position' },
+            "div",
+            { className: "user-error-position" },
             _react2.default.createElement(
-              'ul',
-              { className: 'user-errors-container' },
+              "ul",
+              { className: "user-errors-container" },
               this.errors()
             )
           )
@@ -4463,17 +4748,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var mstp = function mstp(state) {
   return {
     errors: state.errors.session.signUp,
-    formType: 'Sign Up',
+    formType: "Sign Up",
     navLink: _react2.default.createElement(
       _reactRouterDom.Link,
-      { className: 'clickable user-welcome-link', to: '/login' },
-      ' Sign in here'
+      { className: "clickable user-welcome-link", to: "/login" },
+      " ",
+      "Sign in here"
     )
   };
 };
 
 var mdtp = function mdtp(dispatch) {
-  var demo = { username: 'Demo-Bot', password: '123456' };
+  var demo = { username: "Demo-Bot", password: "123456" };
   return {
     processForm: function processForm(user) {
       dispatch((0, _session_actions.signUp)(user));
@@ -5211,7 +5497,6 @@ var userReducer = function userReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { id: null };
   var action = arguments[1];
 
-
   var oldState = Object.freeze(state);
   switch (action.type) {
     case Session_Actions.RECEIVE_CURRENT_USER:
@@ -5299,7 +5584,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
   var store = void 0;
   if (window.currentUser) {
     var preloadedState = {
@@ -5314,7 +5599,7 @@ document.addEventListener('DOMContentLoaded', function () {
     store = (0, _store2.default)();
   }
 
-  var root = document.getElementById('root');
+  var root = document.getElementById("root");
   _reactDom2.default.render(_react2.default.createElement(_root2.default, { store: store }), root);
 });
 
@@ -5378,38 +5663,31 @@ Object.defineProperty(exports, "__esModule", {
 });
 var fetchComments = exports.fetchComments = function fetchComments(id) {
   return $.ajax({
-    method: 'GET',
-    url: '/api/projects/' + id + '/comments'
+    method: "GET",
+    url: "/api/projects/" + id + "/comments"
   });
 };
 
-// export const fetchComment = (id) => {
-//   return $.ajax({
-//     method: 'GET',
-//     url: `/api/comments/${id}`
-//   });
-// };
-
 var createComment = exports.createComment = function createComment(comment, id) {
   return $.ajax({
-    method: 'POST',
-    url: '/api/projects/' + id + '/comments',
+    method: "POST",
+    url: "/api/projects/" + id + "/comments",
     data: comment
   });
 };
 
 var updateComment = exports.updateComment = function updateComment(comment, id) {
   return $.ajax({
-    method: 'PATCH',
-    url: 'api/comments/' + id,
+    method: "PATCH",
+    url: "api/comments/" + id,
     data: comment
   });
 };
 
 var deleteComment = exports.deleteComment = function deleteComment(id) {
   return $.ajax({
-    method: 'DELETE',
-    url: 'api/comments/' + id
+    method: "DELETE",
+    url: "api/comments/" + id
   });
 };
 
@@ -5430,22 +5708,22 @@ Object.defineProperty(exports, "__esModule", {
 });
 var fetchInstructions = exports.fetchInstructions = function fetchInstructions(id) {
   return $.ajax({
-    method: 'GET',
-    url: '/api/projects/' + id + '/instructions'
+    method: "GET",
+    url: "/api/projects/" + id + "/instructions"
   });
 };
 
 var fetchInstruction = exports.fetchInstruction = function fetchInstruction(id) {
   return $.ajax({
-    method: 'GET',
-    url: '/api/instructions/' + id
+    method: "GET",
+    url: "/api/instructions/" + id
   });
 };
 
 var createInstruction = exports.createInstruction = function createInstruction(instruction, id) {
   return $.ajax({
-    method: 'POST',
-    url: '/api/projects/' + id + '/instructions',
+    method: "POST",
+    url: "/api/projects/" + id + "/instructions",
     data: instruction,
     contentType: false,
     processData: false
@@ -5454,8 +5732,8 @@ var createInstruction = exports.createInstruction = function createInstruction(i
 
 var updateInstruction = exports.updateInstruction = function updateInstruction(instruction, id) {
   return $.ajax({
-    method: 'PATCH',
-    url: 'api/instructions/' + id,
+    method: "PATCH",
+    url: "api/instructions/" + id,
     data: instruction,
     contentType: false,
     processData: false
@@ -5464,15 +5742,15 @@ var updateInstruction = exports.updateInstruction = function updateInstruction(i
 
 var deleteInstruction = exports.deleteInstruction = function deleteInstruction(id) {
   return $.ajax({
-    method: 'DELETE',
-    url: 'api/instructions/' + id
+    method: "DELETE",
+    url: "api/instructions/" + id
   });
 };
 
 var updateInstructions = exports.updateInstructions = function updateInstructions(instructions) {
   return $.ajax({
-    method: 'PATCH',
-    url: 'api/instructions/update',
+    method: "PATCH",
+    url: "api/instructions/update",
     data: instructions,
     contentType: false,
     processData: false
@@ -5481,8 +5759,8 @@ var updateInstructions = exports.updateInstructions = function updateInstruction
 
 var createInstructions = exports.createInstructions = function createInstructions(instructions, id) {
   return $.ajax({
-    method: 'POST',
-    url: '/api/projects/' + id + '/instructions',
+    method: "POST",
+    url: "/api/projects/" + id + "/instructions",
     data: instructions,
     contentType: false,
     processData: false
@@ -5508,22 +5786,22 @@ Object.defineProperty(exports, "__esModule", {
 });
 var fetchProjects = exports.fetchProjects = function fetchProjects() {
   return $.ajax({
-    method: 'GET',
-    url: 'api/projects'
+    method: "GET",
+    url: "api/projects"
   });
 };
 
 var fetchProject = exports.fetchProject = function fetchProject(id) {
   return $.ajax({
-    method: 'GET',
-    url: 'api/projects/' + id
+    method: "GET",
+    url: "api/projects/" + id
   });
 };
 
 var createProject = exports.createProject = function createProject(project) {
   return $.ajax({
-    method: 'POST',
-    url: 'api/projects',
+    method: "POST",
+    url: "api/projects",
     data: project,
     contentType: false,
     processData: false
@@ -5532,8 +5810,8 @@ var createProject = exports.createProject = function createProject(project) {
 
 var updateProject = exports.updateProject = function updateProject(project, id) {
   return $.ajax({
-    method: 'PATCH',
-    url: 'api/projects/' + id,
+    method: "PATCH",
+    url: "api/projects/" + id,
     data: project,
     contentType: false,
     processData: false
@@ -5542,15 +5820,15 @@ var updateProject = exports.updateProject = function updateProject(project, id) 
 
 var deleteProject = exports.deleteProject = function deleteProject(id) {
   return $.ajax({
-    method: 'DELETE',
-    url: 'api/projects/' + id
+    method: "DELETE",
+    url: "api/projects/" + id
   });
 };
 
 var fetchProjectsByUser = exports.fetchProjectsByUser = function fetchProjectsByUser(id) {
   return $.ajax({
-    method: 'GET',
-    url: '/api/user/' + id + '/projects'
+    method: "GET",
+    url: "/api/user/" + id + "/projects"
   });
 };
 
@@ -5586,9 +5864,13 @@ var Auth = function Auth(_ref) {
       path = _ref.path,
       loggedIn = _ref.loggedIn,
       exact = _ref.exact;
-  return _react2.default.createElement(_reactRouterDom.Route, { path: path, exact: exact, render: function render(props) {
-      return !loggedIn ? _react2.default.createElement(Component, props) : _react2.default.createElement(_reactRouterDom.Redirect, { to: '/' });
-    } });
+  return _react2.default.createElement(_reactRouterDom.Route, {
+    path: path,
+    exact: exact,
+    render: function render(props) {
+      return !loggedIn ? _react2.default.createElement(Component, props) : _react2.default.createElement(_reactRouterDom.Redirect, { to: "/" });
+    }
+  });
 };
 
 var Protected = function Protected(_ref2) {
@@ -5596,9 +5878,13 @@ var Protected = function Protected(_ref2) {
       path = _ref2.path,
       loggedIn = _ref2.loggedIn,
       exact = _ref2.exact;
-  return _react2.default.createElement(_reactRouterDom.Route, { path: path, exact: exact, render: function render(props) {
-      return loggedIn ? _react2.default.createElement(Component, props) : _react2.default.createElement(_reactRouterDom.Redirect, { to: '/login' });
-    } });
+  return _react2.default.createElement(_reactRouterDom.Route, {
+    path: path,
+    exact: exact,
+    render: function render(props) {
+      return loggedIn ? _react2.default.createElement(Component, props) : _react2.default.createElement(_reactRouterDom.Redirect, { to: "/login" });
+    }
+  });
 };
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -5626,8 +5912,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 var searchProjects = exports.searchProjects = function searchProjects(search) {
   return $.ajax({
-    method: 'GET',
-    url: 'api/search',
+    method: "GET",
+    url: "api/search",
     data: {
       search: search
     }
@@ -5651,7 +5937,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 var logIn = exports.logIn = function logIn(user) {
   return $.ajax({
-    method: 'POST',
+    method: "POST",
     url: "api/session",
     data: { user: user }
   });
@@ -5659,7 +5945,7 @@ var logIn = exports.logIn = function logIn(user) {
 
 var signUp = exports.signUp = function signUp(user) {
   return $.ajax({
-    method: 'POST',
+    method: "POST",
     url: "api/users",
     data: { user: user }
   });
@@ -5667,7 +5953,7 @@ var signUp = exports.signUp = function signUp(user) {
 
 var logOut = exports.logOut = function logOut() {
   return $.ajax({
-    method: 'DELETE',
+    method: "DELETE",
     url: "api/session"
   });
 };

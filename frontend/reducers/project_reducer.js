@@ -1,8 +1,7 @@
-import * as Projects_Actions from './../actions/projects_actions';
-import * as Search_Actions from './../actions/search_actions';
+import * as Projects_Actions from "./../actions/projects_actions";
+import * as Search_Actions from "./../actions/search_actions";
 
-import merge from 'lodash/merge';
-
+import merge from "lodash/merge";
 
 const projectReducer = (state = {}, action) => {
   let newState;
@@ -12,17 +11,17 @@ const projectReducer = (state = {}, action) => {
       return merge({}, state, action.projects);
     case Projects_Actions.FETCH_PROJECT:
     case Projects_Actions.RECIEVE_PROJECT:
-      newState = merge({}, state, {[action.project.id]: action.project});
+      newState = merge({}, state, { [action.project.id]: action.project });
       return newState;
     case Search_Actions.SEARCH_PROJECTS:
       newState = merge({}, state);
-      Object.values(action.projects).forEach((project) => {
-        newState = merge({}, newState, { [project.id]: project});
+      Object.values(action.projects).forEach(project => {
+        newState = merge({}, newState, { [project.id]: project });
       });
       return newState;
     case Projects_Actions.REMOVE_PROJECT:
       newState = merge({}, state);
-      delete(newState[action.projectId]);
+      delete newState[action.projectId];
       return newState;
     default:
       return oldState;

@@ -1,7 +1,9 @@
-import { FETCH_PROJECT } from './../actions/projects_actions';
-import { FETCH_COMMENT, RECEIVE_COMMENT_ERRORS } from './../actions/comments_actions';
-import merge from 'lodash/merge';
-
+import { FETCH_PROJECT } from "./../actions/projects_actions";
+import {
+  FETCH_COMMENT,
+  RECEIVE_COMMENT_ERRORS
+} from "./../actions/comments_actions";
+import merge from "lodash/merge";
 
 const commentErrorsReducer = (state = [], action) => {
   const oldState = Object.freeze(state);

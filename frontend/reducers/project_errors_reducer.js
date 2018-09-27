@@ -1,7 +1,11 @@
-import { FETCH_PROJECT, RECEIVE_PROJECT_ERRORS, PROJECT_NOT_FOUND_ERROR } from './../actions/projects_actions';
-import { FETCH_INSTRUCTION } from './../actions/instructions_actions';
-import { RECEIVE_CURRENT_USER } from './../actions/session_actions';
-import merge from 'lodash/merge';
+import {
+  FETCH_PROJECT,
+  RECEIVE_PROJECT_ERRORS,
+  PROJECT_NOT_FOUND_ERROR
+} from "./../actions/projects_actions";
+import { FETCH_INSTRUCTION } from "./../actions/instructions_actions";
+import { RECEIVE_CURRENT_USER } from "./../actions/session_actions";
+import merge from "lodash/merge";
 
 const CLEAR_ERRORS = "CLEAR_ERRORS";
 const projectErrorsReducer = (state = [], action) => {

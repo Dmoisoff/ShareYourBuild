@@ -1,22 +1,22 @@
 export const fetchProjects = () => {
   return $.ajax({
-    method: 'GET',
-    url: 'api/projects'
+    method: "GET",
+    url: "api/projects"
   });
 };
 
-export const fetchProject = (id) => {
+export const fetchProject = id => {
   return $.ajax({
-    method: 'GET',
+    method: "GET",
     url: `api/projects/${id}`
   });
 };
 
-export const createProject = (project) => {
+export const createProject = project => {
   return $.ajax({
-    method: 'POST',
+    method: "POST",
     url: `api/projects`,
-    data: project ,
+    data: project,
     contentType: false,
     processData: false
   });
@@ -24,24 +24,24 @@ export const createProject = (project) => {
 
 export const updateProject = (project, id) => {
   return $.ajax({
-    method: 'PATCH',
+    method: "PATCH",
     url: `api/projects/${id}`,
-    data: project ,
+    data: project,
     contentType: false,
     processData: false
   });
 };
 
-export const deleteProject = (id) => {
+export const deleteProject = id => {
   return $.ajax({
-    method: 'DELETE',
+    method: "DELETE",
     url: `api/projects/${id}`
   });
 };
 
-export const fetchProjectsByUser = (id) => {
+export const fetchProjectsByUser = id => {
   return $.ajax({
-    method: 'GET',
+    method: "GET",
     url: `/api/user/${id}/projects`
   });
 };

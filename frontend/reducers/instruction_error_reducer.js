@@ -1,7 +1,9 @@
-import { FETCH_PROJECT } from './../actions/projects_actions';
-import { FETCH_INSTRUCTION, RECEIVE_INSTRUCTION_ERRORS } from './../actions/instructions_actions';
-import merge from 'lodash/merge';
-
+import { FETCH_PROJECT } from "./../actions/projects_actions";
+import {
+  FETCH_INSTRUCTION,
+  RECEIVE_INSTRUCTION_ERRORS
+} from "./../actions/instructions_actions";
+import merge from "lodash/merge";
 
 const instructionErrorsReducer = (state = [], action) => {
   const oldState = Object.freeze(state);

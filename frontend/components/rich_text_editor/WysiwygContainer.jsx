@@ -1,15 +1,14 @@
-import { connect } from 'react-redux';
-import WYSIWYG from './wysiwyg';
-
+import { connect } from "react-redux";
+import WYSIWYG from "./wysiwyg";
 
 const mstp = (state, ownProps) => {
-  let html = '';
+  let html = "";
   let information = "";
-  if(ownProps.body !== '' && ownProps.body !== undefined){
+  if (ownProps.body !== "" && ownProps.body !== undefined) {
     information = ownProps.body;
   }
-  let htmlDoc = new DOMParser().parseFromString(html, 'text/html');
-  let body = htmlDoc.querySelectorAll('body');
+  let htmlDoc = new DOMParser().parseFromString(html, "text/html");
+  let body = htmlDoc.querySelectorAll("body");
   body[0].innerHTML = information;
   return {
     instructionBody: body[0].innerHTML,
@@ -18,10 +17,11 @@ const mstp = (state, ownProps) => {
   };
 };
 
-const mdtp = (dispatch) => {
-  return {
-
-  };
+const mdtp = dispatch => {
+  return {};
 };
 
-export default connect(mstp,mdtp)(WYSIWYG);
+export default connect(
+  mstp,
+  mdtp
+)(WYSIWYG);

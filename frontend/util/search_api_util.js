@@ -1,7 +1,7 @@
-export const searchProjects = (search) => {
+export const searchProjects = search => {
   return $.ajax({
-    method: 'GET',
-    url: 'api/search',
+    method: "GET",
+    url: "api/search",
     data: {
       search
     }

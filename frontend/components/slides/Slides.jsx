@@ -1,9 +1,13 @@
 import React from "react";
 import Slider from "react-slick";
-import {LetsShareDesigns, LetsShareCostumes, LetsShareRecipes, LetsShareTechnology } from './Slides_Text';
+import {
+  LetsShareDesigns,
+  LetsShareCostumes,
+  LetsShareRecipes,
+  LetsShareTechnology
+} from "./Slides_Text";
 
 class SimpleSlider extends React.Component {
-
   componentDidMount() {
     window.scrollTo(0, 0);
   }
@@ -19,27 +23,27 @@ class SimpleSlider extends React.Component {
       fade: true
     };
     return (
-      <Slider {...settings} className='slide-background' >
+      <Slider {...settings} className="slide-background">
         <div>
           <div className=" slider two ">
-            <div className='slide-overlay'>
-              <LetsShareDesigns  />
+            <div className="slide-overlay">
+              <LetsShareDesigns />
             </div>
           </div>
         </div>
         <div className=" slider three">
-          <div className='slide-overlay'>
-            <LetsShareCostumes  />
+          <div className="slide-overlay">
+            <LetsShareCostumes />
           </div>
         </div>
         <div className=" slider one">
-          <div className='slide-overlay'>
-            <LetsShareRecipes  />
+          <div className="slide-overlay">
+            <LetsShareRecipes />
           </div>
         </div>
         <div className=" slider four">
-          <div className='slide-overlay'>
-            <LetsShareTechnology  />
+          <div className="slide-overlay">
+            <LetsShareTechnology />
           </div>
         </div>
       </Slider>

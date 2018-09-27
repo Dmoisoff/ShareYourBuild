@@ -1,20 +1,20 @@
-export const fetchInstructions = (id) => {
+export const fetchInstructions = id => {
   return $.ajax({
-    method: 'GET',
+    method: "GET",
     url: `/api/projects/${id}/instructions`
   });
 };
 
-export const fetchInstruction = (id) => {
+export const fetchInstruction = id => {
   return $.ajax({
-    method: 'GET',
+    method: "GET",
     url: `/api/instructions/${id}`
   });
 };
 
-export const createInstruction = (instruction,id) => {
+export const createInstruction = (instruction, id) => {
   return $.ajax({
-    method: 'POST',
+    method: "POST",
     url: `/api/projects/${id}/instructions`,
     data: instruction,
     contentType: false,
@@ -22,9 +22,9 @@ export const createInstruction = (instruction,id) => {
   });
 };
 
-export const updateInstruction = (instruction,id) => {
+export const updateInstruction = (instruction, id) => {
   return $.ajax({
-    method: 'PATCH',
+    method: "PATCH",
     url: `api/instructions/${id}`,
     data: instruction,
     contentType: false,
@@ -32,17 +32,16 @@ export const updateInstruction = (instruction,id) => {
   });
 };
 
-
-export const deleteInstruction = (id) => {
+export const deleteInstruction = id => {
   return $.ajax({
-    method: 'DELETE',
+    method: "DELETE",
     url: `api/instructions/${id}`
   });
 };
 
-export const updateInstructions = (instructions) => {
+export const updateInstructions = instructions => {
   return $.ajax({
-    method: 'PATCH',
+    method: "PATCH",
     url: `api/instructions/update`,
     data: instructions,
     contentType: false,
@@ -50,15 +49,14 @@ export const updateInstructions = (instructions) => {
   });
 };
 
-export const createInstructions = (instructions,id) => {
+export const createInstructions = (instructions, id) => {
   return $.ajax({
-    method: 'POST',
+    method: "POST",
     url: `/api/projects/${id}/instructions`,
     data: instructions,
     contentType: false,
     processData: false
   });
 };
-
 
 // {instruction: {project_id: 88, instruction_step: 7, body:'test'}}

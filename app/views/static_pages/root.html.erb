@@ -7,7 +7,6 @@
   window.github = '<%= image_url("GitHub-Mark-120px-plus.png")  %> '
 </script>
 
-
 <% if logged_in? %>
   <script type="text/javascript">
     window.currentUser = <%= render('/api/users/user.json.jbuilder', { user: current_user }).html_safe %>

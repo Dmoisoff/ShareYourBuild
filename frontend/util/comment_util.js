@@ -1,37 +1,29 @@
-export const fetchComments = (id) => {
+export const fetchComments = id => {
   return $.ajax({
-    method: 'GET',
+    method: "GET",
     url: `/api/projects/${id}/comments`
   });
 };
 
-// export const fetchComment = (id) => {
-//   return $.ajax({
-//     method: 'GET',
-//     url: `/api/comments/${id}`
-//   });
-// };
-
-export const createComment = (comment,id) => {
+export const createComment = (comment, id) => {
   return $.ajax({
-    method: 'POST',
+    method: "POST",
     url: `/api/projects/${id}/comments`,
     data: comment
   });
 };
 
-export const updateComment = (comment,id) => {
+export const updateComment = (comment, id) => {
   return $.ajax({
-    method: 'PATCH',
+    method: "PATCH",
     url: `api/comments/${id}`,
     data: comment
   });
 };
 
-
-export const deleteComment = (id) => {
+export const deleteComment = id => {
   return $.ajax({
-    method: 'DELETE',
+    method: "DELETE",
     url: `api/comments/${id}`
   });
 };
