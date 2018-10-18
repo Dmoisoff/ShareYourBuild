@@ -119,5 +119,5 @@ end
 
 **Future Features**
 
-- Enable a search feature with autocomplete for keywords or users
+- Enable autocomplete for the search feature
 - Add the ability to like projects
