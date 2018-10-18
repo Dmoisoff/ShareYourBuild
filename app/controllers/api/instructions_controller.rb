@@ -53,7 +53,6 @@ class Api::InstructionsController < ApplicationController
       else
         render json: @instruction.errors.full_messages, status: 422
       end
-
     end
   end
 
