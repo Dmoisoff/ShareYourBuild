@@ -559,10 +559,6 @@ var _searchbar = __webpack_require__(/*! ./search/searchbar.jsx */ "./frontend/c
 
 var _searchbar2 = _interopRequireDefault(_searchbar);
 
-var _WysiwygContainer = __webpack_require__(/*! ./rich_text_editor/WysiwygContainer */ "./frontend/components/rich_text_editor/WysiwygContainer.jsx");
-
-var _WysiwygContainer2 = _interopRequireDefault(_WysiwygContainer);
-
 var _main_page = __webpack_require__(/*! ./main_page/main_page */ "./frontend/components/main_page/main_page.jsx");
 
 var _main_page2 = _interopRequireDefault(_main_page);
@@ -571,6 +567,7 @@ var _route_util = __webpack_require__(/*! ../util/route_util */ "./frontend/util
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import WysiwygContainer from "./rich_text_editor/WysiwygContainer";
 var App = function App() {
   return _react2.default.createElement(
     "div",
@@ -5766,8 +5763,6 @@ var createInstructions = exports.createInstructions = function createInstruction
     processData: false
   });
 };
-
-// {instruction: {project_id: 88, instruction_step: 7, body:'test'}}
 
 /***/ }),
 

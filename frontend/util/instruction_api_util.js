@@ -58,5 +58,3 @@ export const createInstructions = (instructions, id) => {
     processData: false
   });
 };
-
-// {instruction: {project_id: 88, instruction_step: 7, body:'test'}}

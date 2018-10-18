@@ -11,7 +11,7 @@ import NewInstructionContainer from "./instruction/NewInstructionContainer";
 import UserProjectsIndexContainer from "./projects/UserProjectsIndexContainer";
 import SearchIndexProjectsContainer from "./projects/SearchIndexProjectsContainer";
 import SearchBar from "./search/searchbar.jsx";
-import WysiwygContainer from "./rich_text_editor/WysiwygContainer";
+// import WysiwygContainer from "./rich_text_editor/WysiwygContainer";
 import MainPage from "./main_page/main_page";
 import { AuthRoute, ProtectedRoute } from "../util/route_util";
 
