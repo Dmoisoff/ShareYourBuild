@@ -23,9 +23,9 @@ A single page web application built with React and Ruby on Rails. Where DIY enth
 
   ![](./readme_assets/protected_routes_auth.gif)
 
-- A user can sign in or sign up from any page via the links on the header.
-- Protected Authentication routes for creating and editing projects.
-- The login credentials are verified on the backend and returns any relevant data to the user.
+  - A user can sign in or sign up from any page via the links on the header.
+  - Protected Authentication routes for creating and editing projects.
+  - The login credentials are verified on the backend and returns any relevant data to the user.
 
 - **Project Creation**
 
@@ -42,7 +42,8 @@ A single page web application built with React and Ruby on Rails. Where DIY enth
 
   - Quickly access projects on the backend and display
 
-**Code Sample**
+**Code Samples**
+
 The code below is used to append multiple instructions to a single formdata to limit the amount of Ajax calls to the backend.
 
 ```js
@@ -79,7 +80,7 @@ appendInstructions(instructions, projectId) {
 }
 ```
 
-The code below is how I parse the formdata with multiple instructionStep
+The code below is how I parse the formdata with multiple instruction Step
 
 ```rb
 def update_instructions
