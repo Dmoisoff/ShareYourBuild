@@ -20,14 +20,15 @@ A single page web application built with React and Ruby on Rails. Where DIY enth
 **Features**
 
 - Authentication
-  ![]https://i.imgur.com/BKdyYNB.gifv
 
-  - A user can sign in or sign up from any page via the links on the header.
-  - Protected Authentication routes for creating and editing projects.
-  - The login credentials are verified on the backend and returns any relevant data to the user.
+  ![]https://i.imgur.com/BKdyYNB.gif
+
+- A user can sign in or sign up from any page via the links on the header.
+- Protected Authentication routes for creating and editing projects.
+- The login credentials are verified on the backend and returns any relevant data to the user.
 
 - Project Creation
-  ![]https://i.imgur.com/zML6cMU.gifv
+  ![]https://i.imgur.com/zML6cMU.gif
 
   - Used RESTful API design to perform full CRUD on projects, instructions, and comments.
   - The project form aggregates data from each instruction component in order to limit Ajax requests.
@@ -35,7 +36,7 @@ A single page web application built with React and Ruby on Rails. Where DIY enth
   - Image storage with AWS S3, so users can upload multiply images per instruction.
 
 - Search Bar
-  ![]https://i.imgur.com/6ytv3Qb.gifv
+  ![]https://i.imgur.com/6ytv3Qb.gif
 
   - Quickly access projects on the backend and display
 
