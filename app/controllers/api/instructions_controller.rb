@@ -2,11 +2,9 @@ class Api::InstructionsController < ApplicationController
 
   def create
     index = 0
-    debugger
     while params['instructions'].dig("#{index}")
       permitted = instructions_params(params['instructions'].dig("#{index}"))
       instruction = Instruction.new(permitted)
-      debugger
       if params['instructions']["#{index}"]['images']
         images = params['instructions']["#{index}"]['images'].values
         if images
