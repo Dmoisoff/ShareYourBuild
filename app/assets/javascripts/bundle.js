@@ -619,13 +619,19 @@ var App = function App() {
           _reactRouterDom.Switch,
           null,
           _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/", component: _main_page2.default }),
-          _react2.default.createElement(_route_util.ProtectedRoute, { path: "/project/new", component: _NewProjectContainer2.default }),
+          _react2.default.createElement(_route_util.ProtectedRoute, {
+            path: "/project/new",
+            component: _NewProjectContainer2.default
+          }),
           _react2.default.createElement(_route_util.ProtectedRoute, {
             exact: true,
             path: "/project/:projectId/edit",
             component: _EditProjectContainer2.default
           }),
-          _react2.default.createElement(_reactRouterDom.Route, { path: "/project/:projectId", component: _ShowProjectContainer2.default }),
+          _react2.default.createElement(_reactRouterDom.Route, {
+            path: "/project/:projectId",
+            component: _ShowProjectContainer2.default
+          }),
           _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/projects", component: _IndexProjectsContainer2.default }),
           _react2.default.createElement(_reactRouterDom.Route, {
             exact: true,
@@ -637,9 +643,11 @@ var App = function App() {
             component: _SearchIndexProjectsContainer2.default
           }),
           _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/projects/search/", component: _main_page2.default }),
-          "//",
-          " ",
-          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/test", component: _SearchIndexProjectsContainer2.default }),
+          _react2.default.createElement(_reactRouterDom.Route, {
+            exact: true,
+            path: "/test",
+            component: _SearchIndexProjectsContainer2.default
+          }),
           _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: "/login", component: _LoginFormContainer2.default }),
           _react2.default.createElement(_route_util.AuthRoute, { exact: true, path: "/signup", component: _SignupFormContainer2.default })
         )

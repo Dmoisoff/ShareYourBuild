@@ -3,11 +3,15 @@ class Api::InstructionsController < ApplicationController
   def create
     index = 0
     while params['instructions'].dig("#{index}")
+      debugger
       permitted = instructions_params(params['instructions'].dig("#{index}"))
       instruction = Instruction.new(permitted)
-      images = params['instructions']["#{index}"]['images'].values
-      if images
-        instruction.images.attach(images)
+      if instruction['instructions']#making change here
+
+        images = instruction['instructions']["#{index}"]['images'].values
+        if images
+          instruction.images.attach(images)
+        end
       end
       render json: instruction.errors.full_messages, status: 422 unless instruction.save
       index += 1
