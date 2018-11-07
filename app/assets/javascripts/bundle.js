@@ -2660,7 +2660,6 @@ var ProjectForm = function (_React$Component) {
     value: function redirect(id) {
       var _this2 = this;
 
-      this.props.fetchProject(id);
       this.setState({ uploadStatus: true });
       setTimeout(function () {
         _this2.props.history.push("/project/" + id);
