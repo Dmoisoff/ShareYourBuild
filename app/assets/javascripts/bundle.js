@@ -1972,6 +1972,7 @@ var EditProjectForm = function (_React$Component) {
 
       return _react2.default.createElement(_ProjectForm2.default, {
         submitProject: submitProject,
+        fetchProject: _projects_actions.fetchProject,
         deleteInstruction: deleteInstruction,
         clearProjectErrors: clearProjectErrors,
         formType: formType,
@@ -2659,6 +2660,7 @@ var ProjectForm = function (_React$Component) {
     value: function redirect(id) {
       var _this2 = this;
 
+      this.props.fetchProject(id);
       this.setState({ uploadStatus: true });
       setTimeout(function () {
         _this2.props.history.push("/project/" + id);
@@ -5245,6 +5247,7 @@ var instructionReducer = function instructionReducer() {
       if (action.instructions) {
         Object.values(action.instructions).forEach(function (instruction) {
           newState = (0, _merge4.default)(newState, _defineProperty({}, instruction.id, instruction));
+          newState[instruction.id]["images"] = instruction["images"];
         });
       }
       return newState;

@@ -50,6 +50,7 @@ class EditProjectForm extends React.Component {
     return (
       <ProjectForm
         submitProject={submitProject}
+        fetchProject={fetchProject}
         deleteInstruction={deleteInstruction}
         clearProjectErrors={clearProjectErrors}
         formType={formType}

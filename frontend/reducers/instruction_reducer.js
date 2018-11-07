@@ -12,6 +12,7 @@ const instructionReducer = (state = {}, action) => {
       if (action.instructions) {
         Object.values(action.instructions).forEach(instruction => {
           newState = merge(newState, { [instruction.id]: instruction });
+          newState[instruction.id]["images"] = instruction["images"];
         });
       }
       return newState;
